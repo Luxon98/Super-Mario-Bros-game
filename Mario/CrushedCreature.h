@@ -1,0 +1,21 @@
+#ifndef _CrushedCreature_H
+#define _CrushedCreature_H
+
+#include "SDL_Interface.h"
+#include "TemporaryObject.h"
+
+
+class CrushedCreature : public TemporaryObject {
+private:
+	static SDL_Surface* crushedCreatureImage;
+
+public:
+	CrushedCreature(); 
+	CrushedCreature(int x, int y);
+	void loadCrushedCreatureImage(SDL_Surface* screen);
+	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	bool shouldBeRemoved() override;
+	void slide() override;
+};
+
+#endif
