@@ -1,6 +1,4 @@
-*.c linguist-detectable=false
-*.h linguist-detectable=false
-*.cpp linguist-detectable=true
+Mario/SDL2/include/SDL.h linguist-vendored=false
 
 .vs/
 
