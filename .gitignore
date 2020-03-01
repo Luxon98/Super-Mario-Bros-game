@@ -1,6 +1,6 @@
-*.* linguist-language=Java
+*.* linguist-language=C++
 
-.vs
+.vs/
 
 # Compiled Object files
 *.slo
