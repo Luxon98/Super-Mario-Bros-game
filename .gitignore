@@ -25,4 +25,4 @@
 # Log files
 *.log
 
-*.c linguist-language=C++
+*.* linguist-language=Java
