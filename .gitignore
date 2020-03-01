@@ -1,6 +1,6 @@
-*.* linguist-language=C++
 *.c linguist-detectable=false
 *.h linguist-detectable=false
+*.cpp linguist-detectable=true
 
 .vs/
 
