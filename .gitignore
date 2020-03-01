@@ -25,4 +25,4 @@
 # Log files
 *.log
 
-*.c linguist-detectable=false
+*.c linguist-language=C++
