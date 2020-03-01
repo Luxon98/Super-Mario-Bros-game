@@ -24,3 +24,5 @@
 
 # Log files
 *.log
+
+*.c linguist-detectable=false
