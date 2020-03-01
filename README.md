@@ -1,6 +1,6 @@
 # Super Mario Bros (1985) first level remake.
 
-##### Demo Video: https://www.youtube.com/watch?v=-ljm-C-187I&t=1s
+##### Demo Video: https://www.youtube.com/watch?v=-ljm-C-187I&t=
 
 <br>
 I have used the following libraries:
