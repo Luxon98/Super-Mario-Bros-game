@@ -8,7 +8,7 @@ I have used the following libraries:
 - SDL_image - v. 2.0.5
 - SDL_mixer - v. 2.0.4
 
-<br>
+
 ## Documentations and tutorials:
 
 https://wiki.libsdl.org/APIByCategory   
