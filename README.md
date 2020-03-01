@@ -2,7 +2,6 @@
 
 ##### Demo Video: https://www.youtube.com/watch?v=-ljm-C-187I&t=
 
-<br>
 I have used the following libraries:
 - SDL 	    - v. 2.0.10
 - SDL_image - v. 2.0.5
