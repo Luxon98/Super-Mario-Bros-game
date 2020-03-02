@@ -1,4 +1,4 @@
-# Super Mario Bros (1985) first level remake.
+# Super Mario Bros (1985) remake.
 
 ##### Demo Video: https://www.youtube.com/watch?v=-ljm-C-187I&t=
 
