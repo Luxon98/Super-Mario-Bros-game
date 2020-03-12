@@ -16,4 +16,4 @@ http://sdl.beuc.net/sdl.wiki/SDL_mixer
 https://lazyfoo.net/tutorials/SDL/index.php  
 
 <br><br>
-If you want to compile my code, you have to download the aforementioned libraries and set the appropriate paths in the program :smile:
+If you want to compile my code, you have to download the aforementioned libraries and set the appropriate paths in the following files: SDL_Interface.h :smile:
