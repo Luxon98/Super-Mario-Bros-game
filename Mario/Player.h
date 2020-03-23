@@ -37,7 +37,7 @@ enum PlayerState {
 	ImmortalFourth = 9,
 	Average = 10,
 	InsensitiveSmall = 11,
-	InsensitiveTall = 12
+	InsensitiveTall = 12,
 };
 
 

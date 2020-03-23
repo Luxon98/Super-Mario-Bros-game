@@ -99,19 +99,19 @@ void Player::performGrowingAnimation(int difference) {
 }
 
 void Player::performShrinkingAnimation(int difference) {
-	if (difference <= 600 && this->lastDifference < 10) {
+	if (difference <= 1000 && this->lastDifference < 10) {
 
 		this->lastDifference = difference;
 		this->currentState = InsensitiveTall;
 	}
-	else if (difference > 600 && difference < 1200 && this->lastDifference < 600) {
+	else if (difference > 1000 && difference < 2000 && this->lastDifference < 1000) {
 
 		this->height = 32;
 		this->positionY += 16;
 		this->lastDifference = difference;
 		this->currentState = InsensitiveSmall;
 	}
-	else if (difference >= 1200) {
+	else if (difference >= 2000) {
 
 		this->currentAnimationState = NoAnimation;
 		this->currentState = Small;
@@ -422,7 +422,10 @@ void Player::jump(Direction direction, int height, World& world, Screen* mainScr
 	if (isHittingBlock(alignment, direction)) {
 		this->hitBlock(world, mainScreen);
 	}
-	this->model = 0;
+
+	if (isCharacterStandingOnTheBlock(this, world)) {
+		this->model = 0;
+	}
 }
 
 void Player::moveAndJump(Direction dirX, int distance, int height, World& world, Screen* mainScreen) {
@@ -459,7 +462,10 @@ void Player::moveAndJump(Direction dirX, int distance, int height, World& world,
 			break;
 		}
 	}
-	this->model = 0;
+
+	if (isCharacterStandingOnTheBlock(this, world)) {
+		this->model = 0;
+	}
 }
 
 void Player::performAdditionalJump(World& world, Screen* mainScreen) {
@@ -482,30 +488,4 @@ void Player::reborn() {
 	this->currentState = Small;
 	this->movementBlock = false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

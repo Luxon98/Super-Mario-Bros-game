@@ -60,7 +60,7 @@ void World::performMonstersActions() {
 		}
 
 		if (this->monsters[i]->getPositionY() > WORLD_HEIGHT + 30) {
-			this->deleteMonster(i);
+			this->deleteMonster(i, false);
 		}
 	}
 }
@@ -129,6 +129,7 @@ void World::slideBlock() {
 				this->createGreenMushroom();
 			}
 		}
+		handleIfMonsterCollideWithDestroyedBlock(*this, this->blocks[this->lastTouchedBlockIndex], this->player);
 
 		if (this->slidingCounter == 0) {
 			this->createNewBonusIfPossible();
@@ -188,7 +189,7 @@ void World::createGreenMushroom() {
 void World::playBlockSoundEffects() {
 	if (this->blocks[this->lastTouchedBlockIndex].getModel() >= BonusWithGreenMushroom &&
 		this->blocks[this->lastTouchedBlockIndex].getModel() <= BonusWithStar) {
-		
+
 		SoundController::playBonusAppeardEffect();
 	}
 	else if (this->blocks[this->lastTouchedBlockIndex].getModel() >= Monetary &&
@@ -276,8 +277,10 @@ void World::changeShellMovementParameters(int index, Direction direction) {
 
 void World::deleteBlock(int index) {
 	this->addShards(this->blocks[index].getPositionX(), this->blocks[index].getPositionY());
+	handleIfMonsterCollideWithDestroyedBlock(*this, this->blocks[index], this->player);
 	this->blocks.erase(this->blocks.begin() + index);
 	this->player->addPoints(50);
+
 	SoundController::playBlockDestroyedEffect();
 }
 
@@ -289,8 +292,11 @@ void World::deleteLivingElement(int index) {
 	this->bonusElements.erase(this->bonusElements.begin() + index);
 }
 
-void World::deleteMonster(int index) {
-	SoundController::playEnemyDestroyedEffect();
+void World::deleteMonster(int index, bool sound) {
+	if (sound) {
+		SoundController::playEnemyDestroyedEffect();
+	}
+
 	this->monsters.erase(this->monsters.begin() + index);
 }
 

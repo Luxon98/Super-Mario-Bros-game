@@ -35,3 +35,4 @@ void AnimatedText::slide() {
 		--this->positionY;
 	}
 }
+

@@ -1,6 +1,7 @@
 #ifndef _CollisionHandling_H
 #define _CollisionHandling_H
 
+#include <cmath>
 #include "World.h"
 #include "WorldObject.h"
 #include "NonControllableLivingObject.h"
@@ -20,6 +21,8 @@ bool isCharacterHittingBlock(WorldObject* object, Block block, Direction directi
 
 bool isCharacterStandingOnTheBlock(WorldObject* object, World& world);
 
+bool isMonsterStandingOnTheBlock(NonControllableLivingObject* object, Block block);
+
 bool isFlowerStandingOnTheBlock(World& world, int index);
 
 bool areAtTheSameWidth(WorldObject* object, Block block);
@@ -37,6 +40,8 @@ void handleIfCollisionWithMonsterOccurs(Player* player, World& world);
 void handleIfShellCollideWithMonsters(World& world, Player* player);
 
 void handleIfFireBallCollideWithMonsters(World& world, Player* player);
+
+void handleIfMonsterCollideWithDestroyedBlock(World& world, Block block, Player* player);
 
 void collectCoinIfPossible(Player* player, World& world);
 

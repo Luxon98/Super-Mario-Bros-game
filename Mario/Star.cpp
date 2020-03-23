@@ -12,7 +12,7 @@ Star::Star(int x, int y) {
 	this->moveDirection = Right;
 	this->verticalDirection = Up;
 	this->stepsCounter = 0;
-	this->growCounter = 90;	
+	this->growCounter = 90;
 }
 
 void Star::loadStarImages(SDL_Surface* screen) {

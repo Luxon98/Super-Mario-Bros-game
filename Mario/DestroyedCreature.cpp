@@ -26,7 +26,7 @@ bool DestroyedCreature::shouldBeRemoved() {
 
 void DestroyedCreature::slide() {
 	++this->auxiliaryCounter;
-	
+
 	if (this->auxiliaryCounter & 1) {
 		if (this->auxiliaryCounter <= 12) {
 			this->positionY -= 3;

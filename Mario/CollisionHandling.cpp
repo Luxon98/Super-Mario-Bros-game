@@ -33,6 +33,15 @@ bool isCharacterStandingOnTheBlock(WorldObject* object, World& world) {
 	return false;
 }
 
+bool isMonsterStandingOnTheBlock(NonControllableLivingObject* object, Block block) {
+	if (abs((object->getPositionY() + object->getHeight() / 2) - (block.getPositionY() - block.getHeight() / 2)) 
+		< (block.getHeight() / 2) && areAtTheSameWidth(object, block)) {
+		return true;
+	}
+
+	return false;
+}
+
 bool isFlowerStandingOnTheBlock(World& world, int index) {
 	std::vector<InanimateObject*> elements = world.getInanimateElements();
 	std::vector<Block> blocks = world.getBlocks();
@@ -201,6 +210,25 @@ void handleIfFireBallCollideWithMonsters(World& world, Player* player) {
 				world.addExplosion(it->getPositionX(), it->getPositionY());
 				world.deleteFireBall(i);
 			}
+		}
+	}
+}
+
+void handleIfMonsterCollideWithDestroyedBlock(World& world, Block block, Player* player) {
+	std::vector<NonControllableLivingObject*> monsters = world.getMonsters();
+	int index = 0;
+	for (auto it = monsters.begin(); it != monsters.end(); ++it, ++index) {
+		if (isMonsterStandingOnTheBlock(*it, block)) {
+			if (dynamic_cast<Creature*>(*it)) {
+				world.addDestroyedCreature((*it)->getPositionX(), (*it)->getPositionY());
+			}
+			else if (dynamic_cast<Turtle*>(*it)) {
+				world.addDestroyedTurtle((*it)->getPositionX(), (*it)->getPositionY());
+			}
+			
+			player->addPoints(100);
+			world.addAnimatedText(ONE_HUNDRED, (*it)->getPositionX(), (*it)->getPositionY() - 15);
+			world.deleteMonster(index);
 		}
 	}
 }

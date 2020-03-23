@@ -95,7 +95,7 @@ public:
 	void deleteBlock(int index);
 	void deleteInanimateElement(int index);
 	void deleteLivingElement(int index);
-	void deleteMonster(int index);
+	void deleteMonster(int index, bool sound = true);
 	void deleteFireBall(int index);
 	void addShell(int x, int y);
 	void addCrushedCreature(int x, int y);

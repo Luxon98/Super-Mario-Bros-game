@@ -164,7 +164,7 @@ int Screen::initGUI() {
 	SDL_RenderSetLogicalSize(this->renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 	SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
 
-	SDL_SetWindowTitle(this->window, "MyGame");
+	SDL_SetWindowTitle(this->window, "Super Mario Bros");
 
 	scrtex = SDL_CreateTexture(this->renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -196,7 +196,7 @@ Screen::Screen() {
 	this->camera.setBegginingOfCamera(0);
 	this->camera.setEndOfCamera(SCREEN_WIDTH);
 	this->initStatus = this->initGUI();
-	this->time = 403;
+	this->time = 405;
 	this->loadScreenImages();
 }
 
@@ -280,7 +280,7 @@ void Screen::drawDeadMario(World& world) {
 	for (int i = 0; i < 3000; ++i) {
 		if (i % 3 == 0) {
 			std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
-			this->time = (int)(403 - std::chrono::duration_cast<std::chrono::seconds> (timePoint - this->timeBegin).count());
+			this->time = (int)(410 - std::chrono::duration_cast<std::chrono::seconds> (timePoint - this->timeBegin).count());
 			this->fillWorldBackground();
 			this->drawScreenElements();
 			this->drawTime(this->time);
@@ -316,7 +316,7 @@ void Screen::drawWorldFinishedScreen(World& world) {
 
 void Screen::updateScreen(World& world) {
 	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
-	this->time = (int)(403 - std::chrono::duration_cast<std::chrono::seconds> (timePoint - this->timeBegin).count());
+	this->time = (int)(405 - std::chrono::duration_cast<std::chrono::seconds> (timePoint - this->timeBegin).count());
 	this->changeCoinImageIfAvailable(timePoint);
 	this->fillWorldBackground();
 	this->drawScreenElements();
