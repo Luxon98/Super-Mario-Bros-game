@@ -1,7 +1,7 @@
 #ifndef _Flower_H
 #define _Flower_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "BonusObject.h"
 #include "World.h"
 

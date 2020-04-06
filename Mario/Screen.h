@@ -4,7 +4,7 @@
 #include <string>
 #include <chrono>
 #include <thread>
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "Player.h"
 #include "World.h"
 

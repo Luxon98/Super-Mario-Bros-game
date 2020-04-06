@@ -1,7 +1,7 @@
 #ifndef _WorldObject_H
 #define _WorldObject_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 
 
 class WorldObject {

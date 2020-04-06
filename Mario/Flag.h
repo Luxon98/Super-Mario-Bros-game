@@ -1,7 +1,7 @@
 #ifndef _Flag_H
 #define _Flag_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "InanimateObject.h"
 
 

@@ -1,7 +1,7 @@
 #ifndef _Creature_H
 #define _Creature_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "NonControllableLivingObject.h"
 #include "World.h"
 

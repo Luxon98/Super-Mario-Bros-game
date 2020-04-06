@@ -196,7 +196,7 @@ Screen::Screen() {
 	this->camera.setBegginingOfCamera(0);
 	this->camera.setEndOfCamera(SCREEN_WIDTH);
 	this->initStatus = this->initGUI();
-	this->time = 405;
+	this->time = 403;
 	this->loadScreenImages();
 }
 
@@ -280,7 +280,7 @@ void Screen::drawDeadMario(World& world) {
 	for (int i = 0; i < 3000; ++i) {
 		if (i % 3 == 0) {
 			std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
-			this->time = (int)(410 - std::chrono::duration_cast<std::chrono::seconds> (timePoint - this->timeBegin).count());
+			this->time = (int)(403 - std::chrono::duration_cast<std::chrono::seconds> (timePoint - this->timeBegin).count());
 			this->fillWorldBackground();
 			this->drawScreenElements();
 			this->drawTime(this->time);
@@ -316,7 +316,7 @@ void Screen::drawWorldFinishedScreen(World& world) {
 
 void Screen::updateScreen(World& world) {
 	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
-	this->time = (int)(405 - std::chrono::duration_cast<std::chrono::seconds> (timePoint - this->timeBegin).count());
+	this->time = (int)(403 - std::chrono::duration_cast<std::chrono::seconds> (timePoint - this->timeBegin).count());
 	this->changeCoinImageIfAvailable(timePoint);
 	this->fillWorldBackground();
 	this->drawScreenElements();

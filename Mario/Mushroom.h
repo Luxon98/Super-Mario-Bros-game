@@ -1,7 +1,7 @@
 #ifndef _Mushroom_H
 #define _Mushroom_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "BonusObject.h"
 #include "World.h"
 

@@ -2,7 +2,7 @@
 #define _Block_H
 
 #include <string>
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "InanimateObject.h"
 
 

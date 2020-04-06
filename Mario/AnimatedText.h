@@ -1,7 +1,7 @@
 #ifndef _AnimatedText_H
 #define _AnimatedText_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "TemporaryObject.h"
 
 

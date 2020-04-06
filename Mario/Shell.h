@@ -2,7 +2,7 @@
 #define _Shell_H
 
 #include <chrono>
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "NonControllableLivingObject.h"
 #include "World.h"
 

@@ -1,7 +1,7 @@
 #ifndef _DestroyedTurtle_H
 #define _DestroyedTurtle_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "TemporaryObject.h"
 
 

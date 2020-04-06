@@ -1,7 +1,7 @@
 #ifndef _DestroyedCreature_H
 #define _DestroyedCreature_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "TemporaryObject.h"
 
 

@@ -1,7 +1,7 @@
 #ifndef _Cloud_H
 #define _Cloud_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "InanimateObject.h"
 
 

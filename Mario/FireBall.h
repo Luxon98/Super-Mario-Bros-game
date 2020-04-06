@@ -1,7 +1,8 @@
 #ifndef _FireBall_H
 #define _FireBall_H
 
-#include "SDL_Interface.h"
+
+#include "SDL_Utility.h"
 #include "NonControllableLivingObject.h"
 #include "World.h"
 

@@ -1,7 +1,7 @@
 #ifndef _Star_H
 #define _Star_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "BonusObject.h"
 #include "World.h"
 

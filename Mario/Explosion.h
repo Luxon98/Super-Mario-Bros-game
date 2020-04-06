@@ -1,7 +1,7 @@
 #ifndef _Explosion_H
 #define _Explosion_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "TemporaryObject.h"
 
 

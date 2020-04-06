@@ -3,7 +3,7 @@
 
 #include <chrono>
 #include "World.h"
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "Player.h"
 #include "Level.h"
 #include "Screen.h"

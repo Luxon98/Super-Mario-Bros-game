@@ -1,7 +1,7 @@
 #ifndef _Shards_H
 #define _Shards_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "TemporaryObject.h"
 
 

@@ -1,7 +1,7 @@
 #ifndef _Coin_H
 #define _Coin_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "InanimateObject.h"
 
 

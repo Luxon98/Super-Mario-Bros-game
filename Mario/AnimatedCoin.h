@@ -2,7 +2,7 @@
 #define _AnimatedCoin_H
 
 #include <string>
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "TemporaryObject.h"
 
 

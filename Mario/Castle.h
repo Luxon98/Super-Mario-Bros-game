@@ -1,7 +1,7 @@
 #ifndef _Castle_H
 #define _Castle_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "InanimateObject.h"
 
 

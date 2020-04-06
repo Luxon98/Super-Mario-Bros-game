@@ -2,7 +2,7 @@
 #define _KeyboardController_H
 
 #include <map>
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "CollisionHandling.h"
 #include "World.h"
 #include "Player.h"

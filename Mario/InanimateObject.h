@@ -1,7 +1,7 @@
 #ifndef _InanimateObject_H
 #define _InanimateObject_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "WorldObject.h"
 
 

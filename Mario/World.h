@@ -3,7 +3,7 @@
 
 #include <chrono>
 #include <vector>
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "Block.h"
 #include "Player.h"
 #include "InanimateObject.h"

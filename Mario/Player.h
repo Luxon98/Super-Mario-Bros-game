@@ -3,7 +3,7 @@
 
 #include <chrono>
 #include <string>
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "LivingObject.h"
 #include "World.h"
 #include "Block.h"

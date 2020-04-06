@@ -1,7 +1,7 @@
 #ifndef _CrushedCreature_H
 #define _CrushedCreature_H
 
-#include "SDL_Interface.h"
+#include "SDL_Utility.h"
 #include "TemporaryObject.h"
 
 
