@@ -3,8 +3,8 @@
 SDL_Surface* FireBall::fireBallImages[4] = { nullptr };
 
 void FireBall::computeModelIndex() {
-	++this->counter;
-	if (this->counter % 8 == 0) {
+	++this->changeModelCounter;
+	if (this->changeModelCounter % 8 == 0) {
 		++this->modelIndex;
 
 		if (this->modelIndex == 4) {
@@ -22,7 +22,7 @@ FireBall::FireBall(int x, int y, Direction direction) {
 	this->positionY = y;
 	this->moveDirection = direction;
 	this->verticalDirection = Down;
-	this->counter = 0;
+	this->changeModelCounter = 0;
 	this->stepsUp = 0;
 	this->modelIndex = 0;
 	this->stop = false;

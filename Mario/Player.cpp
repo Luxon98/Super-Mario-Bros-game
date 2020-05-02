@@ -58,6 +58,7 @@ void Player::changeStateDuringAnimation() {
 
 void Player::performGrowingAnimation(int difference) {
 	this->movementBlock = true;
+	this->model = 0;
 
 	if ((difference >= 100 && difference <= 200 && this->lastDifference < 100)
 		|| (difference >= 300 && difference <= 400 && this->lastDifference < 300)

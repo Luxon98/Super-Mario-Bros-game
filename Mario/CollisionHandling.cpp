@@ -319,7 +319,7 @@ int alignIfCollisionOccursDuringVerticalMovement(Direction direction, int distan
 				alignment = (it->getPositionY() + it->getHeight() / 2) - (object->getPositionY() - distance - object->getHeight() / 2);
 			}
 			else if ((object->getPositionY() + distance + object->getHeight() / 2) - (it->getPositionY() - it->getHeight() / 2) > alignment
-				&& direction == Down) {
+				&& direction == Down && it->getModel() != BonusWithGreenMushroom) {
 				alignment = (object->getPositionY() + distance + object->getHeight() / 2) - (it->getPositionY() - it->getHeight() / 2);
 			}
 		}

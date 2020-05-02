@@ -11,7 +11,6 @@ class FireBall : public NonControllableLivingObject {
 private:
 	static SDL_Surface* fireBallImages[4];
 	Direction verticalDirection;
-	int counter;
 	int stepsUp;
 	int modelIndex;
 	bool stop;
