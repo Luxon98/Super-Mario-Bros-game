@@ -23,4 +23,4 @@ https://lazyfoo.net/tutorials/SDL/index.php
 If you want to compile my code, you have to download the aforementioned libraries and set the appropriate paths in the following files: **SDL_Utility.h** (SDL, SDL_image), **SoundController.h** (SDL_mixer) 
 <br>
 <br>
-Download all necessary libraries **(for Windows)**: https://workupload.com/file/C6SuM66RDQQ
+Download all necessary libraries **(for Windows)**: https://drive.google.com/file/d/1xlKIg2lgwnebIZGF_2nRDyY51KSrYRI6/view?usp=sharing
