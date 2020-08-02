@@ -12,7 +12,7 @@ void World::changeColoursIfAvailable() {
 }
 
 void World::setMovementDirectionIfPlayerIsCloseEnough(NonControllableLivingObject& monster) {
-	if (monster.getPositionX() < this->player->getPositionX() + 2 * CAMERA_REFERENCE_POINT) {
+	if (monster.getX() < this->player->getX() + 2 * CAMERA_REFERENCE_POINT) {
 		if (dynamic_cast<Turtle*>(&monster)) {
 			dynamic_cast<Turtle*>(&monster)->setMoveDirection(Left);
 		}
@@ -26,8 +26,8 @@ void World::deleteTemporaryElementsIfTimePassed() {
 	for (unsigned int i = 0; i < this->temporaryElements.size(); ++i) {
 		if (this->temporaryElements[i]->shouldBeRemoved()) {
 			if (dynamic_cast<AnimatedCoin*>(this->temporaryElements[i])) {
-				this->addAnimatedText(TWO_HUNDRED, new Position(this->temporaryElements[i]->getPositionX(), 
-					this->temporaryElements[i]->getPositionY()));
+				this->addAnimatedText(TWO_HUNDRED, new Position(this->temporaryElements[i]->getX(), 
+					this->temporaryElements[i]->getY()));
 			}
 			this->temporaryElements.erase(this->temporaryElements.begin() + i);
 		}
@@ -38,7 +38,7 @@ void World::performBonusElementsActions() {
 	for (unsigned int i = 0; i < bonusElements.size(); ++i) {
 		this->bonusElements[i]->move(this->bonusElements[i]->getMoveDirection(), 1, *this);
 
-		if (this->bonusElements[i]->getPositionY() > WORLD_HEIGHT + 30) {
+		if (this->bonusElements[i]->getY() > WORLD_HEIGHT + 30) {
 			this->deleteLivingElement(i);
 		}
 	}
@@ -55,12 +55,11 @@ void World::performMonstersActions() {
 		if (dynamic_cast<Shell*>(this->monsters[i]) && !(dynamic_cast<Shell*>(this->monsters[i])->isActive())
 			&& dynamic_cast<Shell*>(this->monsters[i])->shouldTurnIntoTurtle()) {
 
-			this->monsters.push_back(new Turtle(new Position(this->monsters[i]->getPositionX(), 
-				this->monsters[i]->getPositionY())));
+			this->monsters.push_back(new Turtle(new Position(this->monsters[i]->getX(), this->monsters[i]->getY())));
 			this->monsters.erase(this->monsters.begin() + i);
 		}
 
-		if (this->monsters[i]->getPositionY() > WORLD_HEIGHT + 30) {
+		if (this->monsters[i]->getY() > WORLD_HEIGHT + 30) {
 			this->deleteMonster(i, false);
 		}
 	}
@@ -72,20 +71,20 @@ void World::performFireBallsActions() {
 
 		if (this->fireballs[i].shouldBeRemoved()) {
 			int shift = (this->fireballs[i].getMoveDirection() == Left ? -5 : 5);
-			this->temporaryElements.push_back(new Explosion(new Position(this->fireballs[i].getPositionX() + shift,
-				this->fireballs[i].getPositionY())));
+			this->temporaryElements.push_back(new Explosion(new Position(this->fireballs[i].getX() + shift,
+				this->fireballs[i].getY())));
 
 			this->fireballs.erase(this->fireballs.begin() + i);
 		}
-		else if (this->fireballs[i].getPositionY() > WORLD_HEIGHT + 30) {
+		else if (this->fireballs[i].getY() > WORLD_HEIGHT + 30) {
 			this->fireballs.erase(this->fireballs.begin() + i);
 		}
 	}
 
 	if (this->fireballStatus && this->player->isArmed()) {
 		SoundController::playFireballPoppedEffect();
-		this->fireballs.push_back(FireBall(new Position(this->player->getPositionX() + 5,
-			this->player->getPositionY() - 15), this->player->getMovementDirection()));
+		this->fireballs.push_back(FireBall(new Position(this->player->getX() + 5, this->player->getY() - 15), 
+			this->player->getMovementDirection()));
 
 		this->fireballStatus = false;
 	}
@@ -147,8 +146,8 @@ void World::subtractCoinFromBlockIfPossible() {
 		this->blocks[this->lastTouchedBlockIndex].setAvailableCoins(this->blocks[this->lastTouchedBlockIndex].getAvailableCoins() - 1);
 		this->player->incrementCoins();
 		this->player->addPoints(200);
-		this->temporaryElements.push_back(new AnimatedCoin(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-			this->blocks[this->lastTouchedBlockIndex].getPositionY() - 56)));
+		this->temporaryElements.push_back(new AnimatedCoin(new Position(this->blocks[this->lastTouchedBlockIndex].getX(),
+			this->blocks[this->lastTouchedBlockIndex].getY() - 56)));
 
 		if (!this->blocks[this->lastTouchedBlockIndex].getAvailableCoins()) {
 			this->blocks[this->lastTouchedBlockIndex].setModel(Empty);
@@ -157,33 +156,33 @@ void World::subtractCoinFromBlockIfPossible() {
 	else if (this->blocks[this->lastTouchedBlockIndex].getModel() == BonusWithCoin) {
 		this->player->incrementCoins();
 		this->player->addPoints(200);
-		this->temporaryElements.push_back(new AnimatedCoin(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-			this->blocks[this->lastTouchedBlockIndex].getPositionY() - 50)));
+		this->temporaryElements.push_back(new AnimatedCoin(new Position(this->blocks[this->lastTouchedBlockIndex].getX(),
+			this->blocks[this->lastTouchedBlockIndex].getY() - 50)));
 		this->blocks[this->lastTouchedBlockIndex].setModel(Empty);
 	}
 }
 
 void World::createNewBonusIfPossible() {
 	if (this->blocks[this->lastTouchedBlockIndex].getModel() == BonusWithRedMushroom) {
-		this->bonusElements.push_back(new Mushroom(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-			this->blocks[this->lastTouchedBlockIndex].getPositionY()), false));
+		this->bonusElements.push_back(new Mushroom(new Position(this->blocks[this->lastTouchedBlockIndex].getX(),
+			this->blocks[this->lastTouchedBlockIndex].getY()), false));
 		this->blocks[this->lastTouchedBlockIndex].setModel(Empty);
 	}
 	else if (this->blocks[this->lastTouchedBlockIndex].getModel() == BonusWithFlower) {
-		this->bonusElements.push_back(new Flower(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-			this->blocks[this->lastTouchedBlockIndex].getPositionY())));
+		this->bonusElements.push_back(new Flower(new Position(this->blocks[this->lastTouchedBlockIndex].getX(),
+			this->blocks[this->lastTouchedBlockIndex].getY())));
 		this->blocks[this->lastTouchedBlockIndex].setModel(Empty);
 	}
 	else if (this->blocks[this->lastTouchedBlockIndex].getModel() == BonusWithStar) {
-		this->bonusElements.push_back(new Star(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-			this->blocks[this->lastTouchedBlockIndex].getPositionY())));
+		this->bonusElements.push_back(new Star(new Position(this->blocks[this->lastTouchedBlockIndex].getX(),
+			this->blocks[this->lastTouchedBlockIndex].getY())));
 		this->blocks[this->lastTouchedBlockIndex].setModel(Empty);
 	}
 }
 
 void World::createGreenMushroom() {
-	this->bonusElements.push_back(new Mushroom(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-		this->blocks[this->lastTouchedBlockIndex].getPositionY()), true));
+	this->bonusElements.push_back(new Mushroom(new Position(this->blocks[this->lastTouchedBlockIndex].getX(),
+		this->blocks[this->lastTouchedBlockIndex].getY()), true));
 	this->blocks[lastTouchedBlockIndex].setModel(Empty);
 }
 
@@ -277,7 +276,7 @@ void World::changeShellMovementParameters(int index, Direction direction) {
 }
 
 void World::deleteBlock(int index) {
-	this->addShards(this->blocks[index].getPositionX(), this->blocks[index].getPositionY());
+	this->addShards(this->blocks[index].getX(), this->blocks[index].getY());
 	handleIfMonsterCollideWithDestroyedBlock(*this, this->blocks[index], this->player);
 	this->blocks.erase(this->blocks.begin() + index);
 	this->player->addPoints(50);

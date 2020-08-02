@@ -28,16 +28,13 @@ Block::Block(BlockType type, Position* position) {
 	this->model = type;
 	this->position = position;
 	if (type == Tube) {
-		this->width = 56;
-		this->height = 34;
+		size = new Size(56, 34);
 	}
 	else if (type == TubeEntry) {
-		this->width = 64;
-		this->height = 31;
+		size = new Size(64, 31);
 	}
 	else {
-		this->width = 32;
-		this->height = 32;
+		size = new Size(32, 32);
 	}
 	this->availableCoins = (type == Monetary ? 5 : 0);
 }

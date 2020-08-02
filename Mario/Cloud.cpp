@@ -7,6 +7,8 @@ Cloud::Cloud() {}
 Cloud::Cloud(int type, Position* position) {
 	this->model = type;
 	this->position = position;
+
+	size = new Size(0, 0);
 }
 
 void Cloud::loadCloudImages(SDL_Surface* screen) {

@@ -5,9 +5,8 @@ SDL_Surface* Star::starImages[4] = { nullptr };
 Star::Star() {}
 
 Star::Star(Position* position) {
+	size = new Size(28, 32);
 	this->position = position;
-	this->width = 28;
-	this->height = 32;
 	this->moveDirection = Right;
 	this->verticalDirection = Up;
 	this->stepsCounter = 0;

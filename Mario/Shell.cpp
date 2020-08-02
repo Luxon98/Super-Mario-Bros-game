@@ -5,8 +5,7 @@ SDL_Surface* Shell::shellImg = nullptr;
 Shell::Shell() {}
 
 Shell::Shell(Position* position) {
-	this->width = 32;
-	this->height = 28;
+	size = new Size(32, 28);
 	this->position = position;
 	this->stepsCounter = 0;
 	this->moveDirection = None;

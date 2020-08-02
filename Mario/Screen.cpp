@@ -288,7 +288,7 @@ void Screen::drawDeadMario(World& world) {
 			this->drawCoins(this->player->getCoins());
 			world.draw(this->screen, getBeginningOfCamera(), false);
 
-			drawSurface(this->screen, img, this->player->getCameraX(), this->player->getPositionY() + shift);
+			drawSurface(this->screen, img, this->player->getCameraX(), this->player->getY() + shift);
 			this->updateView();
 
 			shift += (i <= 450 ? -1 : 1);

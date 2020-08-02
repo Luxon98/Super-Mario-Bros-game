@@ -13,8 +13,7 @@ void Turtle::chooseModel() {
 Turtle::Turtle() {}
 
 Turtle::Turtle(Position* position) {
-	this->width = 26;
-	this->height = 38;
+	size = new Size(26, 38);
 	this->position = position;
 	this->model = 1;
 	this->stepsCounter = 0;

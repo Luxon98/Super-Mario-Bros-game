@@ -8,8 +8,7 @@ Coin::Coin() {}
 
 Coin::Coin(Position* position) {
 	this->position = position;
-	this->width = 11;
-	this->height = 17;
+	size = new Size(11, 17);
 }
 
 void Coin::loadCoinImages(SDL_Surface* screen) {

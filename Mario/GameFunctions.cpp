@@ -162,7 +162,7 @@ void runGame() {
 					controller.forceActions(player, world, windowScreen);
 				}
 
-				if (player->getPositionX() >= 6350 && player->getPositionX() <= 6400 && !winStatus) {
+				if (player->getX() >= 6350 && player->getX() <= 6400 && !winStatus) {
 					SoundController::playFlagDownEffect();
 					world.setActiveFlag();
 					winStatus = true;
@@ -172,7 +172,7 @@ void runGame() {
 					}
 					player->move(Right, 25, world, windowScreen);
 					player->jump(Down, 35, world, windowScreen);
-					player->move(Right, 6540 - player->getPositionX(), world, windowScreen);
+					player->move(Right, 6540 - player->getX(), world, windowScreen);
 
 					windowScreen->drawWorldFinishedScreen(world);
 				}

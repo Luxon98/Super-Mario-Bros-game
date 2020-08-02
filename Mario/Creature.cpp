@@ -12,8 +12,7 @@ void Creature::chooseModel() {
 Creature::Creature() {}
 
 Creature::Creature(Position* position) {
-	this->width = 32;
-	this->height = 32;
+	size = new Size(32, 32);
 	this->position = position;
 	this->model = 1;
 	this->stepsCounter = 0;

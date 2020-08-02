@@ -1,20 +1,20 @@
 #include "CollisionHandling.h"
 
 bool isCharacterHittingBlock(WorldObject* object, Block block, Direction direction, int distance) {
-	if (direction == Right && object->getPositionX() < block.getPositionX()
-		&& object->getPositionX() + distance + object->getWidth() / 2 >= block.getPositionX() - block.getWidth() / 2) {
+	if (direction == Right && object->getX() < block.getX() && object->getX() + distance + object->getWidth() / 2 
+			>= block.getX() - block.getWidth() / 2) {
 		return true;
 	}
-	else if (direction == Left && object->getPositionX() > block.getPositionX()
-		&& object->getPositionX() - distance - object->getWidth() / 2 <= block.getPositionX() + block.getWidth() / 2) {
+	else if (direction == Left && object->getX() > block.getX() && object->getX() - distance - object->getWidth() / 2 
+			<= block.getX() + block.getWidth() / 2) {
 		return true;
 	}
-	else if (direction == Up && object->getPositionY() > block.getPositionY()
-		&& object->getPositionY() - distance - object->getHeight() / 2 <= block.getPositionY() + block.getHeight() / 2) {
+	else if (direction == Up && object->getY() > block.getY() && object->getY() - distance - object->getHeight() / 2 
+			<= block.getY() + block.getHeight() / 2) {
 		return true;
 	}
-	else if (direction == Down && object->getPositionY() < block.getPositionY()
-		&& object->getPositionY() + distance + object->getHeight() / 2 >= block.getPositionY() - block.getHeight() / 2) {
+	else if (direction == Down && object->getY() < block.getY() && object->getY() + distance + object->getHeight() / 2
+			>= block.getY() - block.getHeight() / 2) {
 		return true;
 	}
 	else {
@@ -25,16 +25,16 @@ bool isCharacterHittingBlock(WorldObject* object, Block block, Direction directi
 bool isCharacterStandingOnTheBlock(WorldObject* object, World& world) {
 	std::vector<Block> blocks = world.getBlocks();
 	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
-		if (object->getPositionY() + object->getHeight() / 2 == it->getPositionY() - it->getHeight() / 2
-			&& areAtTheSameWidth(object, *it)) {
+		if (object->getY() + object->getHeight() / 2 == it->getY() - it->getHeight() / 2 && areAtTheSameWidth(object, *it)) {
 			return true;
 		}
 	}
+
 	return false;
 }
 
 bool isMonsterStandingOnTheBlock(NonControllableLivingObject* object, Block block) {
-	if (abs((object->getPositionY() + object->getHeight() / 2) - (block.getPositionY() - block.getHeight() / 2)) 
+	if (abs((object->getY() + object->getHeight() / 2) - (block.getY() - block.getHeight() / 2)) 
 		< (block.getHeight() / 2) && areAtTheSameWidth(object, block)) {
 		return true;
 	}
@@ -47,8 +47,8 @@ bool isFlowerStandingOnTheBlock(World& world, int index) {
 	std::vector<Block> blocks = world.getBlocks();
 	for (auto it = elements.begin(); it != elements.end(); ++it) {
 		if (dynamic_cast<Flower*>(*it)) {
-			if (((*it)->getPositionY() + (*it)->getHeight() / 2) + 9 == blocks[index].getPositionY()
-				- blocks[index].getHeight() / 2 && areAtTheSameWidth(*it, blocks[index])) {
+			if (((*it)->getY() + (*it)->getHeight() / 2) + 9 == blocks[index].getY() - blocks[index].getHeight() / 2 
+				&& areAtTheSameWidth(*it, blocks[index])) {
 
 				return true;
 			}
@@ -58,55 +58,55 @@ bool isFlowerStandingOnTheBlock(World& world, int index) {
 }
 
 bool areAtTheSameWidth(WorldObject* object, Block block) {
-	if (object->getPositionX() + object->getWidth() / 2 > block.getPositionX() - block.getWidth() / 2
-		&& object->getPositionX() <= block.getPositionX()) {
+	if (object->getX() + object->getWidth() / 2 > block.getX() - block.getWidth() / 2 && object->getX() <= block.getX()) {
 		return true;
 	}
-	else if (object->getPositionX() - object->getWidth() / 2 < block.getPositionX() + block.getWidth() / 2
-		&& object->getPositionX() >= block.getPositionX()) {
+	else if (object->getX() - object->getWidth() / 2 < block.getX() + block.getWidth() / 2 && object->getX() >= block.getX()) {
 		return true;
 	}
+
 	return false;
 }
 
 bool areAtTheSameHeight(WorldObject* object, Block block) {
-	if (object->getPositionY() >= block.getPositionY()
-		&& object->getPositionY() - object->getHeight() / 2 < block.getPositionY() + block.getHeight() / 2) {
+	if (object->getY() >= block.getY() && object->getY() - object->getHeight() / 2 < block.getY() + block.getHeight() / 2) {
 		return true;
 	}
-	else if (object->getPositionY() <= block.getPositionY()
-		&& object->getPositionY() + object->getHeight() / 2 > block.getPositionY() - block.getHeight() / 2) {
+	else if (object->getY() <= block.getY() && object->getY() + object->getHeight() / 2 > block.getY() - block.getHeight() / 2) {
 		return true;
 	}
+
 	return false;
 }
 
 bool areAtTheSameWidth(WorldObject* firstObject, WorldObject* secondObject) {
-	if (firstObject->getPositionX() + firstObject->getWidth() / 2 > secondObject->getPositionX() - secondObject->getWidth() / 2
-		&& firstObject->getPositionX() <= secondObject->getPositionX()) {
+	if (firstObject->getX() + firstObject->getWidth() / 2 > secondObject->getX() - secondObject->getWidth() / 2
+		&& firstObject->getX() <= secondObject->getX()) {
 		return true;
 	}
-	else if (firstObject->getPositionX() - firstObject->getWidth() / 2 < secondObject->getPositionX() + secondObject->getWidth() / 2
-		&& firstObject->getPositionX() >= secondObject->getPositionX()) {
+	else if (firstObject->getX() - firstObject->getWidth() / 2 < secondObject->getX() + secondObject->getWidth() / 2
+		&& firstObject->getX() >= secondObject->getX()) {
 		return true;
 	}
+
 	return false;
 }
 
 bool areAtTheSameHeight(WorldObject* firstObject, WorldObject* secondObject) {
-	if (firstObject->getPositionY() >= secondObject->getPositionY()
-		&& firstObject->getPositionY() - firstObject->getHeight() / 2 < secondObject->getPositionY() + secondObject->getHeight() / 2) {
+	if (firstObject->getY() >= secondObject->getY() && firstObject->getY() - firstObject->getHeight() / 2 
+			< secondObject->getY() + secondObject->getHeight() / 2) {
 		return true;
 	}
-	else if (firstObject->getPositionY() <= secondObject->getPositionY()
-		&& firstObject->getPositionY() + firstObject->getHeight() / 2 > secondObject->getPositionY() - secondObject->getHeight() / 2) {
+	else if (firstObject->getY() <= secondObject->getY() && firstObject->getY() + firstObject->getHeight() / 2 
+			> secondObject->getY() - secondObject->getHeight() / 2) {
 		return true;
 	}
+
 	return false;
 }
 
 bool isPlayerJumpingOnMonster(Player* player, NonControllableLivingObject* monster) {
-	return (monster->getPositionY() - player->getPositionY() > 25);
+	return (monster->getY() - player->getY() > 25);
 }
 
 void handleIfCollisionWithMonsterOccurs(Player* player, World& world) {
@@ -122,40 +122,37 @@ void handleIfCollisionWithMonsterOccurs(Player* player, World& world) {
 						world.changeShellMovementParameters(index, None);
 					}
 					else {
-						world.changeShellMovementParameters(index, player->getPositionX()
-							>= dynamic_cast<Shell*>(*it)->getPositionX() ? Left : Right);
+						world.changeShellMovementParameters(index, player->getX() >= dynamic_cast<Shell*>(*it)->getX() ? Left : Right);
 					}
 					break;
 				}
 
 				if (dynamic_cast<Turtle*>(*it)) {
-					world.addShell(new Position((*it)->getPositionX(), (*it)->getPositionY() + 6));
+					world.addShell(new Position((*it)->getX(), (*it)->getY() + 6));
 				}
 				else if (dynamic_cast<Creature*>(*it)) {
-					world.addCrushedCreature(new Position(dynamic_cast<Creature*>(*it)->getPositionX(),
-						dynamic_cast<Creature*>(*it)->getPositionY() + 8));
+					world.addCrushedCreature(new Position(dynamic_cast<Creature*>(*it)->getX(),
+						dynamic_cast<Creature*>(*it)->getY() + 8));
 				}
 				player->addPoints(100);
-				world.addAnimatedText(ONE_HUNDRED, new Position(player->getPositionX() - 22, player->getPositionY() - 22));
+				world.addAnimatedText(ONE_HUNDRED, new Position(player->getX() - 22, player->getY() - 22));
 				world.deleteMonster(index);
 			}
 			else {
 				if (dynamic_cast<Shell*>(*it) && !(dynamic_cast<Shell*>(*it)->isActive())) {
-					world.changeShellMovementParameters(index, player->getPositionX()
-						>= dynamic_cast<Shell*>(*it)->getPositionX() ? Left : Right);
-
+					world.changeShellMovementParameters(index, player->getX() >= dynamic_cast<Shell*>(*it)->getX() ? Left : Right);
 					break;
 				}
 
 				if (player->isImmortal()) {
 					if (dynamic_cast<Turtle*>(*it) || (dynamic_cast<Shell*>(*it) && dynamic_cast<Shell*>(*it)->isActive())) {
-						world.addDestroyedTurtle(new Position((*it)->getPositionX(), (*it)->getPositionY()));
+						world.addDestroyedTurtle(new Position((*it)->getX(), (*it)->getY()));
 					}
 					else if (dynamic_cast<Creature*>(*it)) {
-						world.addDestroyedCreature(new Position((*it)->getPositionX(), (*it)->getPositionY()));
+						world.addDestroyedCreature(new Position((*it)->getX(), (*it)->getY()));
 					}
 					player->addPoints(100);
-					world.addAnimatedText(ONE_HUNDRED, new Position(player->getPositionX() - 22, player->getPositionY() - 22));
+					world.addAnimatedText(ONE_HUNDRED, new Position(player->getX() - 22, player->getY() - 22));
 					world.deleteMonster(index);
 				}
 				else {
@@ -175,14 +172,14 @@ void handleIfShellCollideWithMonsters(World& world, Player* player) {
 			for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2, ++index) {
 				if (!(dynamic_cast<Shell*>(*it2)) && (areAtTheSameWidth(*it, *it2) && areAtTheSameHeight(*it, *it2))) {
 					if (dynamic_cast<Creature*>(*it2)) {
-						world.addDestroyedCreature(new Position((*it2)->getPositionX(), (*it2)->getPositionY()));
+						world.addDestroyedCreature(new Position((*it2)->getX(), (*it2)->getY()));
 					}
 					else if (dynamic_cast<Turtle*>(*it2) || dynamic_cast<Shell*>(*it2)) {
-						world.addDestroyedTurtle(new Position((*it2)->getPositionX(), (*it2)->getPositionY()));
+						world.addDestroyedTurtle(new Position((*it2)->getX(), (*it2)->getY()));
 					}
 					world.deleteMonster(index);
 					player->addPoints(200);
-					world.addAnimatedText(TWO_HUNDRED, new Position((*it)->getPositionX() - 20, (*it)->getPositionY() - 15));
+					world.addAnimatedText(TWO_HUNDRED, new Position((*it)->getX() - 20, (*it)->getY() - 15));
 				}
 			}
 		}
@@ -197,17 +194,18 @@ void handleIfFireBallCollideWithMonsters(World& world, Player* player) {
 		for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2, ++j) {
 			if (areAtTheSameWidth(&*it, *it2) && areAtTheSameHeight(&*it, *it2)) {
 				int alignment = (fireballs[i].getMoveDirection() == Left ? -5 : 5);
+
 				if (dynamic_cast<Creature*>(*it2)) {
-					world.addDestroyedCreature(new Position((*it2)->getPositionX() + alignment, (*it2)->getPositionY()));
+					world.addDestroyedCreature(new Position((*it2)->getX() + alignment, (*it2)->getY()));
 				}
 				else if (dynamic_cast<Turtle*>(*it2) || dynamic_cast<Shell*>(*it2)) {
-					world.addDestroyedTurtle(new Position((*it2)->getPositionX() + alignment, (*it2)->getPositionY()));
+					world.addDestroyedTurtle(new Position((*it2)->getX() + alignment, (*it2)->getY()));
 				}
 
 				world.deleteMonster(j);
 				player->addPoints(100);
-				world.addAnimatedText(ONE_HUNDRED, new Position(fireballs[i].getPositionX() - 22, fireballs[i].getPositionY() - 22));
-				world.addExplosion(new Position(it->getPositionX(), it->getPositionY()));
+				world.addAnimatedText(ONE_HUNDRED, new Position(fireballs[i].getX() - 22, fireballs[i].getY() - 22));
+				world.addExplosion(new Position(it->getX(), it->getY()));
 				world.deleteFireBall(i);
 			}
 		}
@@ -220,14 +218,14 @@ void handleIfMonsterCollideWithDestroyedBlock(World& world, Block block, Player*
 	for (auto it = monsters.begin(); it != monsters.end(); ++it, ++index) {
 		if (isMonsterStandingOnTheBlock(*it, block)) {
 			if (dynamic_cast<Creature*>(*it)) {
-				world.addDestroyedCreature(new Position((*it)->getPositionX(), (*it)->getPositionY()));
+				world.addDestroyedCreature(new Position((*it)->getX(), (*it)->getY()));
 			}
 			else if (dynamic_cast<Turtle*>(*it)) {
-				world.addDestroyedTurtle(new Position((*it)->getPositionX(), (*it)->getPositionY()));
+				world.addDestroyedTurtle(new Position((*it)->getX(), (*it)->getY()));
 			}
 			
 			player->addPoints(100);
-			world.addAnimatedText(ONE_HUNDRED, new Position((*it)->getPositionX(), (*it)->getPositionY() - 15));
+			world.addAnimatedText(ONE_HUNDRED, new Position((*it)->getX(), (*it)->getY() - 15));
 			world.deleteMonster(index);
 		}
 	}
@@ -258,7 +256,7 @@ void collectBonusIfPossible(Player* player, World& world) {
 				}
 				else {
 					player->incrementLives();
-					world.addAnimatedText(ONE_UP, new Position(player->getPositionX(), player->getPositionY() - 20));
+					world.addAnimatedText(ONE_UP, new Position(player->getX(), player->getY() - 20));
 					world.deleteLivingElement(index);
 					SoundController::play1upCollectedEffect();
 					break;
@@ -285,7 +283,7 @@ void collectBonusIfPossible(Player* player, World& world) {
 			}
 			world.deleteLivingElement(index);
 			player->addPoints(1000);
-			world.addAnimatedText(ONE_THOUSAND, new Position(player->getPositionX(), player->getPositionY() - 20));
+			world.addAnimatedText(ONE_THOUSAND, new Position(player->getX(), player->getY() - 20));
 		}
 	}
 }
@@ -295,13 +293,15 @@ int alignIfCollisionOccursDuringMovement(Direction direction, int distance, Worl
 	int alignment = 0;
 	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
 		if (areAtTheSameHeight(object, *it) && isCharacterHittingBlock(object, *it, direction, distance)) {
-			if ((object->getPositionX() + distance + object->getWidth() / 2) - (it->getPositionX() - it->getWidth() / 2) > alignment
+			if ((object->getX() + distance + object->getWidth() / 2) - (it->getX() - it->getWidth() / 2) > alignment
 				&& direction == Right) {
-				alignment = (object->getPositionX() + distance + object->getWidth() / 2) - (it->getPositionX() - it->getWidth() / 2);
+
+				alignment = (object->getX() + distance + object->getWidth() / 2) - (it->getX() - it->getWidth() / 2);
 			}
-			else if ((it->getPositionX() + it->getWidth() / 2) - (object->getPositionX() - distance - object->getWidth() / 2) > alignment
+			else if ((it->getX() + it->getWidth() / 2) - (object->getX() - distance - object->getWidth() / 2) > alignment
 				&& direction == Left) {
-				alignment = (it->getPositionX() + it->getWidth() / 2) - (object->getPositionX() - distance - object->getWidth() / 2);
+
+				alignment = (it->getX() + it->getWidth() / 2) - (object->getX() - distance - object->getWidth() / 2);
 			}
 		}
 	}
@@ -313,14 +313,16 @@ int alignIfCollisionOccursDuringVerticalMovement(Direction direction, int distan
 	int alignment = 0;
 	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
 		if (areAtTheSameWidth(object, *it) && isCharacterHittingBlock(object, *it, direction, distance)) {
-			if ((it->getPositionY() + it->getHeight() / 2) - (object->getPositionY() - distance - object->getHeight() / 2) > alignment
+			if ((it->getY() + it->getHeight() / 2) - (object->getY() - distance - object->getHeight() / 2) > alignment
 				&& direction == Up) {
+
 				world.setLastTouchedBlock(it - blocks.begin());
-				alignment = (it->getPositionY() + it->getHeight() / 2) - (object->getPositionY() - distance - object->getHeight() / 2);
+				alignment = (it->getY() + it->getHeight() / 2) - (object->getY() - distance - object->getHeight() / 2);
 			}
-			else if ((object->getPositionY() + distance + object->getHeight() / 2) - (it->getPositionY() - it->getHeight() / 2) > alignment
+			else if ((object->getY() + distance + object->getHeight() / 2) - (it->getY() - it->getHeight() / 2) > alignment
 				&& direction == Down && it->getModel() != BonusWithGreenMushroom) {
-				alignment = (object->getPositionY() + distance + object->getHeight() / 2) - (it->getPositionY() - it->getHeight() / 2);
+
+				alignment = (object->getY() + distance + object->getHeight() / 2) - (it->getY() - it->getHeight() / 2);
 			}
 		}
 	}

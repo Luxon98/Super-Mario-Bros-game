@@ -64,7 +64,7 @@ void Player::performGrowingAnimation(int difference) {
 		|| (difference >= 300 && difference <= 400 && this->lastDifference < 300)
 		|| (difference >= 700 && difference <= 800 && this->lastDifference < 700)) {
 
-		this->height = 48;
+		this->size->setHeight(48);
 		this->position->setY(this->position->getY() - 8);
 		this->lastDifference = difference;
 		this->currentState = Average;
@@ -72,7 +72,7 @@ void Player::performGrowingAnimation(int difference) {
 	else if ((difference > 200 && difference < 300 && this->lastDifference < 200)
 		|| (difference > 600 && difference < 700 && this->lastDifference < 600)) {
 
-		this->height = 32;
+		this->size->setHeight(32);
 		this->position->setY(this->position->getY() + 8);
 		this->lastDifference = difference;
 		this->currentState = Small;
@@ -80,14 +80,14 @@ void Player::performGrowingAnimation(int difference) {
 	else if ((difference > 400 && difference < 500 && this->lastDifference < 400)
 		|| (difference > 800 && difference <= 900 && this->lastDifference < 800)) {
 
-		this->height = 64;
+		this->size->setHeight(64);
 		this->position->setY(this->position->getY() - 8);
 		this->lastDifference = difference;
 		this->currentState = Tall;
 	}
 	else if (difference >= 500 && difference <= 600 && this->lastDifference < 500) {
 
-		this->height = 48;
+		this->size->setHeight(48);
 		this->position->setY(this->position->getY() + 8);
 		this->lastDifference = difference;
 		this->currentState = Average;
@@ -107,7 +107,7 @@ void Player::performShrinkingAnimation(int difference) {
 	}
 	else if (difference > 1000 && difference < 2000 && this->lastDifference < 1000) {
 
-		this->height = 32;
+		this->size->setHeight(32);
 		this->position->setY(this->position->getY() + 16);
 		this->lastDifference = difference;
 		this->currentState = InsensitiveSmall;
@@ -181,15 +181,15 @@ void Player::chooseModel(World& world) {
 }
 
 bool Player::isHittingCeiling(int distance) {
-	return (this->position->getY() - distance - this->height / 2 < 0);
+	return (this->position->getY() - distance - this->getHeight() / 2 < 0);
 }
 
 bool Player::isFallingIntoAbyss(int distance) {
-	return (this->position->getY() + distance + this->height / 2 > World::WORLD_HEIGHT);
+	return (this->position->getY() + distance + this->getHeight() / 2 > World::WORLD_HEIGHT);
 }
 
 bool Player::isGoingOutBoundariesOfWorld(Direction direction, int distance) {
-	if (direction == Left && this->cameraX - distance <= this->width / 2) {
+	if (direction == Left && this->cameraX - distance <= this->getWidth() / 2) {
 		return true;
 	}
 	else if (direction == Right && this->position->getX() + distance > World::WORLD_WIDTH) {
@@ -220,8 +220,7 @@ bool Player::isRejumping() {
 Player::Player() {}
 
 Player::Player(Position* position) {
-	this->width = 32;
-	this->height = 32;
+	size = new Size(32, 32);
 	this->position = position;
 	this->cameraX = position->getX();
 	this->points = 0;
@@ -473,10 +472,9 @@ void Player::performAdditionalJump(World& world, Screen* mainScreen) {
 }
 
 void Player::reborn() {
+	this->size->setSize(32, 32);
 	this->position->setXY(35, 400);
 	this->cameraX = 35;
-	this->width = 32;
-	this->height = 32;
 	this->model = 0;
 	this->changeModelCounter = 0;
 	this->orientationFlag = true;

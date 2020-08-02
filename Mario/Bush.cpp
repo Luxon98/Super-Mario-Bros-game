@@ -7,6 +7,8 @@ Bush::Bush() {}
 Bush::Bush(int type, Position* position) {
 	this->model = type;
 	this->position = position;
+
+	size = new Size(0, 0);
 }
 
 void Bush::loadBushImages(SDL_Surface* screen) {

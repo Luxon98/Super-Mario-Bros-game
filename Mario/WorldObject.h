@@ -3,17 +3,17 @@
 
 #include "SDL_Utility.h"
 #include "Position.h"
+#include "Size.h"
 
 
 class WorldObject {
 protected:
 	Position* position;
-	int width;
-	int height;
+	Size* size;
 
 public:
-	int getPositionX() const;
-	int getPositionY() const;
+	int getX() const;
+	int getY() const;
 	int getWidth() const;
 	int getHeight() const;
 	virtual void draw(SDL_Surface* screen, int beginningOfCamera) = 0;

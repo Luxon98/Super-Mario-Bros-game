@@ -16,8 +16,7 @@ void FireBall::computeModelIndex() {
 FireBall::FireBall() {}
 
 FireBall::FireBall(Position* position, Direction direction) {
-	this->width = 16;
-	this->height = 16;
+	size = new Size(16, 16);
 	this->position = position;
 	this->moveDirection = direction;
 	this->verticalDirection = Down;

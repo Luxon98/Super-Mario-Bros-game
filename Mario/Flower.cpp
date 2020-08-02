@@ -7,9 +7,8 @@ int Flower::typeOfImage = 2;
 Flower::Flower() {}
 
 Flower::Flower(Position* position) {
+	size = new Size(32, 32);
 	this->position = position;
-	this->width = 32;
-	this->height = 32;
 	this->growCounter = 96;
 }
 

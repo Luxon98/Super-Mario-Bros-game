@@ -6,6 +6,8 @@ Castle::Castle() {}
 
 Castle::Castle(Position* position) {
 	this->position = position;
+
+	size = new Size(0, 0);
 }
 
 void Castle::loadCastleImages(SDL_Surface* screen) {

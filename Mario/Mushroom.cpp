@@ -5,8 +5,7 @@ SDL_Surface* Mushroom::mushroomImages[2] = { nullptr };
 Mushroom::Mushroom() {}
 
 Mushroom::Mushroom(Position* position, bool colour) {
-	this->width = 32;
-	this->height = 32;
+	size = new Size(32, 32);
 	this->position = position;
 	this->stepsCounter = 0;
 	this->green = colour;
