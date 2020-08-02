@@ -2,12 +2,12 @@
 #define _WorldObject_H
 
 #include "SDL_Utility.h"
+#include "Position.h"
 
 
 class WorldObject {
 protected:
-	int positionX;
-	int positionY;
+	Position* position;
 	int width;
 	int height;
 

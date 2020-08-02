@@ -24,10 +24,9 @@ int Block::computeImageIndex() {
 
 Block::Block() {}
 
-Block::Block(BlockType type, int x, int y) {
+Block::Block(BlockType type, Position* position) {
 	this->model = type;
-	this->positionX = x;
-	this->positionY = y;
+	this->position = position;
 	if (type == Tube) {
 		this->width = 56;
 		this->height = 34;
@@ -57,8 +56,8 @@ void Block::setAvailableCoins(int coins) {
 	}
 }
 
-void Block::changePositionY(int y) {
-	this->positionY += y;
+void Block::addToPositionY(int y) {
+	this->position->setY(this->position->getY() + y);
 }
 
 void Block::changeBlockImage() {
@@ -83,6 +82,6 @@ void Block::loadBlockImages(SDL_Surface* screen) {
 void Block::draw(SDL_Surface* screen, int beginningOfCamera) {
 	SDL_Surface * blockImg = nullptr;
 	blockImg = blockImages[this->computeImageIndex()];
-	drawSurface(screen, blockImg, this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, blockImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 

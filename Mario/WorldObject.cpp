@@ -1,11 +1,11 @@
 #include "WorldObject.h"
 
 int WorldObject::getPositionX() const {
-	return this->positionX;
+	return this->position->getX();
 }
 
 int WorldObject::getPositionY() const {
-	return this->positionY;
+	return this->position->getY();
 }
 
 int WorldObject::getWidth() const {

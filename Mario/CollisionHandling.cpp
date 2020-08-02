@@ -129,14 +129,14 @@ void handleIfCollisionWithMonsterOccurs(Player* player, World& world) {
 				}
 
 				if (dynamic_cast<Turtle*>(*it)) {
-					world.addShell((*it)->getPositionX(), (*it)->getPositionY() + 6);
+					world.addShell(new Position((*it)->getPositionX(), (*it)->getPositionY() + 6));
 				}
 				else if (dynamic_cast<Creature*>(*it)) {
-					world.addCrushedCreature(dynamic_cast<Creature*>(*it)->getPositionX(),
-						dynamic_cast<Creature*>(*it)->getPositionY() + 8);
+					world.addCrushedCreature(new Position(dynamic_cast<Creature*>(*it)->getPositionX(),
+						dynamic_cast<Creature*>(*it)->getPositionY() + 8));
 				}
 				player->addPoints(100);
-				world.addAnimatedText(ONE_HUNDRED, player->getPositionX() - 22, player->getPositionY() - 22);
+				world.addAnimatedText(ONE_HUNDRED, new Position(player->getPositionX() - 22, player->getPositionY() - 22));
 				world.deleteMonster(index);
 			}
 			else {
@@ -149,13 +149,13 @@ void handleIfCollisionWithMonsterOccurs(Player* player, World& world) {
 
 				if (player->isImmortal()) {
 					if (dynamic_cast<Turtle*>(*it) || (dynamic_cast<Shell*>(*it) && dynamic_cast<Shell*>(*it)->isActive())) {
-						world.addDestroyedTurtle((*it)->getPositionX(), (*it)->getPositionY());
+						world.addDestroyedTurtle(new Position((*it)->getPositionX(), (*it)->getPositionY()));
 					}
 					else if (dynamic_cast<Creature*>(*it)) {
-						world.addDestroyedCreature((*it)->getPositionX(), (*it)->getPositionY());
+						world.addDestroyedCreature(new Position((*it)->getPositionX(), (*it)->getPositionY()));
 					}
 					player->addPoints(100);
-					world.addAnimatedText(ONE_HUNDRED, player->getPositionX() - 22, player->getPositionY() - 22);
+					world.addAnimatedText(ONE_HUNDRED, new Position(player->getPositionX() - 22, player->getPositionY() - 22));
 					world.deleteMonster(index);
 				}
 				else {
@@ -175,14 +175,14 @@ void handleIfShellCollideWithMonsters(World& world, Player* player) {
 			for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2, ++index) {
 				if (!(dynamic_cast<Shell*>(*it2)) && (areAtTheSameWidth(*it, *it2) && areAtTheSameHeight(*it, *it2))) {
 					if (dynamic_cast<Creature*>(*it2)) {
-						world.addDestroyedCreature((*it2)->getPositionX(), (*it2)->getPositionY());
+						world.addDestroyedCreature(new Position((*it2)->getPositionX(), (*it2)->getPositionY()));
 					}
 					else if (dynamic_cast<Turtle*>(*it2) || dynamic_cast<Shell*>(*it2)) {
-						world.addDestroyedTurtle((*it2)->getPositionX(), (*it2)->getPositionY());
+						world.addDestroyedTurtle(new Position((*it2)->getPositionX(), (*it2)->getPositionY()));
 					}
 					world.deleteMonster(index);
 					player->addPoints(200);
-					world.addAnimatedText(TWO_HUNDRED, (*it)->getPositionX() - 20, (*it)->getPositionY() - 15);
+					world.addAnimatedText(TWO_HUNDRED, new Position((*it)->getPositionX() - 20, (*it)->getPositionY() - 15));
 				}
 			}
 		}
@@ -198,16 +198,16 @@ void handleIfFireBallCollideWithMonsters(World& world, Player* player) {
 			if (areAtTheSameWidth(&*it, *it2) && areAtTheSameHeight(&*it, *it2)) {
 				int alignment = (fireballs[i].getMoveDirection() == Left ? -5 : 5);
 				if (dynamic_cast<Creature*>(*it2)) {
-					world.addDestroyedCreature((*it2)->getPositionX() + alignment, (*it2)->getPositionY());
+					world.addDestroyedCreature(new Position((*it2)->getPositionX() + alignment, (*it2)->getPositionY()));
 				}
 				else if (dynamic_cast<Turtle*>(*it2) || dynamic_cast<Shell*>(*it2)) {
-					world.addDestroyedTurtle((*it2)->getPositionX() + alignment, (*it2)->getPositionY());
+					world.addDestroyedTurtle(new Position((*it2)->getPositionX() + alignment, (*it2)->getPositionY()));
 				}
 
 				world.deleteMonster(j);
 				player->addPoints(100);
-				world.addAnimatedText(ONE_HUNDRED, fireballs[i].getPositionX() - 22, fireballs[i].getPositionY() - 22);
-				world.addExplosion(it->getPositionX(), it->getPositionY());
+				world.addAnimatedText(ONE_HUNDRED, new Position(fireballs[i].getPositionX() - 22, fireballs[i].getPositionY() - 22));
+				world.addExplosion(new Position(it->getPositionX(), it->getPositionY()));
 				world.deleteFireBall(i);
 			}
 		}
@@ -220,14 +220,14 @@ void handleIfMonsterCollideWithDestroyedBlock(World& world, Block block, Player*
 	for (auto it = monsters.begin(); it != monsters.end(); ++it, ++index) {
 		if (isMonsterStandingOnTheBlock(*it, block)) {
 			if (dynamic_cast<Creature*>(*it)) {
-				world.addDestroyedCreature((*it)->getPositionX(), (*it)->getPositionY());
+				world.addDestroyedCreature(new Position((*it)->getPositionX(), (*it)->getPositionY()));
 			}
 			else if (dynamic_cast<Turtle*>(*it)) {
-				world.addDestroyedTurtle((*it)->getPositionX(), (*it)->getPositionY());
+				world.addDestroyedTurtle(new Position((*it)->getPositionX(), (*it)->getPositionY()));
 			}
 			
 			player->addPoints(100);
-			world.addAnimatedText(ONE_HUNDRED, (*it)->getPositionX(), (*it)->getPositionY() - 15);
+			world.addAnimatedText(ONE_HUNDRED, new Position((*it)->getPositionX(), (*it)->getPositionY() - 15));
 			world.deleteMonster(index);
 		}
 	}
@@ -258,7 +258,7 @@ void collectBonusIfPossible(Player* player, World& world) {
 				}
 				else {
 					player->incrementLives();
-					world.addAnimatedText(ONE_UP, player->getPositionX(), player->getPositionY() - 20);
+					world.addAnimatedText(ONE_UP, new Position(player->getPositionX(), player->getPositionY() - 20));
 					world.deleteLivingElement(index);
 					SoundController::play1upCollectedEffect();
 					break;
@@ -285,7 +285,7 @@ void collectBonusIfPossible(Player* player, World& world) {
 			}
 			world.deleteLivingElement(index);
 			player->addPoints(1000);
-			world.addAnimatedText(ONE_THOUSAND, player->getPositionX(), player->getPositionY() - 20);
+			world.addAnimatedText(ONE_THOUSAND, new Position(player->getPositionX(), player->getPositionY() - 20));
 		}
 	}
 }

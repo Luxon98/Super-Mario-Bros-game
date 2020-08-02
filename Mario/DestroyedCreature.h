@@ -12,7 +12,7 @@ private:
 
 public:
 	DestroyedCreature();
-	DestroyedCreature(int x, int y);
+	DestroyedCreature(Position* position);
 	void loadDestroyedCreatureImage(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 	bool shouldBeRemoved() override;

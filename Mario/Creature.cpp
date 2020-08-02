@@ -11,11 +11,10 @@ void Creature::chooseModel() {
 
 Creature::Creature() {}
 
-Creature::Creature(int x, int y) {
+Creature::Creature(Position* position) {
 	this->width = 32;
 	this->height = 32;
-	this->positionX = x;
-	this->positionY = y;
+	this->position = position;
 	this->model = 1;
 	this->stepsCounter = 0;
 	this->changeModelCounter = 0;
@@ -34,21 +33,26 @@ void Creature::loadCreatureImages(SDL_Surface* screen) {
 void Creature::draw(SDL_Surface* screen, int beginningOfCamera) {
 	SDL_Surface* creatureImg = nullptr;
 	creatureImg = creatureImages[this->model - 1];
-	drawSurface(screen, creatureImg, this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, creatureImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
 void Creature::move(Direction direction, int distance, World& world, Screen* mainScreen) {
 	if (this->moveDirection != None && this->stepsCounter % 3 == 0) {
 		if (isCharacterStandingOnTheBlock(this, world)) {
 			int alignment = alignIfCollisionOccursDuringMovement(direction, distance, this, world);
-			this->positionX += (direction == Right ? (distance - alignment) : -1 * (distance - alignment));
+			int realDistance = direction == Right ? (distance - alignment) : (-1) * (distance - alignment);
+			this->position->setX(this->position->getX() + realDistance);
+
 			if (alignment > 0) {
 				this->moveDirection = (this->moveDirection == Right ? Left : Right);
 			}
 		}
 		else {
-			this->positionY += (2 * distance - alignIfCollisionOccursDuringVerticalMovement(Down, 2 * distance, this, world));
-			this->positionX += (direction == Right ? 1 : -1) * (1 - alignIfCollisionOccursDuringMovement(direction, distance, this, world));
+			int realVerticalDistance = (2 * distance) - alignIfCollisionOccursDuringVerticalMovement(Down, 2 * distance, this, world);
+			this->position->setY(this->position->getY() + realVerticalDistance);
+
+			int realDistance = (direction == Right ? 1 : -1) * (1 - alignIfCollisionOccursDuringMovement(direction, distance, this, world));
+			this->position->setX(this->position->getX() + realDistance);
 		}
 
 		this->chooseModel();

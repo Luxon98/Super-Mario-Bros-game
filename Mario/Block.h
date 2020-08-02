@@ -31,10 +31,10 @@ private:
 
 public:
 	Block();
-	Block(BlockType type, int x, int y);
+	Block(BlockType type, Position* position);
 	int getAvailableCoins() const;
 	void setModel(BlockType type);
-	void changePositionY(int y);
+	void addToPositionY(int y);
 	void setAvailableCoins(int coins);
 	static void changeBlockImage();
 	void loadBlockImages(SDL_Surface* screen);

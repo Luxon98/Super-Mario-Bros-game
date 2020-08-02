@@ -4,10 +4,9 @@ SDL_Surface* AnimatedCoin::animatedCoinImages[7] = { nullptr };
 
 AnimatedCoin::AnimatedCoin() {}
 
-AnimatedCoin::AnimatedCoin(int x, int y) {
+AnimatedCoin::AnimatedCoin(Position* position) {
 	this->creationTime = std::chrono::steady_clock::now();
-	this->positionX = x;
-	this->positionY = y;
+	this->position = position;
 	this->slideCounter = 0;
 	this->auxiliaryCounter = 0;
 	this->imageIndex = 0;
@@ -24,7 +23,7 @@ void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* screen) {
 
 void AnimatedCoin::draw(SDL_Surface* screen, int beginningOfCamera) {
 	SDL_Surface* animatedCoinImg = this->animatedCoinImages[this->imageIndex];
-	drawSurface(screen, animatedCoinImg, this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, animatedCoinImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
 bool AnimatedCoin::shouldBeRemoved() {
@@ -39,22 +38,22 @@ void AnimatedCoin::slide() {
 			this->imageIndex = 0;
 		}
 		else if (this->slideCounter <= 13) {
-			this->positionY -= 2;
+			this->position->setY(this->position->getY() - 2);
 			this->imageIndex = 1;
 		}
 		else if (this->slideCounter <= 23) {
-			--this->positionY;
+			this->position->setY(this->position->getY() - 1);
 			this->imageIndex = 2;
 		}
 		else if (this->slideCounter <= 25) {
 			this->imageIndex = 3;
 		}
 		else if (this->slideCounter <= 35) {
-			++this->positionY;
+			this->position->setY(this->position->getY() + 1);
 			this->imageIndex = 4;
 		}
 		else if (this->slideCounter <= 45) {
-			this->positionY += 2;
+			this->position->setY(this->position->getY() + 2);
 			this->imageIndex = 5;
 		}
 		else if (this->slideCounter <= 55) {

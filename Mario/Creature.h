@@ -14,7 +14,7 @@ private:
 
 public:
 	Creature();
-	Creature(int x, int y);
+	Creature(Position* position);
 	void setMoveDirection(Direction direction);
 	void loadCreatureImages(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;

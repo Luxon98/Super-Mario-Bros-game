@@ -14,7 +14,7 @@ private:
 
 public:
 	Turtle();
-	Turtle(int x, int y);
+	Turtle(Position* position);
 	void setMoveDirection(Direction direction);
 	void loadTurtleImages(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;

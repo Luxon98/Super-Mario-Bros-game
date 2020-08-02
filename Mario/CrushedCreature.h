@@ -11,7 +11,7 @@ private:
 
 public:
 	CrushedCreature(); 
-	CrushedCreature(int x, int y);
+	CrushedCreature(Position* position);
 	void loadCrushedCreatureImage(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 	bool shouldBeRemoved() override;

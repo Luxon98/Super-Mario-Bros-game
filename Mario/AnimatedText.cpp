@@ -4,10 +4,9 @@ SDL_Surface* AnimatedText::animatedTextImages[5] = { nullptr };
 
 AnimatedText::AnimatedText() {}
 
-AnimatedText::AnimatedText(TextType type, int x, int y) {
+AnimatedText::AnimatedText(TextType type, Position* position) {
 	this->type = type;
-	this->positionX = x;
-	this->positionY = y;
+	this->position = position;
 	this->auxiliaryCounter = 0;
 }
 
@@ -21,7 +20,7 @@ void AnimatedText::loadAnimatedTextImages(SDL_Surface* screen) {
 
 void AnimatedText::draw(SDL_Surface* screen, int beginningOfCamera) {
 	SDL_Surface* animatedTextImg = this->animatedTextImages[this->type - 1];
-	drawSurface(screen, animatedTextImg, this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, animatedTextImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
 bool AnimatedText::shouldBeRemoved() {
@@ -32,7 +31,7 @@ bool AnimatedText::shouldBeRemoved() {
 void AnimatedText::slide() {
 	++this->auxiliaryCounter;
 	if (this->auxiliaryCounter % 3 == 0) {
-		--this->positionY;
+		this->position->setY(this->position->getY() - 1);
 	}
 }
 

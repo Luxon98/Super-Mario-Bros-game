@@ -97,12 +97,12 @@ public:
 	void deleteLivingElement(int index);
 	void deleteMonster(int index, bool sound = true);
 	void deleteFireBall(int index);
-	void addShell(int x, int y);
-	void addCrushedCreature(int x, int y);
-	void addDestroyedCreature(int x, int y);
-	void addDestroyedTurtle(int x, int y);
-	void addExplosion(int x, int y);
-	void addAnimatedText(TextType type, int x, int y);
+	void addShell(Position* position);
+	void addCrushedCreature(Position* position);
+	void addDestroyedCreature(Position* position);
+	void addDestroyedTurtle(Position* position);
+	void addExplosion(Position* position);
+	void addAnimatedText(TextType type, Position* position);
 	void performActions();
 	void draw(SDL_Surface* screen, int beginningOfScreen, bool playerFlag = true);
 };

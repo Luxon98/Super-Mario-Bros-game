@@ -11,7 +11,7 @@ private:
 
 public:
 	Explosion();
-	Explosion(int x, int y);
+	Explosion(Position* position);
 	void loadExplosionImage(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 	bool shouldBeRemoved() override;

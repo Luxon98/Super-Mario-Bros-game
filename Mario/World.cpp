@@ -26,8 +26,8 @@ void World::deleteTemporaryElementsIfTimePassed() {
 	for (unsigned int i = 0; i < this->temporaryElements.size(); ++i) {
 		if (this->temporaryElements[i]->shouldBeRemoved()) {
 			if (dynamic_cast<AnimatedCoin*>(this->temporaryElements[i])) {
-				this->addAnimatedText(TWO_HUNDRED, this->temporaryElements[i]->getPositionX(),
-					this->temporaryElements[i]->getPositionY());
+				this->addAnimatedText(TWO_HUNDRED, new Position(this->temporaryElements[i]->getPositionX(), 
+					this->temporaryElements[i]->getPositionY()));
 			}
 			this->temporaryElements.erase(this->temporaryElements.begin() + i);
 		}
@@ -55,7 +55,8 @@ void World::performMonstersActions() {
 		if (dynamic_cast<Shell*>(this->monsters[i]) && !(dynamic_cast<Shell*>(this->monsters[i])->isActive())
 			&& dynamic_cast<Shell*>(this->monsters[i])->shouldTurnIntoTurtle()) {
 
-			this->monsters.push_back(new Turtle(this->monsters[i]->getPositionX(), this->monsters[i]->getPositionY()));
+			this->monsters.push_back(new Turtle(new Position(this->monsters[i]->getPositionX(), 
+				this->monsters[i]->getPositionY())));
 			this->monsters.erase(this->monsters.begin() + i);
 		}
 
@@ -71,8 +72,8 @@ void World::performFireBallsActions() {
 
 		if (this->fireballs[i].shouldBeRemoved()) {
 			int shift = (this->fireballs[i].getMoveDirection() == Left ? -5 : 5);
-			this->temporaryElements.push_back(new Explosion(this->fireballs[i].getPositionX() + shift,
-				this->fireballs[i].getPositionY()));
+			this->temporaryElements.push_back(new Explosion(new Position(this->fireballs[i].getPositionX() + shift,
+				this->fireballs[i].getPositionY())));
 
 			this->fireballs.erase(this->fireballs.begin() + i);
 		}
@@ -83,8 +84,8 @@ void World::performFireBallsActions() {
 
 	if (this->fireballStatus && this->player->isArmed()) {
 		SoundController::playFireballPoppedEffect();
-		this->fireballs.push_back(FireBall(this->player->getPositionX() + 5, this->player->getPositionY() - 15,
-			this->player->getMovementDirection()));
+		this->fireballs.push_back(FireBall(new Position(this->player->getPositionX() + 5,
+			this->player->getPositionY() - 15), this->player->getMovementDirection()));
 
 		this->fireballStatus = false;
 	}
@@ -123,7 +124,7 @@ void World::slideBlock() {
 
 		if (this->slidingCounter % 3 == 0) {
 			int height = (this->slidingCounter <= 60 ? 1 : -1);
-			this->blocks[lastTouchedBlockIndex].changePositionY(height);
+			this->blocks[lastTouchedBlockIndex].addToPositionY(height);
 
 			if (this->slidingCounter > 60 && this->blocks[lastTouchedBlockIndex].getModel() == BonusWithGreenMushroom) {
 				this->createGreenMushroom();
@@ -146,8 +147,8 @@ void World::subtractCoinFromBlockIfPossible() {
 		this->blocks[this->lastTouchedBlockIndex].setAvailableCoins(this->blocks[this->lastTouchedBlockIndex].getAvailableCoins() - 1);
 		this->player->incrementCoins();
 		this->player->addPoints(200);
-		this->temporaryElements.push_back(new AnimatedCoin(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-			this->blocks[this->lastTouchedBlockIndex].getPositionY() - 56));
+		this->temporaryElements.push_back(new AnimatedCoin(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
+			this->blocks[this->lastTouchedBlockIndex].getPositionY() - 56)));
 
 		if (!this->blocks[this->lastTouchedBlockIndex].getAvailableCoins()) {
 			this->blocks[this->lastTouchedBlockIndex].setModel(Empty);
@@ -156,33 +157,33 @@ void World::subtractCoinFromBlockIfPossible() {
 	else if (this->blocks[this->lastTouchedBlockIndex].getModel() == BonusWithCoin) {
 		this->player->incrementCoins();
 		this->player->addPoints(200);
-		this->temporaryElements.push_back(new AnimatedCoin(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-			this->blocks[this->lastTouchedBlockIndex].getPositionY() - 50));
+		this->temporaryElements.push_back(new AnimatedCoin(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
+			this->blocks[this->lastTouchedBlockIndex].getPositionY() - 50)));
 		this->blocks[this->lastTouchedBlockIndex].setModel(Empty);
 	}
 }
 
 void World::createNewBonusIfPossible() {
 	if (this->blocks[this->lastTouchedBlockIndex].getModel() == BonusWithRedMushroom) {
-		this->bonusElements.push_back(new Mushroom(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-			this->blocks[this->lastTouchedBlockIndex].getPositionY(), false));
+		this->bonusElements.push_back(new Mushroom(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
+			this->blocks[this->lastTouchedBlockIndex].getPositionY()), false));
 		this->blocks[this->lastTouchedBlockIndex].setModel(Empty);
 	}
 	else if (this->blocks[this->lastTouchedBlockIndex].getModel() == BonusWithFlower) {
-		this->bonusElements.push_back(new Flower(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-			this->blocks[this->lastTouchedBlockIndex].getPositionY()));
+		this->bonusElements.push_back(new Flower(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
+			this->blocks[this->lastTouchedBlockIndex].getPositionY())));
 		this->blocks[this->lastTouchedBlockIndex].setModel(Empty);
 	}
 	else if (this->blocks[this->lastTouchedBlockIndex].getModel() == BonusWithStar) {
-		this->bonusElements.push_back(new Star(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-			this->blocks[this->lastTouchedBlockIndex].getPositionY()));
+		this->bonusElements.push_back(new Star(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
+			this->blocks[this->lastTouchedBlockIndex].getPositionY())));
 		this->blocks[this->lastTouchedBlockIndex].setModel(Empty);
 	}
 }
 
 void World::createGreenMushroom() {
-	this->bonusElements.push_back(new Mushroom(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
-		this->blocks[this->lastTouchedBlockIndex].getPositionY(), true));
+	this->bonusElements.push_back(new Mushroom(new Position(this->blocks[this->lastTouchedBlockIndex].getPositionX(),
+		this->blocks[this->lastTouchedBlockIndex].getPositionY()), true));
 	this->blocks[lastTouchedBlockIndex].setModel(Empty);
 }
 
@@ -304,28 +305,28 @@ void World::deleteFireBall(int index) {
 	this->fireballs.erase(this->fireballs.begin() + index);
 }
 
-void World::addShell(int x, int y) {
-	this->monsters.push_back(new Shell(x, y));
+void World::addShell(Position* position) {
+	this->monsters.push_back(new Shell(position));
 }
 
-void World::addCrushedCreature(int x, int y) {
-	this->temporaryElements.push_back(new CrushedCreature(x, y));
+void World::addCrushedCreature(Position* position) {
+	this->temporaryElements.push_back(new CrushedCreature(position));
 }
 
-void World::addDestroyedCreature(int x, int y) {
-	this->temporaryElements.push_back(new DestroyedCreature(x, y));
+void World::addDestroyedCreature(Position* position) {
+	this->temporaryElements.push_back(new DestroyedCreature(position));
 }
 
-void World::addDestroyedTurtle(int x, int y) {
-	this->temporaryElements.push_back(new DestroyedTurtle(x, y));
+void World::addDestroyedTurtle(Position* position) {
+	this->temporaryElements.push_back(new DestroyedTurtle(position));
 }
 
-void World::addExplosion(int x, int y) {
-	this->temporaryElements.push_back(new Explosion(x, y));
+void World::addExplosion(Position* position) {
+	this->temporaryElements.push_back(new Explosion(position));
 }
 
-void World::addAnimatedText(TextType type, int x, int y) {
-	this->temporaryElements.push_back(new AnimatedText(type, x, y));
+void World::addAnimatedText(TextType type, Position* position) {
+	this->temporaryElements.push_back(new AnimatedText(type, position));
 }
 
 void World::performActions() {

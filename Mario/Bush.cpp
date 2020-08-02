@@ -4,10 +4,9 @@ SDL_Surface* Bush::bushImages[5] = { nullptr };
 
 Bush::Bush() {}
 
-Bush::Bush(int type, int x, int y) {
+Bush::Bush(int type, Position* position) {
 	this->model = type;
-	this->positionX = x;
-	this->positionY = y;
+	this->position = position;
 }
 
 void Bush::loadBushImages(SDL_Surface* screen) {
@@ -22,6 +21,6 @@ void Bush::loadBushImages(SDL_Surface* screen) {
 void Bush::draw(SDL_Surface* screen, int beginningOfCamera) {
 	SDL_Surface* bushImg = nullptr;
 	bushImg = bushImages[model - 1];
-	drawSurface(screen, bushImg, this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, bushImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 

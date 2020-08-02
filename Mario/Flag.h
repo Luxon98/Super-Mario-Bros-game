@@ -14,7 +14,7 @@ private:
 
 public:
 	Flag();
-	Flag(int x, int y);
+	Flag(Position* position);
 	bool isActive() const;
 	bool isDown() const;
 	void setActiveState();

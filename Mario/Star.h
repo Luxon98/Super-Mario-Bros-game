@@ -15,7 +15,7 @@ private:
 
 public:
 	Star();
-	Star(int x, int y);
+	Star(Position* position);
 	void loadStarImages(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;

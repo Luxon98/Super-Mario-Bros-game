@@ -6,9 +6,8 @@ int Flower::typeOfImage = 2;
 
 Flower::Flower() {}
 
-Flower::Flower(int x, int y) {
-	this->positionX = x;
-	this->positionY = y;
+Flower::Flower(Position* position) {
+	this->position = position;
 	this->width = 32;
 	this->height = 32;
 	this->growCounter = 96;
@@ -26,7 +25,7 @@ void Flower::loadFlowerImages(SDL_Surface* screen) {
 void Flower::draw(SDL_Surface* screen, int beginningOfCamera) {
 	SDL_Surface* flowerImg = nullptr;
 	flowerImg = flowerImages[typeOfImage - 1];
-	drawSurface(screen, flowerImg, this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, flowerImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
 void Flower::move(Direction direction, int distance, World& world, Screen* mainScreen) {

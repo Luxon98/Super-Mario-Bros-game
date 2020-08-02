@@ -15,7 +15,7 @@ private:
 	
 public:
 	Shell();
-	Shell(int x, int y);
+	Shell(Position* position);
 	bool isActive();
 	bool shouldTurnIntoTurtle();
 	void setMovementDirectionAndActiveState(Direction direction);

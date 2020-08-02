@@ -13,7 +13,7 @@ private:
 public:
 	static int typeOfImage;
 	Flower();
-	Flower(int x, int y);
+	Flower(Position* position);
 	static void changeFlowerImage();
 	void loadFlowerImages(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;

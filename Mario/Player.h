@@ -75,7 +75,7 @@ private:
 
 public:
 	Player();
-	Player(int x, int y);
+	Player(Position* position);
 	int getCameraX() const;
 	int getPoints() const;
 	int getCoins() const;

@@ -12,7 +12,7 @@ private:
 
 public:
 	DestroyedTurtle();
-	DestroyedTurtle(int x, int y);
+	DestroyedTurtle(Position* position);
 	void loadDestroyedTurtleImage(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 	bool shouldBeRemoved() override;

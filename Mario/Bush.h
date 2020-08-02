@@ -12,7 +12,7 @@ private:
 
 public:
 	Bush();
-	Bush(int type, int x, int y);
+	Bush(int type, Position* position);
 	void loadBushImages(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 };

@@ -15,11 +15,10 @@ void FireBall::computeModelIndex() {
 
 FireBall::FireBall() {}
 
-FireBall::FireBall(int x, int y, Direction direction) {
+FireBall::FireBall(Position* position, Direction direction) {
 	this->width = 16;
 	this->height = 16;
-	this->positionX = x;
-	this->positionY = y;
+	this->position = position;
 	this->moveDirection = direction;
 	this->verticalDirection = Down;
 	this->changeModelCounter = 0;
@@ -44,13 +43,14 @@ void FireBall::loadFireBallImages(SDL_Surface* screen) {
 void FireBall::draw(SDL_Surface* screen, int beginningOfCamera) {
 	SDL_Surface* fireballImg = nullptr;
 	fireballImg = fireBallImages[this->modelIndex];
-	drawSurface(screen, fireballImg, this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, fireballImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
 void FireBall::move(Direction direction, int distance, World& world, Screen* mainScreen) {
 	if (!this->stop) {
 		int alignment = alignIfCollisionOccursDuringMovement(this->moveDirection, 2 * distance, this, world);
-		this->positionX += (this->moveDirection == Right ? 1 : -1) * (2 * distance - alignment);
+		int realDistance = (this->moveDirection == Right ? 1 : -1) * (2 * distance - alignment);
+		this->position->setX(this->position->getX() + realDistance);
 
 		if (alignment > 0) {
 			this->stop = true;
@@ -58,7 +58,8 @@ void FireBall::move(Direction direction, int distance, World& world, Screen* mai
 		}
 
 		alignment = alignIfCollisionOccursDuringVerticalMovement(this->verticalDirection, distance, this, world);
-		this->positionY += (this->verticalDirection == Down ? 1 : -1) * (distance - alignment);
+		int realVerticalDistance = (this->verticalDirection == Down ? 1 : -1) * (distance - alignment);
+		this->position->setY(this->position->getY() + realVerticalDistance);
 
 		this->computeModelIndex();
 

@@ -12,7 +12,7 @@ private:
 public:
 	static int typeOfImage;
 	Coin();
-	Coin(int x, int y);
+	Coin(Position* position);
 	void loadCoinImages(SDL_Surface* screen);
 	static void changeCoinImage();
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;

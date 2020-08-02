@@ -15,7 +15,7 @@ private:
 
 public:
 	AnimatedCoin();
-	AnimatedCoin(int x, int y);
+	AnimatedCoin(Position* position);
 	void loadAnimatedCoinImages(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 	bool shouldBeRemoved() override;

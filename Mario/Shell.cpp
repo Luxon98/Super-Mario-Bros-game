@@ -4,11 +4,10 @@ SDL_Surface* Shell::shellImg = nullptr;
 
 Shell::Shell() {}
 
-Shell::Shell(int x, int y) {
+Shell::Shell(Position* position) {
 	this->width = 32;
 	this->height = 28;
-	this->positionX = x;
-	this->positionY = y;
+	this->position = position;
 	this->stepsCounter = 0;
 	this->moveDirection = None;
 	this->creationTime = std::chrono::steady_clock::now();
@@ -39,7 +38,7 @@ void Shell::loadShellImage(SDL_Surface* screen) {
 }
 
 void Shell::draw(SDL_Surface* screen, int beginningOfCamera) {
-	drawSurface(screen, this->shellImg, this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, this->shellImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
 void Shell::move(Direction direction, int distance, World& world, Screen* mainScreen) {
@@ -47,15 +46,20 @@ void Shell::move(Direction direction, int distance, World& world, Screen* mainSc
 		if (isCharacterStandingOnTheBlock(this, world)) {
 			for (int i = 0; i < 3; ++i) {
 				int alignment = alignIfCollisionOccursDuringMovement(direction, distance, this, world);
-				this->positionX += (direction == Right ? (distance - alignment) : -1 * (distance - alignment));
+				int realDistance = direction == Right ? (distance - alignment) : (-1) * (distance - alignment);
+				this->position->setX(this->position->getX() + realDistance);
+				
 				if (alignment > 0) {
 					this->moveDirection = (this->moveDirection == Right ? Left : Right);
 				}
 			}
 		}
 		else {
-			this->positionY += (2 * distance - alignIfCollisionOccursDuringVerticalMovement(Down, 2 * distance, this, world));
-			this->positionX += (direction == Right ? 1 : -1) * (1 - alignIfCollisionOccursDuringMovement(direction, distance, this, world));
+			int realVerticalDistance = (2 * distance - alignIfCollisionOccursDuringVerticalMovement(Down, 2 * distance, this, world));
+			this->position->setY(this->position->getY() + realVerticalDistance);
+			
+			int realDistance = (direction == Right ? 1 : -1) * (1 - alignIfCollisionOccursDuringMovement(direction, distance, this, world));
+			this->position->setX(this->position->getX() + realDistance);
 		}
 	}
 	++this->stepsCounter;

@@ -4,9 +4,8 @@ SDL_Surface* Castle::castleImage = nullptr;
 
 Castle::Castle() {}
 
-Castle::Castle(int x, int y) {
-	this->positionX = x;
-	this->positionY = y;
+Castle::Castle(Position* position) {
+	this->position = position;
 }
 
 void Castle::loadCastleImages(SDL_Surface* screen) {
@@ -14,6 +13,6 @@ void Castle::loadCastleImages(SDL_Surface* screen) {
 }
 
 void Castle::draw(SDL_Surface* screen, int beginningOfCamera) {
-	drawSurface(screen, this->castleImage, this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, this->castleImage, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 

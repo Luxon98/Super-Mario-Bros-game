@@ -4,11 +4,10 @@ SDL_Surface* Flag::flagImages[2] = { nullptr };
 
 Flag::Flag() {}
 
-Flag::Flag(int x, int y) {
-	this->positionX = x;
-	this->positionY = y;
+Flag::Flag(Position* position) {
+	this->position = position;
 	this->active = false;
-	this->stickPositionY = y + 117;
+	this->stickPositionY = position->getY() + 117;
 	this->stepsCounter = 0;
 }
 
@@ -30,15 +29,15 @@ void Flag::loadFlagImage(SDL_Surface* screen) {
 }
 
 void Flag::draw(SDL_Surface* screen, int beginningOfCamera) {
-	drawSurface(screen, this->flagImages[1], this->positionX + 17 - beginningOfCamera, this->stickPositionY);
-	drawSurface(screen, this->flagImages[0], this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, this->flagImages[1], this->position->getX() + 17 - beginningOfCamera, this->stickPositionY);
+	drawSurface(screen, this->flagImages[0], this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
 void Flag::changePosition() {
 	if (this->active && this->stepsCounter < 506) {
 		++this->stepsCounter;
 		if (this->stepsCounter & 1) {
-			++this->positionY;
+			this->position->setY(this->position->getY() + 1);
 		}
 	}
 	else if (this->stepsCounter >= 506) {

@@ -13,7 +13,7 @@ private:
 
 public:
 	Mushroom();
-	Mushroom(int x, int y, bool colour);
+	Mushroom(Position* position, bool colour);
 	bool isGreen();
 	void loadMushroomImages(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;

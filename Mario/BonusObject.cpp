@@ -1,8 +1,9 @@
 #include "BonusObject.h"
 
 void BonusObject::grow() {
-	--this->growCounter;
+	this->growCounter--;
+
 	if (this->growCounter % 3 == 0) {
-		--this->positionY;
+		this->position->setY(this->position->getY() - 1);
 	}
 }

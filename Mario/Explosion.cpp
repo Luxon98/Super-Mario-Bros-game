@@ -4,9 +4,8 @@ SDL_Surface* Explosion::explosionImage = nullptr;
 
 Explosion::Explosion() {}
 
-Explosion::Explosion(int x, int y) {
-	this->positionX = x;
-	this->positionY = y;
+Explosion::Explosion(Position* position) {
+	this->position = position;
 	this->creationTime = std::chrono::steady_clock::now();
 }
 
@@ -15,7 +14,7 @@ void Explosion::loadExplosionImage(SDL_Surface* screen) {
 }
 
 void Explosion::draw(SDL_Surface* screen, int beginningOfCamera) {
-	drawSurface(screen, this->explosionImage, this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, this->explosionImage, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
 bool Explosion::shouldBeRemoved() {

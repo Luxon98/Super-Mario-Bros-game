@@ -6,9 +6,8 @@ int Coin::typeOfImage = 2;
 
 Coin::Coin() {}
 
-Coin::Coin(int x, int y) {
-	this->positionX = x;
-	this->positionY = y;
+Coin::Coin(Position* position) {
+	this->position = position;
 	this->width = 11;
 	this->height = 17;
 }
@@ -25,6 +24,6 @@ void Coin::changeCoinImage() {
 void Coin::draw(SDL_Surface* screen, int beginningOfCamera) {
 	SDL_Surface* coinImg = nullptr;
 	coinImg = coinImages[typeOfImage - 1];
-	drawSurface(screen, coinImg, this->positionX - beginningOfCamera, this->positionY);
+	drawSurface(screen, coinImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
