@@ -6,7 +6,8 @@
 #include "World.h"
 
 
-class Mushroom : public BonusObject {
+class Mushroom : public BonusObject 
+{
 private:
 	static SDL_Surface* mushroomImages[2];
 	bool green;
@@ -20,4 +21,4 @@ public:
 	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
 };
 
-#endif
+#endif //_Mushroom_H

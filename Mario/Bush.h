@@ -6,7 +6,8 @@
 #include "InanimateObject.h"
 
 
-class Bush : public InanimateObject {
+class Bush : public InanimateObject
+{
 private:
 	static SDL_Surface* bushImages[5];
 
@@ -17,5 +18,5 @@ public:
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 };
 
-#endif
+#endif //_Bush_H
 

@@ -2,7 +2,8 @@
 #define _Size_H
 
 
-class Size {
+class Size 
+{
 private:
 	int width;
 	int height;
@@ -16,5 +17,5 @@ public:
 	void setSize(int width, int height);
 };
 
-#endif
+#endif //_Size_H
 

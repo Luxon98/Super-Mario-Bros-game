@@ -6,7 +6,8 @@
 #include "World.h"
 
 
-class Creature : public NonControllableLivingObject {
+class Creature : public NonControllableLivingObject 
+{
 private:
 	static SDL_Surface* creatureImages[2];
 	int model;
@@ -21,4 +22,4 @@ public:
 	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
 };
 
-#endif
+#endif //_Creature_H

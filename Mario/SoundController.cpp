@@ -4,7 +4,8 @@ Mix_Music* SoundController::backgroundTracks[5] = { nullptr };
 
 Mix_Chunk* SoundController::soundsEffects[12] = { nullptr };
 
-bool SoundController::initSoundMixer() {
+bool SoundController::initSoundMixer()
+{
 	bool success = true;
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 		success = false;
@@ -13,7 +14,8 @@ bool SoundController::initSoundMixer() {
 	return success;
 }
 
-void SoundController::loadSounds() {
+void SoundController::loadSounds()
+{
 	this->backgroundTracks[0] = Mix_LoadMUS("./sounds/background_normal.wav");
 	this->backgroundTracks[1] = Mix_LoadMUS("./sounds/background_star.wav");
 	this->backgroundTracks[2] = Mix_LoadMUS("./sounds/world_finished.wav");
@@ -34,7 +36,8 @@ void SoundController::loadSounds() {
 	this->soundsEffects[11] = Mix_LoadWAV("./sounds/mario_dead.wav");
 }
 
-void SoundController::closeSoundMixer() {
+void SoundController::closeSoundMixer()
+{
 	for (int i = 0; i < 5; ++i) {
 		Mix_FreeMusic(this->backgroundTracks[0]);
 		this->backgroundTracks[0] = nullptr;
@@ -48,80 +51,99 @@ void SoundController::closeSoundMixer() {
 	Mix_Quit();
 }
 
-SoundController::SoundController() {
+SoundController::SoundController()
+{
 	if (this->initSoundMixer()) {
 		this->loadSounds();
 	}
 }
 
-void SoundController::playBackgroudMarioMusic() {
+void SoundController::playBackgroudMarioMusic()
+{
 	Mix_PlayMusic(backgroundTracks[0], -1);
 }
 
-void SoundController::playBackgroudStarMusic() {
+void SoundController::playBackgroudStarMusic()
+{
 	Mix_PlayMusic(backgroundTracks[1], -1);
 }
 
-void SoundController::playWorldFinishedMusic() {
+void SoundController::playWorldFinishedMusic()
+{
 	Mix_PlayMusic(backgroundTracks[2], -1);
 }
 
-void SoundController::playGameoverMusic() {
+void SoundController::playGameoverMusic()
+{
 	Mix_PlayMusic(backgroundTracks[3], -1);
 }
 
-void SoundController::playTimePassedMusic() {
+void SoundController::playTimePassedMusic()
+{
 	Mix_PlayMusic(backgroundTracks[4], -1);
 }
 
-void SoundController::play1upCollectedEffect() {
+void SoundController::play1upCollectedEffect()
+{
 	Mix_PlayChannel(-1, soundsEffects[0], 0);
 }
 
-void SoundController::playBlockDestroyedEffect() {
+void SoundController::playBlockDestroyedEffect()
+{
 	Mix_PlayChannel(-1, soundsEffects[1], 0);
 }
 
-void SoundController::playBlockHittedEffect() {
+void SoundController::playBlockHittedEffect()
+{
 	Mix_PlayChannel(-1, soundsEffects[2], 0);
 }
 
-void SoundController::playBonusAppeardEffect() {
+void SoundController::playBonusAppeardEffect()
+{
 	Mix_PlayChannel(-1, soundsEffects[3], 0);
 }
 
-void SoundController::playBonusCollectedEffect() {
+void SoundController::playBonusCollectedEffect()
+{
 	Mix_PlayChannel(-1, soundsEffects[4], 0);
 }
 
-void SoundController::playCoinCollectedEffect() {
+void SoundController::playCoinCollectedEffect()
+{
 	Mix_PlayChannel(-1, soundsEffects[5], 0);
 }
 
-void SoundController::playEnemyDestroyedEffect() {
+void SoundController::playEnemyDestroyedEffect()
+{
 	Mix_PlayChannel(-1, soundsEffects[6], 0);
 }
 
-void SoundController::playFireballPoppedEffect() {
+void SoundController::playFireballPoppedEffect()
+{
 	Mix_PlayChannel(-1, soundsEffects[7], 0);
 }
 
-void SoundController::playFlagDownEffect() {
+void SoundController::playFlagDownEffect()
+{
 	Mix_PlayChannel(-1, soundsEffects[8], 0);
 }
 
-void SoundController::playJumpEffect(Player* player) {
+void SoundController::playJumpEffect(Player* player)
+{
 	Mix_PlayChannel(-1, soundsEffects[player->getCurrentState() != Small ? 10 : 9], 0);
 }
 
-void SoundController::playMarioDeadEffect() {
+void SoundController::playMarioDeadEffect()
+{
 	Mix_PlayChannel(-1, soundsEffects[11], 0);
 }
 
-void SoundController::stopMusic() {
+void SoundController::stopMusic()
+{
 	Mix_HaltMusic();
 }
 
-SoundController::~SoundController() {
+SoundController::~SoundController()
+{
 	this->closeSoundMixer();
 }

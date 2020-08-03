@@ -1,12 +1,14 @@
 #include "KeyboardController.h"
 
-void KeyboardController::handleSpacebar(World& world) {
+void KeyboardController::handleSpacebar(World& world)
+{
 	if (this->shotState) {
 		world.setFireballStatus();
 	}
 }
 
-void KeyboardController::handleArrowKeys(Player* player, World& world, Screen* mainScreen) {
+void KeyboardController::handleArrowKeys(Player* player, World& world, Screen* mainScreen)
+{
 	if (this->keysState[Left]) {
 		if (this->keysState[Up] && isCharacterStandingOnTheBlock(player, world)) {
 			SoundController::playJumpEffect(player);
@@ -14,7 +16,7 @@ void KeyboardController::handleArrowKeys(Player* player, World& world, Screen* m
 		}
 		else {
 			player->move(Left, 32 + (player->getCurrentState() >= ImmortalFirst && player->getCurrentState()
-							<= ImmortalFourth) * 32, world, mainScreen);
+				<= ImmortalFourth) * 32, world, mainScreen);
 		}
 	}
 	else if (this->keysState[Right]) {
@@ -23,8 +25,8 @@ void KeyboardController::handleArrowKeys(Player* player, World& world, Screen* m
 			player->moveAndJump(Right, 80, 80, world, mainScreen);
 		}
 		else {
-			player->move(Right, 32 + (player->getCurrentState() >= ImmortalFirst && player->getCurrentState() 
-							<= ImmortalFourth) * 32, world, mainScreen);
+			player->move(Right, 32 + (player->getCurrentState() >= ImmortalFirst && player->getCurrentState()
+				<= ImmortalFourth) * 32, world, mainScreen);
 		}
 	}
 	else if (keysState[Up] && isCharacterStandingOnTheBlock(player, world)) {
@@ -36,12 +38,14 @@ void KeyboardController::handleArrowKeys(Player* player, World& world, Screen* m
 	}
 }
 
-KeyboardController::KeyboardController() {
+KeyboardController::KeyboardController()
+{
 	this->keysState = { {Left, false}, {Right, false}, {Up, false} };
 	this->shotState = false;
 }
 
-void KeyboardController::handleKeysState(const Uint8* state) {
+void KeyboardController::handleKeysState(const Uint8* state)
+{
 	if (state[SDL_SCANCODE_SPACE]) {
 		this->shotState = true;
 	}
@@ -57,14 +61,16 @@ void KeyboardController::handleKeysState(const Uint8* state) {
 	}
 }
 
-void KeyboardController::clearKeysState() {
+void KeyboardController::clearKeysState()
+{
 	this->keysState[Up] = false;
 	this->keysState[Left] = false;
 	this->keysState[Right] = false;
 	this->shotState = false;
 }
 
-void KeyboardController::forceActions(Player* player, World& world, Screen* mainScreen) {
+void KeyboardController::forceActions(Player* player, World& world, Screen* mainScreen)
+{
 	this->handleSpacebar(world);
 	this->handleArrowKeys(player, world, mainScreen);
 }

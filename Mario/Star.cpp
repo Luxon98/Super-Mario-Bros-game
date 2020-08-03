@@ -4,8 +4,9 @@ SDL_Surface* Star::starImages[4] = { nullptr };
 
 Star::Star() {}
 
-Star::Star(Position* position) {
-	size = new Size(28, 32);
+Star::Star(Position* position)
+{
+	this->size = new Size(28, 32);
 	this->position = position;
 	this->moveDirection = Right;
 	this->verticalDirection = Up;
@@ -13,7 +14,8 @@ Star::Star(Position* position) {
 	this->growCounter = 90;
 }
 
-void Star::loadStarImages(SDL_Surface* screen) {
+void Star::loadStarImages(SDL_Surface* screen)
+{
 	for (int i = 0; i < 4; ++i) {
 		std::string filename = "./img/star";
 		filename += std::to_string(i + 1);
@@ -22,18 +24,20 @@ void Star::loadStarImages(SDL_Surface* screen) {
 	}
 }
 
-void Star::draw(SDL_Surface* screen, int beginningOfCamera) {
+void Star::draw(SDL_Surface* screen, int beginningOfCamera)
+{
 	SDL_Surface* starImg = nullptr;
 	starImg = starImages[this->stepsCounter % 4];
 	drawSurface(screen, starImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
-void Star::move(Direction direction, int distance, World& world, Screen* mainScreen) {
+void Star::move(Direction direction, int distance, World& world, Screen* mainScreen)
+{
 	if (this->growCounter) {
 		this->grow();
 	}
 	else {
-		int alignment = alignIfCollisionOccursDuringMovement(this->moveDirection, 2 * distance, this, world);
+		int alignment = getAlignmentIfCollisionOccursDuringMovement(this->moveDirection, 2 * distance, this, world);
 		int realDistance = this->moveDirection == Right ? 1 : -1 * (2 * distance - alignment);
 		this->position->setX(this->position->getX() + realDistance);
 
@@ -41,7 +45,7 @@ void Star::move(Direction direction, int distance, World& world, Screen* mainScr
 			this->moveDirection = (this->moveDirection == Right ? Left : Right);
 		}
 
-		alignment = alignIfCollisionOccursDuringVerticalMovement(this->verticalDirection, distance, this, world);
+		alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(this->verticalDirection, distance, this, world);
 		int realVerticalDistance = (this->verticalDirection == Down ? 1 : -1) * (distance - alignment);
 		this->position->setY(this->position->getY() + realVerticalDistance);
 
@@ -58,6 +62,7 @@ void Star::move(Direction direction, int distance, World& world, Screen* mainScr
 			this->stepsUp = 0;
 		}
 	}
-	++this->stepsCounter;
+
+	this->stepsCounter++;
 }
 

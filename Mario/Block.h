@@ -6,7 +6,8 @@
 #include "InanimateObject.h"
 
 
-enum BlockType {
+enum BlockType 
+{
 	Ground = 1,
 	Indestructible = 2,
 	Empty = 3,
@@ -22,12 +23,14 @@ enum BlockType {
 };
 
 
-class Block : public InanimateObject {
+class Block : public InanimateObject 
+{
 private:
 	static SDL_Surface* blockImages[10];
 	static bool changesChecker;
 	int availableCoins;
 	int computeImageIndex();
+	Size* getSizeFromBlockType(BlockType type);
 
 public:
 	Block();
@@ -41,5 +44,5 @@ public:
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 };
 
-#endif
+#endif //_Block_H
 

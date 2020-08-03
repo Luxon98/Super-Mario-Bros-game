@@ -5,7 +5,8 @@
 #include "TemporaryObject.h"
 
 
-enum TextType {
+enum TextType
+{
 	ONE_HUNDRED = 1,
 	TWO_HUNDRED = 2,
 	FOUR_HUNDRED = 3,
@@ -14,7 +15,8 @@ enum TextType {
 };
 
 
-class AnimatedText : public TemporaryObject {
+class AnimatedText : public TemporaryObject 
+{
 private:
 	static SDL_Surface* animatedTextImages[5];
 	TextType type;
@@ -29,4 +31,4 @@ public:
 	void slide() override;
 };
 
-#endif
+#endif //_AnimatedText_H

@@ -5,7 +5,8 @@
 #include "InanimateObject.h"
 
 
-class Castle : public InanimateObject {
+class Castle : public InanimateObject
+{
 private:
 	static SDL_Surface* castleImage;
 
@@ -16,5 +17,5 @@ public:
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 };
 
-#endif
+#endif //_Castle_H
 

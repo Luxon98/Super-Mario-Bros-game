@@ -5,7 +5,8 @@
 #include "TemporaryObject.h"
 
 
-class CrushedCreature : public TemporaryObject {
+class CrushedCreature : public TemporaryObject
+{
 private:
 	static SDL_Surface* crushedCreatureImage;
 
@@ -18,4 +19,4 @@ public:
 	void slide() override;
 };
 
-#endif
+#endif //_CrushedCreature_H

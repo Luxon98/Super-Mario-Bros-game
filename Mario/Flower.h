@@ -6,7 +6,8 @@
 #include "World.h"
 
 
-class Flower : public BonusObject {
+class Flower : public BonusObject
+{
 private:
 	static SDL_Surface* flowerImages[2];
 
@@ -20,5 +21,5 @@ public:
 	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
 };
 
-#endif
+#endif //_Flower_H
 

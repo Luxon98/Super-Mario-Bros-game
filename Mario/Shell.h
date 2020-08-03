@@ -7,7 +7,8 @@
 #include "World.h"
 
 
-class Shell : public NonControllableLivingObject {
+class Shell : public NonControllableLivingObject
+{
 private:
 	static SDL_Surface* shellImg;
 	std::chrono::steady_clock::time_point creationTime;
@@ -25,5 +26,5 @@ public:
 	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
 };
 
-#endif
+#endif //_Shell_H
 

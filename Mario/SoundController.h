@@ -5,7 +5,8 @@
 #include "Player.h"
 
 
-class SoundController {
+class SoundController
+{
 private:
 	static Mix_Music* backgroundTracks[5];
 	static Mix_Chunk* soundsEffects[12];
@@ -35,4 +36,4 @@ public:
 	~SoundController();
 };
 
-#endif
+#endif //_SoundController_H

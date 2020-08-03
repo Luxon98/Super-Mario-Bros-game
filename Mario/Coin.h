@@ -5,7 +5,8 @@
 #include "InanimateObject.h"
 
 
-class Coin : public InanimateObject {
+class Coin : public InanimateObject
+{
 private:
 	static SDL_Surface* coinImages[2]; 
 
@@ -18,5 +19,5 @@ public:
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 };
 
-#endif
+#endif //_Coin_H
 

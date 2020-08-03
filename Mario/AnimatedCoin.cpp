@@ -4,7 +4,8 @@ SDL_Surface* AnimatedCoin::animatedCoinImages[7] = { nullptr };
 
 AnimatedCoin::AnimatedCoin() {}
 
-AnimatedCoin::AnimatedCoin(Position* position) {
+AnimatedCoin::AnimatedCoin(Position* position)
+{
 	this->creationTime = std::chrono::steady_clock::now();
 	this->position = position;
 	this->slideCounter = 0;
@@ -12,7 +13,8 @@ AnimatedCoin::AnimatedCoin(Position* position) {
 	this->imageIndex = 0;
 }
 
-void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* screen) {
+void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* screen)
+{
 	for (int i = 0; i < 7; ++i) {
 		std::string filename = "./img/a_coin";
 		filename += std::to_string(i + 1);
@@ -21,18 +23,20 @@ void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* screen) {
 	}
 }
 
-void AnimatedCoin::draw(SDL_Surface* screen, int beginningOfCamera) {
+void AnimatedCoin::draw(SDL_Surface* screen, int beginningOfCamera)
+{
 	SDL_Surface* animatedCoinImg = this->animatedCoinImages[this->imageIndex];
-	drawSurface(screen, animatedCoinImg, this->position->getX() - beginningOfCamera, this->position->getY());
+	drawSurface(screen, animatedCoinImg,
+		this->position->getX() - beginningOfCamera,
+		this->position->getY());
 }
 
-bool AnimatedCoin::shouldBeRemoved() {
-	return (this->slideCounter > 57);
-}
+bool AnimatedCoin::shouldBeRemoved() { return (this->slideCounter > 57); }
 
-void AnimatedCoin::slide() {
-	++this->slideCounter;
-	++this->auxiliaryCounter;
+void AnimatedCoin::slide()
+{
+	this->slideCounter++;
+	this->auxiliaryCounter++;
 	if (this->auxiliaryCounter & 1) {
 		if (this->slideCounter <= 3) {
 			this->imageIndex = 0;
@@ -61,4 +65,3 @@ void AnimatedCoin::slide() {
 		}
 	}
 }
-

@@ -5,7 +5,8 @@
 #include "TemporaryObject.h"
 
 
-class DestroyedTurtle : public TemporaryObject {
+class DestroyedTurtle : public TemporaryObject
+{
 private:
 	static SDL_Surface* destroyedTurtleImage;
 	int auxiliaryCounter;
@@ -19,4 +20,4 @@ public:
 	void slide() override;
 };
 
-#endif
+#endif //_DestroyedTurtle_H

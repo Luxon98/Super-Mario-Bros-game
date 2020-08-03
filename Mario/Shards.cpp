@@ -4,7 +4,8 @@ SDL_Surface* Shards::shardsImages[2] = { nullptr };
 
 Shards::Shards() {}
 
-Shards::Shards(int x, int y) {
+Shards::Shards(int x, int y)
+{
 	this->creationTime = std::chrono::steady_clock::now();
 	this->positionsX[0] = x - 15;
 	this->positionsY[0] = y - 15;
@@ -18,12 +19,14 @@ Shards::Shards(int x, int y) {
 	this->imageIndex = 0;
 }
 
-void Shards::loadShardsImages(SDL_Surface* screen) {
+void Shards::loadShardsImages(SDL_Surface* screen)
+{
 	this->shardsImages[0] = loadPNG("./img/shard1.png", screen);
 	this->shardsImages[1] = loadPNG("./img/shard2.png", screen);
 }
 
-void Shards::draw(SDL_Surface* screen, int beginningOfCamera) {
+void Shards::draw(SDL_Surface* screen, int beginningOfCamera)
+{
 	if (this->auxiliaryCounter % 30 == 0) {
 		this->imageIndex = (this->imageIndex == 0 ? 1 : 0);
 	}
@@ -34,13 +37,15 @@ void Shards::draw(SDL_Surface* screen, int beginningOfCamera) {
 	}
 }
 
-bool Shards::shouldBeRemoved() {
+bool Shards::shouldBeRemoved()
+{
 	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
 	return (this->creationTime + std::chrono::milliseconds(3000) < timePoint);
 }
 
-void Shards::slide() {
-	++this->auxiliaryCounter;
+void Shards::slide()
+{
+	this->auxiliaryCounter++;
 	if (this->auxiliaryCounter % 3 == 0) {
 		if (this->auxiliaryCounter < 46) {
 			this->positionsY[0] -= 5;

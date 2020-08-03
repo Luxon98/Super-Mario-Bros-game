@@ -6,7 +6,8 @@
 #include "World.h"
 
 
-class Star : public BonusObject {
+class Star : public BonusObject 
+{
 private:
 	static SDL_Surface* starImages[4];
 	int stepsCounter;
@@ -21,4 +22,4 @@ public:
 	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
 };
 
-#endif
+#endif //_Star_H

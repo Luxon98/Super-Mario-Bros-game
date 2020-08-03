@@ -4,7 +4,8 @@
 #include "LivingObject.h"
 
 
-class NonControllableLivingObject : public LivingObject {
+class NonControllableLivingObject : public LivingObject 
+{
 protected:
 	Direction moveDirection;
 
@@ -12,5 +13,5 @@ public:
 	Direction getMoveDirection() const;
 };
 
-#endif
+#endif //_NonControllableLivingObject_H
 

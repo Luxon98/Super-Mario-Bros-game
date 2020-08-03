@@ -5,7 +5,8 @@
 #include "WorldObject.h"
 
 
-class TemporaryObject : public WorldObject {
+class TemporaryObject : public WorldObject
+{
 protected:
 	std::chrono::steady_clock::time_point creationTime;
 
@@ -14,4 +15,4 @@ public:
 	virtual void slide() = 0;
 };
 
-#endif
+#endif //_TemporaryObject_H

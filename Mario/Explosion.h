@@ -5,7 +5,8 @@
 #include "TemporaryObject.h"
 
 
-class Explosion : public TemporaryObject {
+class Explosion : public TemporaryObject
+{
 private:
 	static SDL_Surface* explosionImage;
 
@@ -18,5 +19,5 @@ public:
 	void slide() override;
 };
 
-#endif
+#endif //_Explosion_H
 

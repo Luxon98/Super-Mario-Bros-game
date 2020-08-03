@@ -9,7 +9,8 @@
 #include "Screen.h"
 
 
-class KeyboardController {
+class KeyboardController
+{
 private:
 	std::map<Direction, bool> keysState;
 	bool shotState;
@@ -23,4 +24,4 @@ public:
 	void forceActions(Player* player, World& world, Screen* mainScreen);
 };
 
-#endif
+#endif //_KeyboardController_H

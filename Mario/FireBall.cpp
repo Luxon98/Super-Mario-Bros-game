@@ -2,11 +2,11 @@
 
 SDL_Surface* FireBall::fireBallImages[4] = { nullptr };
 
-void FireBall::computeModelIndex() {
-	++this->changeModelCounter;
+void FireBall::computeModelIndex()
+{
+	this->changeModelCounter++;
 	if (this->changeModelCounter % 8 == 0) {
-		++this->modelIndex;
-
+		this->modelIndex++;
 		if (this->modelIndex == 4) {
 			this->modelIndex = 0;
 		}
@@ -15,8 +15,9 @@ void FireBall::computeModelIndex() {
 
 FireBall::FireBall() {}
 
-FireBall::FireBall(Position* position, Direction direction) {
-	size = new Size(16, 16);
+FireBall::FireBall(Position* position, Direction direction)
+{
+	this->size = new Size(16, 16);
 	this->position = position;
 	this->moveDirection = direction;
 	this->verticalDirection = Down;
@@ -26,11 +27,13 @@ FireBall::FireBall(Position* position, Direction direction) {
 	this->stop = false;
 }
 
-bool FireBall::shouldBeRemoved() {
+bool FireBall::shouldBeRemoved()
+{
 	return this->stop;
 }
 
-void FireBall::loadFireBallImages(SDL_Surface* screen) {
+void FireBall::loadFireBallImages(SDL_Surface* screen)
+{
 	for (int i = 0; i < 4; ++i) {
 		std::string filename = "./img/fireball";
 		filename += std::to_string(i + 1);
@@ -39,15 +42,17 @@ void FireBall::loadFireBallImages(SDL_Surface* screen) {
 	}
 }
 
-void FireBall::draw(SDL_Surface* screen, int beginningOfCamera) {
+void FireBall::draw(SDL_Surface* screen, int beginningOfCamera)
+{
 	SDL_Surface* fireballImg = nullptr;
 	fireballImg = fireBallImages[this->modelIndex];
 	drawSurface(screen, fireballImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
-void FireBall::move(Direction direction, int distance, World& world, Screen* mainScreen) {
+void FireBall::move(Direction direction, int distance, World& world, Screen* mainScreen)
+{
 	if (!this->stop) {
-		int alignment = alignIfCollisionOccursDuringMovement(this->moveDirection, 2 * distance, this, world);
+		int alignment = getAlignmentIfCollisionOccursDuringMovement(this->moveDirection, 2 * distance, this, world);
 		int realDistance = (this->moveDirection == Right ? 1 : -1) * (2 * distance - alignment);
 		this->position->setX(this->position->getX() + realDistance);
 
@@ -56,7 +61,7 @@ void FireBall::move(Direction direction, int distance, World& world, Screen* mai
 			SoundController::playBlockHittedEffect();
 		}
 
-		alignment = alignIfCollisionOccursDuringVerticalMovement(this->verticalDirection, distance, this, world);
+		alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(this->verticalDirection, distance, this, world);
 		int realVerticalDistance = (this->verticalDirection == Down ? 1 : -1) * (distance - alignment);
 		this->position->setY(this->position->getY() + realVerticalDistance);
 

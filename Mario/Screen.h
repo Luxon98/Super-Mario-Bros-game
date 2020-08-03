@@ -15,9 +15,11 @@ class Player;
 class World;
 
 
-class Screen {
+class Screen
+{
 private:
-	class Camera {
+	class Camera 
+	{
 	private:
 		int beginningOfCamera;
 		int endOfCamera;
@@ -84,4 +86,4 @@ public:
 	~Screen();
 };
 
-#endif
+#endif //_Screen_H

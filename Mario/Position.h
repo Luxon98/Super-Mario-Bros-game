@@ -2,7 +2,8 @@
 #define _Position_H
 
 
-class Position {
+class Position 
+{
 private:
 	int x;
 	int y;
@@ -16,4 +17,4 @@ public:
 	void setXY(int x, int y);
 };
 
-#endif
+#endif //_Position_H

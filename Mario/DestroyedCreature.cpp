@@ -4,26 +4,31 @@ SDL_Surface* DestroyedCreature::destroyedCreatureImage = nullptr;
 
 DestroyedCreature::DestroyedCreature() {}
 
-DestroyedCreature::DestroyedCreature(Position* position) {
+DestroyedCreature::DestroyedCreature(Position* position)
+{
 	this->position = position;
 	this->creationTime = std::chrono::steady_clock::now();
 	this->auxiliaryCounter = 0;
 }
 
-void DestroyedCreature::loadDestroyedCreatureImage(SDL_Surface* screen) {
+void DestroyedCreature::loadDestroyedCreatureImage(SDL_Surface* screen)
+{
 	this->destroyedCreatureImage = loadPNG("./img/destroyed_creature.png", screen);
 }
 
-void DestroyedCreature::draw(SDL_Surface* screen, int beginningOfCamera) {
+void DestroyedCreature::draw(SDL_Surface* screen, int beginningOfCamera)
+{
 	drawSurface(screen, this->destroyedCreatureImage, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
-bool DestroyedCreature::shouldBeRemoved() {
+bool DestroyedCreature::shouldBeRemoved()
+{
 	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
 	return (this->creationTime + std::chrono::milliseconds(2000) < timePoint);
 }
 
-void DestroyedCreature::slide() {
+void DestroyedCreature::slide()
+{
 	++this->auxiliaryCounter;
 
 	if (this->auxiliaryCounter & 1) {

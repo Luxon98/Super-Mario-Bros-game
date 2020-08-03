@@ -5,7 +5,8 @@
 #include "InanimateObject.h"
 
 
-class Cloud : public InanimateObject {
+class Cloud : public InanimateObject
+{
 private:
 	static SDL_Surface* cloudImages[3];
 
@@ -16,4 +17,4 @@ public:
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 };
 
-#endif
+#endif //_Cloud_H

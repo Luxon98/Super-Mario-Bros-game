@@ -5,7 +5,8 @@
 #include "WorldObject.h"
 
 
-class InanimateObject : public WorldObject {
+class InanimateObject : public WorldObject
+{
 protected:
 	int model;
 	
@@ -13,4 +14,4 @@ public:
 	int getModel() const;
 };
 
-#endif
+#endif //_InanimateObject_H

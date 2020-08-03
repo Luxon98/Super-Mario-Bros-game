@@ -5,9 +5,10 @@
 #include "Screen.h"
 
 
-class Level {
+class Level 
+{
 public:
 	static void setFirstLevel(World& world);
 };
 
-#endif
+#endif //_Level_H

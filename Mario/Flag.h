@@ -5,7 +5,8 @@
 #include "InanimateObject.h"
 
 
-class Flag : public InanimateObject {
+class Flag : public InanimateObject
+{
 private:
 	static SDL_Surface* flagImages[2];
 	int stepsCounter;
@@ -23,5 +24,5 @@ public:
 	void changePosition();
 };
 
-#endif
+#endif //_Flag_H
 

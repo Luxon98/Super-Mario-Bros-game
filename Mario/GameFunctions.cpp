@@ -1,6 +1,7 @@
 #include "GameFunctions.h"
 
-bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions) {
+bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions)
+{
 	for (int i = begin, j = 0; j < repetitions; i += shift, ++j) {
 		if (difference >= i && difference <= i + 150) {
 			return true;
@@ -9,7 +10,8 @@ bool isDifferenceInInterval(int difference, int begin, int shift, int repetition
 	return false;
 }
 
-void loadBonusObjectsImages(SDL_Surface* screen) {
+void loadBonusObjectsImages(SDL_Surface* screen)
+{
 	Flower* tempFlower = new Flower();
 	tempFlower->loadFlowerImages(screen);
 	delete tempFlower;
@@ -27,7 +29,8 @@ void loadBonusObjectsImages(SDL_Surface* screen) {
 	delete tempCoin;
 }
 
-void loadInanimateObjectImages(SDL_Surface* screen) {
+void loadInanimateObjectImages(SDL_Surface* screen)
+{
 	Bush* tempBush = new Bush();
 	tempBush->loadBushImages(screen);
 	delete tempBush;
@@ -45,7 +48,8 @@ void loadInanimateObjectImages(SDL_Surface* screen) {
 	delete tempFlag;
 }
 
-void loadLivingObjectImages(SDL_Surface* screen) {
+void loadLivingObjectImages(SDL_Surface* screen)
+{
 	Creature* tempCreature = new Creature();
 	tempCreature->loadCreatureImages(screen);
 	delete tempCreature;
@@ -67,7 +71,8 @@ void loadLivingObjectImages(SDL_Surface* screen) {
 	delete tempPlayer;
 }
 
-void loadTemporaryObjectImages(SDL_Surface* screen) {
+void loadTemporaryObjectImages(SDL_Surface* screen)
+{
 	CrushedCreature* tempCrushedCreature = new CrushedCreature();
 	tempCrushedCreature->loadCrushedCreatureImage(screen);
 	delete tempCrushedCreature;
@@ -97,13 +102,15 @@ void loadTemporaryObjectImages(SDL_Surface* screen) {
 	delete tempAnimatedText;
 }
 
-void loadBlockImages(SDL_Surface* screen) {
+void loadBlockImages(SDL_Surface* screen)
+{
 	Block* tempBlock = new Block();
 	tempBlock->loadBlockImages(screen);
 	delete tempBlock;
 }
 
-void loadImages(SDL_Surface* screen) {
+void loadImages(SDL_Surface* screen)
+{
 	loadBonusObjectsImages(screen);
 	loadInanimateObjectImages(screen);
 	loadLivingObjectImages(screen);
@@ -111,7 +118,8 @@ void loadImages(SDL_Surface* screen) {
 	loadBlockImages(screen);
 }
 
-void runGame() {
+void runGame()
+{
 	bool playerState, winStatus = false, timeState = true;
 	std::chrono::steady_clock::time_point timePoint, timeBegin;
 	SDL_Event event;

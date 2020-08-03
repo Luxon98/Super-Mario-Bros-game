@@ -7,7 +7,8 @@
 #include "World.h"
 
 
-class FireBall : public NonControllableLivingObject {
+class FireBall : public NonControllableLivingObject
+{
 private:
 	static SDL_Surface* fireBallImages[4];
 	Direction verticalDirection;
@@ -25,4 +26,4 @@ public:
 	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
 };
 
-#endif
+#endif //_FireBall_H

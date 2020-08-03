@@ -6,7 +6,8 @@
 #include "TemporaryObject.h"
 
 
-class AnimatedCoin : public TemporaryObject {
+class AnimatedCoin : public TemporaryObject 
+{
 private:
 	static SDL_Surface* animatedCoinImages[7];
 	int slideCounter;
@@ -22,5 +23,5 @@ public:
 	void slide() override;
 };
 
-#endif
+#endif //_AnimatedCoin_H
 

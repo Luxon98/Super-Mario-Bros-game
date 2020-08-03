@@ -35,7 +35,8 @@ class Player;
 class FireBall;
 
 
-enum Direction {
+enum Direction
+{
 	None = 0,
 	Left = 1,
 	Right = 2,
@@ -44,7 +45,8 @@ enum Direction {
 };
 
 
-class World {
+class World
+{
 private:
 	std::chrono::steady_clock::time_point lastColoursUpdateTime;
 	std::vector<Block> blocks;
@@ -107,4 +109,4 @@ public:
 	void draw(SDL_Surface* screen, int beginningOfScreen, bool playerFlag = true);
 };
 
-#endif
+#endif //_World_H

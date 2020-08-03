@@ -6,7 +6,8 @@
 #include "Size.h"
 
 
-class WorldObject {
+class WorldObject 
+{
 protected:
 	Position* position;
 	Size* size;
@@ -19,4 +20,4 @@ public:
 	virtual void draw(SDL_Surface* screen, int beginningOfCamera) = 0;
 };
 
-#endif
+#endif //_WorldObject_H

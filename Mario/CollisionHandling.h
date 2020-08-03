@@ -47,8 +47,8 @@ void collectCoinIfPossible(Player* player, World& world);
 
 void collectBonusIfPossible(Player* player, World& world);
 
-int alignIfCollisionOccursDuringMovement(Direction direction, int distance, WorldObject* object, World& world);
+int getAlignmentIfCollisionOccursDuringMovement(Direction direction, int distance, WorldObject* object, World& world);
 
-int alignIfCollisionOccursDuringVerticalMovement(Direction direction, int distance, WorldObject* object, World& world);
+int getAlignmentIfCollisionOccursDuringVerticalMovement(Direction direction, int distance, WorldObject* object, World& world);
 
-#endif
+#endif //_CollisionHandling_H

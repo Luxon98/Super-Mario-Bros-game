@@ -4,11 +4,12 @@
 #include "NonControllableLivingObject.h"
 
 
-class BonusObject : public NonControllableLivingObject {
+class BonusObject : public NonControllableLivingObject
+{
 protected:
 	int growCounter;
 	void grow();
 };
 
-#endif
+#endif //_BonusObject_H
 

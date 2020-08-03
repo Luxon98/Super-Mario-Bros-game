@@ -4,7 +4,8 @@ SDL_Surface* Block::blockImages[10] = { nullptr };
 
 bool Block::changesChecker = true;
 
-int Block::computeImageIndex() {
+int Block::computeImageIndex()
+{
 	if (this->model <= Destructible) {
 		return this->model - 1;
 	}
@@ -22,47 +23,59 @@ int Block::computeImageIndex() {
 	}
 }
 
-Block::Block() {}
-
-Block::Block(BlockType type, Position* position) {
-	this->model = type;
-	this->position = position;
+Size* Block::getSizeFromBlockType(BlockType type)
+{
 	if (type == Tube) {
-		size = new Size(56, 34);
+		return new Size(56, 34);
 	}
 	else if (type == TubeEntry) {
-		size = new Size(64, 31);
+		return new Size(64, 31);
 	}
 	else {
-		size = new Size(32, 32);
+		return new Size(32, 32);
 	}
+}
+
+Block::Block() {}
+
+Block::Block(BlockType type, Position* position)
+{
+	this->model = type;
+	this->position = position;
+	this->size = getSizeFromBlockType(type);
 	this->availableCoins = (type == Monetary ? 5 : 0);
 }
 
-int Block::getAvailableCoins() const {
+int Block::getAvailableCoins() const
+{
 	return this->availableCoins;
 }
 
-void Block::setModel(BlockType type) {
+void Block::setModel(BlockType type)
+{
 	this->model = type;
 }
 
-void Block::setAvailableCoins(int coins) {
+void Block::setAvailableCoins(int coins)
+{
 	if (coins >= 0) {
 		this->availableCoins = coins;
 	}
 }
 
-void Block::addToPositionY(int y) {
+void Block::addToPositionY(int y)
+{
 	this->position->setY(this->position->getY() + y);
 }
 
-void Block::changeBlockImage() {
+void Block::changeBlockImage()
+{
 	Block::blockImages[4] = Block::blockImages[5 + Block::changesChecker];
 	Block::changesChecker = !Block::changesChecker;
 }
 
-void Block::loadBlockImages(SDL_Surface* screen) {
+void Block::loadBlockImages(SDL_Surface* screen)
+{
 	for (int i = 0; i < 5; ++i) {
 		std::string filename = "./img/block";
 		filename += std::to_string(i + 1);
@@ -76,8 +89,9 @@ void Block::loadBlockImages(SDL_Surface* screen) {
 	blockImages[9] = loadPNG("./img/block_empty.png", screen);
 }
 
-void Block::draw(SDL_Surface* screen, int beginningOfCamera) {
-	SDL_Surface * blockImg = nullptr;
+void Block::draw(SDL_Surface* screen, int beginningOfCamera)
+{
+	SDL_Surface* blockImg = nullptr;
 	blockImg = blockImages[this->computeImageIndex()];
 	drawSurface(screen, blockImg, this->position->getX() - beginningOfCamera, this->position->getY());
 }

@@ -5,7 +5,8 @@
 #include "TemporaryObject.h"
 
 
-class Shards : public TemporaryObject {
+class Shards : public TemporaryObject
+{
 private:
 	static SDL_Surface* shardsImages[2];
 	int positionsX[4];
@@ -22,4 +23,4 @@ public:
 	void slide() override;
 };
 
-#endif
+#endif //_Shards_H

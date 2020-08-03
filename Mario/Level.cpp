@@ -1,6 +1,7 @@
 #include "Level.h"
 
-void Level::setFirstLevel(World& world) {
+void Level::setFirstLevel(World& world)
+{
 	world.blocks.clear();
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
@@ -25,7 +26,7 @@ void Level::setFirstLevel(World& world) {
 	world.blocks.push_back(Block(BonusWithFlower, new Position(2510, 288)));
 	world.blocks.push_back(Block(Destructible, new Position(2542, 288)));
 	for (int i = 0; i < 8; ++i) {
-		world.blocks.push_back(Block(Destructible, new Position(2574 + i*32, 160)));
+		world.blocks.push_back(Block(Destructible, new Position(2574 + i * 32, 160)));
 	}
 	world.blocks.push_back(Block(Destructible, new Position(2926, 160)));
 	world.blocks.push_back(Block(Destructible, new Position(2958, 160)));

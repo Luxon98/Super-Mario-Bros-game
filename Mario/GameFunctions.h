@@ -27,5 +27,5 @@ void loadImages(SDL_Surface* screen);
 
 void runGame();
 
-#endif
+#endif //_GameFunctions_H
 

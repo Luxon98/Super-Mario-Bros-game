@@ -17,7 +17,8 @@ class World;
 class Screen;
 class LivingObject;
 
-enum AnimationState {
+enum AnimationState 
+{
 	NoAnimation = 0,
 	DuringGrowingAnimation = 1,
 	DuringArmingAnimation = 2,
@@ -25,7 +26,8 @@ enum AnimationState {
 	DuringImmortalAnimation = 4
 };
 
-enum PlayerState {
+enum PlayerState
+{
 	Small = 1,
 	Tall = 2,
 	ArmedFirst = 3,
@@ -41,18 +43,34 @@ enum PlayerState {
 };
 
 
-class Player : public LivingObject {
+class Player : public LivingObject
+{
 private:
+	class Statistics
+	{
+	public:
+		int points;
+		int coins;
+		int lives;
+		Statistics();
+	};
+
+	class Flags
+	{
+	public:
+		bool orientationFlag;
+		bool rejumpFlag;
+		bool aliveFlag;
+		bool removeLivesFlag;
+		Flags();
+		void setDefaultFlags();
+	};
+
 	static SDL_Surface* playerImages[74];
+	Statistics statistics;
+	Flags flags;
 	int cameraX;
-	int points;
-	int coins;
 	int model;
-	int lives;
-	bool orientationFlag;
-	bool rejumpFlag;
-	bool aliveFlag;
-	bool removeLivesFlag;
 	std::chrono::steady_clock::time_point lastAnimationStartTime;
 	AnimationState currentAnimationState;
 	PlayerState currentState;
@@ -103,5 +121,5 @@ public:
 	void reborn();
 };
 
-#endif
+#endif //_Player_H
 

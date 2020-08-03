@@ -4,26 +4,31 @@ SDL_Surface* DestroyedTurtle::destroyedTurtleImage = nullptr;
 
 DestroyedTurtle::DestroyedTurtle() {}
 
-DestroyedTurtle::DestroyedTurtle(Position* position) {
+DestroyedTurtle::DestroyedTurtle(Position* position)
+{
 	this->position = position;
 	this->creationTime = std::chrono::steady_clock::now();
 	this->auxiliaryCounter = 0;
 }
 
-void DestroyedTurtle::loadDestroyedTurtleImage(SDL_Surface* screen) {
+void DestroyedTurtle::loadDestroyedTurtleImage(SDL_Surface* screen)
+{
 	this->destroyedTurtleImage = loadPNG("./img/destroyed_turtle.png", screen);
 }
 
-void DestroyedTurtle::draw(SDL_Surface* screen, int beginningOfCamera) {
+void DestroyedTurtle::draw(SDL_Surface* screen, int beginningOfCamera)
+{
 	drawSurface(screen, this->destroyedTurtleImage, this->position->getX() - beginningOfCamera, this->position->getY());
 }
 
-bool DestroyedTurtle::shouldBeRemoved() {
+bool DestroyedTurtle::shouldBeRemoved()
+{
 	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
 	return (this->creationTime + std::chrono::milliseconds(2000) < timePoint);
 }
 
-void DestroyedTurtle::slide() {
+void DestroyedTurtle::slide()
+{
 	++this->auxiliaryCounter;
 
 	if (this->auxiliaryCounter & 1) {
