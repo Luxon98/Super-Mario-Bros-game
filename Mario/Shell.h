@@ -10,7 +10,7 @@
 class Shell : public NonControllableLivingObject
 {
 private:
-	static SDL_Surface* shellImg;
+	static SDL_Surface* shellImage;
 	std::chrono::steady_clock::time_point creationTime;
 	bool active;
 	

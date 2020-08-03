@@ -4,11 +4,11 @@ SDL_Surface* FireBall::fireBallImages[4] = { nullptr };
 
 void FireBall::computeModelIndex()
 {
-	this->changeModelCounter++;
-	if (this->changeModelCounter % 8 == 0) {
-		this->modelIndex++;
-		if (this->modelIndex == 4) {
-			this->modelIndex = 0;
+	changeModelCounter++;
+	if (changeModelCounter % 8 == 0) {
+		modelIndex++;
+		if (modelIndex == 4) {
+			modelIndex = 0;
 		}
 	}
 }
@@ -17,19 +17,19 @@ FireBall::FireBall() {}
 
 FireBall::FireBall(Position* position, Direction direction)
 {
-	this->size = new Size(16, 16);
+	size = new Size(16, 16);
 	this->position = position;
-	this->moveDirection = direction;
-	this->verticalDirection = Down;
-	this->changeModelCounter = 0;
-	this->stepsUp = 0;
-	this->modelIndex = 0;
-	this->stop = false;
+	moveDirection = direction;
+	verticalDirection = Down;
+	changeModelCounter = 0;
+	stepsUp = 0;
+	modelIndex = 0;
+	stop = false;
 }
 
 bool FireBall::shouldBeRemoved()
 {
-	return this->stop;
+	return stop;
 }
 
 void FireBall::loadFireBallImages(SDL_Surface* screen)
@@ -45,39 +45,39 @@ void FireBall::loadFireBallImages(SDL_Surface* screen)
 void FireBall::draw(SDL_Surface* screen, int beginningOfCamera)
 {
 	SDL_Surface* fireballImg = nullptr;
-	fireballImg = fireBallImages[this->modelIndex];
-	drawSurface(screen, fireballImg, this->position->getX() - beginningOfCamera, this->position->getY());
+	fireballImg = fireBallImages[modelIndex];
+	drawSurface(screen, fireballImg, position->getX() - beginningOfCamera, position->getY());
 }
 
 void FireBall::move(Direction direction, int distance, World& world, Screen* mainScreen)
 {
-	if (!this->stop) {
-		int alignment = getAlignmentIfCollisionOccursDuringMovement(this->moveDirection, 2 * distance, this, world);
-		int realDistance = (this->moveDirection == Right ? 1 : -1) * (2 * distance - alignment);
-		this->position->setX(this->position->getX() + realDistance);
+	if (!stop) {
+		int alignment = getAlignmentIfCollisionOccursDuringMovement(moveDirection, 2 * distance, this, world);
+		int realDistance = (moveDirection == Right ? 1 : -1) * (2 * distance - alignment);
+		position->setX(position->getX() + realDistance);
 
 		if (alignment > 0) {
-			this->stop = true;
+			stop = true;
 			SoundController::playBlockHittedEffect();
 		}
 
-		alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(this->verticalDirection, distance, this, world);
-		int realVerticalDistance = (this->verticalDirection == Down ? 1 : -1) * (distance - alignment);
-		this->position->setY(this->position->getY() + realVerticalDistance);
+		alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(verticalDirection, distance, this, world);
+		int realVerticalDistance = (verticalDirection == Down ? 1 : -1) * (distance - alignment);
+		position->setY(position->getY() + realVerticalDistance);
 
-		this->computeModelIndex();
+		computeModelIndex();
 
-		if (this->verticalDirection == Up) {
-			++this->stepsUp;
+		if (verticalDirection == Up) {
+			++stepsUp;
 		}
 
 		if (alignment > 0) {
-			this->verticalDirection = (this->verticalDirection == Down ? Up : Down);
-			this->stepsUp = 0;
+			verticalDirection = (verticalDirection == Down ? Up : Down);
+			stepsUp = 0;
 		}
-		else if (this->stepsUp % 48 == 0 && this->verticalDirection == Up) {
-			this->verticalDirection = Down;
-			this->stepsUp = 0;
+		else if (stepsUp % 48 == 0 && verticalDirection == Up) {
+			verticalDirection = Down;
+			stepsUp = 0;
 		}
 	}
 }

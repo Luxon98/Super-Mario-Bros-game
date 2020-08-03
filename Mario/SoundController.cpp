@@ -16,36 +16,36 @@ bool SoundController::initSoundMixer()
 
 void SoundController::loadSounds()
 {
-	this->backgroundTracks[0] = Mix_LoadMUS("./sounds/background_normal.wav");
-	this->backgroundTracks[1] = Mix_LoadMUS("./sounds/background_star.wav");
-	this->backgroundTracks[2] = Mix_LoadMUS("./sounds/world_finished.wav");
-	this->backgroundTracks[3] = Mix_LoadMUS("./sounds/gameover.wav");
-	this->backgroundTracks[4] = Mix_LoadMUS("./sounds/time_passed.wav");
+	backgroundTracks[0] = Mix_LoadMUS("./sounds/background_normal.wav");
+	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_star.wav");
+	backgroundTracks[2] = Mix_LoadMUS("./sounds/world_finished.wav");
+	backgroundTracks[3] = Mix_LoadMUS("./sounds/gameover.wav");
+	backgroundTracks[4] = Mix_LoadMUS("./sounds/time_passed.wav");
 
-	this->soundsEffects[0] = Mix_LoadWAV("./sounds/1up_collected.wav");
-	this->soundsEffects[1] = Mix_LoadWAV("./sounds/block_destroyed.wav");
-	this->soundsEffects[2] = Mix_LoadWAV("./sounds/block_hitted.wav");
-	this->soundsEffects[3] = Mix_LoadWAV("./sounds/bonus_appeard.wav");
-	this->soundsEffects[4] = Mix_LoadWAV("./sounds/bonus_collected.wav");
-	this->soundsEffects[5] = Mix_LoadWAV("./sounds/coin_collected.wav");
-	this->soundsEffects[6] = Mix_LoadWAV("./sounds/enemy_destroyed.wav");
-	this->soundsEffects[7] = Mix_LoadWAV("./sounds/fireball_popped.wav");
-	this->soundsEffects[8] = Mix_LoadWAV("./sounds/flag_down.wav");
-	this->soundsEffects[9] = Mix_LoadWAV("./sounds/jump_small.wav");
-	this->soundsEffects[10] = Mix_LoadWAV("./sounds/jump_tall.wav");
-	this->soundsEffects[11] = Mix_LoadWAV("./sounds/mario_dead.wav");
+	soundsEffects[0] = Mix_LoadWAV("./sounds/1up_collected.wav");
+	soundsEffects[1] = Mix_LoadWAV("./sounds/block_destroyed.wav");
+	soundsEffects[2] = Mix_LoadWAV("./sounds/block_hitted.wav");
+	soundsEffects[3] = Mix_LoadWAV("./sounds/bonus_appeard.wav");
+	soundsEffects[4] = Mix_LoadWAV("./sounds/bonus_collected.wav");
+	soundsEffects[5] = Mix_LoadWAV("./sounds/coin_collected.wav");
+	soundsEffects[6] = Mix_LoadWAV("./sounds/enemy_destroyed.wav");
+	soundsEffects[7] = Mix_LoadWAV("./sounds/fireball_popped.wav");
+	soundsEffects[8] = Mix_LoadWAV("./sounds/flag_down.wav");
+	soundsEffects[9] = Mix_LoadWAV("./sounds/jump_small.wav");
+	soundsEffects[10] = Mix_LoadWAV("./sounds/jump_tall.wav");
+	soundsEffects[11] = Mix_LoadWAV("./sounds/mario_dead.wav");
 }
 
 void SoundController::closeSoundMixer()
 {
 	for (int i = 0; i < 5; ++i) {
-		Mix_FreeMusic(this->backgroundTracks[0]);
-		this->backgroundTracks[0] = nullptr;
+		Mix_FreeMusic(backgroundTracks[0]);
+		backgroundTracks[0] = nullptr;
 	}
 
 	for (int i = 0; i < 12; ++i) {
-		Mix_FreeChunk(this->soundsEffects[i]);
-		this->soundsEffects[i] = nullptr;
+		Mix_FreeChunk(soundsEffects[i]);
+		soundsEffects[i] = nullptr;
 	}
 
 	Mix_Quit();
@@ -53,8 +53,8 @@ void SoundController::closeSoundMixer()
 
 SoundController::SoundController()
 {
-	if (this->initSoundMixer()) {
-		this->loadSounds();
+	if (initSoundMixer()) {
+		loadSounds();
 	}
 }
 
@@ -145,5 +145,5 @@ void SoundController::stopMusic()
 
 SoundController::~SoundController()
 {
-	this->closeSoundMixer();
+	closeSoundMixer();
 }

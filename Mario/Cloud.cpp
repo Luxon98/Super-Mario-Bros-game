@@ -6,10 +6,10 @@ Cloud::Cloud() {}
 
 Cloud::Cloud(int type, Position* position)
 {
-	this->model = type;
+	model = type;
 	this->position = position;
 
-	this->size = new Size(0, 0);
+	size = new Size(0, 0);
 }
 
 void Cloud::loadCloudImages(SDL_Surface* screen)
@@ -21,8 +21,8 @@ void Cloud::loadCloudImages(SDL_Surface* screen)
 
 void Cloud::draw(SDL_Surface* screen, int beginningOfCamera)
 {
-	SDL_Surface* blockImg = nullptr;
-	blockImg = cloudImages[model - 1];
-	drawSurface(screen, blockImg, this->position->getX() - beginningOfCamera, this->position->getY());
+	SDL_Surface* cloudImg = nullptr;
+	cloudImg = cloudImages[model - 1];
+	drawSurface(screen, cloudImg, position->getX() - beginningOfCamera, position->getY());
 }
 

@@ -6,16 +6,16 @@ bool Block::changesChecker = true;
 
 int Block::computeImageIndex()
 {
-	if (this->model <= Destructible) {
-		return this->model - 1;
+	if (model <= Destructible) {
+		return model - 1;
 	}
-	else if (this->model == Monetary || this->model == BonusWithStar) {
+	else if (model == Monetary || model == BonusWithStar) {
 		return 3;
 	}
-	else if (this->model == Tube || this->model == TubeEntry) {
-		return this->model - 4;
+	else if (model == Tube || model == TubeEntry) {
+		return model - 4;
 	}
-	else if (this->model == BonusWithGreenMushroom) {
+	else if (model == BonusWithGreenMushroom) {
 		return 9;
 	}
 	else {
@@ -40,32 +40,32 @@ Block::Block() {}
 
 Block::Block(BlockType type, Position* position)
 {
-	this->model = type;
+	model = type;
 	this->position = position;
-	this->size = getSizeFromBlockType(type);
-	this->availableCoins = (type == Monetary ? 5 : 0);
+	size = getSizeFromBlockType(type);
+	availableCoins = (type == Monetary ? 5 : 0);
 }
 
 int Block::getAvailableCoins() const
 {
-	return this->availableCoins;
+	return availableCoins;
 }
 
 void Block::setModel(BlockType type)
 {
-	this->model = type;
+	model = type;
 }
 
 void Block::setAvailableCoins(int coins)
 {
 	if (coins >= 0) {
-		this->availableCoins = coins;
+		availableCoins = coins;
 	}
 }
 
 void Block::addToPositionY(int y)
 {
-	this->position->setY(this->position->getY() + y);
+	position->setY(position->getY() + y);
 }
 
 void Block::changeBlockImage()
@@ -92,7 +92,7 @@ void Block::loadBlockImages(SDL_Surface* screen)
 void Block::draw(SDL_Surface* screen, int beginningOfCamera)
 {
 	SDL_Surface* blockImg = nullptr;
-	blockImg = blockImages[this->computeImageIndex()];
-	drawSurface(screen, blockImg, this->position->getX() - beginningOfCamera, this->position->getY());
+	blockImg = blockImages[computeImageIndex()];
+	drawSurface(screen, blockImg, position->getX() - beginningOfCamera, position->getY());
 }
 

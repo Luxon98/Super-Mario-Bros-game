@@ -1,6 +1,7 @@
 #ifndef _Shards_H
 #define _Shards_H
 
+#include <vector>
 #include "SDL_Utility.h"
 #include "TemporaryObject.h"
 
@@ -9,14 +10,14 @@ class Shards : public TemporaryObject
 {
 private:
 	static SDL_Surface* shardsImages[2];
-	int positionsX[4];
-	int positionsY[4];
+	std::vector<Position*> shardsPositions;
 	int auxiliaryCounter;
 	int imageIndex;
+	void initPositionsVector(Position* position);
 
 public:
 	Shards();
-	Shards(int x, int y);
+	Shards(Position* position);
 	void loadShardsImages(SDL_Surface* screen);
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 	bool shouldBeRemoved() override;

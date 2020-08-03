@@ -9,13 +9,13 @@ Coin::Coin() {}
 Coin::Coin(Position* position)
 {
 	this->position = position;
-	this->size = new Size(11, 17);
+	size = new Size(11, 17);
 }
 
 void Coin::loadCoinImages(SDL_Surface* screen)
 {
-	this->coinImages[0] = loadPNG("./img/coin1.png", screen);
-	this->coinImages[1] = loadPNG("./img/coin2.png", screen);
+	coinImages[0] = loadPNG("./img/coin1.png", screen);
+	coinImages[1] = loadPNG("./img/coin2.png", screen);
 }
 
 void Coin::changeCoinImage()
@@ -27,6 +27,6 @@ void Coin::draw(SDL_Surface* screen, int beginningOfCamera)
 {
 	SDL_Surface* coinImg = nullptr;
 	coinImg = coinImages[typeOfImage - 1];
-	drawSurface(screen, coinImg, this->position->getX() - beginningOfCamera, this->position->getY());
+	drawSurface(screen, coinImg, position->getX() - beginningOfCamera, position->getY());
 }
 

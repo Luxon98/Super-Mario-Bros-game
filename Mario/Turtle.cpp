@@ -4,9 +4,9 @@ SDL_Surface* Turtle::turtleImages[4] = { nullptr };
 
 void Turtle::chooseModel()
 {
-	this->changeModelCounter++;
-	if (this->changeModelCounter % 30 == 0) {
-		this->model += (this->model & 1 ? 1 : -1);
+	changeModelCounter++;
+	if (changeModelCounter % 30 == 0) {
+		model += (model & 1 ? 1 : -1);
 	}
 }
 
@@ -14,17 +14,17 @@ Turtle::Turtle() {}
 
 Turtle::Turtle(Position* position)
 {
-	this->size = new Size(26, 38);
+	size = new Size(26, 38);
 	this->position = position;
-	this->model = 1;
-	this->stepsCounter = 0;
-	this->changeModelCounter = 0;
-	this->moveDirection = None;
+	model = 1;
+	stepsCounter = 0;
+	changeModelCounter = 0;
+	moveDirection = None;
 }
 
 void Turtle::setMoveDirection(Direction direction)
 {
-	this->moveDirection = direction;
+	moveDirection = direction;
 }
 
 void Turtle::loadTurtleImages(SDL_Surface* screen)
@@ -38,34 +38,34 @@ void Turtle::loadTurtleImages(SDL_Surface* screen)
 void Turtle::draw(SDL_Surface* screen, int beginningOfCamera)
 {
 	SDL_Surface* turtleImg = nullptr;
-	turtleImg = turtleImages[this->model - 1];
-	drawSurface(screen, turtleImg, this->position->getX() - beginningOfCamera, this->position->getY());
+	turtleImg = turtleImages[model - 1];
+	drawSurface(screen, turtleImg, position->getX() - beginningOfCamera, position->getY());
 }
 
 void Turtle::move(Direction direction, int distance, World& world, Screen* mainScreen)
 {
-	if (this->moveDirection != None && this->stepsCounter % 3 == 0) {
+	if (moveDirection != None && stepsCounter % 3 == 0) {
 		if (isCharacterStandingOnTheBlock(this, world)) {
 			int alignment = getAlignmentIfCollisionOccursDuringMovement(direction, distance, this, world);
 			int realDistance = (direction == Right ? (distance - alignment) : -1 * (distance - alignment));
-			this->position->setX(this->position->getX() + realDistance);
+			position->setX(position->getX() + realDistance);
 
 			if (alignment > 0) {
-				this->moveDirection = (this->moveDirection == Right ? Left : Right);
-				this->model = (this->moveDirection == Left ? 1 : 3);
+				moveDirection = (moveDirection == Right ? Left : Right);
+				model = (moveDirection == Left ? 1 : 3);
 			}
 		}
 		else {
 			int realVerticalDistance = (2 * distance) - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 2 * distance, this, world);
-			this->position->setY(this->position->getY() + realVerticalDistance);
+			position->setY(position->getY() + realVerticalDistance);
 
 			int realDistance = (direction == Right ? 1 : -1) * (1 - getAlignmentIfCollisionOccursDuringMovement(direction, distance, this, world));
-			this->position->setX(this->position->getX() + realDistance);
+			position->setX(position->getX() + realDistance);
 		}
 
-		this->chooseModel();
+		chooseModel();
 	}
 
-	this->stepsCounter++;
+	stepsCounter++;
 }
 

@@ -7,48 +7,48 @@ Flag::Flag() {}
 Flag::Flag(Position* position)
 {
 	this->position = position;
-	this->active = false;
-	this->stickPositionY = position->getY() + 117;
-	this->stepsCounter = 0;
+	active = false;
+	stickPositionY = position->getY() + 117;
+	stepsCounter = 0;
 }
 
 bool Flag::isActive() const
 {
-	return this->active;
+	return active;
 }
 
 bool Flag::isDown() const
 {
-	return (this->stepsCounter >= 506);
+	return (stepsCounter >= 506);
 }
 
 void Flag::setActiveState()
 {
-	this->active = true;
+	active = true;
 }
 
 void Flag::loadFlagImage(SDL_Surface* screen)
 {
-	this->flagImages[0] = loadPNG("./img/flag.png", screen);
-	this->flagImages[1] = loadPNG("./img/stick.png", screen);
+	flagImages[0] = loadPNG("./img/flag.png", screen);
+	flagImages[1] = loadPNG("./img/stick.png", screen);
 }
 
 void Flag::draw(SDL_Surface* screen, int beginningOfCamera)
 {
-	drawSurface(screen, this->flagImages[1], this->position->getX() + 17 - beginningOfCamera, this->stickPositionY);
-	drawSurface(screen, this->flagImages[0], this->position->getX() - beginningOfCamera, this->position->getY());
+	drawSurface(screen, flagImages[1], position->getX() + 17 - beginningOfCamera, stickPositionY);
+	drawSurface(screen, flagImages[0], position->getX() - beginningOfCamera, position->getY());
 }
 
 void Flag::changePosition()
 {
-	if (this->active && this->stepsCounter < 506) {
-		this->stepsCounter++;
-		if (this->stepsCounter & 1) {
-			this->position->setY(this->position->getY() + 1);
+	if (active && stepsCounter < 506) {
+		stepsCounter++;
+		if (stepsCounter & 1) {
+			position->setY(position->getY() + 1);
 		}
 	}
-	else if (this->stepsCounter >= 506) {
-		this->active = false;
+	else if (stepsCounter >= 506) {
+		active = false;
 	}
 }
 

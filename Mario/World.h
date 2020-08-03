@@ -69,7 +69,7 @@ private:
 	void performWorldActions();
 	void slideTemporaryElements();
 	void slideBlock();
-	void addShards(int x, int y);
+	void addShards(Position* position);
 	void subtractCoinFromBlockIfPossible();
 	void createNewBonusIfPossible();
 	void createGreenMushroom();
@@ -88,7 +88,7 @@ public:
 	int getLastTouchedBlockIndex() const;
 	int getBlockModel(int index) const;
 	bool isFlagDown() const;
-	void setPlayer(Player* playerPointer);
+	void setPlayer(Player* player);
 	void setLastTouchedBlock(int index);
 	void setSlidingCounter(int ctr);
 	void setFireballStatus();

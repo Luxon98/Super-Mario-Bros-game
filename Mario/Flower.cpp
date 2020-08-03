@@ -8,9 +8,9 @@ Flower::Flower() {}
 
 Flower::Flower(Position* position)
 {
-	this->size = new Size(32, 32);
+	size = new Size(32, 32);
 	this->position = position;
-	this->growCounter = 96;
+	growCounter = 96;
 }
 
 void Flower::changeFlowerImage()
@@ -28,12 +28,12 @@ void Flower::draw(SDL_Surface* screen, int beginningOfCamera)
 {
 	SDL_Surface* flowerImg = nullptr;
 	flowerImg = flowerImages[typeOfImage - 1];
-	drawSurface(screen, flowerImg, this->position->getX() - beginningOfCamera, this->position->getY());
+	drawSurface(screen, flowerImg, position->getX() - beginningOfCamera, position->getY());
 }
 
 void Flower::move(Direction direction, int distance, World& world, Screen* mainScreen)
 {
-	if (this->growCounter) {
-		this->grow();
+	if (growCounter) {
+		grow();
 	}
 }

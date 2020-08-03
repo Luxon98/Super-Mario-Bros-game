@@ -1,19 +1,15 @@
 #include "Size.h"
 
-Size::Size(int width, int height)
-{
-	this->width = width;
-	this->height = height;
-}
+Size::Size(int width, int height) : width(width), height(height) {}
 
 int Size::getWidth() const
 {
-	return this->width;
+	return width;
 }
 
 int Size::getHeight() const
 {
-	return this->height;
+	return height;
 }
 
 void Size::setWidth(int width)
