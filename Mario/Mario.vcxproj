@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{CA962290-020C-44B4-93FC-368652A79ABB}</ProjectGuid>
+    <RootNamespace>Mario</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>F:\Moje\Mario\Mario\SDL2_mixer\include;F:\Moje\Mario\Mario\SDL2_image\include;F:\Moje\Mario\Mario\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\Moje\Mario\Mario\SDL2_image\lib\x86;F:\Moje\Mario\Mario\SDL2\lib\x86;F:\Moje\Mario\Mario\SDL2_mixer\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>F:\Moje\Mario\Mario\SDL2\include;F:\Moje\Mario\Mario\SDL2_image\include;F:\Moje\Mario\Mario\SDL2_mixer\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\Moje\Mario\Mario\SDL2\lib\x86;F:\Moje\Mario\Mario\SDL2_mixer\lib\x86;F:\Moje\Mario\Mario\SDL2_image\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>SDL2_image.lib;SDL2.lib;SDL2main.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2_image.lib;SDL2.lib;SDL2main.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AnimatedCoin.cpp" />
+    <ClCompile Include="AnimatedText.cpp" />
+    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BonusObject.cpp" />
+    <ClCompile Include="Bush.cpp" />
+    <ClCompile Include="Castle.cpp" />
+    <ClCompile Include="Cloud.cpp" />
+    <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="CollisionHandling.cpp" />
+    <ClCompile Include="Creature.cpp" />
+    <ClCompile Include="CrushedCreature.cpp" />
+    <ClCompile Include="DestroyedCreature.cpp" />
+    <ClCompile Include="DestroyedTurtle.cpp" />
+    <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="Flag.cpp" />
+    <ClCompile Include="Flower.cpp" />
+    <ClCompile Include="GameFunctions.cpp" />
+    <ClCompile Include="InanimateObject.cpp" />
+    <ClCompile Include="KeyboardController.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LivingObject.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="NonControllableLivingObject.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Position.cpp" />
+    <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="SDL_Utility.cpp" />
+    <ClCompile Include="Shards.cpp" />
+    <ClCompile Include="Shell.cpp" />
+    <ClCompile Include="Size.cpp" />
+    <ClCompile Include="SoundController.cpp" />
+    <ClCompile Include="Star.cpp" />
+    <ClCompile Include="TemporaryObject.cpp" />
+    <ClCompile Include="Turtle.cpp" />
+    <ClCompile Include="World.cpp" />
+    <ClCompile Include="WorldObject.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AnimatedCoin.h" />
+    <ClInclude Include="AnimatedText.h" />
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="BonusObject.h" />
+    <ClInclude Include="Bush.h" />
+    <ClInclude Include="Castle.h" />
+    <ClInclude Include="Cloud.h" />
+    <ClInclude Include="Coin.h" />
+    <ClInclude Include="CollisionHandling.h" />
+    <ClInclude Include="Creature.h" />
+    <ClInclude Include="CrushedCreature.h" />
+    <ClInclude Include="DestroyedCreature.h" />
+    <ClInclude Include="DestroyedTurtle.h" />
+    <ClInclude Include="Explosion.h" />
+    <ClInclude Include="FireBall.h" />
+    <ClInclude Include="Flag.h" />
+    <ClInclude Include="Flower.h" />
+    <ClInclude Include="GameFunctions.h" />
+    <ClInclude Include="InanimateObject.h" />
+    <ClInclude Include="KeyboardController.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LivingObject.h" />
+    <ClInclude Include="Mushroom.h" />
+    <ClInclude Include="NonControllableLivingObject.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="Screen.h" />
+    <ClInclude Include="SDL_Utility.h" />
+    <ClInclude Include="Shards.h" />
+    <ClInclude Include="Shell.h" />
+    <ClInclude Include="Size.h" />
+    <ClInclude Include="SoundController.h" />
+    <ClInclude Include="Star.h" />
+    <ClInclude Include="TemporaryObject.h" />
+    <ClInclude Include="Turtle.h" />
+    <ClInclude Include="World.h" />
+    <ClInclude Include="WorldObject.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

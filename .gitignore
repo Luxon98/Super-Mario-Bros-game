@@ -357,10 +357,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Additional (temporary)
-*.sln
-*.vcxproj
-*.vcxproj.filters
 *.dll
-SDL2
-SDL2_image
-SDL2_mixer
