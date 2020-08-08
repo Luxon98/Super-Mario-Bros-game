@@ -9,17 +9,18 @@ void KeyboardController::handleSpacebar(World& world)
 
 void KeyboardController::handleArrowKeys(Player* player, World& world, Screen* mainScreen)
 {
-	if (keysState[Left] && player->stepsRight == 0) {
-		player->stepsLeft = 16;
+	if (keysState[Left] && player->getStepsRight() == 0) {
+		player->setStepsLeft(16);
 	}
-	else if (keysState[Right] && player->stepsLeft == 0) {
-		player->stepsRight = 16;
+	else if (keysState[Right] && player->getStepsLeft() == 0) {
+		player->setStepsRight(16);
 	}
 	else if (keysState[Up] && isCharacterStandingOnTheBlock(player, world)) {
-		player->stepsUp = 81;
+		player->setStepsUp(81);
 	}
-	else if (!isCharacterStandingOnTheBlock(player, world) && player->stepsUp == 0) {
-		player->stepsDown = 3;
+
+	if (!isCharacterStandingOnTheBlock(player, world) && player->getStepsUp() == 0) {
+		player->setStepsDown(1);
 	}
 }
 

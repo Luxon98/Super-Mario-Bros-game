@@ -85,27 +85,28 @@ private:
 	void changeModel(World& world);
 	bool isHittingCeiling(int distance);
 	bool isFallingIntoAbyss(int distance);
-	bool isGoingOutBoundariesOfWorld(Direction direction, int distance);
+	bool isGoingBeyondCamera(int distance);
 	bool isExceedingCameraReferencePoint(int distance);
 	bool isHittingBlock(int alignment, Direction direction);
 	bool isDuringAnimation();
 	bool isRejumping();
 
-	
-
-public:
 	int stepsLeft;
 	int stepsRight;
 	int stepsUp;
 	int stepsDown;
 	int speed;
 
+public:
 	Player();
 	Player(Position* position);
 	int getCameraX() const;
 	int getPoints() const;
 	int getCoins() const;
 	int getLives() const;
+	int getStepsLeft() const;
+	int getStepsRight() const;
+	int getStepsUp() const;
 	bool isArmed() const;
 	bool isImmortal() const;
 	bool isDead() const;
@@ -113,6 +114,10 @@ public:
 	Direction getMovementDirection() const;
 	void incrementCoins();
 	void incrementLives();
+	void setStepsLeft(int stepsLeft);
+	void setStepsRight(int stepsRight);
+	void setStepsUp(int stepsUp);
+	void setStepsDown(int stepsDown);
 	void addPoints(int pts);
 	void setRejumpFlag();
 	void setCurrentAnimation(AnimationState state);

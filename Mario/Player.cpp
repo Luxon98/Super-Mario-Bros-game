@@ -197,15 +197,21 @@ void Player::performImmortalAnimation(int difference)
 
 void Player::changeModel(World& world)
 {
+	if (!isCharacterStandingOnTheBlock(this, world)) {
+		model = 4;
+		return;
+	}
+	if (stepsLeft == 0 && stepsRight == 0) {
+		model = 0;
+		return;
+	}
+
 	changeModelCounter++;
 	if (changeModelCounter % 15 == 0) {
 		model++;
 		if (model > 3) {
 			model = 1;
-		}
-	}
-	if (!isCharacterStandingOnTheBlock(this, world)) {
-		model = 4;
+		}	
 	}
 }
 
@@ -219,12 +225,9 @@ bool Player::isFallingIntoAbyss(int distance)
 	return (position->getY() + distance + getHeight() / 2 > World::WORLD_HEIGHT);
 }
 
-bool Player::isGoingOutBoundariesOfWorld(Direction direction, int distance)
+bool Player::isGoingBeyondCamera(int distance)
 {
-	if (direction == Left && cameraX - distance <= getWidth() / 2) {
-		return true;
-	}
-	else if (direction == Right && position->getX() + distance > World::WORLD_WIDTH) {
+	if (cameraX - distance <= getWidth() / 2) {
 		return true;
 	}
 
@@ -298,6 +301,21 @@ int Player::getLives() const
 	return statistics.lives;
 }
 
+int Player::getStepsLeft() const
+{
+	return stepsLeft;
+}
+
+int Player::getStepsRight() const
+{
+	return stepsRight;
+}
+
+int Player::getStepsUp() const
+{
+	return stepsUp;
+}
+
 bool Player::isArmed() const
 {
 	return (currentState == ArmedFirst);
@@ -331,6 +349,26 @@ void Player::incrementCoins()
 void Player::incrementLives()
 {
 	statistics.lives++;
+}
+
+void Player::setStepsLeft(int stepsLeft)
+{
+	this->stepsLeft = stepsLeft;
+}
+
+void Player::setStepsRight(int stepsRight)
+{
+	this->stepsRight = stepsRight;
+}
+
+void Player::setStepsUp(int stepsUp)
+{
+	this->stepsUp = stepsUp;
+}
+
+void Player::setStepsDown(int stepsDown)
+{
+	this->stepsDown = stepsDown;
 }
 
 void Player::addPoints(int pts)
@@ -540,21 +578,19 @@ void Player::move(Direction direction, int distance, World& world, Screen* mainS
 	if (!movementBlock) {
 		if (stepsLeft > 0) {
 			int dis = speed - getAlignmentIfCollisionOccursDuringMovement(Left, speed, this, world);
-			if (position->getX() - dis > 16) {
+			if (!isGoingBeyondCamera(dis)) {
 				position->setX(position->getX() - dis);
 				cameraX -= dis;
-
-				changeModel(world);
 			}
 
 			stepsLeft--;
 			flags.orientationFlag = false;
 		}
-		else if (stepsRight > 0) {
+
+		if (stepsRight > 0) {
 			int dis = speed - getAlignmentIfCollisionOccursDuringMovement(Right, speed, this, world);
 			position->setX(position->getX() + dis);
 
-			changeModel(world);
 			if (isExceedingCameraReferencePoint(dis)) {
 				mainScreen->setPositionOfTheScreen(mainScreen->getBeginningOfCamera() + dis,
 					mainScreen->getEndOfCamera() + dis);
@@ -566,7 +602,8 @@ void Player::move(Direction direction, int distance, World& world, Screen* mainS
 			stepsRight--;
 			flags.orientationFlag = true;
 		}
-		else if (stepsUp > 0) {
+
+		if (stepsUp > 0) {
 			int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(Up, speed, this, world);
 			int dis = speed - alignment;
 
@@ -582,13 +619,12 @@ void Player::move(Direction direction, int distance, World& world, Screen* mainS
 				stepsUp--;
 			}
 
-			changeModel(world);
-
 			if (isCharacterStandingOnTheBlock(this, world)) {
 				model = 0;
 			}
 		}
-		else if (stepsDown > 0) {
+		 
+		if (stepsDown > 0) {
 			int dis = speed - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, speed, this, world);
 
 			if (!isFallingIntoAbyss(dis)) {
@@ -603,11 +639,8 @@ void Player::move(Direction direction, int distance, World& world, Screen* mainS
 			}
 
 			stepsDown--;
-			changeModel(world);
 		}
-		else if (stepsLeft == 0 && stepsRight == 0) {
-			model = 0;
-		}
+		changeModel(world);
 	}
 }
 
