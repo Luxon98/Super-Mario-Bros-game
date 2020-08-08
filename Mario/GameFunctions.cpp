@@ -137,6 +137,7 @@ void runGame()
 	if (!windowScreen->getInitStatus()) {
 		Player* player = new Player(new Position(35, 400));
 		world.setPlayer(player);
+		world.mainScreen = windowScreen;
 		windowScreen->setPlayer(player);
 
 		while (player->getLives() && !winStatus) {
@@ -170,7 +171,7 @@ void runGame()
 					controller.forceActions(player, world, windowScreen);
 				}
 
-				if (player->getX() >= 6350 && player->getX() <= 6400 && !winStatus) {
+				/*if (player->getX() >= 6350 && player->getX() <= 6400 && !winStatus) {
 					SoundController::playFlagDownEffect();
 					world.setActiveFlag();
 					winStatus = true;
@@ -183,7 +184,7 @@ void runGame()
 					player->move(Right, 6540 - player->getX(), world, windowScreen);
 
 					windowScreen->drawWorldFinishedScreen(world);
-				}
+				}*/
 
 				if (player->isDead()) {
 					playerState = false;

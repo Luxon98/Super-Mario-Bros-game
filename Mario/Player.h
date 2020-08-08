@@ -82,7 +82,7 @@ private:
 	void performImmortalAnimation(int difference);
 	long long int lastDifference;
 	bool movementBlock;
-	void chooseModel(World& world);
+	void changeModel(World& world);
 	bool isHittingCeiling(int distance);
 	bool isFallingIntoAbyss(int distance);
 	bool isGoingOutBoundariesOfWorld(Direction direction, int distance);
@@ -91,7 +91,15 @@ private:
 	bool isDuringAnimation();
 	bool isRejumping();
 
+	
+
 public:
+	int stepsLeft;
+	int stepsRight;
+	int stepsUp;
+	int stepsDown;
+	int speed;
+
 	Player();
 	Player(Position* position);
 	int getCameraX() const;
@@ -112,12 +120,14 @@ public:
 	void draw(SDL_Surface* screen, int beginningOfCamera) override;
 	void hitBlock(World& world, Screen* mainScreen);
 	void loseBonusOrLife();
-	void changePosition(Direction direction, int distance, World& world, Screen* mainScreen);
-	void changeVerticalPosition(Direction direction, int distance, World& world);
-	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
-	void jump(Direction direction, int height, World& world, Screen* mainScreen);
-	void moveAndJump(Direction dirX, int distance, int height, World& world, Screen* mainScreen);
-	void performAdditionalJump(World& world, Screen* mainScreen);
+	//void changePosition(Direction direction, int distance, World& world, Screen* mainScreen);
+	//void changeVerticalPosition(Direction direction, int distance, World& world);
+	//void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
+	//void jump(Direction direction, int height, World& world, Screen* mainScreen);
+	//void moveAndJump(Direction dirX, int distance, int height, World& world, Screen* mainScreen);
+	//void performAdditionalJump(World& world, Screen* mainScreen);
+
+	void move(Direction direction, int distance, World& world, Screen* mainScreen);
 	void reborn();
 };
 

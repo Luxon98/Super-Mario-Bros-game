@@ -9,32 +9,17 @@ void KeyboardController::handleSpacebar(World& world)
 
 void KeyboardController::handleArrowKeys(Player* player, World& world, Screen* mainScreen)
 {
-	if (keysState[Left]) {
-		if (keysState[Up] && isCharacterStandingOnTheBlock(player, world)) {
-			SoundController::playJumpEffect(player);
-			player->moveAndJump(Left, 80, 80, world, mainScreen);
-		}
-		else {
-			player->move(Left, 32 + (player->getCurrentState() >= ImmortalFirst && player->getCurrentState()
-				<= ImmortalFourth) * 32, world, mainScreen);
-		}
+	if (keysState[Left] && player->stepsRight == 0) {
+		player->stepsLeft = 16;
 	}
-	else if (keysState[Right]) {
-		if (keysState[Up] && isCharacterStandingOnTheBlock(player, world)) {
-			SoundController::playJumpEffect(player);
-			player->moveAndJump(Right, 80, 80, world, mainScreen);
-		}
-		else {
-			player->move(Right, 32 + (player->getCurrentState() >= ImmortalFirst && player->getCurrentState()
-				<= ImmortalFourth) * 32, world, mainScreen);
-		}
+	else if (keysState[Right] && player->stepsLeft == 0) {
+		player->stepsRight = 16;
 	}
 	else if (keysState[Up] && isCharacterStandingOnTheBlock(player, world)) {
-		SoundController::playJumpEffect(player);
-		player->jump(Up, 160, world, mainScreen);
+		player->stepsUp = 81;
 	}
-	else if (!isCharacterStandingOnTheBlock(player, world)) {
-		player->jump(Down, 15, world, mainScreen);
+	else if (!isCharacterStandingOnTheBlock(player, world) && player->stepsUp == 0) {
+		player->stepsDown = 3;
 	}
 }
 

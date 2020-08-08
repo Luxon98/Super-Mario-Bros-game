@@ -146,6 +146,7 @@ void handleIfCollisionWithMonsterOccurs(Player* player, World& world)
 				player->addPoints(100);
 				world.addAnimatedText(ONE_HUNDRED, new Position(player->getX() - 22, player->getY() - 22));
 				world.deleteMonster(index);
+				SoundController::playEnemyDestroyedEffect();
 			}
 			else {
 				if (dynamic_cast<Shell*>(*it) && !(dynamic_cast<Shell*>(*it)->isActive())) {
@@ -163,6 +164,7 @@ void handleIfCollisionWithMonsterOccurs(Player* player, World& world)
 					player->addPoints(100);
 					world.addAnimatedText(ONE_HUNDRED, new Position(player->getX() - 22, player->getY() - 22));
 					world.deleteMonster(index);
+					SoundController::playEnemyDestroyedEffect();
 				}
 				else {
 					player->loseBonusOrLife();
@@ -188,6 +190,7 @@ void handleIfShellCollideWithMonsters(World& world, Player* player)
 						world.addDestroyedTurtle(new Position((*it2)->getX(), (*it2)->getY()));
 					}
 					world.deleteMonster(index);
+					SoundController::playEnemyDestroyedEffect();
 					player->addPoints(200);
 					world.addAnimatedText(TWO_HUNDRED, new Position((*it)->getX() - 20, (*it)->getY() - 15));
 				}
@@ -214,6 +217,8 @@ void handleIfFireBallCollideWithMonsters(World& world, Player* player)
 				}
 
 				world.deleteMonster(j);
+				SoundController::playEnemyDestroyedEffect();
+
 				player->addPoints(100);
 				world.addAnimatedText(ONE_HUNDRED, new Position(fireballs[i].getX() - 22, fireballs[i].getY() - 22));
 				world.addExplosion(new Position(it->getX(), it->getY()));
@@ -239,6 +244,7 @@ void handleIfMonsterCollideWithDestroyedBlock(World& world, Block block, Player*
 			player->addPoints(100);
 			world.addAnimatedText(ONE_HUNDRED, new Position((*it)->getX(), (*it)->getY() - 15));
 			world.deleteMonster(index);
+			SoundController::playEnemyDestroyedEffect();
 		}
 	}
 }

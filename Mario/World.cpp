@@ -64,7 +64,7 @@ void World::performMonstersActions()
 		}
 
 		if (monsters[i]->getY() > WORLD_HEIGHT + 30) {
-			deleteMonster(i, false);
+			deleteMonster(i);
 		}
 	}
 }
@@ -97,6 +97,7 @@ void World::performFireBallsActions()
 
 void World::performWorldActions()
 {
+	player->move(Left, 0, *this, mainScreen);
 	performBonusElementsActions();
 	performMonstersActions();
 	performFireBallsActions();
@@ -302,7 +303,7 @@ void World::changeShellMovementParameters(int index, Direction direction)
 	dynamic_cast<Shell*>(monsters[index])->resetCreationTime();
 }
 
-void World::deleteBlock(int index)
+void World::performBlockRemovalActions(int index)
 {
 	addShards(new Position(blocks[index].getX(), blocks[index].getY()));
 	handleIfMonsterCollideWithDestroyedBlock(*this, blocks[index], player);
@@ -322,11 +323,8 @@ void World::deleteLivingElement(int index)
 	bonusElements.erase(bonusElements.begin() + index);
 }
 
-void World::deleteMonster(int index, bool sound)
+void World::deleteMonster(int index)
 {
-	if (sound) {
-		SoundController::playEnemyDestroyedEffect();
-	}
 	monsters.erase(monsters.begin() + index);
 }
 

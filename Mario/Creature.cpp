@@ -2,7 +2,7 @@
 
 SDL_Surface* Creature::creatureImages[2] = { nullptr };
 
-void Creature::chooseModel()
+void Creature::changeModel()
 {
 	changeModelCounter++;
 	if (changeModelCounter % 30 == 0) {
@@ -60,7 +60,7 @@ void Creature::move(Direction direction, int distance, World& world, Screen* mai
 			position->setX(position->getX() + realDistance);
 		}
 
-		chooseModel();
+		changeModel();
 	}
 
 	stepsCounter++;

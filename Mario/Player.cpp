@@ -195,7 +195,7 @@ void Player::performImmortalAnimation(int difference)
 	}
 }
 
-void Player::chooseModel(World& world)
+void Player::changeModel(World& world)
 {
 	changeModelCounter++;
 	if (changeModelCounter % 15 == 0) {
@@ -270,6 +270,12 @@ Player::Player(Position* position)
 	currentAnimationState = NoAnimation;
 	currentState = Small;
 	movementBlock = false;
+
+	stepsLeft = 0;
+	stepsRight = 0;
+	stepsUp = 0;
+	stepsDown = 0;
+	speed = 1;
 }
 
 int Player::getCameraX() const
@@ -370,7 +376,7 @@ void Player::hitBlock(World& world, Screen* mainScreen)
 {
 	if ((currentState >= Tall && currentState <= ImmortalFourth)
 		&& world.getBlockModel(world.getLastTouchedBlockIndex()) == Destructible) {
-		world.deleteBlock(world.getLastTouchedBlockIndex());
+		world.performBlockRemovalActions(world.getLastTouchedBlockIndex());
 		mainScreen->updateScreen(world);
 	}
 	else {
@@ -394,139 +400,215 @@ void Player::loseBonusOrLife()
 	}
 }
 
-void Player::changePosition(Direction direction, int distance, World& world, Screen* mainScreen)
-{
-	if (!isGoingOutBoundariesOfWorld(direction, distance)) {
-		if (direction == Left) {
-			position->setX(position->getX() - distance);
-			cameraX -= distance;
-		}
-		else if (direction == Right) {
-			if (isExceedingCameraReferencePoint(distance)) {
-				mainScreen->setPositionOfTheScreen(mainScreen->getBeginningOfCamera() + distance,
-					mainScreen->getEndOfCamera() + distance);
-			}
-			else {
-				cameraX += distance;
-			}
-			position->setX(position->getX() + distance);
-		}
-		flags.orientationFlag = (direction == Right);
-	}
-}
-
-void Player::changeVerticalPosition(Direction direction, int distance, World& world)
-{
-	if (direction == Up && !isHittingCeiling(distance)) {
-		position->setY(position->getY() - distance);
-	}
-	else if (direction == Down && !isFallingIntoAbyss(distance)) {
-		position->setY(position->getY() + distance);
-	}
-	else if (isFallingIntoAbyss(distance)) {
-		if (!flags.removeLivesFlag) {
-			flags.removeLivesFlag = true;
-			statistics.lives--;
-			flags.aliveFlag = false;
-		}
-	}
-}
+//void Player::changePosition(Direction direction, int distance, World& world, Screen* mainScreen)
+//{
+//	if (!isGoingOutBoundariesOfWorld(direction, distance)) {
+//		if (direction == Left) {
+//			position->setX(position->getX() - distance);
+//			cameraX -= distance;
+//		}
+//		else if (direction == Right) {
+//			if (isExceedingCameraReferencePoint(distance)) {
+//				mainScreen->setPositionOfTheScreen(mainScreen->getBeginningOfCamera() + distance,
+//					mainScreen->getEndOfCamera() + distance);
+//			}
+//			else {
+//				cameraX += distance;
+//			}
+//			position->setX(position->getX() + distance);
+//		}
+//		flags.orientationFlag = (direction == Right);
+//	}
+//}
+//
+//void Player::changeVerticalPosition(Direction direction, int distance, World& world)
+//{
+//	if (direction == Up && !isHittingCeiling(distance)) {
+//		position->setY(position->getY() - distance);
+//	}
+//	else if (direction == Down && !isFallingIntoAbyss(distance)) {
+//		position->setY(position->getY() + distance);
+//	}
+//	else if (isFallingIntoAbyss(distance)) {
+//		if (!flags.removeLivesFlag) {
+//			flags.removeLivesFlag = true;
+//			statistics.lives--;
+//			flags.aliveFlag = false;
+//		}
+//	}
+//}
+//
+//void Player::move(Direction direction, int distance, World& world, Screen* mainScreen)
+//{
+//	int height, range;
+//	for (int i = 0; i < distance && !movementBlock; ++i) {
+//		range = 1 - getAlignmentIfCollisionOccursDuringMovement(direction, 1, this, world);
+//		changePosition(direction, range, world, mainScreen);
+//
+//		height = 1 - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 1, this, world);
+//		if (!isCharacterStandingOnTheBlock(this, world)) {
+//			changeVerticalPosition(Down, height, world);
+//		}
+//		collectCoinIfPossible(this, world);
+//		mainScreen->updateScreen(world);
+//		chooseModel(world);
+//	}
+//
+//	model = 0;
+//}
+//
+//void Player::jump(Direction direction, int height, World& world, Screen* mainScreen)
+//{
+//	int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(direction, height, this, world);
+//	height -= alignment;
+//	model = 4;
+//
+//	for (int i = 0; i < height && !movementBlock; ++i) {
+//		changeVerticalPosition(direction, 1, world);
+//		collectCoinIfPossible(this, world);
+//		mainScreen->updateScreen(world);
+//
+//		if (flags.rejumpFlag) {
+//			flags.rejumpFlag = false;
+//			performAdditionalJump(world, mainScreen);
+//			break;
+//		}
+//
+//	}
+//	changeVerticalPosition(direction, height % 1, world);
+//	collectCoinIfPossible(this, world);
+//
+//	mainScreen->updateScreen(world);
+//
+//	if (isHittingBlock(alignment, direction)) {
+//		hitBlock(world, mainScreen);
+//	}
+//
+//	if (isCharacterStandingOnTheBlock(this, world)) {
+//		model = 0;
+//	}
+//}
+//
+//void Player::moveAndJump(Direction dirX, int distance, int height, World& world, Screen* mainScreen)
+//{
+//	bool checker = false;
+//	int steps = 2 * distance, treads = 2 * height;
+//	int ctr = 0, alignment = 0;
+//	Direction dirY = Up;
+//	model = 4;
+//
+//	while ((steps || treads) && !movementBlock) {
+//		if (treads) {
+//			alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(dirY, 1, this, world);
+//			changeVerticalPosition(dirY, 1 - alignment, world);
+//			treads--;
+//
+//			if (++ctr > treads) {
+//				dirY = Down;
+//			}
+//			if (isHittingBlock(alignment, dirY) && !checker) {
+//				checker = true;
+//				hitBlock(world, mainScreen);
+//			}
+//		}
+//		if (steps) {
+//			changePosition(dirX, 1 - getAlignmentIfCollisionOccursDuringMovement(dirX, 1, this, world), world, mainScreen);
+//			steps--;
+//		}
+//		collectCoinIfPossible(this, world);
+//		mainScreen->updateScreen(world);
+//
+//		if (flags.rejumpFlag) {
+//			flags.rejumpFlag = false;
+//			performAdditionalJump(world, mainScreen);
+//			break;
+//		}
+//	}
+//
+//	if (isCharacterStandingOnTheBlock(this, world)) {
+//		model = 0;
+//	}
+//}
+//
+//void Player::performAdditionalJump(World& world, Screen* mainScreen)
+//{
+//	jump(Up, 40, world, mainScreen);
+//}
 
 void Player::move(Direction direction, int distance, World& world, Screen* mainScreen)
 {
-	int height, range;
-	for (int i = 0; i < distance && !movementBlock; ++i) {
-		range = 1 - getAlignmentIfCollisionOccursDuringMovement(direction, 1, this, world);
-		changePosition(direction, range, world, mainScreen);
+	if (!movementBlock) {
+		if (stepsLeft > 0) {
+			int dis = speed - getAlignmentIfCollisionOccursDuringMovement(Left, speed, this, world);
+			if (position->getX() - dis > 16) {
+				position->setX(position->getX() - dis);
+				cameraX -= dis;
 
-		height = 1 - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 1, this, world);
-		if (!isCharacterStandingOnTheBlock(this, world)) {
-			changeVerticalPosition(Down, height, world);
-		}
-		collectCoinIfPossible(this, world);
-		mainScreen->updateScreen(world);
-		chooseModel(world);
-	}
-
-	model = 0;
-}
-
-void Player::jump(Direction direction, int height, World& world, Screen* mainScreen)
-{
-	int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(direction, height, this, world);
-	height -= alignment;
-	model = 4;
-
-	for (int i = 0; i < height && !movementBlock; ++i) {
-		changeVerticalPosition(direction, 1, world);
-		collectCoinIfPossible(this, world);
-		mainScreen->updateScreen(world);
-
-		if (flags.rejumpFlag) {
-			flags.rejumpFlag = false;
-			performAdditionalJump(world, mainScreen);
-			break;
-		}
-
-	}
-	changeVerticalPosition(direction, height % 1, world);
-	collectCoinIfPossible(this, world);
-
-	mainScreen->updateScreen(world);
-
-	if (isHittingBlock(alignment, direction)) {
-		hitBlock(world, mainScreen);
-	}
-
-	if (isCharacterStandingOnTheBlock(this, world)) {
-		model = 0;
-	}
-}
-
-void Player::moveAndJump(Direction dirX, int distance, int height, World& world, Screen* mainScreen)
-{
-	bool checker = false;
-	int steps = 2 * distance, treads = 2 * height;
-	int ctr = 0, alignment = 0;
-	Direction dirY = Up;
-	model = 4;
-
-	while ((steps || treads) && !movementBlock) {
-		if (treads) {
-			alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(dirY, 1, this, world);
-			changeVerticalPosition(dirY, 1 - alignment, world);
-			treads--;
-
-			if (++ctr > treads) {
-				dirY = Down;
+				changeModel(world);
 			}
-			if (isHittingBlock(alignment, dirY) && !checker) {
-				checker = true;
+
+			stepsLeft--;
+			flags.orientationFlag = false;
+		}
+		else if (stepsRight > 0) {
+			int dis = speed - getAlignmentIfCollisionOccursDuringMovement(Right, speed, this, world);
+			position->setX(position->getX() + dis);
+
+			changeModel(world);
+			if (isExceedingCameraReferencePoint(dis)) {
+				mainScreen->setPositionOfTheScreen(mainScreen->getBeginningOfCamera() + dis,
+					mainScreen->getEndOfCamera() + dis);
+			}
+			else {
+				cameraX += dis;
+			}
+
+			stepsRight--;
+			flags.orientationFlag = true;
+		}
+		else if (stepsUp > 0) {
+			int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(Up, speed, this, world);
+			int dis = speed - alignment;
+
+			if (!isHittingCeiling(dis)) {
+				position->setY(position->getY() - dis);
+			}
+
+			if (isHittingBlock(alignment, Up)) {
 				hitBlock(world, mainScreen);
+				stepsUp = 0;
+			}
+			else {
+				stepsUp--;
+			}
+
+			changeModel(world);
+
+			if (isCharacterStandingOnTheBlock(this, world)) {
+				model = 0;
 			}
 		}
-		if (steps) {
-			changePosition(dirX, 1 - getAlignmentIfCollisionOccursDuringMovement(dirX, 1, this, world), world, mainScreen);
-			steps--;
-		}
-		collectCoinIfPossible(this, world);
-		mainScreen->updateScreen(world);
+		else if (stepsDown > 0) {
+			int dis = speed - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, speed, this, world);
 
-		if (flags.rejumpFlag) {
-			flags.rejumpFlag = false;
-			performAdditionalJump(world, mainScreen);
-			break;
+			if (!isFallingIntoAbyss(dis)) {
+				position->setY(position->getY() + dis);
+			}
+			else {
+				if (!flags.removeLivesFlag) {
+					flags.removeLivesFlag = true;
+					statistics.lives--;
+					flags.aliveFlag = false;
+				}
+			}
+
+			stepsDown--;
+			changeModel(world);
+		}
+		else if (stepsLeft == 0 && stepsRight == 0) {
+			model = 0;
 		}
 	}
-
-	if (isCharacterStandingOnTheBlock(this, world)) {
-		model = 0;
-	}
-}
-
-void Player::performAdditionalJump(World& world, Screen* mainScreen)
-{
-	jump(Up, 40, world, mainScreen);
 }
 
 void Player::reborn()

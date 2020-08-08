@@ -11,7 +11,7 @@ class Creature : public NonControllableLivingObject
 private:
 	static SDL_Surface* creatureImages[2];
 	int model;
-	void chooseModel();
+	void changeModel();
 
 public:
 	Creature();

@@ -94,10 +94,10 @@ public:
 	void setFireballStatus();
 	void setActiveFlag();
 	void changeShellMovementParameters(int index, Direction direction);
-	void deleteBlock(int index);
+	void performBlockRemovalActions(int index);
 	void deleteInanimateElement(int index);
 	void deleteLivingElement(int index);
-	void deleteMonster(int index, bool sound = true);
+	void deleteMonster(int index);
 	void deleteFireBall(int index);
 	void addShell(Position* position);
 	void addCrushedCreature(Position* position);
@@ -107,6 +107,8 @@ public:
 	void addAnimatedText(TextType type, Position* position);
 	void performActions();
 	void draw(SDL_Surface* screen, int beginningOfScreen, bool playerFlag = true);
+
+	Screen* mainScreen;
 };
 
 #endif //_World_H
