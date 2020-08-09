@@ -12,16 +12,17 @@
 class KeyboardController
 {
 private:
+	bool doubleJumpFlag;
+	bool shotStatusFlag;
 	std::map<Direction, bool> keysState;
-	bool shotState;
 	void handleSpacebar(World& world);
-	void handleArrowKeys(Player* player, World& world, Screen* mainScreen);
+	void handleArrowKeys(Player* player, World& world);
 
 public:
 	KeyboardController();
 	void handleKeysState(const Uint8* state);
 	void clearKeysState();
-	void forceActions(Player* player, World& world, Screen* mainScreen);
+	void handleKeys(Player* player, World& world);
 };
 
 #endif //_KeyboardController_H

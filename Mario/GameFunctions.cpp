@@ -160,7 +160,7 @@ void runGame()
 
 				while (SDL_PollEvent(&event) && playerState) {
 					controller.handleKeysState(state);
-					controller.forceActions(player, world, windowScreen);
+					controller.handleKeys(player, world);
 					if (player->isDead()) {
 						playerState = false;
 					}
@@ -168,7 +168,7 @@ void runGame()
 				}
 
 				if (playerState) {
-					controller.forceActions(player, world, windowScreen);
+					controller.handleKeys(player, world);
 				}
 
 				/*if (player->getX() >= 6350 && player->getX() <= 6400 && !winStatus) {
