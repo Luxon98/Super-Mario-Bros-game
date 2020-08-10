@@ -16,8 +16,8 @@ public:
 	Flower();
 	Flower(Position* position);
 	static void changeFlowerImage();
-	void loadFlowerImages(SDL_Surface* screen);
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	void loadFlowerImages(SDL_Surface* display);
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
 	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
 };
 

@@ -16,8 +16,8 @@ public:
 	Mushroom();
 	Mushroom(Position* position, bool greenColor);
 	bool isGreen();
-	void loadMushroomImages(SDL_Surface* screen);
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	void loadMushroomImages(SDL_Surface* display);
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
 	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
 };
 

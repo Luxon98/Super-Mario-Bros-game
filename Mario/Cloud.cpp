@@ -12,17 +12,17 @@ Cloud::Cloud(int type, Position* position)
 	size = new Size(0, 0);
 }
 
-void Cloud::loadCloudImages(SDL_Surface* screen)
+void Cloud::loadCloudImages(SDL_Surface* display)
 {
-	cloudImages[0] = loadPNG("./img/cloud1.png", screen);
-	cloudImages[1] = loadPNG("./img/cloud2.png", screen);
-	cloudImages[2] = loadPNG("./img/cloud3.png", screen);
+	cloudImages[0] = loadPNG("./img/cloud1.png", display);
+	cloudImages[1] = loadPNG("./img/cloud2.png", display);
+	cloudImages[2] = loadPNG("./img/cloud3.png", display);
 }
 
-void Cloud::draw(SDL_Surface* screen, int beginningOfCamera)
+void Cloud::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	SDL_Surface* cloudImg = nullptr;
 	cloudImg = cloudImages[model - 1];
-	drawSurface(screen, cloudImg, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, cloudImg, position->getX() - beginningOfCamera, position->getY());
 }
 

@@ -74,25 +74,25 @@ void Block::changeBlockImage()
 	Block::changesChecker = !Block::changesChecker;
 }
 
-void Block::loadBlockImages(SDL_Surface* screen)
+void Block::loadBlockImages(SDL_Surface* display)
 {
 	for (int i = 0; i < 5; ++i) {
 		std::string filename = "./img/block";
 		filename += std::to_string(i + 1);
 		filename += ".png";
-		blockImages[i] = loadPNG(filename, screen);
+		blockImages[i] = loadPNG(filename, display);
 	}
-	blockImages[5] = loadPNG("./img/block5.png", screen);
-	blockImages[6] = loadPNG("./img/block6.png", screen);
-	blockImages[7] = loadPNG("./img/tube.png", screen);
-	blockImages[8] = loadPNG("./img/entry.png", screen);
-	blockImages[9] = loadPNG("./img/block_empty.png", screen);
+	blockImages[5] = loadPNG("./img/block5.png", display);
+	blockImages[6] = loadPNG("./img/block6.png", display);
+	blockImages[7] = loadPNG("./img/tube.png", display);
+	blockImages[8] = loadPNG("./img/entry.png", display);
+	blockImages[9] = loadPNG("./img/block_empty.png", display);
 }
 
-void Block::draw(SDL_Surface* screen, int beginningOfCamera)
+void Block::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	SDL_Surface* blockImg = nullptr;
 	blockImg = blockImages[computeImageIndex()];
-	drawSurface(screen, blockImg, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, blockImg, position->getX() - beginningOfCamera, position->getY());
 }
 

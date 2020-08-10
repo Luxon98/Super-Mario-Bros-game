@@ -57,6 +57,7 @@ private:
 	std::vector<FireBall> fireballs;
 	Player* player;
 	Flag* flag;
+	Screen* screen;
 	int lastTouchedBlockIndex;
 	int slidingCounter;
 	bool fireballStatus;
@@ -89,6 +90,7 @@ public:
 	int getBlockModel(int index) const;
 	bool isFlagDown() const;
 	void setPlayer(Player* player);
+	void setScreen(Screen* screen);
 	void setLastTouchedBlock(int index);
 	void setSlidingCounter(int ctr);
 	void setFireballStatus();
@@ -106,9 +108,7 @@ public:
 	void addExplosion(Position* position);
 	void addAnimatedText(TextType type, Position* position);
 	void performActions();
-	void draw(SDL_Surface* screen, int beginningOfScreen, bool playerFlag = true);
-
-	Screen* mainScreen;
+	void draw(SDL_Surface* display, int beginningOfScreen, bool playerFlag = true);
 };
 
 #endif //_World_H

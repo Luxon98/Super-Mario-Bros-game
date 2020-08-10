@@ -19,8 +19,8 @@ public:
 	bool isActive() const;
 	bool isDown() const;
 	void setActiveState();
-	void loadFlagImage(SDL_Surface* screen);
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	void loadFlagImage(SDL_Surface* display);
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
 	void changePosition();
 };
 

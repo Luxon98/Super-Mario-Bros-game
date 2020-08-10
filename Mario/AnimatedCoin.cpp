@@ -13,20 +13,20 @@ AnimatedCoin::AnimatedCoin(Position* position)
 	imageIndex = 0;
 }
 
-void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* screen)
+void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
 {
 	for (int i = 0; i < 7; ++i) {
 		std::string filename = "./img/a_coin";
 		filename += std::to_string(i + 1);
 		filename += ".png";
-		animatedCoinImages[i] = loadPNG(filename, screen);
+		animatedCoinImages[i] = loadPNG(filename, display);
 	}
 }
 
-void AnimatedCoin::draw(SDL_Surface* screen, int beginningOfCamera)
+void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	SDL_Surface* animatedCoinImg = animatedCoinImages[imageIndex];
-	drawSurface(screen, animatedCoinImg, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, animatedCoinImg, position->getX() - beginningOfCamera, position->getY());
 }
 
 bool AnimatedCoin::shouldBeRemoved() 

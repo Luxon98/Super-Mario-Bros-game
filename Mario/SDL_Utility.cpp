@@ -1,13 +1,13 @@
 #include "SDL_Utility.h"
 
-void drawSurface(SDL_Surface* screen, SDL_Surface* sprite, int x, int y)
+void drawSurface(SDL_Surface* display, SDL_Surface* sprite, int x, int y)
 {
 	SDL_Rect destination;
 	destination.x = x - sprite->w / 2;
 	destination.y = y - sprite->h / 2;
 	destination.w = sprite->w;
 	destination.h = sprite->h;
-	SDL_BlitSurface(sprite, NULL, screen, &destination);
+	SDL_BlitSurface(sprite, NULL, display, &destination);
 }
 
 SDL_Surface* loadBMP(std::string path)
@@ -18,13 +18,13 @@ SDL_Surface* loadBMP(std::string path)
 	return bitmap != nullptr ? bitmap : nullptr;
 }
 
-SDL_Surface* loadPNG(std::string path, SDL_Surface* screen)
+SDL_Surface* loadPNG(std::string path, SDL_Surface* display)
 {
 	SDL_Surface* optimizedSurface = nullptr;
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 
 	if (loadedSurface != nullptr) {
-		optimizedSurface = SDL_ConvertSurface(loadedSurface, screen->format, 0);
+		optimizedSurface = SDL_ConvertSurface(loadedSurface, display->format, 0);
 		SDL_FreeSurface(loadedSurface);
 	}
 

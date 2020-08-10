@@ -7,11 +7,11 @@
 #include <SDL_image.h>
 
 
-void drawSurface(SDL_Surface* screen, SDL_Surface* sprite, int x, int y);
+void drawSurface(SDL_Surface* display, SDL_Surface* sprite, int x, int y);
 
 SDL_Surface* loadBMP(std::string path);
 
-SDL_Surface* loadPNG(std::string path, SDL_Surface* screen);
+SDL_Surface* loadPNG(std::string path, SDL_Surface* display);
 
 #endif //_SDL_Utility_H
 

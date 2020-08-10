@@ -14,8 +14,8 @@ private:
 public:
 	Bush();
 	Bush(int type, Position* position);
-	void loadBushImages(SDL_Surface* screen);
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	void loadBushImages(SDL_Surface* display);
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
 };
 
 #endif //_Bush_H

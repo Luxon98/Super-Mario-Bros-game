@@ -27,17 +27,17 @@ void Creature::setMoveDirection(Direction direction)
 	moveDirection = direction;
 }
 
-void Creature::loadCreatureImages(SDL_Surface* screen)
+void Creature::loadCreatureImages(SDL_Surface* display)
 {
-	creatureImages[0] = loadPNG("./img/creature1.png", screen);
-	creatureImages[1] = loadPNG("./img/creature2.png", screen);
+	creatureImages[0] = loadPNG("./img/creature1.png", display);
+	creatureImages[1] = loadPNG("./img/creature2.png", display);
 }
 
-void Creature::draw(SDL_Surface* screen, int beginningOfCamera)
+void Creature::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	SDL_Surface* creatureImg = nullptr;
 	creatureImg = creatureImages[model - 1];
-	drawSurface(screen, creatureImg, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, creatureImg, position->getX() - beginningOfCamera, position->getY());
 }
 
 void Creature::move(Direction direction, int distance, World& world, Screen* mainScreen)

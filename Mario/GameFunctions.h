@@ -13,17 +13,17 @@
 
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions);
 
-void loadBonusObjectsImages(SDL_Surface* screen);
+void loadBonusObjectsImages(SDL_Surface* display);
 
-void loadInanimateObjectImages(SDL_Surface* screen);
+void loadInanimateObjectImages(SDL_Surface* display);
 
-void loadLivingObjectImages(SDL_Surface* screen);
+void loadLivingObjectImages(SDL_Surface* display);
 
-void loadTemporaryObjectImages(SDL_Surface* screen);
+void loadTemporaryObjectImages(SDL_Surface* display);
 
-void loadBlockImages(SDL_Surface* screen);
+void loadBlockImages(SDL_Surface* display);
 
-void loadImages(SDL_Surface* screen);
+void loadImages(SDL_Surface* display);
 
 void runGame();
 

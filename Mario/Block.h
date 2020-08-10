@@ -40,8 +40,8 @@ public:
 	void addToPositionY(int y);
 	void setAvailableCoins(int coins);
 	static void changeBlockImage();
-	void loadBlockImages(SDL_Surface* screen);
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	void loadBlockImages(SDL_Surface* display);
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
 };
 
 #endif //_Block_H

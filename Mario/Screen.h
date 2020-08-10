@@ -42,7 +42,7 @@ private:
 	std::chrono::steady_clock::time_point lastColoursUpdateTime;
 	static SDL_Surface* digitImages[10];
 	static SDL_Surface* screenImages[12];
-	SDL_Surface* screen;
+	SDL_Surface* display;
 	SDL_Surface* charset;
 	SDL_Texture* scrtex;
 	SDL_Window* window;
@@ -72,14 +72,14 @@ public:
 	int getBeginningOfCamera() const;
 	int getEndOfCamera() const;
 	bool isTimePassed() const;
-	SDL_Surface* getScreen() const;
+	SDL_Surface* getDisplay() const;
 	void setPlayer(Player* playerPointer);
 	void setTimeBegin(std::chrono::steady_clock::time_point timeBegin);
 	void setPositionOfTheScreen(int begX, int endX);
 	void resetScreen();
-	void drawStartScreen(World& world);
-	void drawGameOverScreen(World& world);
-	void drawTimeUpScreen(World& world);
+	void drawStartScreen();
+	void drawGameOverScreen();
+	void drawTimeUpScreen();
 	void drawDeadMario(World& world);
 	void drawWorldFinishedScreen(World& world);
 	void updateScreen(World& world);

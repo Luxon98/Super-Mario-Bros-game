@@ -21,8 +21,8 @@ public:
 	FireBall();
 	FireBall(Position* position, Direction direction);
 	bool shouldBeRemoved();
-	void loadFireBallImages(SDL_Surface* screen);
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	void loadFireBallImages(SDL_Surface* display);
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
 	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
 };
 

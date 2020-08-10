@@ -17,7 +17,7 @@ public:
 	int getY() const;
 	int getWidth() const;
 	int getHeight() const;
-	virtual void draw(SDL_Surface* screen, int beginningOfCamera) = 0;
+	virtual void draw(SDL_Surface* display, int beginningOfCamera) = 0;
 };
 
 #endif //_WorldObject_H

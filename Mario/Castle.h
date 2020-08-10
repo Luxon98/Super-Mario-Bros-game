@@ -13,8 +13,8 @@ private:
 public:
 	Castle();
 	Castle(Position* position);
-	void loadCastleImages(SDL_Surface* screen);
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	void loadCastleImages(SDL_Surface* display);
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
 };
 
 #endif //_Castle_H

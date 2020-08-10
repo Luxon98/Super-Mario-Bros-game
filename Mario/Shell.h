@@ -21,8 +21,8 @@ public:
 	bool shouldTurnIntoTurtle();
 	void setMovementDirectionAndActiveState(Direction direction);
 	void resetCreationTime();
-	void loadShellImage(SDL_Surface* screen);
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	void loadShellImage(SDL_Surface* display);
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
 	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
 };
 

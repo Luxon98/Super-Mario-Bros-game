@@ -20,13 +20,13 @@ Shards::Shards(Position* position)
 	imageIndex = 0;
 }
 
-void Shards::loadShardsImages(SDL_Surface* screen)
+void Shards::loadShardsImages(SDL_Surface* display)
 {
-	shardsImages[0] = loadPNG("./img/shard1.png", screen);
-	shardsImages[1] = loadPNG("./img/shard2.png", screen);
+	shardsImages[0] = loadPNG("./img/shard1.png", display);
+	shardsImages[1] = loadPNG("./img/shard2.png", display);
 }
 
-void Shards::draw(SDL_Surface* screen, int beginningOfCamera)
+void Shards::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	if (auxiliaryCounter % 30 == 0) {
 		imageIndex = (imageIndex == 0 ? 1 : 0);
@@ -34,7 +34,7 @@ void Shards::draw(SDL_Surface* screen, int beginningOfCamera)
 
 	SDL_Surface* shardImg = shardsImages[imageIndex];
 	for (int i = 0; i < 4; ++i) {
-		drawSurface(screen, shardImg, shardsPositions[i]->getX() - beginningOfCamera, shardsPositions[i]->getY());
+		drawSurface(display, shardImg, shardsPositions[i]->getX() - beginningOfCamera, shardsPositions[i]->getY());
 	}
 }
 

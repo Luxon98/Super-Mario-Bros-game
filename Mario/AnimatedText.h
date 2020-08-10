@@ -25,8 +25,8 @@ private:
 public:
 	AnimatedText();
 	AnimatedText(TextType type, Position* position);
-	void loadAnimatedTextImages(SDL_Surface* screen);
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	void loadAnimatedTextImages(SDL_Surface* display);
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
 	bool shouldBeRemoved() override;
 	void slide() override;
 };

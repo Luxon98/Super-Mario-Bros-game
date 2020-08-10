@@ -27,19 +27,19 @@ void Turtle::setMoveDirection(Direction direction)
 	moveDirection = direction;
 }
 
-void Turtle::loadTurtleImages(SDL_Surface* screen)
+void Turtle::loadTurtleImages(SDL_Surface* display)
 {
-	turtleImages[0] = loadPNG("./img/turtle_left1.png", screen);
-	turtleImages[1] = loadPNG("./img/turtle_left2.png", screen);
-	turtleImages[2] = loadPNG("./img/turtle_rigth1.png", screen);
-	turtleImages[3] = loadPNG("./img/turtle_right2.png", screen);
+	turtleImages[0] = loadPNG("./img/turtle_left1.png", display);
+	turtleImages[1] = loadPNG("./img/turtle_left2.png", display);
+	turtleImages[2] = loadPNG("./img/turtle_rigth1.png", display);
+	turtleImages[3] = loadPNG("./img/turtle_right2.png", display);
 }
 
-void Turtle::draw(SDL_Surface* screen, int beginningOfCamera)
+void Turtle::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	SDL_Surface* turtleImg = nullptr;
 	turtleImg = turtleImages[model - 1];
-	drawSurface(screen, turtleImg, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, turtleImg, position->getX() - beginningOfCamera, position->getY());
 }
 
 void Turtle::move(Direction direction, int distance, World& world, Screen* mainScreen)

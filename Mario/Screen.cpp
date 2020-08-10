@@ -44,21 +44,21 @@ void Screen::loadScreenImages()
 		std::string filename = "./img/";
 		filename += std::to_string(i);
 		filename += ".png";
-		digitImages[i] = loadPNG(filename, screen);
+		digitImages[i] = loadPNG(filename, display);
 	}
 
-	screenImages[0] = loadPNG("./img/mario.png", screen);
-	screenImages[1] = loadPNG("./img/world11.png", screen);
-	screenImages[2] = loadPNG("./img/time.png", screen);
-	screenImages[3] = loadPNG("./img/x.png", screen);
-	screenImages[4] = loadPNG("./img/coin1.png", screen);
-	screenImages[5] = loadPNG("./img/coin2.png", screen);
-	screenImages[6] = loadPNG("./img/mario_right1.png", screen);
-	screenImages[7] = loadPNG("./img/world_start.png", screen);
-	screenImages[8] = loadPNG("./img/timeup.png", screen);
-	screenImages[9] = loadPNG("./img/gameover.png", screen);
-	screenImages[10] = loadPNG("./img/mario_dead1.png", screen);
-	screenImages[11] = loadPNG("./img/mario_dead2.png", screen);
+	screenImages[0] = loadPNG("./img/mario.png", display);
+	screenImages[1] = loadPNG("./img/world11.png", display);
+	screenImages[2] = loadPNG("./img/time.png", display);
+	screenImages[3] = loadPNG("./img/x.png", display);
+	screenImages[4] = loadPNG("./img/coin1.png", display);
+	screenImages[5] = loadPNG("./img/coin2.png", display);
+	screenImages[6] = loadPNG("./img/mario_right1.png", display);
+	screenImages[7] = loadPNG("./img/world_start.png", display);
+	screenImages[8] = loadPNG("./img/timeup.png", display);
+	screenImages[9] = loadPNG("./img/gameover.png", display);
+	screenImages[10] = loadPNG("./img/mario_dead1.png", display);
+	screenImages[11] = loadPNG("./img/mario_dead2.png", display);
 }
 
 void Screen::changeCoinImageIfAvailable(std::chrono::steady_clock::time_point timePoint)
@@ -72,47 +72,47 @@ void Screen::changeCoinImageIfAvailable(std::chrono::steady_clock::time_point ti
 void Screen::fillWorldBackground()
 {
 	// 90 149 252
-	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0x5A, 0x95, 0xFC));
+	SDL_FillRect(display, NULL, SDL_MapRGB(display->format, 0x5A, 0x95, 0xFC));
 }
 
 void Screen::fillScreenBackground()
 {
 	// 0 0 0
-	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0x00, 0x00, 0x00));
+	SDL_FillRect(display, NULL, SDL_MapRGB(display->format, 0x00, 0x00, 0x00));
 }
 
 void Screen::drawScreenElements()
 {
 	SDL_Surface* marioImg = screenImages[0];
-	drawSurface(screen, marioImg, 114, 30);
+	drawSurface(display, marioImg, 114, 30);
 	SDL_Surface* worldImg = screenImages[1];
-	drawSurface(screen, worldImg, SCREEN_WIDTH - 227, 30);
+	drawSurface(display, worldImg, SCREEN_WIDTH - 227, 30);
 	SDL_Surface* timeImg = screenImages[2];
-	drawSurface(screen, timeImg, SCREEN_WIDTH - 100, 19);
+	drawSurface(display, timeImg, SCREEN_WIDTH - 100, 19);
 }
 
 void Screen::drawStartScreenElements(int lives)
 {
 	SDL_Surface* worldImg = screenImages[7];
-	drawSurface(screen, worldImg, 303, 162);
+	drawSurface(display, worldImg, 303, 162);
 	SDL_Surface* marioImg = screenImages[6];
-	drawSurface(screen, marioImg, 261, 215);
+	drawSurface(display, marioImg, 261, 215);
 	SDL_Surface* xImg = screenImages[3];
-	drawSurface(screen, xImg, 310, 217);
+	drawSurface(display, xImg, 310, 217);
 	SDL_Surface* livesImg = digitImages[lives];
-	drawSurface(screen, livesImg, 360, 215);
+	drawSurface(display, livesImg, 360, 215);
 }
 
 void Screen::drawGameOver()
 {
 	SDL_Surface* img = screenImages[9];
-	drawSurface(screen, img, 310, 200);
+	drawSurface(display, img, 310, 200);
 }
 
 void Screen::drawTimeUp()
 {
 	SDL_Surface* img = screenImages[8];
-	drawSurface(screen, img, 310, 200);
+	drawSurface(display, img, 310, 200);
 }
 
 void Screen::drawTime(long long int time)
@@ -120,7 +120,7 @@ void Screen::drawTime(long long int time)
 	std::string timeStr = std::to_string(time);
 	for (int i = timeStr.length() - 1, j = 1; i >= 0; --i, ++j) {
 		SDL_Surface* img = digitImages[timeStr[i] - '0'];
-		drawSurface(screen, img, SCREEN_WIDTH - (61 + j * 16), 40);
+		drawSurface(display, img, SCREEN_WIDTH - (61 + j * 16), 40);
 	}
 }
 
@@ -129,12 +129,12 @@ void Screen::drawPoints(int points)
 	std::string pointsStr = std::to_string(points);
 	for (int i = pointsStr.length() - 1, j = 1; i >= 0; --i, ++j) {
 		SDL_Surface* img = digitImages[pointsStr[i] - '0'];
-		drawSurface(screen, img, 168 - j * 16, 40);
+		drawSurface(display, img, 168 - j * 16, 40);
 	}
 	if (pointsStr.length() < 6) {
 		SDL_Surface* img = digitImages[0];
 		for (int m = 6 - pointsStr.length() - 1, n = 1; m >= 0; --m, ++n) {
-			drawSurface(screen, img, 56 + n * 16, 40);
+			drawSurface(display, img, 56 + n * 16, 40);
 		}
 	}
 }
@@ -144,9 +144,9 @@ void Screen::drawCoins(int coins)
 	std::string coinsStr = std::to_string(coins);
 	SDL_Surface* img1, * img2;
 	img1 = screenImages[4 + coinImage];
-	drawSurface(screen, img1, 230, 41);
+	drawSurface(display, img1, 230, 41);
 	img1 = screenImages[3];
-	drawSurface(screen, img1, 250, 42);
+	drawSurface(display, img1, 250, 42);
 
 	if (coinsStr.length() == 2) {
 		img1 = digitImages[coinsStr[0] - '0'];
@@ -156,13 +156,13 @@ void Screen::drawCoins(int coins)
 		img1 = digitImages[0];
 		img2 = digitImages[coinsStr[0] - '0'];
 	}
-	drawSurface(screen, img1, 270, 40);
-	drawSurface(screen, img2, 286, 40);
+	drawSurface(display, img1, 270, 40);
+	drawSurface(display, img2, 286, 40);
 }
 
 void Screen::updateView()
 {
-	SDL_UpdateTexture(scrtex, NULL, screen->pixels, screen->pitch);
+	SDL_UpdateTexture(scrtex, NULL, display->pixels, display->pitch);
 	SDL_RenderCopy(renderer, scrtex, NULL, NULL);
 	SDL_RenderPresent(renderer);
 }
@@ -177,7 +177,7 @@ int Screen::initGUI()
 
 	int status = SDL_CreateWindowAndRenderer(Screen::SCREEN_WIDTH, Screen::SCREEN_HEIGHT, 0, &window, &renderer);
 
-	screen = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT, 32, 0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000);
+	display = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT, 32, 0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000);
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 	SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -194,7 +194,7 @@ int Screen::initGUI()
 void Screen::closeGUI()
 {
 	SDL_FreeSurface(charset);
-	SDL_FreeSurface(screen);
+	SDL_FreeSurface(display);
 	SDL_DestroyTexture(scrtex);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
@@ -208,7 +208,7 @@ Screen::Screen()
 	player = nullptr;
 	coinImage = true;
 	lastColoursUpdateTime = std::chrono::steady_clock::now();
-	screen = nullptr;
+	display = nullptr;
 	charset = nullptr;
 	scrtex = nullptr;
 	window = nullptr;
@@ -246,9 +246,9 @@ bool Screen::isTimePassed() const
 	return time <= 0;
 }
 
-SDL_Surface* Screen::getScreen() const
+SDL_Surface* Screen::getDisplay() const
 {
-	return screen;
+	return display;
 }
 
 void Screen::setPlayer(Player* playerPointer)
@@ -274,7 +274,7 @@ void Screen::resetScreen()
 	coinImage = true;
 }
 
-void Screen::drawStartScreen(World& world)
+void Screen::drawStartScreen()
 {
 	fillScreenBackground();
 	drawScreenElements();
@@ -284,7 +284,7 @@ void Screen::drawStartScreen(World& world)
 	updateView();
 }
 
-void Screen::drawGameOverScreen(World& world)
+void Screen::drawGameOverScreen()
 {
 	fillScreenBackground();
 	drawScreenElements();
@@ -294,7 +294,7 @@ void Screen::drawGameOverScreen(World& world)
 	updateView();
 }
 
-void Screen::drawTimeUpScreen(World& world)
+void Screen::drawTimeUpScreen()
 {
 	fillScreenBackground();
 	drawScreenElements();
@@ -321,9 +321,9 @@ void Screen::drawDeadMario(World& world)
 			drawTime(time);
 			drawPoints(player->getPoints());
 			drawCoins(player->getCoins());
-			world.draw(screen, getBeginningOfCamera(), false);
+			world.draw(display, getBeginningOfCamera(), false);
 
-			drawSurface(screen, img, player->getCameraX(), player->getY() + shift);
+			drawSurface(display, img, player->getCameraX(), player->getY() + shift);
 			updateView();
 
 			shift += (i <= 450 ? -1 : 1);
@@ -343,7 +343,7 @@ void Screen::drawWorldFinishedScreen(World& world)
 		drawTime(time);
 		drawPoints(player->getPoints());
 		drawCoins(player->getCoins());
-		world.draw(screen, getBeginningOfCamera(), false);
+		world.draw(display, getBeginningOfCamera(), false);
 		updateView();
 		--time;
 		std::this_thread::sleep_for(std::chrono::milliseconds(25));
@@ -361,7 +361,7 @@ void Screen::updateScreen(World& world)
 	drawPoints(player->getPoints());
 
 	world.performActions();
-	world.draw(screen, getBeginningOfCamera());
+	world.draw(display, getBeginningOfCamera());
 	drawCoins(player->getCoins());
 	updateView();
 }

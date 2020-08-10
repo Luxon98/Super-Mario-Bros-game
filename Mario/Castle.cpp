@@ -11,13 +11,13 @@ Castle::Castle(Position* position)
 	size = new Size(0, 0);
 }
 
-void Castle::loadCastleImages(SDL_Surface* screen)
+void Castle::loadCastleImages(SDL_Surface* display)
 {
-	castleImage = loadPNG("./img/castle.png", screen);
+	castleImage = loadPNG("./img/castle.png", display);
 }
 
-void Castle::draw(SDL_Surface* screen, int beginningOfCamera)
+void Castle::draw(SDL_Surface* display, int beginningOfCamera)
 {
-	drawSurface(screen, castleImage, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, castleImage, position->getX() - beginningOfCamera, position->getY());
 }
 

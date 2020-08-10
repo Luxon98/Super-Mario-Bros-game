@@ -97,7 +97,7 @@ void World::performFireBallsActions()
 
 void World::performWorldActions()
 {
-	player->move(Left, 0, *this, mainScreen);
+	player->move(Left, 0, *this, screen);
 	performBonusElementsActions();
 	performMonstersActions();
 	performFireBallsActions();
@@ -221,6 +221,7 @@ World::World()
 	lastTouchedBlockIndex = 0;
 	player = nullptr;
 	flag = nullptr;
+	screen = nullptr;
 	slidingCounter = 0;
 	fireballStatus = false;
 }
@@ -268,6 +269,11 @@ bool World::isFlagDown() const
 void World::setPlayer(Player* player)
 {
 	this->player = player;
+}
+
+void World::setScreen(Screen* screen)
+{
+	this->screen = screen;
 }
 
 void World::setLastTouchedBlock(int index)
@@ -377,36 +383,36 @@ void World::performActions()
 	changeColoursIfAvailable();
 }
 
-void World::draw(SDL_Surface* screen, int beginningOfScreen, bool playerFlag)
+void World::draw(SDL_Surface* display, int beginningOfScreen, bool playerFlag)
 {
 	for (unsigned int i = 0; i < inanimateElements.size(); ++i) {
-		inanimateElements[i]->draw(screen, beginningOfScreen);
+		inanimateElements[i]->draw(display, beginningOfScreen);
 	}
 
 	for (unsigned int i = 0; i < bonusElements.size(); ++i) {
-		bonusElements[i]->draw(screen, beginningOfScreen);
+		bonusElements[i]->draw(display, beginningOfScreen);
 	}
 
 	for (unsigned int i = 0; i < monsters.size(); ++i) {
-		monsters[i]->draw(screen, beginningOfScreen);
+		monsters[i]->draw(display, beginningOfScreen);
 	}
 
 	for (auto it = fireballs.begin(); it != fireballs.end(); ++it) {
-		it->draw(screen, beginningOfScreen);
+		it->draw(display, beginningOfScreen);
 	}
 
 	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
-		it->draw(screen, beginningOfScreen);
+		it->draw(display, beginningOfScreen);
 	}
 
 	for (unsigned int i = 0; i < temporaryElements.size(); ++i) {
-		temporaryElements[i]->draw(screen, beginningOfScreen);
+		temporaryElements[i]->draw(display, beginningOfScreen);
 	}
 
-	flag->draw(screen, beginningOfScreen);
+	flag->draw(display, beginningOfScreen);
 
 	if (playerFlag) {
-		player->draw(screen, player->getCameraX());
+		player->draw(display, player->getCameraX());
 	}
 }
 

@@ -12,20 +12,20 @@ Bush::Bush(int type, Position* position)
 	size = new Size(0, 0);
 }
 
-void Bush::loadBushImages(SDL_Surface* screen)
+void Bush::loadBushImages(SDL_Surface* display)
 {
 	for (int i = 0; i < 5; ++i) {
 		std::string filename = "./img/bush";
 		filename += std::to_string(i + 1);
 		filename += ".png";
-		bushImages[i] = loadPNG(filename, screen);
+		bushImages[i] = loadPNG(filename, display);
 	}
 }
 
-void Bush::draw(SDL_Surface* screen, int beginningOfCamera)
+void Bush::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	SDL_Surface* bushImg = nullptr;
 	bushImg = bushImages[model - 1];
-	drawSurface(screen, bushImg, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, bushImg, position->getX() - beginningOfCamera, position->getY());
 }
 

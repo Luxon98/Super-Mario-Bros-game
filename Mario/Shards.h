@@ -18,8 +18,8 @@ private:
 public:
 	Shards();
 	Shards(Position* position);
-	void loadShardsImages(SDL_Surface* screen);
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	void loadShardsImages(SDL_Surface* display);
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
 	bool shouldBeRemoved() override;
 	void slide() override;
 };

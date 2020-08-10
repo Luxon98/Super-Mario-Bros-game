@@ -10,14 +10,14 @@ Explosion::Explosion(Position* position)
 	creationTime = std::chrono::steady_clock::now();
 }
 
-void Explosion::loadExplosionImage(SDL_Surface* screen)
+void Explosion::loadExplosionImage(SDL_Surface* display)
 {
-	explosionImage = loadPNG("./img/explosion.png", screen);
+	explosionImage = loadPNG("./img/explosion.png", display);
 }
 
-void Explosion::draw(SDL_Surface* screen, int beginningOfCamera)
+void Explosion::draw(SDL_Surface* display, int beginningOfCamera)
 {
-	drawSurface(screen, explosionImage, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, explosionImage, position->getX() - beginningOfCamera, position->getY());
 }
 
 bool Explosion::shouldBeRemoved()

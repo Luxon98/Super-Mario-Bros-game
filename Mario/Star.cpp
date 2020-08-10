@@ -14,21 +14,21 @@ Star::Star(Position* position)
 	growCounter = 90;
 }
 
-void Star::loadStarImages(SDL_Surface* screen)
+void Star::loadStarImages(SDL_Surface* display)
 {
 	for (int i = 0; i < 4; ++i) {
 		std::string filename = "./img/star";
 		filename += std::to_string(i + 1);
 		filename += ".png";
-		starImages[i] = loadPNG(filename, screen);
+		starImages[i] = loadPNG(filename, display);
 	}
 }
 
-void Star::draw(SDL_Surface* screen, int beginningOfCamera)
+void Star::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	SDL_Surface* starImg = nullptr;
 	starImg = starImages[stepsCounter % 4];
-	drawSurface(screen, starImg, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, starImg, position->getX() - beginningOfCamera, position->getY());
 }
 
 void Star::move(Direction direction, int distance, World& world, Screen* mainScreen)

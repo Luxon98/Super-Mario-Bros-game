@@ -12,7 +12,6 @@ Player::Statistics::Statistics()
 Player::Flags::Flags()
 {
 	orientationFlag = true;
-	rejumpFlag = false;
 	aliveFlag = true;
 	removeLivesFlag = false;
 }
@@ -20,7 +19,6 @@ Player::Flags::Flags()
 void Player::Flags::setDefaultFlags()
 {
 	orientationFlag = true;
-	rejumpFlag = false;
 	aliveFlag = true;
 	removeLivesFlag = false;
 }
@@ -253,11 +251,6 @@ bool Player::isDuringAnimation()
 	return (currentAnimationState != NoAnimation);
 }
 
-bool Player::isRejumping()
-{
-	return flags.rejumpFlag;
-}
-
 Player::Player() {}
 
 Player::Player(Position* position)
@@ -371,14 +364,14 @@ void Player::setStepsDown(int stepsDown)
 	this->stepsDown = stepsDown;
 }
 
+void Player::setScreen(Screen* screen)
+{
+	this->screen = screen;
+}
+
 void Player::addPoints(int pts)
 {
 	statistics.points += pts;
-}
-
-void Player::setRejumpFlag()
-{
-	flags.rejumpFlag = true;
 }
 
 void Player::setCurrentAnimation(AnimationState state)
@@ -387,19 +380,19 @@ void Player::setCurrentAnimation(AnimationState state)
 	lastAnimationStartTime = std::chrono::steady_clock::now();
 }
 
-void Player::loadPlayerImages(SDL_Surface* screen)
+void Player::loadPlayerImages(SDL_Surface* display)
 {
 	for (int i = 0; i < 37; ++i) {
 		std::string filename = "./img/mario_left";
 		filename += std::to_string(i + 1);
 		filename += ".png";
-		playerImages[i] = loadPNG(filename, screen);
+		playerImages[i] = loadPNG(filename, display);
 		filename.replace(12, 4, "right");
-		playerImages[i + 37] = loadPNG(filename, screen);
+		playerImages[i + 37] = loadPNG(filename, display);
 	}
 }
 
-void Player::draw(SDL_Surface* screen, int beginningOfCamera)
+void Player::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	if (isDuringAnimation()) {
 		changeStateDuringAnimation();
@@ -407,15 +400,15 @@ void Player::draw(SDL_Surface* screen, int beginningOfCamera)
 	int index = computeImageIndex();
 
 	SDL_Surface* playerImg = playerImages[index];
-	drawSurface(screen, playerImg, beginningOfCamera, position->getY());
+	drawSurface(display, playerImg, beginningOfCamera, position->getY());
 }
 
-void Player::hitBlock(World& world, Screen* mainScreen)
+void Player::hitBlock(World& world)
 {
 	if ((currentState >= Tall && currentState <= ImmortalFourth)
 		&& world.getBlockModel(world.getLastTouchedBlockIndex()) == Destructible) {
 		world.performBlockRemovalActions(world.getLastTouchedBlockIndex());
-		mainScreen->updateScreen(world);
+		
 	}
 	else {
 		world.setSlidingCounter(124);
@@ -573,33 +566,55 @@ void Player::loseBonusOrLife()
 //	jump(Up, 40, world, mainScreen);
 //}
 
+void Player::performAdditionalJump()
+{
+	stepsDown = 0;
+	stepsUp = 40;
+}
+
 void Player::move(Direction direction, int distance, World& world, Screen* mainScreen)
 {
 	if (!movementBlock) {
 		if (stepsLeft > 0) {
-			int dis = speed - getAlignmentIfCollisionOccursDuringMovement(Left, speed, this, world);
+			int alignment = getAlignmentIfCollisionOccursDuringMovement(Left, speed, this, world);
+			int dis = speed - alignment;
+
 			if (!isGoingBeyondCamera(dis)) {
 				position->setX(position->getX() - dis);
 				cameraX -= dis;
 			}
 
-			stepsLeft--;
+			if (alignment != 0) {
+				stepsLeft = 0;
+			}
+			else {
+				stepsLeft--;
+			}
+
 			flags.orientationFlag = false;
 		}
 
 		if (stepsRight > 0) {
-			int dis = speed - getAlignmentIfCollisionOccursDuringMovement(Right, speed, this, world);
+			int alignment = getAlignmentIfCollisionOccursDuringMovement(Right, speed, this, world);
+			int dis = speed - alignment;
+
 			position->setX(position->getX() + dis);
 
 			if (isExceedingCameraReferencePoint(dis)) {
-				mainScreen->setPositionOfTheScreen(mainScreen->getBeginningOfCamera() + dis,
-					mainScreen->getEndOfCamera() + dis);
+				screen->setPositionOfTheScreen(screen->getBeginningOfCamera() + dis,
+					screen->getEndOfCamera() + dis);
 			}
 			else {
 				cameraX += dis;
 			}
 
-			stepsRight--;
+			if (alignment != 0) {
+				stepsRight = 0;
+			}
+			else {
+				stepsRight--;
+			}
+
 			flags.orientationFlag = true;
 		}
 
@@ -612,7 +627,7 @@ void Player::move(Direction direction, int distance, World& world, Screen* mainS
 			}
 
 			if (isHittingBlock(alignment, Up)) {
-				hitBlock(world, mainScreen);
+				hitBlock(world, screen);
 				stepsUp = 0;
 			}
 			else {

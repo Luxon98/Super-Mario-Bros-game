@@ -11,19 +11,19 @@ AnimatedText::AnimatedText(TextType type, Position* position)
 	auxiliaryCounter = 0;
 }
 
-void AnimatedText::loadAnimatedTextImages(SDL_Surface* screen)
+void AnimatedText::loadAnimatedTextImages(SDL_Surface* display)
 {
-	animatedTextImages[0] = loadPNG("./img/100.png", screen);
-	animatedTextImages[1] = loadPNG("./img/200.png", screen);
-	animatedTextImages[2] = loadPNG("./img/400.png", screen);
-	animatedTextImages[3] = loadPNG("./img/1000.png", screen);
-	animatedTextImages[4] = loadPNG("./img/1UP.png", screen);
+	animatedTextImages[0] = loadPNG("./img/100.png", display);
+	animatedTextImages[1] = loadPNG("./img/200.png", display);
+	animatedTextImages[2] = loadPNG("./img/400.png", display);
+	animatedTextImages[3] = loadPNG("./img/1000.png", display);
+	animatedTextImages[4] = loadPNG("./img/1UP.png", display);
 }
 
-void AnimatedText::draw(SDL_Surface* screen, int beginningOfCamera)
+void AnimatedText::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	SDL_Surface* animatedTextImg = animatedTextImages[type - 1];
-	drawSurface(screen, animatedTextImg, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, animatedTextImg, position->getX() - beginningOfCamera, position->getY());
 }
 
 bool AnimatedText::shouldBeRemoved()

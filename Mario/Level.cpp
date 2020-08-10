@@ -157,8 +157,8 @@ void Level::setFirstLevel(World& world)
 	world.inanimateElements.push_back(new Cloud(2, new Position(5822, 72)));
 	world.inanimateElements.push_back(new Cloud(1, new Position(6446, 104)));
 
-	/*world.monsters.push_back(new Creature(new Position(730, 400)));
-	world.monsters.push_back(new Creature(new Position(1650, 400)));
+	world.monsters.push_back(new Creature(new Position(730, 400)));
+	/*world.monsters.push_back(new Creature(new Position(1650, 400)));
 	world.monsters.push_back(new Creature(new Position(1710, 400)));
 	world.monsters.push_back(new Creature(new Position(2650, 128)));
 	world.monsters.push_back(new Creature(new Position(2700, 128)));

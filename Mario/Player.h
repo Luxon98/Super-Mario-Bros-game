@@ -59,7 +59,6 @@ private:
 	{
 	public:
 		bool orientationFlag;
-		bool rejumpFlag;
 		bool aliveFlag;
 		bool removeLivesFlag;
 		Flags();
@@ -89,13 +88,14 @@ private:
 	bool isExceedingCameraReferencePoint(int distance);
 	bool isHittingBlock(int alignment, Direction direction);
 	bool isDuringAnimation();
-	bool isRejumping();
 
 	int stepsLeft;
 	int stepsRight;
 	int stepsUp;
 	int stepsDown;
 	int speed;
+
+	Screen* screen;
 
 public:
 	Player();
@@ -118,12 +118,12 @@ public:
 	void setStepsRight(int stepsRight);
 	void setStepsUp(int stepsUp);
 	void setStepsDown(int stepsDown);
+	void setScreen(Screen* screen);
 	void addPoints(int pts);
-	void setRejumpFlag();
 	void setCurrentAnimation(AnimationState state);
-	void loadPlayerImages(SDL_Surface* screen);
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
-	void hitBlock(World& world, Screen* mainScreen);
+	void loadPlayerImages(SDL_Surface* display);
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
+	void hitBlock(World& world);
 	void loseBonusOrLife();
 	//void changePosition(Direction direction, int distance, World& world, Screen* mainScreen);
 	//void changeVerticalPosition(Direction direction, int distance, World& world);
@@ -131,7 +131,7 @@ public:
 	//void jump(Direction direction, int height, World& world, Screen* mainScreen);
 	//void moveAndJump(Direction dirX, int distance, int height, World& world, Screen* mainScreen);
 	//void performAdditionalJump(World& world, Screen* mainScreen);
-
+	void performAdditionalJump();
 	void move(Direction direction, int distance, World& world, Screen* mainScreen);
 	void reborn();
 };

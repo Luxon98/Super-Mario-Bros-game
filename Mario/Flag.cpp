@@ -27,16 +27,16 @@ void Flag::setActiveState()
 	active = true;
 }
 
-void Flag::loadFlagImage(SDL_Surface* screen)
+void Flag::loadFlagImage(SDL_Surface* display)
 {
-	flagImages[0] = loadPNG("./img/flag.png", screen);
-	flagImages[1] = loadPNG("./img/stick.png", screen);
+	flagImages[0] = loadPNG("./img/flag.png", display);
+	flagImages[1] = loadPNG("./img/stick.png", display);
 }
 
-void Flag::draw(SDL_Surface* screen, int beginningOfCamera)
+void Flag::draw(SDL_Surface* display, int beginningOfCamera)
 {
-	drawSurface(screen, flagImages[1], position->getX() + 17 - beginningOfCamera, stickPositionY);
-	drawSurface(screen, flagImages[0], position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, flagImages[1], position->getX() + 17 - beginningOfCamera, stickPositionY);
+	drawSurface(display, flagImages[0], position->getX() - beginningOfCamera, position->getY());
 }
 
 void Flag::changePosition()

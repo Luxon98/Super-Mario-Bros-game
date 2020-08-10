@@ -124,7 +124,7 @@ void handleIfCollisionWithMonsterOccurs(Player* player, World& world)
 	for (auto it = monsters.begin(); it != monsters.end(); ++it, ++index) {
 		if (areAtTheSameWidth(player, *it) && areAtTheSameHeight(player, *it)) {
 			if (isPlayerJumpingOnMonster(player, *it)) {
-				player->setRejumpFlag();
+				player->performAdditionalJump();
 
 				if (dynamic_cast<Shell*>(*it)) {
 					if (dynamic_cast<Shell*>(*it)->isActive()) {

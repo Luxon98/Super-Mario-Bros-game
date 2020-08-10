@@ -37,14 +37,14 @@ void Shell::resetCreationTime()
 }
 
 
-void Shell::loadShellImage(SDL_Surface* screen)
+void Shell::loadShellImage(SDL_Surface* display)
 {
-	shellImage = loadPNG("./img/shell.png", screen);
+	shellImage = loadPNG("./img/shell.png", display);
 }
 
-void Shell::draw(SDL_Surface* screen, int beginningOfCamera)
+void Shell::draw(SDL_Surface* display, int beginningOfCamera)
 {
-	drawSurface(screen, shellImage, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, shellImage, position->getX() - beginningOfCamera, position->getY());
 }
 
 void Shell::move(Direction direction, int distance, World& world, Screen* mainScreen)

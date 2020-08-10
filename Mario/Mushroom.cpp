@@ -19,17 +19,17 @@ bool Mushroom::isGreen()
 	return greenColor;
 }
 
-void Mushroom::loadMushroomImages(SDL_Surface* screen)
+void Mushroom::loadMushroomImages(SDL_Surface* display)
 {
-	mushroomImages[0] = loadPNG("./img/mushroom_green.png", screen);
-	mushroomImages[1] = loadPNG("./img/mushroom_red.png", screen);
+	mushroomImages[0] = loadPNG("./img/mushroom_green.png", display);
+	mushroomImages[1] = loadPNG("./img/mushroom_red.png", display);
 }
 
-void Mushroom::draw(SDL_Surface* screen, int beginningOfCamera)
+void Mushroom::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	SDL_Surface* mushroomImg = nullptr;
 	mushroomImg = mushroomImages[!greenColor];
-	drawSurface(screen, mushroomImg, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, mushroomImg, position->getX() - beginningOfCamera, position->getY());
 }
 
 void Mushroom::move(Direction direction, int distance, World& world, Screen* mainScreen)

@@ -14,9 +14,9 @@ public:
 	static int typeOfImage;
 	Coin();
 	Coin(Position* position);
-	void loadCoinImages(SDL_Surface* screen);
+	void loadCoinImages(SDL_Surface* display);
 	static void changeCoinImage();
-	void draw(SDL_Surface* screen, int beginningOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera) override;
 };
 
 #endif //_Coin_H

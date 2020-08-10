@@ -10,14 +10,14 @@ CrushedCreature::CrushedCreature(Position* position)
 	creationTime = std::chrono::steady_clock::now();
 }
 
-void CrushedCreature::loadCrushedCreatureImage(SDL_Surface* screen)
+void CrushedCreature::loadCrushedCreatureImage(SDL_Surface* display)
 {
-	crushedCreatureImage = loadPNG("./img/crushed_creature.png", screen);
+	crushedCreatureImage = loadPNG("./img/crushed_creature.png", display);
 }
 
-void CrushedCreature::draw(SDL_Surface* screen, int beginningOfCamera)
+void CrushedCreature::draw(SDL_Surface* display, int beginningOfCamera)
 {
-	drawSurface(screen, crushedCreatureImage, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, crushedCreatureImage, position->getX() - beginningOfCamera, position->getY());
 }
 
 bool CrushedCreature::shouldBeRemoved()

@@ -11,14 +11,14 @@ DestroyedTurtle::DestroyedTurtle(Position* position)
 	auxiliaryCounter = 0;
 }
 
-void DestroyedTurtle::loadDestroyedTurtleImage(SDL_Surface* screen)
+void DestroyedTurtle::loadDestroyedTurtleImage(SDL_Surface* display)
 {
-	destroyedTurtleImage = loadPNG("./img/destroyed_turtle.png", screen);
+	destroyedTurtleImage = loadPNG("./img/destroyed_turtle.png", display);
 }
 
-void DestroyedTurtle::draw(SDL_Surface* screen, int beginningOfCamera)
+void DestroyedTurtle::draw(SDL_Surface* display, int beginningOfCamera)
 {
-	drawSurface(screen, destroyedTurtleImage, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, destroyedTurtleImage, position->getX() - beginningOfCamera, position->getY());
 }
 
 bool DestroyedTurtle::shouldBeRemoved()

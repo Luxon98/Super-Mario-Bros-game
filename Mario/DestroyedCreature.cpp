@@ -11,14 +11,14 @@ DestroyedCreature::DestroyedCreature(Position* position)
 	auxiliaryCounter = 0;
 }
 
-void DestroyedCreature::loadDestroyedCreatureImage(SDL_Surface* screen)
+void DestroyedCreature::loadDestroyedCreatureImage(SDL_Surface* display)
 {
-	destroyedCreatureImage = loadPNG("./img/destroyed_creature.png", screen);
+	destroyedCreatureImage = loadPNG("./img/destroyed_creature.png", display);
 }
 
-void DestroyedCreature::draw(SDL_Surface* screen, int beginningOfCamera)
+void DestroyedCreature::draw(SDL_Surface* display, int beginningOfCamera)
 {
-	drawSurface(screen, destroyedCreatureImage, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, destroyedCreatureImage, position->getX() - beginningOfCamera, position->getY());
 }
 
 bool DestroyedCreature::shouldBeRemoved()

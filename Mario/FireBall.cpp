@@ -32,21 +32,21 @@ bool FireBall::shouldBeRemoved()
 	return stop;
 }
 
-void FireBall::loadFireBallImages(SDL_Surface* screen)
+void FireBall::loadFireBallImages(SDL_Surface* display)
 {
 	for (int i = 0; i < 4; ++i) {
 		std::string filename = "./img/fireball";
 		filename += std::to_string(i + 1);
 		filename += ".png";
-		fireBallImages[i] = loadPNG(filename, screen);
+		fireBallImages[i] = loadPNG(filename, display);
 	}
 }
 
-void FireBall::draw(SDL_Surface* screen, int beginningOfCamera)
+void FireBall::draw(SDL_Surface* display, int beginningOfCamera)
 {
 	SDL_Surface* fireballImg = nullptr;
 	fireballImg = fireBallImages[modelIndex];
-	drawSurface(screen, fireballImg, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, fireballImg, position->getX() - beginningOfCamera, position->getY());
 }
 
 void FireBall::move(Direction direction, int distance, World& world, Screen* mainScreen)
