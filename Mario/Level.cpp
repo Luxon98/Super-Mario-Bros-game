@@ -158,7 +158,7 @@ void Level::setFirstLevel(World& world)
 	world.inanimateElements.push_back(new Cloud(1, new Position(6446, 104)));
 
 	world.monsters.push_back(new Creature(new Position(730, 400)));
-	/*world.monsters.push_back(new Creature(new Position(1650, 400)));
+	world.monsters.push_back(new Creature(new Position(1650, 400)));
 	world.monsters.push_back(new Creature(new Position(1710, 400)));
 	world.monsters.push_back(new Creature(new Position(2650, 128)));
 	world.monsters.push_back(new Creature(new Position(2700, 128)));
@@ -172,7 +172,7 @@ void Level::setFirstLevel(World& world)
 	world.monsters.push_back(new Creature(new Position(4150, 400)));
 	world.monsters.push_back(new Creature(new Position(4200, 400)));
 	world.monsters.push_back(new Creature(new Position(5200, 400)));
-	world.monsters.push_back(new Creature(new Position(5270, 400)));*/
+	world.monsters.push_back(new Creature(new Position(5270, 400)));
 
 	world.inanimateElements.push_back(new Castle(new Position(6542, 336)));
 	world.flag = new Flag(new Position(6335, 116));

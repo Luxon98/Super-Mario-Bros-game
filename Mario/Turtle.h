@@ -2,11 +2,10 @@
 #define _Turtle_H
 
 #include "SDL_Utility.h"
-#include "NonControllableLivingObject.h"
 #include "World.h"
 
 
-class Turtle : public NonControllableLivingObject
+class Turtle : public LivingObject
 {
 private:
 	static SDL_Surface* turtleImages[4];
@@ -19,7 +18,7 @@ public:
 	void setMoveDirection(Direction direction);
 	void loadTurtleImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera) override;
-	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
+	void move(World& world) override;
 };
 
 #endif //_Turtle_H

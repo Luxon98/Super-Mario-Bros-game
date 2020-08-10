@@ -15,16 +15,16 @@ Creature::Creature() {}
 Creature::Creature(Position* position)
 {
 	size = new Size(32, 32);
+	movement = new Movement(1, None);
 	this->position = position;
 	model = 1;
 	stepsCounter = 0;
 	changeModelCounter = 0;
-	moveDirection = None;
 }
 
 void Creature::setMoveDirection(Direction direction)
 {
-	moveDirection = direction;
+	movement->setDirection(direction);
 }
 
 void Creature::loadCreatureImages(SDL_Surface* display)
@@ -40,24 +40,24 @@ void Creature::draw(SDL_Surface* display, int beginningOfCamera)
 	drawSurface(display, creatureImg, position->getX() - beginningOfCamera, position->getY());
 }
 
-void Creature::move(Direction direction, int distance, World& world, Screen* mainScreen)
+void Creature::move(World& world)
 {
-	if (moveDirection != None && stepsCounter % 3 == 0) {
+	if (movement->getDirection() != None && stepsCounter % 3 == 0) {
 		if (isCharacterStandingOnTheBlock(this, world)) {
-			int alignment = getAlignmentIfCollisionOccursDuringMovement(direction, distance, this, world);
-			int realDistance = direction == Right ? (distance - alignment) : (-1) * (distance - alignment);
-			position->setX(position->getX() + realDistance);
+			int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world);
+			int distance = movement->getDirection() == Right ? (movement->getSpeed() - alignment) : (-1) * (movement->getSpeed() - alignment);
+			position->setX(position->getX() + distance);
 
 			if (alignment > 0) {
-				moveDirection = (moveDirection == Right ? Left : Right);
+				movement->setDirection(movement->getDirection() == Right ? Left : Right);
 			}
 		}
 		else {
-			int realVerticalDistance = (2 * distance) - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 2 * distance, this, world);
-			position->setY(position->getY() + realVerticalDistance);
+			int verticalDistance = (2 * movement->getSpeed()) - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 2 * movement->getSpeed(), this, world);
+			position->setY(position->getY() + verticalDistance);
 
-			int realDistance = (direction == Right ? 1 : -1) * (1 - getAlignmentIfCollisionOccursDuringMovement(direction, distance, this, world));
-			position->setX(position->getX() + realDistance);
+			int distance = (movement->getDirection() == Right ? 1 : -1) * (1 - getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world));
+			position->setX(position->getX() + distance);
 		}
 
 		changeModel();

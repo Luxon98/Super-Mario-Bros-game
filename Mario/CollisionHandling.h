@@ -4,12 +4,12 @@
 #include <cmath>
 #include "World.h"
 #include "WorldObject.h"
-#include "NonControllableLivingObject.h"
 #include "BonusObject.h"
 #include "Player.h"
 #include "Block.h"
 #include "Coin.h"
 #include "FireBall.h"
+#include "Direction.h"
 
 
 enum Direction;
@@ -21,7 +21,7 @@ bool isCharacterHittingBlock(WorldObject* object, Block block, Direction directi
 
 bool isCharacterStandingOnTheBlock(WorldObject* object, World& world);
 
-bool isMonsterStandingOnTheBlock(NonControllableLivingObject* object, Block block);
+bool isMonsterStandingOnTheBlock(LivingObject* object, Block block);
 
 bool isFlowerStandingOnTheBlock(World& world, int index);
 
@@ -33,7 +33,7 @@ bool areAtTheSameWidth(WorldObject* firstObject, WorldObject* secondObject);
 
 bool areAtTheSameHeight(WorldObject* firstObject, WorldObject* secondObject);
 
-bool isPlayerJumpingOnMonster(Player* player, NonControllableLivingObject* monster);
+bool isPlayerJumpingOnMonster(Player* player, LivingObject* monster);
 
 void handleIfCollisionWithMonsterOccurs(Player* player, World& world);
 

@@ -572,7 +572,7 @@ void Player::performAdditionalJump()
 	stepsUp = 40;
 }
 
-void Player::move(Direction direction, int distance, World& world, Screen* mainScreen)
+void Player::move(World& world)
 {
 	if (!movementBlock) {
 		if (stepsLeft > 0) {
@@ -627,7 +627,7 @@ void Player::move(Direction direction, int distance, World& world, Screen* mainS
 			}
 
 			if (isHittingBlock(alignment, Up)) {
-				hitBlock(world, screen);
+				hitBlock(world);
 				stepsUp = 0;
 			}
 			else {

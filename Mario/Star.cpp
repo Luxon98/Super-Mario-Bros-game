@@ -8,7 +8,7 @@ Star::Star(Position* position)
 {
 	size = new Size(28, 32);
 	this->position = position;
-	moveDirection = Right;
+	movement = new Movement(1, Right);
 	verticalDirection = Up;
 	stepsCounter = 0;
 	growCounter = 90;
@@ -31,23 +31,24 @@ void Star::draw(SDL_Surface* display, int beginningOfCamera)
 	drawSurface(display, starImg, position->getX() - beginningOfCamera, position->getY());
 }
 
-void Star::move(Direction direction, int distance, World& world, Screen* mainScreen)
+void Star::move(World& world)
 {
 	if (growCounter) {
 		grow();
 	}
 	else {
-		int alignment = getAlignmentIfCollisionOccursDuringMovement(moveDirection, 2 * distance, this, world);
-		int realDistance = moveDirection == Right ? 1 : -1 * (2 * distance - alignment);
-		position->setX(position->getX() + realDistance);
+		int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), 2 * movement->getSpeed(), this, world);
+		int distance = movement->getDirection() == Right ? 1 : -1 * (2 * movement->getSpeed() - alignment);
+		position->setX(position->getX() + distance);
 
 		if (alignment > 0) {
-			moveDirection = (moveDirection == Right ? Left : Right);
+			movement->setDirection(movement->getDirection() == Right ? Left : Right);
 		}
 
-		alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(verticalDirection, distance, this, world);
-		int realVerticalDistance = (verticalDirection == Down ? 1 : -1) * (distance - alignment);
-		position->setY(position->getY() + realVerticalDistance);
+		alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(verticalDirection, movement->getSpeed(), this, world);
+		int verticalDistance = (verticalDirection == Down ? 1 : -1) * (movement->getSpeed() - alignment);
+
+		position->setY(position->getY() + verticalDistance);
 
 		if (verticalDirection == Up) {
 			stepsUp++;

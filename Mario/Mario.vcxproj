@@ -160,8 +160,8 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LivingObject.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Movement.cpp" />
     <ClCompile Include="Mushroom.cpp" />
-    <ClCompile Include="NonControllableLivingObject.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -190,6 +190,7 @@
     <ClInclude Include="CrushedCreature.h" />
     <ClInclude Include="DestroyedCreature.h" />
     <ClInclude Include="DestroyedTurtle.h" />
+    <ClInclude Include="Direction.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="Flag.h" />
@@ -199,8 +200,8 @@
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LivingObject.h" />
+    <ClInclude Include="Movement.h" />
     <ClInclude Include="Mushroom.h" />
-    <ClInclude Include="NonControllableLivingObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Screen.h" />

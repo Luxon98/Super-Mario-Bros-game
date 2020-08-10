@@ -28,21 +28,11 @@
 #include "Castle.h"
 #include "Flag.h"
 #include "BonusObject.h"
-#include "NonControllableLivingObject.h"
+#include "Direction.h"
 
 
 class Player;
 class FireBall;
-
-
-enum Direction
-{
-	None = 0,
-	Left = 1,
-	Right = 2,
-	Down = 3,
-	Up = 4
-};
 
 
 class World
@@ -52,7 +42,7 @@ private:
 	std::vector<Block> blocks;
 	std::vector<InanimateObject*> inanimateElements;
 	std::vector<BonusObject*> bonusElements;
-	std::vector<NonControllableLivingObject*> monsters;
+	std::vector<LivingObject*> monsters;
 	std::vector<TemporaryObject*> temporaryElements;
 	std::vector<FireBall> fireballs;
 	Player* player;
@@ -62,7 +52,7 @@ private:
 	int slidingCounter;
 	bool fireballStatus;
 	void changeColoursIfAvailable();
-	void setMovementDirectionIfPlayerIsCloseEnough(NonControllableLivingObject& monster);
+	void setMovementDirectionIfPlayerIsCloseEnough(LivingObject& monster);
 	void deleteTemporaryElementsIfTimePassed();
 	void performBonusElementsActions();
 	void performMonstersActions();
@@ -84,7 +74,7 @@ public:
 	std::vector<Block> getBlocks() const;
 	std::vector<InanimateObject*> getInanimateElements() const;
 	std::vector<BonusObject*> getBonusElements() const;
-	std::vector<NonControllableLivingObject*> getMonsters() const;
+	std::vector<LivingObject*> getMonsters() const;
 	std::vector<FireBall> getFireBalls() const;
 	int getLastTouchedBlockIndex() const;
 	int getBlockModel(int index) const;

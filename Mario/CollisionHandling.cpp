@@ -35,7 +35,7 @@ bool isCharacterStandingOnTheBlock(WorldObject* object, World& world)
 	return false;
 }
 
-bool isMonsterStandingOnTheBlock(NonControllableLivingObject* object, Block block)
+bool isMonsterStandingOnTheBlock(LivingObject* object, Block block)
 {
 	if (abs((object->getY() + object->getHeight() / 2) - (block.getY() - block.getHeight() / 2))
 		< (block.getHeight() / 2) && areAtTheSameWidth(object, block)) {
@@ -112,14 +112,14 @@ bool areAtTheSameHeight(WorldObject* firstObject, WorldObject* secondObject)
 	return false;
 }
 
-bool isPlayerJumpingOnMonster(Player* player, NonControllableLivingObject* monster)
+bool isPlayerJumpingOnMonster(Player* player, LivingObject* monster)
 {
 	return (monster->getY() - player->getY() > 25);
 }
 
 void handleIfCollisionWithMonsterOccurs(Player* player, World& world)
 {
-	std::vector<NonControllableLivingObject*> monsters = world.getMonsters();
+	std::vector<LivingObject*> monsters = world.getMonsters();
 	int index = 0;
 	for (auto it = monsters.begin(); it != monsters.end(); ++it, ++index) {
 		if (areAtTheSameWidth(player, *it) && areAtTheSameHeight(player, *it)) {
@@ -177,7 +177,7 @@ void handleIfCollisionWithMonsterOccurs(Player* player, World& world)
 
 void handleIfShellCollideWithMonsters(World& world, Player* player)
 {
-	std::vector<NonControllableLivingObject*> monsters = world.getMonsters();
+	std::vector<LivingObject*> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if (dynamic_cast<Shell*>(*it) && dynamic_cast<Shell*>(*it)->isActive()) {
 			int index = 0;
@@ -202,12 +202,12 @@ void handleIfShellCollideWithMonsters(World& world, Player* player)
 void handleIfFireBallCollideWithMonsters(World& world, Player* player)
 {
 	std::vector<FireBall> fireballs = world.getFireBalls();
-	std::vector<NonControllableLivingObject*> monsters = world.getMonsters();
+	std::vector<LivingObject*> monsters = world.getMonsters();
 	int i = 0, j = 0;
 	for (auto it = fireballs.begin(); it != fireballs.end(); ++it, ++i) {
 		for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2, ++j) {
 			if (areAtTheSameWidth(&*it, *it2) && areAtTheSameHeight(&*it, *it2)) {
-				int alignment = (fireballs[i].getMoveDirection() == Left ? -5 : 5);
+				int alignment = (fireballs[i].getMovement()->getDirection() == Left ? -5 : 5);
 
 				if (dynamic_cast<Creature*>(*it2)) {
 					world.addDestroyedCreature(new Position((*it2)->getX() + alignment, (*it2)->getY()));
@@ -230,7 +230,7 @@ void handleIfFireBallCollideWithMonsters(World& world, Player* player)
 
 void handleIfMonsterCollideWithDestroyedBlock(World& world, Block block, Player* player)
 {
-	std::vector<NonControllableLivingObject*> monsters = world.getMonsters();
+	std::vector<LivingObject*> monsters = world.getMonsters();
 	int index = 0;
 	for (auto it = monsters.begin(); it != monsters.end(); ++it, ++index) {
 		if (isMonsterStandingOnTheBlock(*it, block)) {

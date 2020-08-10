@@ -7,10 +7,10 @@ Mushroom::Mushroom() {}
 Mushroom::Mushroom(Position* position, bool greenColor)
 {
 	size = new Size(32, 32);
+	movement = new Movement(1, Right);
 	this->position = position;
 	stepsCounter = 0;
 	this->greenColor = greenColor;
-	moveDirection = Right;
 	growCounter = 96;
 }
 
@@ -32,27 +32,27 @@ void Mushroom::draw(SDL_Surface* display, int beginningOfCamera)
 	drawSurface(display, mushroomImg, position->getX() - beginningOfCamera, position->getY());
 }
 
-void Mushroom::move(Direction direction, int distance, World& world, Screen* mainScreen)
+void Mushroom::move(World& world)
 {
 	if (growCounter) {
 		grow();
 	}
 	else if (stepsCounter & 1) {
 		if (isCharacterStandingOnTheBlock(this, world)) {
-			int alignment = getAlignmentIfCollisionOccursDuringMovement(direction, distance, this, world);
-			int realDistance = direction == Right ? (distance - alignment) : (-1) * (distance - alignment);
-			position->setX(position->getX() + realDistance);
+			int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world);
+			int distance = movement->getDirection() == Right ? (movement->getSpeed() - alignment) : (-1) * (movement->getSpeed() - alignment);
+			position->setX(position->getX() + distance);
 
 			if (alignment > 0) {
-				moveDirection = (moveDirection == Right ? Left : Right);
+				movement->setDirection(movement->getDirection() == Right ? Left : Right);
 			}
 		}
 		else {
-			int realVerticalDistance = (2 * distance) - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 2 * distance, this, world);
-			position->setY(position->getY() + realVerticalDistance);
+			int verticalDistance = (2 * movement->getSpeed()) - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 2 * movement->getSpeed(), this, world);
+			position->setY(position->getY() + verticalDistance);
 
-			int realDistance = (direction == Right ? 1 : -1) * (1 - getAlignmentIfCollisionOccursDuringMovement(direction, distance, this, world));
-			position->setX(position->getX() + realDistance);
+			int distance = (movement->getDirection() == Right ? 1 : -1) * (1 - getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world));
+			position->setX(position->getX() + distance);
 		}
 	}
 

@@ -1,10 +1,10 @@
 #ifndef _BonusObject_H
 #define _BonusObject_H
 
-#include "NonControllableLivingObject.h"
+#include "LivingObject.h"
 
 
-class BonusObject : public NonControllableLivingObject
+class BonusObject : public LivingObject
 {
 protected:
 	int growCounter;

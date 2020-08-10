@@ -10,6 +10,7 @@
 #include "Screen.h"
 #include "CollisionHandling.h"
 #include "GameFunctions.h"
+#include "Direction.h"
 
 
 enum Direction;
@@ -132,7 +133,7 @@ public:
 	//void moveAndJump(Direction dirX, int distance, int height, World& world, Screen* mainScreen);
 	//void performAdditionalJump(World& world, Screen* mainScreen);
 	void performAdditionalJump();
-	void move(Direction direction, int distance, World& world, Screen* mainScreen);
+	void move(World& world);
 	void reborn();
 };
 

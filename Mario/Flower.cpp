@@ -9,6 +9,7 @@ Flower::Flower() {}
 Flower::Flower(Position* position)
 {
 	size = new Size(32, 32);
+	movement = new Movement(0, None);
 	this->position = position;
 	growCounter = 96;
 }
@@ -31,7 +32,7 @@ void Flower::draw(SDL_Surface* display, int beginningOfCamera)
 	drawSurface(display, flowerImg, position->getX() - beginningOfCamera, position->getY());
 }
 
-void Flower::move(Direction direction, int distance, World& world, Screen* mainScreen)
+void Flower::move(World& world)
 {
 	if (growCounter) {
 		grow();

@@ -7,9 +7,9 @@ Shell::Shell() {}
 Shell::Shell(Position* position)
 {
 	size = new Size(32, 28);
+	movement = new Movement(1, None);
 	this->position = position;
 	stepsCounter = 0;
-	moveDirection = None;
 	creationTime = std::chrono::steady_clock::now();
 	active = false;
 }
@@ -27,8 +27,8 @@ bool Shell::shouldTurnIntoTurtle()
 
 void Shell::setMovementDirectionAndActiveState(Direction direction)
 {
-	moveDirection = direction;
-	active = (moveDirection != None);
+	movement->setDirection(direction);
+	active = (movement->getDirection() != None);
 }
 
 void Shell::resetCreationTime()
@@ -47,26 +47,26 @@ void Shell::draw(SDL_Surface* display, int beginningOfCamera)
 	drawSurface(display, shellImage, position->getX() - beginningOfCamera, position->getY());
 }
 
-void Shell::move(Direction direction, int distance, World& world, Screen* mainScreen)
+void Shell::move(World& world)
 {
-	if (moveDirection != None && stepsCounter & 1) {
+	if (movement->getDirection() != None && stepsCounter & 1) {
 		if (isCharacterStandingOnTheBlock(this, world)) {
 			for (int i = 0; i < 3; ++i) {
-				int alignment = getAlignmentIfCollisionOccursDuringMovement(direction, distance, this, world);
-				int realDistance = direction == Right ? (distance - alignment) : (-1) * (distance - alignment);
-				position->setX(position->getX() + realDistance);
+				int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world);
+				int distance = movement->getDirection() == Right ? (movement->getSpeed() - alignment) : (-1) * (movement->getSpeed() - alignment);
+				position->setX(position->getX() + distance);
 
 				if (alignment > 0) {
-					moveDirection = (moveDirection == Right ? Left : Right);
+					movement->setDirection(movement->getDirection() == Right ? Left : Right);
 				}
 			}
 		}
 		else {
-			int realVerticalDistance = (2 * distance - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 2 * distance, this, world));
-			position->setY(position->getY() + realVerticalDistance);
+			int verticalDistance = (2 * movement->getSpeed()) - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 2 * movement->getSpeed(), this, world);
+			position->setY(position->getY() + verticalDistance);
 
-			int realDistance = (direction == Right ? 1 : -1) * (1 - getAlignmentIfCollisionOccursDuringMovement(direction, distance, this, world));
-			position->setX(position->getX() + realDistance);
+			int distance = (movement->getDirection() == Right ? 1 : -1) * (1 - getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world));
+			position->setX(position->getX() + distance);
 		}
 	}
 

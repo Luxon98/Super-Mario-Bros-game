@@ -18,7 +18,7 @@ public:
 	bool isGreen();
 	void loadMushroomImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera) override;
-	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
+	void move(World& world) override;
 };
 
 #endif //_Mushroom_H

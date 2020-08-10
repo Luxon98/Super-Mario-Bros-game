@@ -2,11 +2,10 @@
 #define _Creature_H
 
 #include "SDL_Utility.h"
-#include "NonControllableLivingObject.h"
 #include "World.h"
 
 
-class Creature : public NonControllableLivingObject 
+class Creature : public LivingObject
 {
 private:
 	static SDL_Surface* creatureImages[2];
@@ -19,7 +18,7 @@ public:
 	void setMoveDirection(Direction direction);
 	void loadCreatureImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera) override;
-	void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
+	void move(World& world) override;
 };
 
 #endif //_Creature_H

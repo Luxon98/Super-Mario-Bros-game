@@ -12,7 +12,7 @@ void World::changeColoursIfAvailable()
 	}
 }
 
-void World::setMovementDirectionIfPlayerIsCloseEnough(NonControllableLivingObject& monster)
+void World::setMovementDirectionIfPlayerIsCloseEnough(LivingObject& monster)
 {
 	if (monster.getX() < player->getX() + 2 * CAMERA_REFERENCE_POINT) {
 		if (dynamic_cast<Turtle*>(&monster)) {
@@ -40,7 +40,7 @@ void World::deleteTemporaryElementsIfTimePassed()
 void World::performBonusElementsActions()
 {
 	for (unsigned int i = 0; i < bonusElements.size(); ++i) {
-		bonusElements[i]->move(bonusElements[i]->getMoveDirection(), 1, *this);
+		bonusElements[i]->move(*this);
 		if (bonusElements[i]->getY() > WORLD_HEIGHT + 30) {
 			deleteLivingElement(i);
 		}
@@ -50,11 +50,11 @@ void World::performBonusElementsActions()
 void World::performMonstersActions()
 {
 	for (unsigned int i = 0; i < monsters.size(); ++i) {
-		if (monsters[i]->getMoveDirection() == None) {
+		if (monsters[i]->getMovement()->getDirection() == None) {
 			setMovementDirectionIfPlayerIsCloseEnough(*monsters[i]);
 		}
 
-		monsters[i]->move(monsters[i]->getMoveDirection(), 1, *this);
+		monsters[i]->move(*this);
 
 		if (dynamic_cast<Shell*>(monsters[i]) && !(dynamic_cast<Shell*>(monsters[i])->isActive())
 			&& dynamic_cast<Shell*>(monsters[i])->shouldTurnIntoTurtle()) {
@@ -72,12 +72,11 @@ void World::performMonstersActions()
 void World::performFireBallsActions()
 {
 	for (unsigned int i = 0; i < fireballs.size(); ++i) {
-		fireballs[i].move(fireballs[i].getMoveDirection(), 1, *this, nullptr);
+		fireballs[i].move(*this);
 
 		if (fireballs[i].shouldBeRemoved()) {
-			int shift = (fireballs[i].getMoveDirection() == Left ? -5 : 5);
-			temporaryElements.push_back(new Explosion(new Position(fireballs[i].getX() + shift,
-				fireballs[i].getY())));
+			int shift = (fireballs[i].getMovement()->getDirection() == Left ? -5 : 5);
+			temporaryElements.push_back(new Explosion(new Position(fireballs[i].getX() + shift, fireballs[i].getY())));
 
 			fireballs.erase(fireballs.begin() + i);
 		}
@@ -97,7 +96,7 @@ void World::performFireBallsActions()
 
 void World::performWorldActions()
 {
-	player->move(Left, 0, *this, screen);
+	player->move(*this);
 	performBonusElementsActions();
 	performMonstersActions();
 	performFireBallsActions();
@@ -241,7 +240,7 @@ std::vector<BonusObject*> World::getBonusElements() const
 	return bonusElements;
 }
 
-std::vector<NonControllableLivingObject*> World::getMonsters() const
+std::vector<LivingObject*> World::getMonsters() const
 {
 	return monsters;
 }

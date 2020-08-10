@@ -84,9 +84,6 @@
     <ClCompile Include="InanimateObject.cpp">
       <Filter>Source Files\AbstractClasses</Filter>
     </ClCompile>
-    <ClCompile Include="NonControllableLivingObject.cpp">
-      <Filter>Source Files\AbstractClasses</Filter>
-    </ClCompile>
     <ClCompile Include="WorldObject.cpp">
       <Filter>Source Files\AbstractClasses</Filter>
     </ClCompile>
@@ -171,6 +168,9 @@
     <ClCompile Include="Size.cpp">
       <Filter>Source Files\Other</Filter>
     </ClCompile>
+    <ClCompile Include="Movement.cpp">
+      <Filter>Source Files\Other</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -193,9 +193,6 @@
     </ClInclude>
     <ClInclude Include="Coin.h">
       <Filter>Header Files\InanimateObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="NonControllableLivingObject.h">
-      <Filter>Header Files\AbstractClasses</Filter>
     </ClInclude>
     <ClInclude Include="InanimateObject.h">
       <Filter>Header Files\AbstractClasses</Filter>
@@ -282,6 +279,12 @@
       <Filter>Header Files\Other</Filter>
     </ClInclude>
     <ClInclude Include="Size.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Movement.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Direction.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
   </ItemGroup>
