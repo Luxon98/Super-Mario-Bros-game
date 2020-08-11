@@ -13,14 +13,53 @@ void FireBall::computeModelIndex()
 	}
 }
 
+void FireBall::makeVerticalMove(World& world)
+{
+	int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world);
+	int distance = movement->getSpeed() - alignment;
+	if (movement->getDirection() == Left) {
+		distance *= -1;
+	}
+	position->setX(position->getX() + distance);
+
+	if (alignment > 0) {
+		stop = true;
+		SoundController::playBlockHittedEffect();
+	}
+}
+
+void FireBall::makeHorizontalMove(World& world)
+{
+	int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(movement->getVerticalDirection(), movement->getVerticalSpeed(), this, world);
+	int verticalDistance = movement->getVerticalSpeed() - alignment;
+	if (movement->getVerticalDirection() == Up) {
+		verticalDistance *= -1;
+	}
+	position->setY(position->getY() + verticalDistance);
+
+	computeModelIndex();
+
+	if (movement->getVerticalDirection() == Up) {
+		stepsUp++;
+	}
+
+	if (alignment > 0) {
+		movement->setVerticalDirection(movement->getVerticalDirection() == Down ? Up : Down);
+		stepsUp = 0;
+	}
+	else if (stepsUp % 20 == 0 && movement->getVerticalDirection() == Up) {
+		movement->setVerticalDirection(Down);
+		stepsUp = 0;
+	}
+}
+
 FireBall::FireBall() {}
 
 FireBall::FireBall(Position* position, Direction direction)
 {
 	size = new Size(16, 16);
-	movement = new Movement(1, direction);
+	movement = new Movement(3, 2, direction, Down);
 	this->position = position;
-	verticalDirection = Down;
 	changeModelCounter = 0;
 	stepsUp = 0;
 	modelIndex = 0;
@@ -52,33 +91,8 @@ void FireBall::draw(SDL_Surface* display, int beginningOfCamera)
 void FireBall::move(World& world)
 {
 	if (!stop) {
-		int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), 2 * movement->getSpeed(), this, world);
-		int distance = (movement->getDirection() == Right ? 1 : -1) * (2 * movement->getSpeed() - alignment);
-		position->setX(position->getX() + distance);
-
-		if (alignment > 0) {
-			stop = true;
-			SoundController::playBlockHittedEffect();
-		}
-
-		alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(verticalDirection, movement->getSpeed(), this, world);
-		int verticalDistance = (verticalDirection == Down ? 1 : -1) * (movement->getSpeed() - alignment);
-		position->setY(position->getY() + verticalDistance);
-
-		computeModelIndex();
-
-		if (verticalDirection == Up) {
-			++stepsUp;
-		}
-
-		if (alignment > 0) {
-			verticalDirection = (verticalDirection == Down ? Up : Down);
-			stepsUp = 0;
-		}
-		else if (stepsUp % 48 == 0 && verticalDirection == Up) {
-			verticalDirection = Down;
-			stepsUp = 0;
-		}
+		makeVerticalMove(world);
+		makeHorizontalMove(world);
 	}
 }
 

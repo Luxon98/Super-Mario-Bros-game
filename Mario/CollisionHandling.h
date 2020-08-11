@@ -2,19 +2,16 @@
 #define _CollisionHandling_H
 
 #include <cmath>
-#include "World.h"
 #include "WorldObject.h"
-#include "BonusObject.h"
-#include "Player.h"
-#include "Block.h"
 #include "Coin.h"
-#include "FireBall.h"
+#include "Block.h"
 #include "Direction.h"
+#include "Player.h"
 
 
-enum Direction;
 class World;
 class Player;
+class LivingObject;
 
 
 bool isCharacterHittingBlock(WorldObject* object, Block block, Direction direction, int distance);

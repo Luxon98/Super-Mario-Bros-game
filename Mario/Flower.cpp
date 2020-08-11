@@ -9,7 +9,7 @@ Flower::Flower() {}
 Flower::Flower(Position* position)
 {
 	size = new Size(32, 32);
-	movement = new Movement(0, None);
+	movement = new Movement();
 	this->position = position;
 	growCounter = 96;
 }

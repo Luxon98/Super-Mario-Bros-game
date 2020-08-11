@@ -2,14 +2,50 @@
 
 SDL_Surface* Star::starImages[4] = { nullptr };
 
+void Star::makeVerticalMove(World& world)
+{
+	int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world);
+	int distance = movement->getSpeed() - alignment;
+	if (movement->getDirection() == Left) {
+		distance *= -1;
+	}
+	position->setX(position->getX() + distance);
+
+	if (alignment > 0) {
+		movement->setDirection(movement->getDirection() == Right ? Left : Right);
+	}
+}
+
+void Star::makeHorizontalMove(World& world)
+{
+	int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(movement->getVerticalDirection(), movement->getVerticalSpeed(), this, world);
+	int verticalDistance = movement->getVerticalSpeed() - alignment;
+	if (movement->getVerticalDirection() == Up) {
+		verticalDistance *= -1;
+	}
+	position->setY(position->getY() + verticalDistance);
+
+	if (movement->getVerticalDirection() == Up) {
+		stepsUp++;
+	}
+
+	if (alignment > 0) {
+		movement->setVerticalDirection(movement->getVerticalDirection() == Down ? Up : Down);
+		stepsUp = 0;
+	}
+	else if (stepsUp % 64 == 0 && movement->getVerticalDirection() == Up) {
+		movement->setVerticalDirection(Down);
+		stepsUp = 0;
+	}
+}
+
 Star::Star() {}
 
 Star::Star(Position* position)
 {
 	size = new Size(28, 32);
 	this->position = position;
-	movement = new Movement(1, Right);
-	verticalDirection = Up;
+	movement = new Movement(2, 1, Right, Up);
 	stepsCounter = 0;
 	growCounter = 90;
 }
@@ -37,33 +73,9 @@ void Star::move(World& world)
 		grow();
 	}
 	else {
-		int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), 2 * movement->getSpeed(), this, world);
-		int distance = movement->getDirection() == Right ? 1 : -1 * (2 * movement->getSpeed() - alignment);
-		position->setX(position->getX() + distance);
-
-		if (alignment > 0) {
-			movement->setDirection(movement->getDirection() == Right ? Left : Right);
-		}
-
-		alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(verticalDirection, movement->getSpeed(), this, world);
-		int verticalDistance = (verticalDirection == Down ? 1 : -1) * (movement->getSpeed() - alignment);
-
-		position->setY(position->getY() + verticalDistance);
-
-		if (verticalDirection == Up) {
-			stepsUp++;
-		}
-
-		if (alignment > 0) {
-			verticalDirection = (verticalDirection == Down ? Up : Down);
-			stepsUp = 0;
-		}
-		else if (stepsUp % 64 == 0 && verticalDirection == Up) {
-			verticalDirection = Down;
-			stepsUp = 0;
-		}
+		makeVerticalMove(world);
+		makeHorizontalMove(world);
 	}
-
 	stepsCounter++;
 }
 

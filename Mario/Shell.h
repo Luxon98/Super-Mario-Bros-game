@@ -4,9 +4,10 @@
 #include <chrono>
 #include "SDL_Utility.h"
 #include "World.h"
+#include "IndependentLivingObject.h"
 
 
-class Shell : public LivingObject
+class Shell : public IndependentLivingObject
 {
 private:
 	static SDL_Surface* shellImage;

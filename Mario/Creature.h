@@ -3,9 +3,10 @@
 
 #include "SDL_Utility.h"
 #include "World.h"
+#include "IndependentLivingObject.h"
 
 
-class Creature : public LivingObject
+class Creature : public IndependentLivingObject
 {
 private:
 	static SDL_Surface* creatureImages[2];

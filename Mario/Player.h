@@ -8,7 +8,6 @@
 #include "World.h"
 #include "Block.h"
 #include "Screen.h"
-#include "CollisionHandling.h"
 #include "GameFunctions.h"
 #include "Direction.h"
 
@@ -16,16 +15,7 @@
 enum Direction;
 class World;
 class Screen;
-class LivingObject;
 
-enum AnimationState 
-{
-	NoAnimation = 0,
-	DuringGrowingAnimation = 1,
-	DuringArmingAnimation = 2,
-	DuringShrinkingAnimation = 3,
-	DuringImmortalAnimation = 4
-};
 
 enum PlayerState
 {
@@ -41,6 +31,15 @@ enum PlayerState
 	Average = 10,
 	InsensitiveSmall = 11,
 	InsensitiveTall = 12,
+};
+
+enum AnimationState 
+{
+	NoAnimation = 0,
+	DuringGrowingAnimation = 1,
+	DuringArmingAnimation = 2,
+	DuringShrinkingAnimation = 3,
+	DuringImmortalAnimation = 4
 };
 
 
@@ -66,9 +65,20 @@ private:
 		void setDefaultFlags();
 	};
 
+	class PlayerMovement : public Movement
+	{
+	public:
+		int stepsLeft;
+		int stepsRight;
+		int stepsUp;
+		int stepsDown;
+		PlayerMovement();
+	};
+
 	static SDL_Surface* playerImages[74];
 	Statistics statistics;
 	Flags flags;
+	PlayerMovement* playerMovement;
 	int cameraX;
 	int model;
 	std::chrono::steady_clock::time_point lastAnimationStartTime;
@@ -82,6 +92,7 @@ private:
 	void performImmortalAnimation(int difference);
 	long long int lastDifference;
 	bool movementBlock;
+	void resetMovement();
 	void changeModel(World& world);
 	bool isHittingCeiling(int distance);
 	bool isFallingIntoAbyss(int distance);
@@ -89,13 +100,6 @@ private:
 	bool isExceedingCameraReferencePoint(int distance);
 	bool isHittingBlock(int alignment, Direction direction);
 	bool isDuringAnimation();
-
-	int stepsLeft;
-	int stepsRight;
-	int stepsUp;
-	int stepsDown;
-	int speed;
-
 	Screen* screen;
 
 public:

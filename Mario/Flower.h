@@ -2,8 +2,8 @@
 #define _Flower_H
 
 #include "SDL_Utility.h"
-#include "BonusObject.h"
 #include "World.h"
+#include "BonusObject.h"
 
 
 class Flower : public BonusObject

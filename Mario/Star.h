@@ -2,8 +2,8 @@
 #define _Star_H
 
 #include "SDL_Utility.h"
-#include "BonusObject.h"
 #include "World.h"
+#include "BonusObject.h"
 #include "Direction.h"
 
 
@@ -13,7 +13,8 @@ private:
 	static SDL_Surface* starImages[4];
 	int stepsCounter;
 	int stepsUp;
-	Direction verticalDirection;
+	void makeVerticalMove(World& world);
+	void makeHorizontalMove(World& world);
 
 public:
 	Star();

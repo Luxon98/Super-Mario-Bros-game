@@ -23,6 +23,15 @@ void Player::Flags::setDefaultFlags()
 	removeLivesFlag = false;
 }
 
+Player::PlayerMovement::PlayerMovement()
+{
+	stepsLeft = 0;
+	stepsRight = 0;
+	stepsUp = 0;
+	stepsDown = 0;
+	speed = 1;
+}
+
 int Player::computeImageIndex()
 {
 	if (currentState == Small) {
@@ -87,6 +96,7 @@ void Player::performGrowingAnimation(int difference)
 	if ((difference >= 100 && difference <= 200 && lastDifference < 100)
 		|| (difference >= 300 && difference <= 400 && lastDifference < 300)
 		|| (difference >= 700 && difference <= 800 && lastDifference < 700)) {
+
 		size->setHeight(48);
 		position->setY(position->getY() - 8);
 		lastDifference = difference;
@@ -119,25 +129,23 @@ void Player::performGrowingAnimation(int difference)
 		currentAnimationState = NoAnimation;
 		lastDifference = 0;
 		movementBlock = false;
+		resetMovement();
 	}
 }
 
 void Player::performShrinkingAnimation(int difference)
 {
 	if (difference <= 1000 && lastDifference < 10) {
-
 		lastDifference = difference;
 		currentState = InsensitiveTall;
 	}
 	else if (difference > 1000 && difference < 2000 && lastDifference < 1000) {
-
 		size->setHeight(32);
 		position->setY(position->getY() + 16);
 		lastDifference = difference;
 		currentState = InsensitiveSmall;
 	}
 	else if (difference >= 2000) {
-
 		currentAnimationState = NoAnimation;
 		currentState = Small;
 		lastDifference = 0;
@@ -167,6 +175,7 @@ void Player::performArmingAnimation(int difference)
 		currentState = ArmedFirst;
 		lastDifference = 0;
 		movementBlock = false;
+		resetMovement();
 	}
 }
 
@@ -193,13 +202,22 @@ void Player::performImmortalAnimation(int difference)
 	}
 }
 
+void Player::resetMovement()
+{
+	playerMovement->stepsLeft = 0;
+	playerMovement->stepsRight = 0;
+	playerMovement->stepsUp = 0;
+	playerMovement->stepsDown = 0;
+	playerMovement->setSpeed(1);
+}
+
 void Player::changeModel(World& world)
 {
 	if (!isCharacterStandingOnTheBlock(this, world)) {
 		model = 4;
 		return;
 	}
-	if (stepsLeft == 0 && stepsRight == 0) {
+	if (playerMovement->stepsLeft == 0 && playerMovement->stepsRight == 0) {
 		model = 0;
 		return;
 	}
@@ -258,6 +276,7 @@ Player::Player(Position* position)
 	size = new Size(32, 32);
 	statistics = Statistics();
 	flags = Flags();
+	playerMovement = new PlayerMovement();
 	this->position = position;
 	cameraX = position->getX();
 	model = 0;
@@ -266,12 +285,6 @@ Player::Player(Position* position)
 	currentAnimationState = NoAnimation;
 	currentState = Small;
 	movementBlock = false;
-
-	stepsLeft = 0;
-	stepsRight = 0;
-	stepsUp = 0;
-	stepsDown = 0;
-	speed = 1;
 }
 
 int Player::getCameraX() const
@@ -296,17 +309,17 @@ int Player::getLives() const
 
 int Player::getStepsLeft() const
 {
-	return stepsLeft;
+	return playerMovement->stepsLeft;
 }
 
 int Player::getStepsRight() const
 {
-	return stepsRight;
+	return playerMovement->stepsRight;
 }
 
 int Player::getStepsUp() const
 {
-	return stepsUp;
+	return playerMovement->stepsUp;
 }
 
 bool Player::isArmed() const
@@ -346,22 +359,22 @@ void Player::incrementLives()
 
 void Player::setStepsLeft(int stepsLeft)
 {
-	this->stepsLeft = stepsLeft;
+	playerMovement->stepsLeft = stepsLeft;
 }
 
 void Player::setStepsRight(int stepsRight)
 {
-	this->stepsRight = stepsRight;
+	playerMovement->stepsRight = stepsRight;
 }
 
 void Player::setStepsUp(int stepsUp)
 {
-	this->stepsUp = stepsUp;
+	playerMovement->stepsUp = stepsUp;
 }
 
 void Player::setStepsDown(int stepsDown)
 {
-	this->stepsDown = stepsDown;
+	playerMovement->stepsDown = stepsDown;
 }
 
 void Player::setScreen(Screen* screen)
@@ -568,70 +581,73 @@ void Player::loseBonusOrLife()
 
 void Player::performAdditionalJump()
 {
-	stepsDown = 0;
-	stepsUp = 40;
+	playerMovement->stepsDown = 0;
+	playerMovement->stepsUp = 40;
 }
 
 void Player::move(World& world)
 {
 	if (!movementBlock) {
-		if (stepsLeft > 0) {
-			int alignment = getAlignmentIfCollisionOccursDuringMovement(Left, speed, this, world);
-			int dis = speed - alignment;
+		if (playerMovement->stepsLeft > 0) {
+			int alignment = getAlignmentIfCollisionOccursDuringMovement(Left, playerMovement->getSpeed(), this, world);
+			int distance = playerMovement->getSpeed() - alignment;
 
-			if (!isGoingBeyondCamera(dis)) {
-				position->setX(position->getX() - dis);
-				cameraX -= dis;
+			if (!isGoingBeyondCamera(distance)) {
+				position->setX(position->getX() - distance);
+				cameraX -= distance;
 			}
 
-			if (alignment != 0) {
-				stepsLeft = 0;
+			if (alignment != 0 && playerMovement->stepsUp == 0) {
+				playerMovement->stepsLeft = 0;
 			}
 			else {
-				stepsLeft--;
+				playerMovement->stepsLeft--;
 			}
 
 			flags.orientationFlag = false;
 		}
 
-		if (stepsRight > 0) {
-			int alignment = getAlignmentIfCollisionOccursDuringMovement(Right, speed, this, world);
-			int dis = speed - alignment;
+		if (playerMovement->stepsRight > 0) {
+			int alignment = getAlignmentIfCollisionOccursDuringMovement(Right, playerMovement->getSpeed(), this, world);
+			int distance = playerMovement->getSpeed() - alignment;
 
-			position->setX(position->getX() + dis);
+			position->setX(position->getX() + distance);
 
-			if (isExceedingCameraReferencePoint(dis)) {
-				screen->setPositionOfTheScreen(screen->getBeginningOfCamera() + dis,
-					screen->getEndOfCamera() + dis);
+			if (isExceedingCameraReferencePoint(distance)) {
+				screen->setPositionOfTheScreen(screen->getBeginningOfCamera() + distance,
+					screen->getEndOfCamera() + distance);
 			}
 			else {
-				cameraX += dis;
+				cameraX += distance;
 			}
 
-			if (alignment != 0) {
-				stepsRight = 0;
+			if (alignment != 0 && playerMovement->stepsUp == 0) {
+				playerMovement->stepsRight = 0;
 			}
 			else {
-				stepsRight--;
+				playerMovement->stepsRight--;
 			}
 
 			flags.orientationFlag = true;
 		}
 
-		if (stepsUp > 0) {
-			int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(Up, speed, this, world);
-			int dis = speed - alignment;
+		if (playerMovement->stepsUp > 0) {
+			int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(Up, playerMovement->getSpeed(), this, world);
+			int distance = playerMovement->getSpeed() - alignment;
 
-			if (!isHittingCeiling(dis)) {
-				position->setY(position->getY() - dis);
+			if (!isHittingCeiling(distance)) {
+				position->setY(position->getY() - distance);
+			}
+			else {
+				playerMovement->stepsUp = 1;
 			}
 
 			if (isHittingBlock(alignment, Up)) {
 				hitBlock(world);
-				stepsUp = 0;
+				playerMovement->stepsUp = 0;
 			}
 			else {
-				stepsUp--;
+				playerMovement->stepsUp--;
 			}
 
 			if (isCharacterStandingOnTheBlock(this, world)) {
@@ -639,11 +655,11 @@ void Player::move(World& world)
 			}
 		}
 		 
-		if (stepsDown > 0) {
-			int dis = speed - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, speed, this, world);
+		if (playerMovement->stepsDown > 0) {
+			int distance = playerMovement->getSpeed() - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, playerMovement->getSpeed(), this, world);
 
-			if (!isFallingIntoAbyss(dis)) {
-				position->setY(position->getY() + dis);
+			if (!isFallingIntoAbyss(distance)) {
+				position->setY(position->getY() + distance);
 			}
 			else {
 				if (!flags.removeLivesFlag) {
@@ -653,7 +669,7 @@ void Player::move(World& world)
 				}
 			}
 
-			stepsDown--;
+			playerMovement->stepsDown--;
 		}
 		changeModel(world);
 	}
@@ -670,6 +686,5 @@ void Player::reborn()
 	lastDifference = 0;
 	currentState = Small;
 	movementBlock = false;
+	resetMovement();
 }
-
-

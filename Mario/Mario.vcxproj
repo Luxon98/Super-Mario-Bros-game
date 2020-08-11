@@ -156,6 +156,7 @@
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="GameFunctions.cpp" />
     <ClCompile Include="InanimateObject.cpp" />
+    <ClCompile Include="IndependentLivingObject.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LivingObject.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameFunctions.h" />
     <ClInclude Include="InanimateObject.h" />
+    <ClInclude Include="IndependentLivingObject.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LivingObject.h" />

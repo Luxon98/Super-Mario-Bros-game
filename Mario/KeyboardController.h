@@ -3,7 +3,6 @@
 
 #include <map>
 #include "SDL_Utility.h"
-#include "CollisionHandling.h"
 #include "World.h"
 #include "Player.h"
 #include "Screen.h"

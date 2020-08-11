@@ -2,8 +2,8 @@
 #define _Mushroom_H
 
 #include "SDL_Utility.h"
-#include "BonusObject.h"
 #include "World.h"
+#include "BonusObject.h"
 
 
 class Mushroom : public BonusObject 
@@ -11,6 +11,8 @@ class Mushroom : public BonusObject
 private:
 	static SDL_Surface* mushroomImages[2];
 	bool greenColor;
+	void makeHorizontalMovea(World& world);
+	void makeDiagonalMovea(World& world);
 
 public:
 	Mushroom();

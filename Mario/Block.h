@@ -6,7 +6,7 @@
 #include "InanimateObject.h"
 
 
-enum BlockType 
+enum BlockType
 {
 	Ground = 1,
 	Indestructible = 2,

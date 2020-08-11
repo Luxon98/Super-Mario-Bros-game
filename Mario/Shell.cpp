@@ -7,7 +7,7 @@ Shell::Shell() {}
 Shell::Shell(Position* position)
 {
 	size = new Size(32, 28);
-	movement = new Movement(1, None);
+	movement = new Movement(3, 2, None);
 	this->position = position;
 	stepsCounter = 0;
 	creationTime = std::chrono::steady_clock::now();
@@ -51,25 +51,12 @@ void Shell::move(World& world)
 {
 	if (movement->getDirection() != None && stepsCounter & 1) {
 		if (isCharacterStandingOnTheBlock(this, world)) {
-			for (int i = 0; i < 3; ++i) {
-				int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world);
-				int distance = movement->getDirection() == Right ? (movement->getSpeed() - alignment) : (-1) * (movement->getSpeed() - alignment);
-				position->setX(position->getX() + distance);
-
-				if (alignment > 0) {
-					movement->setDirection(movement->getDirection() == Right ? Left : Right);
-				}
-			}
+			makeHorizontalMove(world);
 		}
 		else {
-			int verticalDistance = (2 * movement->getSpeed()) - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 2 * movement->getSpeed(), this, world);
-			position->setY(position->getY() + verticalDistance);
-
-			int distance = (movement->getDirection() == Right ? 1 : -1) * (1 - getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world));
-			position->setX(position->getX() + distance);
+			makeDiagonalMove(world);
 		}
 	}
-
 	stepsCounter++;
 }
 

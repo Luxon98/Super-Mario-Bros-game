@@ -15,7 +15,7 @@ Turtle::Turtle() {}
 Turtle::Turtle(Position* position)
 {
 	size = new Size(26, 38);
-	movement = new Movement(1, None);
+	movement = new Movement(1, 2, None);
 	this->position = position;
 	model = 1;
 	stepsCounter = 0;
@@ -46,26 +46,13 @@ void Turtle::move(World& world)
 {
 	if (movement->getDirection() != None && stepsCounter % 3 == 0) {
 		if (isCharacterStandingOnTheBlock(this, world)) {
-			int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world);
-			int distance = movement->getDirection() == Right ? (movement->getSpeed() - alignment) : (-1) * (movement->getSpeed() - alignment);
-			position->setX(position->getX() + distance);
-
-			if (alignment > 0) {
-				movement->setDirection(movement->getDirection() == Right ? Left : Right);
-				model = (movement->getDirection() == Left ? 1 : 3);
-			}
+			makeHorizontalMove(world);
 		}
 		else {
-			int verticalDistance = (2 * movement->getSpeed()) - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 2 * movement->getSpeed(), this, world);
-			position->setY(position->getY() + verticalDistance);
-
-			int distance = (movement->getDirection() == Right ? 1 : -1) * (1 - getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world));
-			position->setX(position->getX() + distance);
+			makeDiagonalMove(world);
 		}
-
 		chooseModel();
 	}
-
 	stepsCounter++;
 }
 

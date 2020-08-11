@@ -3,19 +3,21 @@
 
 
 #include "SDL_Utility.h"
+#include "IndependentLivingObject.h"
 #include "World.h"
 #include "Direction.h"
 
 
-class FireBall : public LivingObject
+class FireBall : public IndependentLivingObject
 {
 private:
 	static SDL_Surface* fireBallImages[4];
-	Direction verticalDirection;
 	int stepsUp;
 	int modelIndex;
 	bool stop;
 	void computeModelIndex();
+	void makeVerticalMove(World& world);
+	void makeHorizontalMove(World& world);
 
 public:
 	FireBall();

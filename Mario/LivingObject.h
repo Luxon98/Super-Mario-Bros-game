@@ -6,7 +6,6 @@
 
 
 class World;
-class Screen;
 
 
 class LivingObject : public WorldObject 

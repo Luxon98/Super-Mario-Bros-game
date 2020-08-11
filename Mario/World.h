@@ -3,18 +3,19 @@
 
 #include <chrono>
 #include <vector>
+#include "Flower.h"
+#include "Mushroom.h"
+#include "Creature.h"
+#include "Turtle.h"
+#include "Shell.h"
 #include "SDL_Utility.h"
+#include "CollisionHandling.h"
 #include "Block.h"
 #include "Player.h"
 #include "InanimateObject.h"
 #include "Cloud.h"
 #include "Bush.h"
 #include "Coin.h"
-#include "Flower.h"
-#include "Mushroom.h"
-#include "Creature.h"
-#include "Turtle.h"
-#include "Shell.h"
 #include "CrushedCreature.h"
 #include "DestroyedCreature.h"
 #include "DestroyedTurtle.h"
@@ -27,12 +28,13 @@
 #include "Star.h"
 #include "Castle.h"
 #include "Flag.h"
-#include "BonusObject.h"
 #include "Direction.h"
 
 
 class Player;
 class FireBall;
+class Screen;
+class BonusObject;
 
 
 class World
