@@ -52,6 +52,7 @@ private:
 	Screen* screen;
 	int lastTouchedBlockIndex;
 	int slidingCounter;
+	bool slideBlockStatus;
 	bool fireballStatus;
 	void changeColoursIfAvailable();
 	void setMovementDirectionIfPlayerIsCloseEnough(LivingObject& monster);
@@ -62,6 +63,7 @@ private:
 	void performWorldActions();
 	void slideTemporaryElements();
 	void slideBlock();
+	void raiseUpMushroom();
 	void addShards(Position* position);
 	void subtractCoinFromBlockIfPossible();
 	void createNewBonusIfPossible();
@@ -81,10 +83,11 @@ public:
 	int getLastTouchedBlockIndex() const;
 	int getBlockModel(int index) const;
 	bool isFlagDown() const;
+	Screen* getScreen() const;
 	void setPlayer(Player* player);
 	void setScreen(Screen* screen);
 	void setLastTouchedBlock(int index);
-	void setSlidingCounter(int ctr);
+	void hitBlock();
 	void setFireballStatus();
 	void setActiveFlag();
 	void changeShellMovementParameters(int index, Direction direction);

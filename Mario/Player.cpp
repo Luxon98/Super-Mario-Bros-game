@@ -30,6 +30,7 @@ Player::PlayerMovement::PlayerMovement()
 	stepsUp = 0;
 	stepsDown = 0;
 	speed = 1;
+	verticalSpeed = 1;
 }
 
 int Player::computeImageIndex()
@@ -209,6 +210,7 @@ void Player::resetMovement()
 	playerMovement->stepsUp = 0;
 	playerMovement->stepsDown = 0;
 	playerMovement->setSpeed(1);
+	playerMovement->setVerticalSpeed(1);
 }
 
 void Player::changeModel(World& world)
@@ -223,7 +225,7 @@ void Player::changeModel(World& world)
 	}
 
 	changeModelCounter++;
-	if (changeModelCounter % 15 == 0) {
+	if (changeModelCounter % 12 == 0) {
 		model++;
 		if (model > 3) {
 			model = 1;
@@ -241,18 +243,13 @@ bool Player::isFallingIntoAbyss(int distance)
 	return (position->getY() + distance + getHeight() / 2 > World::WORLD_HEIGHT);
 }
 
-bool Player::isGoingBeyondCamera(int distance)
+bool Player::isGoingBeyondCamera(int distance, int beginningOfCamera)
 {
-	if (cameraX - distance <= getWidth() / 2) {
+	if (position->getX() - beginningOfCamera - distance <= getWidth() / 2) {
 		return true;
 	}
 
 	return false;
-}
-
-bool Player::isExceedingCameraReferencePoint(int distance)
-{
-	return (cameraX + distance > Screen::SCREEN_WIDTH - CAMERA_REFERENCE_POINT);
 }
 
 bool Player::isHittingBlock(int alignment, Direction direction)
@@ -278,18 +275,12 @@ Player::Player(Position* position)
 	flags = Flags();
 	playerMovement = new PlayerMovement();
 	this->position = position;
-	cameraX = position->getX();
 	model = 0;
 	changeModelCounter = 0;
 	lastDifference = 0;
 	currentAnimationState = NoAnimation;
 	currentState = Small;
 	movementBlock = false;
-}
-
-int Player::getCameraX() const
-{
-	return cameraX;
 }
 
 int Player::getPoints() const
@@ -377,11 +368,6 @@ void Player::setStepsDown(int stepsDown)
 	playerMovement->stepsDown = stepsDown;
 }
 
-void Player::setScreen(Screen* screen)
-{
-	this->screen = screen;
-}
-
 void Player::addPoints(int pts)
 {
 	statistics.points += pts;
@@ -413,18 +399,18 @@ void Player::draw(SDL_Surface* display, int beginningOfCamera)
 	int index = computeImageIndex();
 
 	SDL_Surface* playerImg = playerImages[index];
-	drawSurface(display, playerImg, beginningOfCamera, position->getY());
+	drawSurface(display, playerImg, position->getX() - beginningOfCamera, position->getY());
 }
 
 void Player::hitBlock(World& world)
 {
 	if ((currentState >= Tall && currentState <= ImmortalFourth)
 		&& world.getBlockModel(world.getLastTouchedBlockIndex()) == Destructible) {
-		world.performBlockRemovalActions(world.getLastTouchedBlockIndex());
 		
+		world.performBlockRemovalActions(world.getLastTouchedBlockIndex());
 	}
 	else {
-		world.setSlidingCounter(124);
+		world.hitBlock();
 	}
 }
 
@@ -592,9 +578,8 @@ void Player::move(World& world)
 			int alignment = getAlignmentIfCollisionOccursDuringMovement(Left, playerMovement->getSpeed(), this, world);
 			int distance = playerMovement->getSpeed() - alignment;
 
-			if (!isGoingBeyondCamera(distance)) {
+			if (!isGoingBeyondCamera(distance, world.getScreen()->getBeginningOfCamera())) {
 				position->setX(position->getX() - distance);
-				cameraX -= distance;
 			}
 
 			if (alignment != 0 && playerMovement->stepsUp == 0) {
@@ -613,14 +598,6 @@ void Player::move(World& world)
 
 			position->setX(position->getX() + distance);
 
-			if (isExceedingCameraReferencePoint(distance)) {
-				screen->setPositionOfTheScreen(screen->getBeginningOfCamera() + distance,
-					screen->getEndOfCamera() + distance);
-			}
-			else {
-				cameraX += distance;
-			}
-
 			if (alignment != 0 && playerMovement->stepsUp == 0) {
 				playerMovement->stepsRight = 0;
 			}
@@ -632,8 +609,8 @@ void Player::move(World& world)
 		}
 
 		if (playerMovement->stepsUp > 0) {
-			int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(Up, playerMovement->getSpeed(), this, world);
-			int distance = playerMovement->getSpeed() - alignment;
+			int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(Up, playerMovement->getVerticalSpeed(), this, world);
+			int distance = playerMovement->getVerticalSpeed() - alignment;
 
 			if (!isHittingCeiling(distance)) {
 				position->setY(position->getY() - distance);
@@ -656,7 +633,8 @@ void Player::move(World& world)
 		}
 		 
 		if (playerMovement->stepsDown > 0) {
-			int distance = playerMovement->getSpeed() - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, playerMovement->getSpeed(), this, world);
+			int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(Down, playerMovement->getVerticalSpeed(), this, world);
+			int distance = playerMovement->getVerticalSpeed() - alignment;
 
 			if (!isFallingIntoAbyss(distance)) {
 				position->setY(position->getY() + distance);
@@ -679,7 +657,6 @@ void Player::reborn()
 {
 	size->setSize(32, 32);
 	position->setXY(35, 400);
-	cameraX = 35;
 	model = 0;
 	changeModelCounter = 0;
 	flags.setDefaultFlags();

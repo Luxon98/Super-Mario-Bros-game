@@ -20,20 +20,14 @@ class Screen
 private:
 	class Camera 
 	{
-	private:
+	public:
 		int beginningOfCamera;
 		int endOfCamera;
-
-	public:
 		Camera();
 		Camera(int begX, int endX);
-		int getBeginningOfCamera() const;
-		int getEndOfCamera() const;
-		void setBegginingOfCamera(int begX);
-		void setEndOfCamera(int endX);
-		~Camera();
 	};
 
+	static const int INITIAL_TIME = 403;
 	Player* player;
 	bool coinImage;
 	int initStatus;
@@ -48,8 +42,11 @@ private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	Camera camera;
+	bool isPlayerExceedingCameraReferencePoint();
+	int computeDifference();
+	int computeTime();
 	void loadScreenImages();
-	void changeCoinImageIfAvailable(std::chrono::steady_clock::time_point timePoint);
+	void changeCoinImageIfAvailable();
 	void fillWorldBackground();
 	void fillScreenBackground();
 	void drawScreenElements();
@@ -73,7 +70,7 @@ public:
 	int getEndOfCamera() const;
 	bool isTimePassed() const;
 	SDL_Surface* getDisplay() const;
-	void setPlayer(Player* playerPointer);
+	void setPlayer(Player* player);
 	void setTimeBegin(std::chrono::steady_clock::time_point timeBegin);
 	void setPositionOfTheScreen(int begX, int endX);
 	void resetScreen();

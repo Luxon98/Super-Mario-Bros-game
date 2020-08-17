@@ -29,6 +29,7 @@ private:
 	static SDL_Surface* blockImages[10];
 	static bool changesChecker;
 	int availableCoins;
+	int initialPositionY;
 	int computeImageIndex();
 	Size* getSizeFromBlockType(BlockType type);
 
@@ -36,6 +37,8 @@ public:
 	Block();
 	Block(BlockType type, Position* position);
 	int getAvailableCoins() const;
+	bool canBeHitted();
+	bool isInvisible();
 	void setModel(BlockType type);
 	void addToPositionY(int y);
 	void setAvailableCoins(int coins);

@@ -43,12 +43,27 @@ Block::Block(BlockType type, Position* position)
 	model = type;
 	this->position = position;
 	size = getSizeFromBlockType(type);
-	availableCoins = (type == Monetary ? 5 : 0);
+	availableCoins = (type == Monetary ? 10 : 0);
+	initialPositionY = position->getY();
 }
 
 int Block::getAvailableCoins() const
 {
 	return availableCoins;
+}
+
+bool Block::canBeHitted()
+{
+	return (position->getY() == initialPositionY);
+}
+
+bool Block::isInvisible()
+{
+	if (model == BonusWithGreenMushroom) {
+		return true;
+	}
+
+	return false;
 }
 
 void Block::setModel(BlockType type)

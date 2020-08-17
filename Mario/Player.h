@@ -79,7 +79,6 @@ private:
 	Statistics statistics;
 	Flags flags;
 	PlayerMovement* playerMovement;
-	int cameraX;
 	int model;
 	std::chrono::steady_clock::time_point lastAnimationStartTime;
 	AnimationState currentAnimationState;
@@ -96,16 +95,13 @@ private:
 	void changeModel(World& world);
 	bool isHittingCeiling(int distance);
 	bool isFallingIntoAbyss(int distance);
-	bool isGoingBeyondCamera(int distance);
-	bool isExceedingCameraReferencePoint(int distance);
+	bool isGoingBeyondCamera(int distance, int beginningOfCamera);
 	bool isHittingBlock(int alignment, Direction direction);
 	bool isDuringAnimation();
-	Screen* screen;
 
 public:
 	Player();
 	Player(Position* position);
-	int getCameraX() const;
 	int getPoints() const;
 	int getCoins() const;
 	int getLives() const;
@@ -123,7 +119,6 @@ public:
 	void setStepsRight(int stepsRight);
 	void setStepsUp(int stepsUp);
 	void setStepsDown(int stepsDown);
-	void setScreen(Screen* screen);
 	void addPoints(int pts);
 	void setCurrentAnimation(AnimationState state);
 	void loadPlayerImages(SDL_Surface* display);

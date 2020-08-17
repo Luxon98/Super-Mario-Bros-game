@@ -2,32 +2,11 @@
 
 SDL_Surface* Mushroom::mushroomImages[2] = { nullptr };
 
-void Mushroom::makeHorizontalMovea(World& world)
-{
-	int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world);
-	int distance = movement->getSpeed() - alignment;
-	if (movement->getDirection() == Left) {
-		distance *= -1;
-	}
-	position->setX(position->getX() + distance);
-
-	if (alignment > 0) {
-		movement->setDirection(movement->getDirection() == Right ? Left : Right);
-	}
-}
-
-void Mushroom::makeDiagonalMovea(World& world)
+void Mushroom::makeMoveUp(World& world)
 {
 	int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(Down, movement->getVerticalSpeed(), this, world);
 	int verticalDistance = movement->getVerticalSpeed() - alignment;
-	position->setY(position->getY() + verticalDistance);
-
-	alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world);
-	int distance = movement->getSpeed() - alignment;
-	if (movement->getDirection() == Left) {
-		distance *= -1;
-	}
-	position->setX(position->getX() + distance);
+	position->setY(position->getY() - verticalDistance);
 }
 
 Mushroom::Mushroom() {}
@@ -39,12 +18,25 @@ Mushroom::Mushroom(Position* position, bool greenColor)
 	this->position = position;
 	stepsCounter = 0;
 	this->greenColor = greenColor;
+	stepsUp = 0;
 	growCounter = 96;
 }
 
 bool Mushroom::isGreen()
 {
 	return greenColor;
+}
+
+void Mushroom::decreasePositionY()
+{
+	position->setY(position->getY() - 3);
+}
+
+void Mushroom::setStepsUp(int stepsUp)
+{
+	if (this->stepsUp == 0) {
+		this->stepsUp = stepsUp;
+	}
 }
 
 void Mushroom::loadMushroomImages(SDL_Surface* display)
@@ -66,11 +58,18 @@ void Mushroom::move(World& world)
 		grow();
 	}
 	else if (stepsCounter & 1) {
-		if (isCharacterStandingOnTheBlock(this, world)) {
+		if (stepsUp > 0) {
+			makeMoveUp(world);
+			stepsUp--;
 			makeHorizontalMove(world);
 		}
 		else {
-			makeDiagonalMove(world);
+			if (isCharacterStandingOnTheBlock(this, world)) {
+				makeHorizontalMove(world);
+			}
+			else {
+				makeDiagonalMove(world);
+			}
 		}
 	}
 	stepsCounter++;

@@ -12,31 +12,30 @@ Screen::Camera::Camera(int begX, int endX)
 	endOfCamera = endX;
 }
 
-int Screen::Camera::getBeginningOfCamera() const
-{
-	return beginningOfCamera;
-}
-
-int Screen::Camera::getEndOfCamera() const
-{
-	return endOfCamera;
-}
-
-void Screen::Camera::setBegginingOfCamera(int begX)
-{
-	beginningOfCamera = begX;
-}
-
-void Screen::Camera::setEndOfCamera(int endX)
-{
-	endOfCamera = endX;
-}
-
-Screen::Camera::~Camera() {}
-
 SDL_Surface* Screen::digitImages[10] = { nullptr };
 
 SDL_Surface* Screen::screenImages[12] = { nullptr };
+
+bool Screen::isPlayerExceedingCameraReferencePoint()
+{
+	if (player->getX() - camera.beginningOfCamera > Screen::SCREEN_WIDTH - CAMERA_REFERENCE_POINT) {
+		return true;
+	}
+
+	return false;
+}
+
+int Screen::computeDifference()
+{
+	return (player->getX() - camera.beginningOfCamera) - (SCREEN_WIDTH - CAMERA_REFERENCE_POINT);
+}
+
+int Screen::computeTime()
+{
+	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
+	int time = (int)(INITIAL_TIME - std::chrono::duration_cast<std::chrono::seconds> (timePoint - timeBegin).count());
+	return time;
+}
 
 void Screen::loadScreenImages()
 {
@@ -61,8 +60,9 @@ void Screen::loadScreenImages()
 	screenImages[11] = loadPNG("./img/mario_dead2.png", display);
 }
 
-void Screen::changeCoinImageIfAvailable(std::chrono::steady_clock::time_point timePoint)
+void Screen::changeCoinImageIfAvailable()
 {
+	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
 	if (std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - lastColoursUpdateTime).count() >= 750) {
 		lastColoursUpdateTime = timePoint;
 		coinImage = !coinImage;
@@ -213,9 +213,7 @@ Screen::Screen()
 	scrtex = nullptr;
 	window = nullptr;
 	renderer = nullptr;
-	camera = Camera();
-	camera.setBegginingOfCamera(0);
-	camera.setEndOfCamera(SCREEN_WIDTH);
+	camera = Camera(0, SCREEN_WIDTH);
 	initStatus = initGUI();
 	time = 403;
 	loadScreenImages();
@@ -233,17 +231,17 @@ int Screen::getTime() const
 
 int Screen::getBeginningOfCamera() const
 {
-	return camera.getBeginningOfCamera();
+	return camera.beginningOfCamera;
 }
 
 int Screen::getEndOfCamera() const
 {
-	return camera.getEndOfCamera();
+	return camera.endOfCamera;
 }
 
 bool Screen::isTimePassed() const
 {
-	return time <= 0;
+	return (time <= 0);
 }
 
 SDL_Surface* Screen::getDisplay() const
@@ -251,26 +249,27 @@ SDL_Surface* Screen::getDisplay() const
 	return display;
 }
 
-void Screen::setPlayer(Player* playerPointer)
+void Screen::setPlayer(Player* player)
 {
-	player = playerPointer;
+	this->player = player;
 }
 
 void Screen::setTimeBegin(std::chrono::steady_clock::time_point timeBegin)
 {
-	timeBegin = timeBegin;
+	this->timeBegin = timeBegin;
 }
 
 void Screen::setPositionOfTheScreen(int begX, int endX)
 {
-	camera.setBegginingOfCamera(begX);
-	camera.setEndOfCamera(endX);
+	camera.beginningOfCamera = begX;
+	camera.endOfCamera = endX;
 }
 
 void Screen::resetScreen()
 {
 	timeBegin = std::chrono::steady_clock::now();
-	camera.setBegginingOfCamera(0);
+	camera.beginningOfCamera = 0;
+	camera.endOfCamera = SCREEN_WIDTH;
 	coinImage = true;
 }
 
@@ -314,8 +313,7 @@ void Screen::drawDeadMario(World& world)
 	int shift = 0;
 	for (int i = 0; i < 3000; ++i) {
 		if (i % 3 == 0) {
-			std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
-			time = (int)(403 - std::chrono::duration_cast<std::chrono::seconds> (timePoint - timeBegin).count());
+			time = computeTime();
 			fillWorldBackground();
 			drawScreenElements();
 			drawTime(time);
@@ -323,7 +321,7 @@ void Screen::drawDeadMario(World& world)
 			drawCoins(player->getCoins());
 			world.draw(display, getBeginningOfCamera(), false);
 
-			drawSurface(display, img, player->getCameraX(), player->getY() + shift);
+			drawSurface(display, img, player->getX() - getBeginningOfCamera(), player->getY() + shift);
 			updateView();
 
 			shift += (i <= 450 ? -1 : 1);
@@ -352,9 +350,13 @@ void Screen::drawWorldFinishedScreen(World& world)
 
 void Screen::updateScreen(World& world)
 {
-	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
-	time = (int)(403 - std::chrono::duration_cast<std::chrono::seconds> (timePoint - timeBegin).count());
-	changeCoinImageIfAvailable(timePoint);
+	if (isPlayerExceedingCameraReferencePoint()) {
+		int difference = computeDifference();
+
+		setPositionOfTheScreen(camera.beginningOfCamera + difference, camera.endOfCamera + difference);
+	}
+	time = computeTime();
+	changeCoinImageIfAvailable();
 	fillWorldBackground();
 	drawScreenElements();
 	drawTime(time);

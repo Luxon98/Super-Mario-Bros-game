@@ -126,6 +126,10 @@ void World::slideBlock()
 		if (slidingCounter == 124) {
 			playBlockSoundEffects();
 			subtractCoinFromBlockIfPossible();
+
+			if (isMushroomStandingOnTheBlock(*this, lastTouchedBlockIndex)) {
+				raiseUpMushroom();
+			}
 		}
 
 		slidingCounter--;
@@ -142,6 +146,23 @@ void World::slideBlock()
 
 		if (slidingCounter == 0) {
 			createNewBonusIfPossible();
+			slideBlockStatus = true;
+		}
+	}
+}
+
+void World::raiseUpMushroom()
+{
+	std::vector<BonusObject*> elements = getBonusElements();
+	for (auto it = elements.begin(); it != elements.end(); ++it) {
+		if (dynamic_cast<Mushroom*>(*it)) {
+			if (((*it)->getY() + (*it)->getHeight() / 2) == blocks[lastTouchedBlockIndex].getY()
+				- blocks[lastTouchedBlockIndex].getHeight() / 2 && areAtTheSameWidth(*it, blocks[lastTouchedBlockIndex])) {
+
+				dynamic_cast<Mushroom*>(*it)->decreasePositionY();
+				dynamic_cast<Mushroom*>(*it)->setStepsUp(30);
+				return;
+			}
 		}
 	}
 }
@@ -222,6 +243,7 @@ World::World()
 	flag = nullptr;
 	screen = nullptr;
 	slidingCounter = 0;
+	slideBlockStatus = true;
 	fireballStatus = false;
 }
 
@@ -265,6 +287,11 @@ bool World::isFlagDown() const
 	return flag->isDown();
 }
 
+Screen* World::getScreen() const
+{
+	return screen;
+}
+
 void World::setPlayer(Player* player)
 {
 	this->player = player;
@@ -282,11 +309,12 @@ void World::setLastTouchedBlock(int index)
 	}
 }
 
-void World::setSlidingCounter(int ctr)
+void World::hitBlock()
 {
-	if (blocks[lastTouchedBlockIndex].getModel() >= Destructible &&
-		blocks[lastTouchedBlockIndex].getModel() <= BonusWithStar) {
-		slidingCounter = ctr;
+	if ((blocks[lastTouchedBlockIndex].getModel() >= Destructible 
+		&& blocks[lastTouchedBlockIndex].getModel() <= BonusWithStar) && blocks[lastTouchedBlockIndex].canBeHitted()) {
+
+		slidingCounter = 124;
 	}
 }
 
@@ -411,7 +439,7 @@ void World::draw(SDL_Surface* display, int beginningOfScreen, bool playerFlag)
 	flag->draw(display, beginningOfScreen);
 
 	if (playerFlag) {
-		player->draw(display, player->getCameraX());
+		player->draw(display, beginningOfScreen);
 	}
 }
 

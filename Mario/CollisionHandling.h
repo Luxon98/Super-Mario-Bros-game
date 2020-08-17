@@ -22,6 +22,8 @@ bool isMonsterStandingOnTheBlock(LivingObject* object, Block block);
 
 bool isFlowerStandingOnTheBlock(World& world, int index);
 
+bool isMushroomStandingOnTheBlock(World& world, int index);
+
 bool areAtTheSameWidth(WorldObject* object, Block block);
 
 bool areAtTheSameHeight(WorldObject* object, Block block); 

@@ -27,7 +27,7 @@ bool isCharacterStandingOnTheBlock(WorldObject* object, World& world)
 {
 	std::vector<Block> blocks = world.getBlocks();
 	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
-		if (object->getY() + object->getHeight() / 2 == it->getY() - it->getHeight() / 2 && areAtTheSameWidth(object, *it)) {
+		if (object->getY() + object->getHeight() / 2 == it->getY() - it->getHeight() / 2 && areAtTheSameWidth(object, *it) && !it->isInvisible()) {
 			return true;
 		}
 	}
@@ -37,8 +37,9 @@ bool isCharacterStandingOnTheBlock(WorldObject* object, World& world)
 
 bool isMonsterStandingOnTheBlock(LivingObject* object, Block block)
 {
-	if (abs((object->getY() + object->getHeight() / 2) - (block.getY() - block.getHeight() / 2))
-		< (block.getHeight() / 2) && areAtTheSameWidth(object, block)) {
+	if (abs((object->getY() + object->getHeight() / 2) - (block.getY() - block.getHeight() / 2)) < 3
+		&& areAtTheSameWidth(object, block)) {
+
 		return true;
 	}
 
@@ -53,6 +54,23 @@ bool isFlowerStandingOnTheBlock(World& world, int index)
 		if (dynamic_cast<Flower*>(*it)) {
 			if (((*it)->getY() + (*it)->getHeight() / 2) + 9 == blocks[index].getY() - blocks[index].getHeight() / 2
 				&& areAtTheSameWidth(*it, blocks[index])) {
+
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool isMushroomStandingOnTheBlock(World& world, int index)
+{
+	std::vector<BonusObject*> elements = world.getBonusElements();
+	std::vector<Block> blocks = world.getBlocks();
+	for (auto it = elements.begin(); it != elements.end(); ++it) {
+		if (dynamic_cast<Mushroom*>(*it)) {
+			if (((*it)->getY() + (*it)->getHeight() / 2) == blocks[index].getY() - blocks[index].getHeight() / 2
+				&& areAtTheSameWidth(*it, blocks[index])) {
+
 				return true;
 			}
 		}
@@ -313,7 +331,7 @@ int getAlignmentIfCollisionOccursDuringMovement(Direction direction, int distanc
 	std::vector<Block> blocks = world.getBlocks();
 	int alignment = 0;
 	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
-		if (areAtTheSameHeight(object, *it) && isCharacterHittingBlock(object, *it, direction, distance)) {
+		if (areAtTheSameHeight(object, *it) && isCharacterHittingBlock(object, *it, direction, distance) && !it->isInvisible()) {
 			if ((object->getX() + distance + object->getWidth() / 2) - (it->getX() - it->getWidth() / 2) > alignment
 				&& direction == Right) {
 				alignment = (object->getX() + distance + object->getWidth() / 2) - (it->getX() - it->getWidth() / 2);
@@ -336,11 +354,13 @@ int getAlignmentIfCollisionOccursDuringVerticalMovement(Direction direction, int
 		if (areAtTheSameWidth(object, *it) && isCharacterHittingBlock(object, *it, direction, distance)) {
 			if ((it->getY() + it->getHeight() / 2) - (object->getY() - distance - object->getHeight() / 2) > alignment
 				&& direction == Up) {
+
 				world.setLastTouchedBlock(it - blocks.begin());
 				alignment = (it->getY() + it->getHeight() / 2) - (object->getY() - distance - object->getHeight() / 2);
 			}
 			else if ((object->getY() + distance + object->getHeight() / 2) - (it->getY() - it->getHeight() / 2) > alignment
-				&& direction == Down && it->getModel() != BonusWithGreenMushroom) {
+				&& direction == Down && !it->isInvisible()) {
+				
 				alignment = (object->getY() + distance + object->getHeight() / 2) - (it->getY() - it->getHeight() / 2);
 			}
 		}

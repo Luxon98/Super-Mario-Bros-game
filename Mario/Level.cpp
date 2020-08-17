@@ -161,7 +161,7 @@ void Level::setFirstLevel(World& world)
 	world.monsters.push_back(new Creature(new Position(1650, 400)));
 	world.monsters.push_back(new Creature(new Position(1710, 400)));
 	world.monsters.push_back(new Creature(new Position(2650, 128)));
-	world.monsters.push_back(new Creature(new Position(2700, 128)));
+	world.monsters.push_back(new Creature(new Position(2730, 128)));
 	world.monsters.push_back(new Creature(new Position(3180, 400)));
 	world.monsters.push_back(new Creature(new Position(3220, 400)));
 	world.monsters.push_back(new Turtle(new Position(3350, 400)));

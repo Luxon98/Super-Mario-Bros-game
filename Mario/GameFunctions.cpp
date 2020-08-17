@@ -136,7 +136,6 @@ void runGame()
 
 	if (!screen->getInitStatus()) {
 		Player* player = new Player(new Position(35, 400));
-		player->setScreen(screen);
 		world.setPlayer(player);
 		world.setScreen(screen);
 		screen->setPlayer(player);

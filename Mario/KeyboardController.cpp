@@ -30,6 +30,8 @@ void KeyboardController::handleArrowKeys(Player* player, World& world)
 				player->setStepsLeft(36);
 				player->setStepsUp(72);
 			}
+
+			SoundController::playJumpEffect(player);
 			return;
 		}
 		else if (keysState[Right] && keysState[Up]) {
@@ -41,6 +43,8 @@ void KeyboardController::handleArrowKeys(Player* player, World& world)
 				player->setStepsRight(36);
 				player->setStepsUp(72);
 			}
+
+			SoundController::playJumpEffect(player);
 			return;
 		}
 		else if (keysState[Left]) {
@@ -48,7 +52,7 @@ void KeyboardController::handleArrowKeys(Player* player, World& world)
 				player->setStepsLeft(player->getStepsLeft() + 8);
 			}
 			else {
-				player->setStepsLeft(24);
+				player->setStepsLeft(16);
 			}
 			return;
 		}
@@ -57,12 +61,13 @@ void KeyboardController::handleArrowKeys(Player* player, World& world)
 				player->setStepsRight(player->getStepsRight() + 8);
 			}
 			else {
-				player->setStepsRight(24);
+				player->setStepsRight(16);
 			}
 			return;
 		}
 		else if (keysState[Up]) {
 			player->setStepsUp(101);
+			SoundController::playJumpEffect(player);
 			return;
 		}
 	}
@@ -87,7 +92,7 @@ void KeyboardController::handleArrowKeys(Player* player, World& world)
 				player->setStepsLeft(16);
 			}
 
-			if (!doubleJumpFlag) {
+			if (!doubleJumpFlag && player->getY() > 200) {
 				player->setStepsUp(player->getStepsUp() + 65);
 				doubleJumpFlag = true;
 			}
@@ -101,14 +106,14 @@ void KeyboardController::handleArrowKeys(Player* player, World& world)
 				player->setStepsRight(16);
 			}
 
-			if (!doubleJumpFlag) {
+			if (!doubleJumpFlag && player->getY() > 200) {
 				player->setStepsUp(player->getStepsUp() + 65);
 				doubleJumpFlag = true;
 			}
 			return;
 		}
 		else if (keysState[Up]) {
-			if (!doubleJumpFlag) {
+			if (!doubleJumpFlag && player->getY() > 200) {
 				player->setStepsUp(player->getStepsUp() + 65);
 				doubleJumpFlag = true;
 			}
