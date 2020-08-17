@@ -14,6 +14,8 @@ Player::Flags::Flags()
 	orientationFlag = true;
 	aliveFlag = true;
 	removeLivesFlag = false;
+	armedFlag = false;
+	inAirFlag = false;
 }
 
 void Player::Flags::setDefaultFlags()
@@ -21,6 +23,8 @@ void Player::Flags::setDefaultFlags()
 	orientationFlag = true;
 	aliveFlag = true;
 	removeLivesFlag = false;
+	armedFlag = false;
+	inAirFlag = false;
 }
 
 Player::PlayerMovement::PlayerMovement()
@@ -54,10 +58,12 @@ int Player::computeImageIndex()
 		return model + 37 * flags.orientationFlag + 25;
 	}
 	else if (currentState == ArmedSecond) {
-		return 37 * flags.orientationFlag + 30;
+		int additionalIndex = (flags.inAirFlag ? 32 : 30);
+		return 37 * flags.orientationFlag + additionalIndex;
 	}
 	else if (currentState == ArmedThird) {
-		return 37 * flags.orientationFlag + 31;
+		int additionalIndex = (flags.inAirFlag ? 33 : 31);
+		return 37 * flags.orientationFlag + additionalIndex;
 	}
 	else if (currentState == InsensitiveSmall) {
 		return 37 * flags.orientationFlag + 35;
@@ -151,13 +157,14 @@ void Player::performShrinkingAnimation(int difference)
 		currentState = Small;
 		lastDifference = 0;
 		movementBlock = false;
+		flags.armedFlag = false;
 	}
 }
 
 void Player::performArmingAnimation(int difference)
 {
 	movementBlock = true;
-	model = 0;
+	model = (flags.inAirFlag ? 4 : 0);
 
 	if (isDifferenceInInterval(difference, 0, 600, 3)) {
 		currentState = ArmedFirst;
@@ -174,6 +181,7 @@ void Player::performArmingAnimation(int difference)
 	else {
 		currentAnimationState = NoAnimation;
 		currentState = ArmedFirst;
+		flags.armedFlag = true;
 		lastDifference = 0;
 		movementBlock = false;
 		resetMovement();
@@ -213,12 +221,17 @@ void Player::resetMovement()
 	playerMovement->setVerticalSpeed(1);
 }
 
-void Player::changeModel(World& world)
+void Player::changeModelAndAirFlagStatus(World& world)
 {
 	if (!isCharacterStandingOnTheBlock(this, world)) {
 		model = 4;
+		flags.inAirFlag = true;
 		return;
 	}
+	else {
+		flags.inAirFlag = false;
+	}
+
 	if (playerMovement->stepsLeft == 0 && playerMovement->stepsRight == 0) {
 		model = 0;
 		return;
@@ -315,7 +328,7 @@ int Player::getStepsUp() const
 
 bool Player::isArmed() const
 {
-	return (currentState == ArmedFirst);
+	return flags.armedFlag;
 }
 
 bool Player::isImmortal() const
@@ -629,6 +642,7 @@ void Player::move(World& world)
 
 			if (isCharacterStandingOnTheBlock(this, world)) {
 				model = 0;
+				flags.inAirFlag = false;
 			}
 		}
 		 
@@ -649,7 +663,7 @@ void Player::move(World& world)
 
 			playerMovement->stepsDown--;
 		}
-		changeModel(world);
+		changeModelAndAirFlagStatus(world);
 	}
 }
 

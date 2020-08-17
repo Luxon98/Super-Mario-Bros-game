@@ -61,6 +61,8 @@ private:
 		bool orientationFlag;
 		bool aliveFlag;
 		bool removeLivesFlag;
+		bool armedFlag;
+		bool inAirFlag;
 		Flags();
 		void setDefaultFlags();
 	};
@@ -92,7 +94,7 @@ private:
 	long long int lastDifference;
 	bool movementBlock;
 	void resetMovement();
-	void changeModel(World& world);
+	void changeModelAndAirFlagStatus(World& world);
 	bool isHittingCeiling(int distance);
 	bool isFallingIntoAbyss(int distance);
 	bool isGoingBeyondCamera(int distance, int beginningOfCamera);

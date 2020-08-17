@@ -29,21 +29,21 @@ bool DestroyedTurtle::shouldBeRemoved()
 
 void DestroyedTurtle::slide()
 {
-	++auxiliaryCounter;
+	auxiliaryCounter++;
 
 	if (auxiliaryCounter & 1) {
 		if (auxiliaryCounter <= 12) {
-			position->setY(position->getY() - 3);
-		}
-		else if (auxiliaryCounter >= 13 && auxiliaryCounter <= 24) {
-			position->setX(position->getX() + 3);
 			position->setY(position->getY() - 2);
 		}
+		else if (auxiliaryCounter >= 13 && auxiliaryCounter <= 24) {
+			position->setX(position->getX() + 2);
+			position->setY(position->getY() - 3);
+		}
 		else if (auxiliaryCounter >= 25 && auxiliaryCounter <= 32) {
-			position->setY(position->getY() + 3);
+			position->setX(position->getX() + 2);
 		}
 		else if (auxiliaryCounter >= 33 && auxiliaryCounter <= 44) {
-			position->setX(position->getX() + 3);
+			position->setX(position->getX() + 2);
 			position->setY(position->getY() + 2);
 		}
 		else {

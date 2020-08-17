@@ -41,7 +41,7 @@ void World::performBonusElementsActions()
 {
 	for (unsigned int i = 0; i < bonusElements.size(); ++i) {
 		bonusElements[i]->move(*this);
-		if (bonusElements[i]->getY() > WORLD_HEIGHT + 30) {
+		if (bonusElements[i]->getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
 			deleteLivingElement(i);
 		}
 	}
@@ -63,7 +63,7 @@ void World::performMonstersActions()
 			monsters.erase(monsters.begin() + i);
 		}
 
-		if (monsters[i]->getY() > WORLD_HEIGHT + 30) {
+		if (monsters[i]->getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
 			deleteMonster(i);
 		}
 	}
@@ -80,7 +80,7 @@ void World::performFireBallsActions()
 
 			fireballs.erase(fireballs.begin() + i);
 		}
-		else if (fireballs[i].getY() > WORLD_HEIGHT + 30) {
+		else if (fireballs[i].getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
 			fireballs.erase(fireballs.begin() + i);
 		}
 	}

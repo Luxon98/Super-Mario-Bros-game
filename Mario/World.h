@@ -40,6 +40,7 @@ class BonusObject;
 class World
 {
 private:
+	static const int DISTANCE_FROM_WORLD = 30;
 	std::chrono::steady_clock::time_point lastColoursUpdateTime;
 	std::vector<Block> blocks;
 	std::vector<InanimateObject*> inanimateElements;
