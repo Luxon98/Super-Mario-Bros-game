@@ -21,7 +21,7 @@ public:
 	static void playWorldFinishedMusic();
 	static void playGameoverMusic();
 	static void playTimePassedMusic();
-	static void play1upCollectedEffect();
+	static void playNewLiveAddedEffect();
 	static void playBlockDestroyedEffect();
 	static void playBlockHittedEffect();
 	static void playBonusAppeardEffect();

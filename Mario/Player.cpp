@@ -1,6 +1,6 @@
 #include "Player.h"
 
-SDL_Surface* Player::playerImages[74] = { nullptr };
+SDL_Surface* Player::playerImages[80] = { nullptr };
 
 Player::Statistics::Statistics()
 {
@@ -40,39 +40,39 @@ Player::PlayerMovement::PlayerMovement()
 int Player::computeImageIndex()
 {
 	if (currentState == Small) {
-		return model + 37 * flags.orientationFlag;
+		return model + 40 * flags.orientationFlag;
 	}
 	else if (currentState == Tall) {
-		return model + 37 * flags.orientationFlag + 5;
+		return model + 40 * flags.orientationFlag + 5;
 	}
 	else if (currentState == ArmedFirst || currentState == ImmortalFourth) {
-		return model + 37 * flags.orientationFlag + 10;
+		return model + 40 * flags.orientationFlag + 10;
 	}
 	else if (currentState == ImmortalFirst) {
-		return model + 37 * flags.orientationFlag + 20;
+		return model + 40 * flags.orientationFlag + 20;
 	}
 	else if (currentState == ImmortalSecond) {
-		return model + 37 * flags.orientationFlag + 15;
+		return model + 40 * flags.orientationFlag + 15;
 	}
 	else if (currentState == ImmortalThird) {
-		return model + 37 * flags.orientationFlag + 25;
+		return model + 40 * flags.orientationFlag + 25;
 	}
 	else if (currentState == ArmedSecond) {
 		int additionalIndex = (flags.inAirFlag ? 32 : 30);
-		return 37 * flags.orientationFlag + additionalIndex;
+		return 40 * flags.orientationFlag + additionalIndex;
 	}
 	else if (currentState == ArmedThird) {
 		int additionalIndex = (flags.inAirFlag ? 33 : 31);
-		return 37 * flags.orientationFlag + additionalIndex;
+		return 40 * flags.orientationFlag + additionalIndex;
 	}
 	else if (currentState == InsensitiveSmall) {
-		return 37 * flags.orientationFlag + 35;
+		return model + 40 * flags.orientationFlag + 35;
 	}
-	else if (currentState == InsensitiveTall) {
-		return 37 * flags.orientationFlag + 36;
+	else if (currentState == Average) {
+		return 40 * flags.orientationFlag + 34;
 	}
 	else {
-		return 37 * flags.orientationFlag + 34;
+		return model;
 	}
 }
 
@@ -143,10 +143,6 @@ void Player::performGrowingAnimation(int difference)
 void Player::performShrinkingAnimation(int difference)
 {
 	if (difference <= 1000 && lastDifference < 10) {
-		lastDifference = difference;
-		currentState = InsensitiveTall;
-	}
-	else if (difference > 1000 && difference < 2000 && lastDifference < 1000) {
 		size->setHeight(32);
 		position->setY(position->getY() + 16);
 		lastDifference = difference;
@@ -156,8 +152,6 @@ void Player::performShrinkingAnimation(int difference)
 		currentAnimationState = NoAnimation;
 		currentState = Small;
 		lastDifference = 0;
-		movementBlock = false;
-		flags.armedFlag = false;
 	}
 }
 
@@ -355,7 +349,14 @@ Direction Player::getMovementDirection() const
 
 void Player::incrementCoins()
 {
-	statistics.coins++;
+	if (statistics.coins == 99) {
+		statistics.coins = 0;
+		statistics.lives++;
+		SoundController::playNewLiveAddedEffect();
+	}
+	else {
+		statistics.coins++;
+	}
 }
 
 void Player::incrementLives()
@@ -402,13 +403,13 @@ void Player::setCurrentAnimation(AnimationState state)
 
 void Player::loadPlayerImages(SDL_Surface* display)
 {
-	for (int i = 0; i < 37; ++i) {
+	for (int i = 0; i < 40; ++i) {
 		std::string filename = "./img/mario_left";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		playerImages[i] = loadPNG(filename, display);
 		filename.replace(12, 4, "right");
-		playerImages[i + 37] = loadPNG(filename, display);
+		playerImages[i + 40] = loadPNG(filename, display);
 	}
 }
 
@@ -438,8 +439,8 @@ void Player::hitBlock(World& world)
 void Player::loseBonusOrLife()
 {
 	if (currentState == Tall || currentState == ArmedFirst) {
-		movementBlock = true;
 		currentAnimationState = DuringShrinkingAnimation;
+		flags.armedFlag = false;
 		lastAnimationStartTime = std::chrono::steady_clock::now();
 	}
 	else if (!isDuringAnimation()) {
@@ -450,141 +451,6 @@ void Player::loseBonusOrLife()
 		}
 	}
 }
-
-//void Player::changePosition(Direction direction, int distance, World& world, Screen* mainScreen)
-//{
-//	if (!isGoingOutBoundariesOfWorld(direction, distance)) {
-//		if (direction == Left) {
-//			position->setX(position->getX() - distance);
-//			cameraX -= distance;
-//		}
-//		else if (direction == Right) {
-//			if (isExceedingCameraReferencePoint(distance)) {
-//				mainScreen->setPositionOfTheScreen(mainScreen->getBeginningOfCamera() + distance,
-//					mainScreen->getEndOfCamera() + distance);
-//			}
-//			else {
-//				cameraX += distance;
-//			}
-//			position->setX(position->getX() + distance);
-//		}
-//		flags.orientationFlag = (direction == Right);
-//	}
-//}
-//
-//void Player::changeVerticalPosition(Direction direction, int distance, World& world)
-//{
-//	if (direction == Up && !isHittingCeiling(distance)) {
-//		position->setY(position->getY() - distance);
-//	}
-//	else if (direction == Down && !isFallingIntoAbyss(distance)) {
-//		position->setY(position->getY() + distance);
-//	}
-//	else if (isFallingIntoAbyss(distance)) {
-//		if (!flags.removeLivesFlag) {
-//			flags.removeLivesFlag = true;
-//			statistics.lives--;
-//			flags.aliveFlag = false;
-//		}
-//	}
-//}
-//
-//void Player::move(Direction direction, int distance, World& world, Screen* mainScreen)
-//{
-//	int height, range;
-//	for (int i = 0; i < distance && !movementBlock; ++i) {
-//		range = 1 - getAlignmentIfCollisionOccursDuringMovement(direction, 1, this, world);
-//		changePosition(direction, range, world, mainScreen);
-//
-//		height = 1 - getAlignmentIfCollisionOccursDuringVerticalMovement(Down, 1, this, world);
-//		if (!isCharacterStandingOnTheBlock(this, world)) {
-//			changeVerticalPosition(Down, height, world);
-//		}
-//		collectCoinIfPossible(this, world);
-//		mainScreen->updateScreen(world);
-//		chooseModel(world);
-//	}
-//
-//	model = 0;
-//}
-//
-//void Player::jump(Direction direction, int height, World& world, Screen* mainScreen)
-//{
-//	int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(direction, height, this, world);
-//	height -= alignment;
-//	model = 4;
-//
-//	for (int i = 0; i < height && !movementBlock; ++i) {
-//		changeVerticalPosition(direction, 1, world);
-//		collectCoinIfPossible(this, world);
-//		mainScreen->updateScreen(world);
-//
-//		if (flags.rejumpFlag) {
-//			flags.rejumpFlag = false;
-//			performAdditionalJump(world, mainScreen);
-//			break;
-//		}
-//
-//	}
-//	changeVerticalPosition(direction, height % 1, world);
-//	collectCoinIfPossible(this, world);
-//
-//	mainScreen->updateScreen(world);
-//
-//	if (isHittingBlock(alignment, direction)) {
-//		hitBlock(world, mainScreen);
-//	}
-//
-//	if (isCharacterStandingOnTheBlock(this, world)) {
-//		model = 0;
-//	}
-//}
-//
-//void Player::moveAndJump(Direction dirX, int distance, int height, World& world, Screen* mainScreen)
-//{
-//	bool checker = false;
-//	int steps = 2 * distance, treads = 2 * height;
-//	int ctr = 0, alignment = 0;
-//	Direction dirY = Up;
-//	model = 4;
-//
-//	while ((steps || treads) && !movementBlock) {
-//		if (treads) {
-//			alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(dirY, 1, this, world);
-//			changeVerticalPosition(dirY, 1 - alignment, world);
-//			treads--;
-//
-//			if (++ctr > treads) {
-//				dirY = Down;
-//			}
-//			if (isHittingBlock(alignment, dirY) && !checker) {
-//				checker = true;
-//				hitBlock(world, mainScreen);
-//			}
-//		}
-//		if (steps) {
-//			changePosition(dirX, 1 - getAlignmentIfCollisionOccursDuringMovement(dirX, 1, this, world), world, mainScreen);
-//			steps--;
-//		}
-//		collectCoinIfPossible(this, world);
-//		mainScreen->updateScreen(world);
-//
-//		if (flags.rejumpFlag) {
-//			flags.rejumpFlag = false;
-//			performAdditionalJump(world, mainScreen);
-//			break;
-//		}
-//	}
-//
-//	if (isCharacterStandingOnTheBlock(this, world)) {
-//		model = 0;
-//	}
-//}
-//
-//void Player::performAdditionalJump(World& world, Screen* mainScreen)
-//{
-//	jump(Up, 40, world, mainScreen);
-//}
 
 void Player::performAdditionalJump()
 {
@@ -671,7 +537,10 @@ void Player::move(World& world)
 
 			playerMovement->stepsDown--;
 		}
+
 		changeModelAndAirFlagStatus(world);
+
+		collectCoinIfPossible(this, world);
 	}
 }
 

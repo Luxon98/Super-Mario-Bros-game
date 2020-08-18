@@ -83,7 +83,7 @@ void SoundController::playTimePassedMusic()
 	Mix_PlayMusic(backgroundTracks[4], -1);
 }
 
-void SoundController::play1upCollectedEffect()
+void SoundController::playNewLiveAddedEffect()
 {
 	Mix_PlayChannel(-1, soundsEffects[0], 0);
 }

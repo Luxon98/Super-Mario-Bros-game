@@ -29,8 +29,7 @@ enum PlayerState
 	ImmortalThird = 8,
 	ImmortalFourth = 9,
 	Average = 10,
-	InsensitiveSmall = 11,
-	InsensitiveTall = 12,
+	InsensitiveSmall = 11
 };
 
 enum AnimationState 
@@ -77,7 +76,7 @@ private:
 		PlayerMovement();
 	};
 
-	static SDL_Surface* playerImages[74];
+	static SDL_Surface* playerImages[80];
 	Statistics statistics;
 	Flags flags;
 	PlayerMovement* playerMovement;
@@ -128,12 +127,6 @@ public:
 	void draw(SDL_Surface* display, int beginningOfCamera) override;
 	void hitBlock(World& world);
 	void loseBonusOrLife();
-	//void changePosition(Direction direction, int distance, World& world, Screen* mainScreen);
-	//void changeVerticalPosition(Direction direction, int distance, World& world);
-	//void move(Direction direction, int distance, World& world, Screen* mainScreen) override;
-	//void jump(Direction direction, int height, World& world, Screen* mainScreen);
-	//void moveAndJump(Direction dirX, int distance, int height, World& world, Screen* mainScreen);
-	//void performAdditionalJump(World& world, Screen* mainScreen);
 	void performAdditionalJump();
 	void move(World& world);
 	void reborn();

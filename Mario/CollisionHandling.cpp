@@ -276,6 +276,7 @@ void collectCoinIfPossible(Player* player, World& world)
 			if (dynamic_cast<Coin*>(*it)) {
 				player->incrementCoins();
 				world.deleteInanimateElement(index);
+				SoundController::playCoinCollectedEffect();
 			}
 		}
 	}
@@ -296,7 +297,7 @@ void collectBonusIfPossible(Player* player, World& world)
 					player->incrementLives();
 					world.addAnimatedText(ONE_UP, new Position(player->getX(), player->getY() - 20));
 					world.deleteLivingElement(index);
-					SoundController::play1upCollectedEffect();
+					SoundController::playNewLiveAddedEffect();
 					break;
 				}
 			}
