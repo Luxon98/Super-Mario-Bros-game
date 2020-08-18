@@ -117,6 +117,7 @@ public:
 	Direction getMovementDirection() const;
 	void incrementCoins();
 	void incrementLives();
+	void increaseSpeed();
 	void setStepsLeft(int stepsLeft);
 	void setStepsRight(int stepsRight);
 	void setStepsUp(int stepsUp);

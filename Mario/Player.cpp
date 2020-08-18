@@ -208,6 +208,8 @@ void Player::performImmortalAnimation(int difference)
 		lastDifference = 0;
 		SoundController::stopMusic();
 		SoundController::playBackgroudMarioMusic();
+		playerMovement->setSpeed(1);
+		playerMovement->setVerticalSpeed(1);
 	}
 }
 
@@ -359,6 +361,12 @@ void Player::incrementCoins()
 void Player::incrementLives()
 {
 	statistics.lives++;
+}
+
+void Player::increaseSpeed()
+{
+	playerMovement->setSpeed(2);
+	playerMovement->setVerticalSpeed(2);
 }
 
 void Player::setStepsLeft(int stepsLeft)

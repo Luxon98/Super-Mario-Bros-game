@@ -315,6 +315,7 @@ void collectBonusIfPossible(Player* player, World& world)
 				}
 				else {
 					player->setCurrentAnimation(DuringImmortalAnimation);
+					player->increaseSpeed();
 					SoundController::stopMusic();
 					SoundController::playBackgroudStarMusic();
 				}

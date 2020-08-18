@@ -48,20 +48,20 @@ void KeyboardController::handleArrowKeys(Player* player, World& world)
 			return;
 		}
 		else if (keysState[Left]) {
-			if (player->getStepsLeft() > 0) {
+			if (player->getStepsLeft() > 0 && player->getStepsLeft() < 60) {
 				player->setStepsLeft(player->getStepsLeft() + 8);
 			}
 			else {
-				player->setStepsLeft(16);
+				player->setStepsLeft(32);
 			}
 			return;
 		}
 		else if (keysState[Right]) {
-			if (player->getStepsRight() > 0) {
+			if (player->getStepsRight() > 0 && player->getStepsRight() < 60) {
 				player->setStepsRight(player->getStepsRight() + 8);
 			}
 			else {
-				player->setStepsRight(16);
+				player->setStepsRight(32);
 			}
 			return;
 		}
@@ -92,7 +92,7 @@ void KeyboardController::handleArrowKeys(Player* player, World& world)
 				player->setStepsLeft(16);
 			}
 
-			if (!doubleJumpFlag && player->getY() > 200) {
+			if (!doubleJumpFlag && player->getY() > 200 && !player->isImmortal()) {
 				player->setStepsUp(player->getStepsUp() + 65);
 				doubleJumpFlag = true;
 			}
@@ -106,14 +106,14 @@ void KeyboardController::handleArrowKeys(Player* player, World& world)
 				player->setStepsRight(16);
 			}
 
-			if (!doubleJumpFlag && player->getY() > 200) {
+			if (!doubleJumpFlag && player->getY() > 200 && !player->isImmortal()) {
 				player->setStepsUp(player->getStepsUp() + 65);
 				doubleJumpFlag = true;
 			}
 			return;
 		}
 		else if (keysState[Up]) {
-			if (!doubleJumpFlag && player->getY() > 200) {
+			if (!doubleJumpFlag && player->getY() > 200 && !player->isImmortal()) {
 				player->setStepsUp(player->getStepsUp() + 65);
 				doubleJumpFlag = true;
 			}
