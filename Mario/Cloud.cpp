@@ -19,10 +19,12 @@ void Cloud::loadCloudImages(SDL_Surface* display)
 	cloudImages[2] = loadPNG("./img/cloud3.png", display);
 }
 
-void Cloud::draw(SDL_Surface* display, int beginningOfCamera)
+void Cloud::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	SDL_Surface* cloudImg = nullptr;
-	cloudImg = cloudImages[model - 1];
-	drawSurface(display, cloudImg, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 100 && position->getX() < endOfCamera + 100) {
+		SDL_Surface* cloudImg = nullptr;
+		cloudImg = cloudImages[model - 1];
+		drawSurface(display, cloudImg, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 

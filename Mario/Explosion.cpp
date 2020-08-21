@@ -15,9 +15,11 @@ void Explosion::loadExplosionImage(SDL_Surface* display)
 	explosionImage = loadPNG("./img/explosion.png", display);
 }
 
-void Explosion::draw(SDL_Surface* display, int beginningOfCamera)
+void Explosion::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	drawSurface(display, explosionImage, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 50 && position->getX() < endOfCamera + 50) {
+		drawSurface(display, explosionImage, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 bool Explosion::shouldBeRemoved()

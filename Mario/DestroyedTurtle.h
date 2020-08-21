@@ -15,7 +15,7 @@ public:
 	DestroyedTurtle();
 	DestroyedTurtle(Position* position);
 	void loadDestroyedTurtleImage(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	bool shouldBeRemoved() override;
 	void slide() override;
 };

@@ -16,7 +16,7 @@ public:
 	Coin(Position* position);
 	void loadCoinImages(SDL_Surface* display);
 	static void changeCoinImage();
-	void draw(SDL_Surface* display, int beginningOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 };
 
 #endif //_Coin_H

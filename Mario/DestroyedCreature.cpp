@@ -16,9 +16,11 @@ void DestroyedCreature::loadDestroyedCreatureImage(SDL_Surface* display)
 	destroyedCreatureImage = loadPNG("./img/destroyed_creature.png", display);
 }
 
-void DestroyedCreature::draw(SDL_Surface* display, int beginningOfCamera)
+void DestroyedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	drawSurface(display, destroyedCreatureImage, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 70 && position->getX() < endOfCamera + 70) {
+		drawSurface(display, destroyedCreatureImage, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 bool DestroyedCreature::shouldBeRemoved()

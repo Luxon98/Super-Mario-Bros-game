@@ -35,11 +35,13 @@ void Turtle::loadTurtleImages(SDL_Surface* display)
 	turtleImages[3] = loadPNG("./img/turtle_right2.png", display);
 }
 
-void Turtle::draw(SDL_Surface* display, int beginningOfCamera)
+void Turtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	SDL_Surface* turtleImg = nullptr;
-	turtleImg = turtleImages[model - 1];
-	drawSurface(display, turtleImg, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 100 && position->getX() < endOfCamera + 100) {
+		SDL_Surface* turtleImg = nullptr;
+		turtleImg = turtleImages[model - 1];
+		drawSurface(display, turtleImg, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 void Turtle::move(World& world)

@@ -25,11 +25,13 @@ void Flower::loadFlowerImages(SDL_Surface* display)
 	flowerImages[1] = loadPNG("./img/flower2.png", display);
 }
 
-void Flower::draw(SDL_Surface* display, int beginningOfCamera)
+void Flower::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	SDL_Surface* flowerImg = nullptr;
-	flowerImg = flowerImages[typeOfImage - 1];
-	drawSurface(display, flowerImg, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 60 && position->getX() < endOfCamera + 60) {
+		SDL_Surface* flowerImg = nullptr;
+		flowerImg = flowerImages[typeOfImage - 1];
+		drawSurface(display, flowerImg, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 void Flower::move(World& world)

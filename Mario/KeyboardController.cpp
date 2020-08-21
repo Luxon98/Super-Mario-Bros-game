@@ -9,133 +9,135 @@ void KeyboardController::handleSpacebar(World& world)
 
 void KeyboardController::handleArrowKeys(Player* player, World& world)
 {
-	if (isCharacterStandingOnTheBlock(player, world)) {
-		doubleJumpFlag = false;
+	if (!player->movementBlock) {
+		if (isCharacterStandingOnTheBlock(player, world)) {
+			doubleJumpFlag = false;
 
-		if (keysState[Left] && keysState[Right]) {
-			if (player->getStepsLeft() > 0) {
-				player->setStepsLeft(player->getStepsLeft() - 4);
+			if (keysState[Left] && keysState[Right]) {
+				if (player->playerMovement->stepsLeft > 0) {
+					player->playerMovement->stepsLeft -= 4;
+				}
+				else if (player->playerMovement->stepsRight > 0) {
+					player->playerMovement->stepsRight -= 4;
+				}
+				return;
 			}
-			else if (player->getStepsRight() > 0) {
-				player->setStepsRight(player->getStepsRight() - 4);
-			}
-			return;
-		}
-		else if (keysState[Left] && keysState[Up]) {
-			if (player->getStepsLeft() > 0) {
-				player->setStepsLeft(player->getStepsLeft() + 18);
-				player->setStepsUp(player->getStepsLeft() * 2);
-			}
-			else {
-				player->setStepsLeft(36);
-				player->setStepsUp(72);
-			}
+			else if (keysState[Left] && keysState[Up]) {
+				if (player->playerMovement->stepsLeft > 0) {
+					player->playerMovement->stepsLeft += 18;
+					player->playerMovement->stepsUp = 2 * player->playerMovement->stepsLeft;
+				}
+				else {
+					player->playerMovement->stepsLeft = 36;
+					player->playerMovement->stepsUp = 72;
+				}
 
-			SoundController::playJumpEffect(player);
-			return;
-		}
-		else if (keysState[Right] && keysState[Up]) {
-			if (player->getStepsRight() > 0) {
-				player->setStepsRight(player->getStepsRight() + 18);
-				player->setStepsUp(player->getStepsRight() * 2);
+				SoundController::playJumpEffect(player);
+				return;
 			}
-			else {
-				player->setStepsRight(36);
-				player->setStepsUp(72);
-			}
+			else if (keysState[Right] && keysState[Up]) {
+				if (player->playerMovement->stepsRight > 0) {
+					player->playerMovement->stepsRight += 18;
+					player->playerMovement->stepsUp = 2 * player->playerMovement->stepsRight;
+				}
+				else {
+					player->playerMovement->stepsRight = 36;
+					player->playerMovement->stepsUp = 72;
+				}
 
-			SoundController::playJumpEffect(player);
-			return;
-		}
-		else if (keysState[Left]) {
-			if (player->getStepsLeft() > 0 && player->getStepsLeft() < 60) {
-				player->setStepsLeft(player->getStepsLeft() + 8);
+				SoundController::playJumpEffect(player);
+				return;
 			}
-			else {
-				player->setStepsLeft(32);
+			else if (keysState[Left]) {
+				if (player->playerMovement->stepsLeft > 0 && player->playerMovement->stepsLeft < 60) {
+					player->playerMovement->stepsLeft += 8;
+				}
+				else {
+					player->playerMovement->stepsLeft = 32;
+				}
+				return;
 			}
-			return;
-		}
-		else if (keysState[Right]) {
-			if (player->getStepsRight() > 0 && player->getStepsRight() < 60) {
-				player->setStepsRight(player->getStepsRight() + 8);
+			else if (keysState[Right]) {
+				if (player->playerMovement->stepsRight > 0 && player->playerMovement->stepsRight < 60) {
+					player->playerMovement->stepsRight += 8;
+				}
+				else {
+					player->playerMovement->stepsRight = 32;
+				}
+				return;
 			}
-			else {
-				player->setStepsRight(32);
+			else if (keysState[Up]) {
+				player->playerMovement->stepsUp = 101;
+				SoundController::playJumpEffect(player);
+				return;
 			}
-			return;
 		}
-		else if (keysState[Up]) {
-			player->setStepsUp(101);
-			SoundController::playJumpEffect(player);
-			return;
-		}
-	}
-	else {
-		if (player->getStepsUp() == 0) {
-			player->setStepsDown(1);
+		else {
+			if (player->playerMovement->stepsUp == 0) {
+				player->playerMovement->stepsDown = 1;
 
-			if (keysState[Left] && player->getStepsLeft() == 0) {
-				player->setStepsLeft(24);
-			}
-			else if (keysState[Right] && player->getStepsRight() == 0) {
-				player->setStepsRight(24);
-			}
-			return;
-		}
-
-		if (keysState[Left] && keysState[Up]) {
-			if (player->getStepsLeft() > 0) {
-				player->setStepsLeft(player->getStepsLeft() + 8);
-			}
-			else {
-				player->setStepsLeft(16);
+				if (keysState[Left] && player->playerMovement->stepsLeft == 0) {
+					player->playerMovement->stepsLeft = 24;
+				}
+				else if (keysState[Right] && player->playerMovement->stepsRight == 0) {
+					player->playerMovement->stepsRight = 24;
+				}
+				return;
 			}
 
-			if (!doubleJumpFlag && player->getY() > 200 && !player->isImmortal()) {
-				player->setStepsUp(player->getStepsUp() + 65);
-				doubleJumpFlag = true;
-			}
-			return;
-		}
-		else if (keysState[Right] && keysState[Up]) {
-			if (player->getStepsRight() > 0) {
-				player->setStepsRight(player->getStepsRight() + 8);
-			}
-			else {
-				player->setStepsRight(16);
-			}
+			if (keysState[Left] && keysState[Up]) {
+				if (player->playerMovement->stepsLeft > 0) {
+					player->playerMovement->stepsLeft += 8;
+				}
+				else {
+					player->playerMovement->stepsLeft = 16;
+				}
 
-			if (!doubleJumpFlag && player->getY() > 200 && !player->isImmortal()) {
-				player->setStepsUp(player->getStepsUp() + 65);
-				doubleJumpFlag = true;
+				if (!doubleJumpFlag && player->getY() > 200 && !player->isImmortal()) {
+					player->playerMovement->stepsUp += 65;
+					doubleJumpFlag = true;
+				}
+				return;
 			}
-			return;
-		}
-		else if (keysState[Up]) {
-			if (!doubleJumpFlag && player->getY() > 200 && !player->isImmortal()) {
-				player->setStepsUp(player->getStepsUp() + 65);
-				doubleJumpFlag = true;
+			else if (keysState[Right] && keysState[Up]) {
+				if (player->playerMovement->stepsRight > 0) {
+					player->playerMovement->stepsRight += 8;
+				}
+				else {
+					player->playerMovement->stepsRight = 16;
+				}
+
+				if (!doubleJumpFlag && player->getY() > 200 && !player->isImmortal()) {
+					player->playerMovement->stepsUp += 65;
+					doubleJumpFlag = true;
+				}
+				return;
 			}
-			return;
-		}
-		else if (keysState[Left]) {
-			if (player->getStepsLeft() > 0) {
-				player->setStepsLeft(player->getStepsLeft() + 12);
+			else if (keysState[Up]) {
+				if (!doubleJumpFlag && player->getY() > 200 && !player->isImmortal()) {
+					player->playerMovement->stepsUp += 65;
+					doubleJumpFlag = true;
+				}
+				return;
 			}
-			else {
-				player->setStepsLeft(24);
+			else if (keysState[Left]) {
+				if (player->playerMovement->stepsLeft > 0) {
+					player->playerMovement->stepsLeft += 12;
+				}
+				else {
+					player->playerMovement->stepsLeft = 24;
+				}
+				return;
 			}
-			return;
-		}
-		else if (keysState[Right]) {
-			if (player->getStepsRight() > 0) {
-				player->setStepsRight(player->getStepsRight() + 12);
+			else if (keysState[Right]) {
+				if (player->playerMovement->stepsRight > 0) {
+					player->playerMovement->stepsRight += 12;
+				}
+				else {
+					player->playerMovement->stepsRight = 24;
+				}
+				return;
 			}
-			else {
-				player->setStepsRight(24);
-			}
-			return;
 		}
 	}
 }

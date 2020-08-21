@@ -16,8 +16,10 @@ void Castle::loadCastleImages(SDL_Surface* display)
 	castleImage = loadPNG("./img/castle.png", display);
 }
 
-void Castle::draw(SDL_Surface* display, int beginningOfCamera)
+void Castle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	drawSurface(display, castleImage, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 200 && position->getX() < endOfCamera + 200) {
+		drawSurface(display, castleImage, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 

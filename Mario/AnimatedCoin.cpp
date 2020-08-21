@@ -23,10 +23,12 @@ void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
 	}
 }
 
-void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera)
+void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	SDL_Surface* animatedCoinImg = animatedCoinImages[imageIndex];
-	drawSurface(display, animatedCoinImg, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 60 && position->getX() < endOfCamera + 60) {
+		SDL_Surface* animatedCoinImg = animatedCoinImages[imageIndex];
+		drawSurface(display, animatedCoinImg, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 bool AnimatedCoin::shouldBeRemoved() 

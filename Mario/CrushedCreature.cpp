@@ -15,9 +15,11 @@ void CrushedCreature::loadCrushedCreatureImage(SDL_Surface* display)
 	crushedCreatureImage = loadPNG("./img/crushed_creature.png", display);
 }
 
-void CrushedCreature::draw(SDL_Surface* display, int beginningOfCamera)
+void CrushedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	drawSurface(display, crushedCreatureImage, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 60 && position->getX() < endOfCamera + 60) {
+		drawSurface(display, crushedCreatureImage, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 bool CrushedCreature::shouldBeRemoved()

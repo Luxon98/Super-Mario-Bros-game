@@ -60,11 +60,13 @@ void Star::loadStarImages(SDL_Surface* display)
 	}
 }
 
-void Star::draw(SDL_Surface* display, int beginningOfCamera)
+void Star::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	SDL_Surface* starImg = nullptr;
-	starImg = starImages[stepsCounter % 4];
-	drawSurface(display, starImg, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 90 && position->getX() < endOfCamera + 90) {
+		SDL_Surface* starImg = nullptr;
+		starImg = starImages[stepsCounter % 4];
+		drawSurface(display, starImg, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 void Star::move(World& world)

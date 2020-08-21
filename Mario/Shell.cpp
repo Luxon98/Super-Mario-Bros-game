@@ -42,9 +42,11 @@ void Shell::loadShellImage(SDL_Surface* display)
 	shellImage = loadPNG("./img/shell.png", display);
 }
 
-void Shell::draw(SDL_Surface* display, int beginningOfCamera)
+void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	drawSurface(display, shellImage, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 120 && position->getX() < endOfCamera + 120) {
+		drawSurface(display, shellImage, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 void Shell::move(World& world)

@@ -104,10 +104,12 @@ void Block::loadBlockImages(SDL_Surface* display)
 	blockImages[9] = loadPNG("./img/block_empty.png", display);
 }
 
-void Block::draw(SDL_Surface* display, int beginningOfCamera)
+void Block::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	SDL_Surface* blockImg = nullptr;
-	blockImg = blockImages[computeImageIndex()];
-	drawSurface(display, blockImg, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 120 && position->getX() < endOfCamera + 120) {
+		SDL_Surface* blockImg = nullptr;
+		blockImg = blockImages[computeImageIndex()];
+		drawSurface(display, blockImg, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 

@@ -19,7 +19,7 @@ public:
 	Shards();
 	Shards(Position* position);
 	void loadShardsImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	bool shouldBeRemoved() override;
 	void slide() override;
 };

@@ -23,10 +23,12 @@ void Coin::changeCoinImage()
 	Coin::typeOfImage = (Coin::typeOfImage == 1 ? 2 : 1);
 }
 
-void Coin::draw(SDL_Surface* display, int beginningOfCamera)
+void Coin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	SDL_Surface* coinImg = nullptr;
-	coinImg = coinImages[typeOfImage - 1];
-	drawSurface(display, coinImg, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 60 && position->getX() < endOfCamera + 60) {
+		SDL_Surface* coinImg = nullptr;
+		coinImg = coinImages[typeOfImage - 1];
+		drawSurface(display, coinImg, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 

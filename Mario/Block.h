@@ -44,7 +44,7 @@ public:
 	void setAvailableCoins(int coins);
 	static void changeBlockImage();
 	void loadBlockImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 };
 
 #endif //_Block_H

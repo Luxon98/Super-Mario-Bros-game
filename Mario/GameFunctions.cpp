@@ -44,7 +44,7 @@ void loadInanimateObjectImages(SDL_Surface* display)
 	delete tempCastle;
 
 	Flag* tempFlag = new Flag();
-	tempFlag->loadFlagImage(display);
+	tempFlag->loadFlagImages(display);
 	delete tempFlag;
 }
 
@@ -171,20 +171,20 @@ void runGame()
 					controller.handleKeys(player, world);
 				}
 
-				/*if (player->getX() >= 6350 && player->getX() <= 6400 && !winStatus) {
+				if (player->getX() >= 6350 && player->getX() <= 6400 && !winStatus) {
 					SoundController::playFlagDownEffect();
-					world.setActiveFlag();
+					world.switchOnFlag();
 					winStatus = true;
+					player->resetSteps();
+					
 					while (!world.isFlagDown()) {
 						world.performActions();
-						windowScreen->updateScreen(world);
+						screen->updateScreen(world);
 					}
-					player->move(Right, 25, world, windowScreen);
-					player->jump(Down, 35, world, windowScreen);
-					player->move(Right, 6540 - player->getX(), world, windowScreen);
+					player->setFinishingRunParameters();
 
-					windowScreen->drawWorldFinishedScreen(world);
-				}*/
+					screen->drawWorldFinishedScreen(world);
+				}
 
 				if (player->isDead()) {
 					playerState = false;

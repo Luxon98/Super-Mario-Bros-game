@@ -16,9 +16,11 @@ void DestroyedTurtle::loadDestroyedTurtleImage(SDL_Surface* display)
 	destroyedTurtleImage = loadPNG("./img/destroyed_turtle.png", display);
 }
 
-void DestroyedTurtle::draw(SDL_Surface* display, int beginningOfCamera)
+void DestroyedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	drawSurface(display, destroyedTurtleImage, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 70 && position->getX() < endOfCamera + 70) {
+		drawSurface(display, destroyedTurtleImage, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 bool DestroyedTurtle::shouldBeRemoved()

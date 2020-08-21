@@ -37,7 +37,7 @@ bool isCharacterStandingOnTheBlock(WorldObject* object, World& world)
 
 bool isMonsterStandingOnTheBlock(LivingObject* object, Block block)
 {
-	if (abs((object->getY() + object->getHeight() / 2) - (block.getY() - block.getHeight() / 2)) < 3
+	if (abs((object->getY() + object->getHeight() / 2) - (block.getY() - block.getHeight() / 2)) < 2
 		&& areAtTheSameWidth(object, block)) {
 
 		return true;
@@ -246,7 +246,7 @@ void handleIfFireBallCollideWithMonsters(World& world, Player* player)
 	}
 }
 
-void handleIfMonsterCollideWithDestroyedBlock(World& world, Block block, Player* player)
+void handleIfMonsterCollideWithBlock(World& world, Block block, Player* player)
 {
 	std::vector<LivingObject*> monsters = world.getMonsters();
 	int index = 0;
@@ -290,7 +290,7 @@ void collectBonusIfPossible(Player* player, World& world)
 		if (areAtTheSameWidth(player, *it) && areAtTheSameHeight(player, *it)) {
 			if (dynamic_cast<Mushroom*>(*it)) {
 				if (!(dynamic_cast<Mushroom*>(*it)->isGreen())) {
-					player->setCurrentAnimation(DuringGrowingAnimation);
+					player->setCurrentAnimation(Growing);
 					SoundController::playBonusCollectedEffect();
 				}
 				else {
@@ -302,24 +302,24 @@ void collectBonusIfPossible(Player* player, World& world)
 				}
 			}
 			else if (dynamic_cast<Flower*>(*it)) {
-				if (player->getCurrentState() == Tall) {
-					player->setCurrentAnimation(DuringArmingAnimation);
+				if (player->isSmall()) {
+					player->setCurrentAnimation(Growing);
 				}
-				else if (player->getCurrentState() == Small) {
-					player->setCurrentAnimation(DuringGrowingAnimation);
+				else if (!player->isImmortal() && !player->isArmed()) {
+					player->setCurrentAnimation(Arming);
 				}
 				SoundController::playBonusCollectedEffect();
 			}
 			else if (dynamic_cast<Star*>(*it)) {
-				if (player->getCurrentState() == Small) {
-					player->setCurrentAnimation(DuringGrowingAnimation);
+				if (player->isSmall()) {
+					player->setCurrentAnimation(ImmortalSmall);
 				}
 				else {
-					player->setCurrentAnimation(DuringImmortalAnimation);
-					player->increaseSpeed();
-					SoundController::stopMusic();
-					SoundController::playBackgroudStarMusic();
+					player->setCurrentAnimation(Immortal);
 				}
+				player->increaseSpeed();
+				SoundController::stopMusic();
+				SoundController::playBackgroudStarMusic();
 			}
 			world.deleteLivingElement(index);
 			player->addPoints(1000);

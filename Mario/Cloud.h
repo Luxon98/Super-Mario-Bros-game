@@ -14,7 +14,7 @@ public:
 	Cloud();
 	Cloud(int type, Position* position);
 	void loadCloudImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 };
 
 #endif //_Cloud_H

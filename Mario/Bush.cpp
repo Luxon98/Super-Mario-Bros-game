@@ -22,10 +22,12 @@ void Bush::loadBushImages(SDL_Surface* display)
 	}
 }
 
-void Bush::draw(SDL_Surface* display, int beginningOfCamera)
+void Bush::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	SDL_Surface* bushImg = nullptr;
-	bushImg = bushImages[model - 1];
-	drawSurface(display, bushImg, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 100 && position->getX() < endOfCamera + 100) {
+		SDL_Surface* bushImg = nullptr;
+		bushImg = bushImages[model - 1];
+		drawSurface(display, bushImg, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 

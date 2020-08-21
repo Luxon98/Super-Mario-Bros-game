@@ -51,6 +51,7 @@ private:
 	Player* player;
 	Flag* flag;
 	Screen* screen;
+	int gameCounter;
 	int lastTouchedBlockIndex;
 	int slidingCounter;
 	bool slideBlockStatus;
@@ -90,7 +91,7 @@ public:
 	void setLastTouchedBlock(int index);
 	void hitBlock();
 	void setFireballStatus();
-	void setActiveFlag();
+	void switchOnFlag();
 	void changeShellMovementParameters(int index, Direction direction);
 	void performBlockRemovalActions(int index);
 	void deleteInanimateElement(int index);
@@ -104,7 +105,7 @@ public:
 	void addExplosion(Position* position);
 	void addAnimatedText(TextType type, Position* position);
 	void performActions();
-	void draw(SDL_Surface* display, int beginningOfScreen, bool playerFlag = true);
+	void draw(SDL_Surface* display, int beginningOfScreen, int endOfScreen, bool playerFlag = true);
 };
 
 #endif //_World_H

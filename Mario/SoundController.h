@@ -8,8 +8,8 @@
 class SoundController
 {
 private:
-	static Mix_Music* backgroundTracks[5];
-	static Mix_Chunk* soundsEffects[12];
+	static Mix_Music* backgroundTracks[6];
+	static Mix_Chunk* soundsEffects[13];
 	bool initSoundMixer();
 	void loadSounds();
 	void closeSoundMixer();
@@ -31,6 +31,7 @@ public:
 	static void playFireballPoppedEffect();
 	static void playFlagDownEffect();
 	static void playJumpEffect(Player* player);
+	static void playBonusLostEffect();
 	static void playMarioDeadEffect();
 	static void stopMusic();
 	~SoundController();

@@ -26,14 +26,14 @@ void Shards::loadShardsImages(SDL_Surface* display)
 	shardsImages[1] = loadPNG("./img/shard2.png", display);
 }
 
-void Shards::draw(SDL_Surface* display, int beginningOfCamera)
+void Shards::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
 	if (auxiliaryCounter % 30 == 0) {
 		imageIndex = (imageIndex == 0 ? 1 : 0);
 	}
 
 	SDL_Surface* shardImg = shardsImages[imageIndex];
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < 4; i++) {
 		drawSurface(display, shardImg, shardsPositions[i]->getX() - beginningOfCamera, shardsPositions[i]->getY());
 	}
 }

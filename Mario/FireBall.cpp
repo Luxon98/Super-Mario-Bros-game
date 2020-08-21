@@ -81,11 +81,13 @@ void FireBall::loadFireBallImages(SDL_Surface* display)
 	}
 }
 
-void FireBall::draw(SDL_Surface* display, int beginningOfCamera)
+void FireBall::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	SDL_Surface* fireballImg = nullptr;
-	fireballImg = fireBallImages[modelIndex];
-	drawSurface(display, fireballImg, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 120 && position->getX() < endOfCamera + 120) {
+		SDL_Surface* fireballImg = nullptr;
+		fireballImg = fireBallImages[modelIndex];
+		drawSurface(display, fireballImg, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 void FireBall::move(World& world)

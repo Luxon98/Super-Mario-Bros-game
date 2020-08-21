@@ -45,11 +45,13 @@ void Mushroom::loadMushroomImages(SDL_Surface* display)
 	mushroomImages[1] = loadPNG("./img/mushroom_red.png", display);
 }
 
-void Mushroom::draw(SDL_Surface* display, int beginningOfCamera)
+void Mushroom::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	SDL_Surface* mushroomImg = nullptr;
-	mushroomImg = mushroomImages[!greenColor];
-	drawSurface(display, mushroomImg, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 75 && position->getX() < endOfCamera + 75) {
+		SDL_Surface* mushroomImg = nullptr;
+		mushroomImg = mushroomImages[!greenColor];
+		drawSurface(display, mushroomImg, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 void Mushroom::move(World& world)

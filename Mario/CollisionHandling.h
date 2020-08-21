@@ -40,7 +40,7 @@ void handleIfShellCollideWithMonsters(World& world, Player* player);
 
 void handleIfFireBallCollideWithMonsters(World& world, Player* player);
 
-void handleIfMonsterCollideWithDestroyedBlock(World& world, Block block, Player* player);
+void handleIfMonsterCollideWithBlock(World& world, Block block, Player* player);
 
 void collectCoinIfPossible(Player* player, World& world);
 

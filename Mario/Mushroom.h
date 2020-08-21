@@ -21,7 +21,7 @@ public:
 	void decreasePositionY();
 	void setStepsUp(int stepsUp);
 	void loadMushroomImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	void move(World& world) override;
 };
 

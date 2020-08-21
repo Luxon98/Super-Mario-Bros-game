@@ -33,11 +33,13 @@ void Creature::loadCreatureImages(SDL_Surface* display)
 	creatureImages[1] = loadPNG("./img/creature2.png", display);
 }
 
-void Creature::draw(SDL_Surface* display, int beginningOfCamera)
+void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	SDL_Surface* creatureImg = nullptr;
-	creatureImg = creatureImages[model - 1];
-	drawSurface(display, creatureImg, position->getX() - beginningOfCamera, position->getY());
+	if (position->getX() > beginningOfCamera - 90 && position->getX() < endOfCamera + 90) {
+		SDL_Surface* creatureImg = nullptr;
+		creatureImg = creatureImages[model - 1];
+		drawSurface(display, creatureImg, position->getX() - beginningOfCamera, position->getY());
+	}
 }
 
 void Creature::move(World& world)

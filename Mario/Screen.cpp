@@ -33,13 +33,13 @@ int Screen::computeDifference()
 int Screen::computeTime()
 {
 	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
-	int time = (int)(INITIAL_TIME - std::chrono::duration_cast<std::chrono::seconds> (timePoint - timeBegin).count());
+	int time = static_cast<int>(INITIAL_TIME - std::chrono::duration_cast<std::chrono::seconds> (timePoint - timeBegin).count());
 	return time;
 }
 
 void Screen::loadScreenImages()
 {
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 10; i++) {
 		std::string filename = "./img/";
 		filename += std::to_string(i);
 		filename += ".png";
@@ -56,8 +56,13 @@ void Screen::loadScreenImages()
 	screenImages[7] = loadPNG("./img/world_start.png", display);
 	screenImages[8] = loadPNG("./img/timeup.png", display);
 	screenImages[9] = loadPNG("./img/gameover.png", display);
-	screenImages[10] = loadPNG("./img/mario_dead1.png", display);
-	screenImages[11] = loadPNG("./img/mario_dead2.png", display);
+
+	for (int j = 10, k = 1; j < 15; j++, k++) {
+		std::string filename = "./img/mario_dead";
+		filename += std::to_string(k);
+		filename += ".png";
+		screenImages[j] = loadPNG(filename, display);
+	}
 }
 
 void Screen::changeCoinImageIfAvailable()
@@ -308,7 +313,7 @@ void Screen::drawDeadMario(World& world)
 	SoundController::stopMusic();
 	SoundController::playMarioDeadEffect();
 
-	int index = (player->getCurrentState() <= Tall ? 10 : 11);
+	int index = player->getDeadMarioImageIndex() + 10;
 	SDL_Surface* img = screenImages[index];
 	int shift = 0;
 	for (int i = 0; i < 3000; ++i) {
@@ -319,7 +324,7 @@ void Screen::drawDeadMario(World& world)
 			drawTime(time);
 			drawPoints(player->getPoints());
 			drawCoins(player->getCoins());
-			world.draw(display, getBeginningOfCamera(), false);
+			world.draw(display, getBeginningOfCamera(), getEndOfCamera(), false);
 
 			drawSurface(display, img, player->getX() - getBeginningOfCamera(), player->getY() + shift);
 			updateView();
@@ -334,17 +339,22 @@ void Screen::drawWorldFinishedScreen(World& world)
 	SoundController::stopMusic();
 	SoundController::playWorldFinishedMusic();
 
-	for (int i = time; i >= 0; --i) {
-		player->addPoints(100);
-		fillWorldBackground();
-		drawScreenElements();
-		drawTime(time);
-		drawPoints(player->getPoints());
-		drawCoins(player->getCoins());
-		world.draw(display, getBeginningOfCamera(), false);
+	for (int i = 2 * time; i >= 0; i--) {
+		world.performActions();
+		bool drawPlayer = (player->getX() < 6540);
+		world.draw(display, getBeginningOfCamera(), getEndOfCamera(), drawPlayer);
 		updateView();
-		--time;
-		std::this_thread::sleep_for(std::chrono::milliseconds(25));
+
+		if (i & 1) {
+			player->addPoints(100);
+			fillWorldBackground();
+			drawScreenElements();
+			drawTime(time);
+			drawPoints(player->getPoints());
+			drawCoins(player->getCoins());
+			time--;
+			std::this_thread::sleep_for(std::chrono::milliseconds(25));
+		}
 	}
 }
 
@@ -363,7 +373,7 @@ void Screen::updateScreen(World& world)
 	drawPoints(player->getPoints());
 
 	world.performActions();
-	world.draw(display, getBeginningOfCamera());
+	world.draw(display, getBeginningOfCamera(), getEndOfCamera());
 	drawCoins(player->getCoins());
 	updateView();
 }
