@@ -75,33 +75,25 @@ void Player::performGrowingAnimation(int difference)
 	movementBlock = true;
 	model = 0;
 
-	if ((difference >= 100 && difference <= 200 && lastDifference < 100)
-		|| (difference >= 300 && difference <= 400 && lastDifference < 300)
-		|| (difference >= 700 && difference <= 800 && lastDifference < 700)) {
-
+	if ((difference >= 100 && difference <= 200 && lastDifference < 100) || (difference >= 300 && difference <= 400 && lastDifference < 300) || (difference >= 700 && difference <= 800 && lastDifference < 700)) {
 		size->setHeight(48);
 		position->setY(position->getY() - 8);
 		lastDifference = difference;
 		currentState = Average;
 	}
-	else if ((difference > 200 && difference < 300 && lastDifference < 200)
-		|| (difference > 600 && difference < 700 && lastDifference < 600)) {
-
+	else if ((difference > 200 && difference < 300 && lastDifference < 200) || (difference > 600 && difference < 700 && lastDifference < 600)) {
 		size->setHeight(32);
 		position->setY(position->getY() + 8);
 		lastDifference = difference;
 		currentState = Small;
 	}
-	else if ((difference > 400 && difference < 500 && lastDifference < 400)
-		|| (difference > 800 && difference <= 900 && lastDifference < 800)) {
-
+	else if ((difference > 400 && difference < 500 && lastDifference < 400) || (difference > 800 && difference <= 900 && lastDifference < 800)) {
 		size->setHeight(64);
 		position->setY(position->getY() - 8);
 		lastDifference = difference;
 		currentState = Tall;
 	}
 	else if (difference >= 500 && difference <= 600 && lastDifference < 500) {
-
 		size->setHeight(48);
 		position->setY(position->getY() + 8);
 		lastDifference = difference;
@@ -174,8 +166,10 @@ void Player::performImmortalAnimation(int difference)
 		currentAnimationState = NoAnimation;
 		currentState = (flags.armedFlag ? ArmedFirst : Tall);
 		lastDifference = 0;
+
 		SoundController::stopMusic();
 		SoundController::playBackgroudMarioMusic();
+
 		playerMovement->setSpeed(1);
 		playerMovement->setVerticalSpeed(1);
 	}
@@ -199,8 +193,10 @@ void Player::performSmallImmortalAnimation(int difference)
 		currentAnimationState = NoAnimation;
 		currentState = Small;
 		lastDifference = 0;
+
 		SoundController::stopMusic();
 		SoundController::playBackgroudMarioMusic();
+
 		playerMovement->setSpeed(1);
 		playerMovement->setVerticalSpeed(1);
 	}
@@ -265,6 +261,86 @@ bool Player::isHittingBlock(int alignment, Direction direction)
 bool Player::isDuringAnimation()
 {
 	return (currentAnimationState != NoAnimation);
+}
+
+void Player::moveLeft(World& world)
+{
+	int alignment = getAlignmentForHorizontalMove(Left, playerMovement->getSpeed(), this, world);
+	int distance = playerMovement->getSpeed() - alignment;
+
+	if (!isGoingBeyondCamera(distance, world.getScreen()->getBeginningOfCamera())) {
+		position->setX(position->getX() - distance);
+	}
+
+	if (alignment != 0 && playerMovement->stepsUp == 0) {
+		playerMovement->stepsLeft = 0;
+	}
+	else {
+		playerMovement->stepsLeft--;
+	}
+
+	flags.orientationFlag = false;
+}
+
+void Player::moveRight(World& world)
+{
+	int alignment = getAlignmentForHorizontalMove(Right, playerMovement->getSpeed(), this, world);
+	int distance = playerMovement->getSpeed() - alignment;
+
+	position->setX(position->getX() + distance);
+
+	if (alignment != 0 && playerMovement->stepsUp == 0) {
+		playerMovement->stepsRight = 0;
+	}
+	else {
+		playerMovement->stepsRight--;
+	}
+
+	flags.orientationFlag = true;
+}
+
+void Player::moveUp(World& world)
+{
+	int alignment = getAlignmentForVerticalMove(Up, playerMovement->getVerticalSpeed(), this, world);
+	int distance = playerMovement->getVerticalSpeed() - alignment;
+
+	if (!isHittingCeiling(distance)) {
+		position->setY(position->getY() - distance);
+	}
+	else {
+		playerMovement->stepsUp = 1;
+	}
+
+	if (isHittingBlock(alignment, Up)) {
+		hitBlock(world);
+		playerMovement->stepsUp = 0;
+	}
+	else {
+		playerMovement->stepsUp--;
+	}
+
+	if (isCharacterStandingOnTheBlock(this, world)) {
+		model = 0;
+	}
+}
+
+void Player::moveDown(World& world)
+{
+	int alignment = getAlignmentForVerticalMove(Down, playerMovement->getVerticalSpeed(), this, world);
+	int distance = playerMovement->getVerticalSpeed() - alignment;
+
+	if (!isFallingIntoAbyss(distance)) {
+		position->setY(position->getY() + distance);
+	}
+	else {
+		if (!flags.removeLivesFlag) {
+			flags.removeLivesFlag = true;
+			statistics.lives--;
+			flags.aliveFlag = false;
+		}
+	}
+
+	playerMovement->stepsDown--;
 }
 
 Player::Player() {}
@@ -401,9 +477,7 @@ void Player::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 
 void Player::hitBlock(World& world)
 {
-	if ((currentState >= Tall && currentState <= ImmortalFourth)
-		&& world.getBlockModel(world.getLastTouchedBlockIndex()) == Destructible) {
-		
+	if ((currentState >= Tall && currentState <= ImmortalFourth) && world.getBlockModel(world.getLastTouchedBlockIndex()) == Destructible) {
 		world.performBlockRemovalActions(world.getLastTouchedBlockIndex());
 	}
 	else {
@@ -438,79 +512,19 @@ void Player::move(World& world)
 {
 	if (!movementBlock) {
 		if (playerMovement->stepsLeft > 0) {
-			int alignment = getAlignmentIfCollisionOccursDuringMovement(Left, playerMovement->getSpeed(), this, world);
-			int distance = playerMovement->getSpeed() - alignment;
-
-			if (!isGoingBeyondCamera(distance, world.getScreen()->getBeginningOfCamera())) {
-				position->setX(position->getX() - distance);
-			}
-
-			if (alignment != 0 && playerMovement->stepsUp == 0) {
-				playerMovement->stepsLeft = 0;
-			}
-			else {
-				playerMovement->stepsLeft--;
-			}
-
-			flags.orientationFlag = false;
+			moveLeft(world);
 		}
 
 		if (playerMovement->stepsRight > 0) {
-			int alignment = getAlignmentIfCollisionOccursDuringMovement(Right, playerMovement->getSpeed(), this, world);
-			int distance = playerMovement->getSpeed() - alignment;
-
-			position->setX(position->getX() + distance);
-
-			if (alignment != 0 && playerMovement->stepsUp == 0) {
-				playerMovement->stepsRight = 0;
-			}
-			else {
-				playerMovement->stepsRight--;
-			}
-
-			flags.orientationFlag = true;
+			moveRight(world);
 		}
 
 		if (playerMovement->stepsUp > 0) {
-			int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(Up, playerMovement->getVerticalSpeed(), this, world);
-			int distance = playerMovement->getVerticalSpeed() - alignment;
-
-			if (!isHittingCeiling(distance)) {
-				position->setY(position->getY() - distance);
-			}
-			else {
-				playerMovement->stepsUp = 1;
-			}
-
-			if (isHittingBlock(alignment, Up)) {
-				hitBlock(world);
-				playerMovement->stepsUp = 0;
-			}
-			else {
-				playerMovement->stepsUp--;
-			}
-
-			if (isCharacterStandingOnTheBlock(this, world)) {
-				model = 0;
-			}
+			moveUp(world);
 		}
-		 
+
 		if (playerMovement->stepsDown > 0) {
-			int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(Down, playerMovement->getVerticalSpeed(), this, world);
-			int distance = playerMovement->getVerticalSpeed() - alignment;
-
-			if (!isFallingIntoAbyss(distance)) {
-				position->setY(position->getY() + distance);
-			}
-			else {
-				if (!flags.removeLivesFlag) {
-					flags.removeLivesFlag = true;
-					statistics.lives--;
-					flags.aliveFlag = false;
-				}
-			}
-
-			playerMovement->stepsDown--;
+			moveDown(world);
 		}
 
 		changeModelAndAirFlagStatus(world);

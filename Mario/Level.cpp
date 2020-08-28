@@ -8,6 +8,7 @@ void Level::setFirstLevel(World& world)
 	world.monsters.clear();
 	world.temporaryElements.clear();
 	world.fireballs.clear();
+	world.slidingCounter = 0;
 
 	for (int i = 0; i < World::WORLD_WIDTH + CAMERA_REFERENCE_POINT; i += 32) {
 		if (i != 2208 && i != 2240 && i != 4896 && i != 4928 && i != 2752 && i != 2784 && i != 2816) {

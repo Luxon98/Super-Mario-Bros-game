@@ -12,6 +12,7 @@
 class World;
 class Player;
 class LivingObject;
+class Mushroom;
 
 
 bool isCharacterHittingBlock(WorldObject* object, Block block, Direction direction, int distance);
@@ -34,20 +35,26 @@ bool areAtTheSameHeight(WorldObject* firstObject, WorldObject* secondObject);
 
 bool isPlayerJumpingOnMonster(Player* player, LivingObject* monster);
 
-void handleIfCollisionWithMonsterOccurs(Player* player, World& world);
+void handlePlayerCollisions(Player* player, World& world);
 
-void handleIfShellCollideWithMonsters(World& world, Player* player);
+void handleShellsAndMonstersCollisions(World& world, Player* player);
 
-void handleIfFireBallCollideWithMonsters(World& world, Player* player);
+void handleFireBallsAndMonstersCollisions(World& world, Player* player);
 
-void handleIfMonsterCollideWithBlock(World& world, Block block, Player* player);
+void handleMonstersAndBlockCollisions(World& world, Block block, Player* player);
 
 void collectCoinIfPossible(Player* player, World& world);
 
+void collectMushroom(Mushroom* mushroom, int index, Player* player, World& world);
+
+void collectFlower(Player* player, World& world);
+
+void collectStar(Player* player, World& world);
+
 void collectBonusIfPossible(Player* player, World& world);
 
-int getAlignmentIfCollisionOccursDuringMovement(Direction direction, int distance, WorldObject* object, World& world);
+int getAlignmentForHorizontalMove(Direction direction, int distance, WorldObject* object, World& world);
 
-int getAlignmentIfCollisionOccursDuringVerticalMovement(Direction direction, int distance, WorldObject* object, World& world);
+int getAlignmentForVerticalMove(Direction direction, int distance, WorldObject* object, World& world);
 
 #endif //_CollisionHandling_H

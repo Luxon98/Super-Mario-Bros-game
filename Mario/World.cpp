@@ -1,37 +1,70 @@
 #include "World.h"
 
 
-void World::changeColoursIfAvailable()
+bool World::isTimeToChangeColors()
 {
 	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
 	if (std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - lastColoursUpdateTime).count() >= 750) {
-		lastColoursUpdateTime = timePoint;
-		Coin::changeCoinImage();
-		Block::changeBlockImage();
-		Flower::changeFlowerImage();
+		return true;
 	}
+
+	return false;
 }
 
-void World::setMovementDirectionIfPlayerIsCloseEnough(LivingObject& monster)
+bool World::isPlayerCloseEnough(LivingObject& monster)
 {
 	if (monster.getX() < player->getX() + 2 * CAMERA_REFERENCE_POINT) {
-		if (dynamic_cast<Turtle*>(&monster)) {
-			dynamic_cast<Turtle*>(&monster)->setMoveDirection(Left);
-		}
-		else if (dynamic_cast<Creature*>(&monster)) {
-			dynamic_cast<Creature*>(&monster)->setMoveDirection(Left);
-		}
+		return true;
+	}
+
+	return false;
+}
+
+bool World::hasLastTouchedBlockCoin() 
+{
+	if (blocks[lastTouchedBlockIndex].getModel() == Monetary || blocks[lastTouchedBlockIndex].getModel() == BonusWithCoin) {
+		return true;
+	}
+
+	return false;
+}
+
+bool World::isLastTouchedBlockBonus()
+{
+	if (blocks[lastTouchedBlockIndex].getModel() == BonusWithRedMushroom || blocks[lastTouchedBlockIndex].getModel() == BonusWithFlower || blocks[lastTouchedBlockIndex].getModel() == BonusWithStar) {
+		return true;
+	}
+
+	return false;
+}
+
+void World::changeColors()
+{
+	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
+	lastColoursUpdateTime = timePoint;
+	Coin::changeCoinImage();
+	Block::changeBlockImage();
+	Flower::changeFlowerImage();
+}
+
+void World::setMovementDirection(LivingObject& monster)
+{
+	if (dynamic_cast<Turtle*>(&monster)) {
+		dynamic_cast<Turtle*>(&monster)->setMoveDirection(Left);
+	}
+	else if (dynamic_cast<Creature*>(&monster)) {
+		dynamic_cast<Creature*>(&monster)->setMoveDirection(Left);
 	}
 }
 
-void World::deleteTemporaryElementsIfTimePassed()
+void World::deleteTemporaryElements()
 {
-	for (unsigned int i = 0; i < temporaryElements.size(); ++i) {
+	for (unsigned int i = 0; i < temporaryElements.size(); i++) {
 		if (temporaryElements[i]->shouldBeRemoved()) {
 			if (dynamic_cast<AnimatedCoin*>(temporaryElements[i])) {
-				addAnimatedText(TWO_HUNDRED, new Position(temporaryElements[i]->getX(),
-					temporaryElements[i]->getY()));
+				addAnimatedText(TWO_HUNDRED, new Position(temporaryElements[i]->getX(), temporaryElements[i]->getY()));
 			}
+
 			temporaryElements.erase(temporaryElements.begin() + i);
 		}
 	}
@@ -39,7 +72,7 @@ void World::deleteTemporaryElementsIfTimePassed()
 
 void World::performBonusElementsActions()
 {
-	for (unsigned int i = 0; i < bonusElements.size(); ++i) {
+	for (unsigned int i = 0; i < bonusElements.size(); i++) {
 		bonusElements[i]->move(*this);
 		if (bonusElements[i]->getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
 			deleteLivingElement(i);
@@ -49,9 +82,9 @@ void World::performBonusElementsActions()
 
 void World::performMonstersActions()
 {
-	for (unsigned int i = 0; i < monsters.size(); ++i) {
-		if (monsters[i]->getMovement()->getDirection() == None) {
-			setMovementDirectionIfPlayerIsCloseEnough(*monsters[i]);
+	for (unsigned int i = 0; i < monsters.size(); i++) {
+		if (monsters[i]->getMovement()->getDirection() == None && isPlayerCloseEnough(*monsters[i])) {
+			setMovementDirection(*monsters[i]);
 		}
 
 		monsters[i]->move(*this);
@@ -71,7 +104,7 @@ void World::performMonstersActions()
 
 void World::performFireBallsActions()
 {
-	for (unsigned int i = 0; i < fireballs.size(); ++i) {
+	for (unsigned int i = 0; i < fireballs.size(); i++) {
 		fireballs[i].move(*this);
 
 		if (fireballs[i].shouldBeRemoved()) {
@@ -112,7 +145,7 @@ void World::performWorldActions()
 
 void World::slideTemporaryElements()
 {
-	for (unsigned int i = 0; i < temporaryElements.size(); ++i) {
+	for (unsigned int i = 0; i < temporaryElements.size(); i++) {
 		temporaryElements[i]->slide();
 	}
 }
@@ -125,27 +158,23 @@ void World::slideBlock()
 	else {
 		if (slidingCounter == 124) {
 			playBlockSoundEffects();
-			subtractCoinFromBlockIfPossible();
+
+			if (hasLastTouchedBlockCoin()) {
+				subtractCoinFromBlock();
+			}
 
 			if (isMushroomStandingOnTheBlock(*this, lastTouchedBlockIndex)) {
 				raiseUpMushroom();
 			}
 		}
 
-		slidingCounter--;
-
-		if (slidingCounter % 3 == 0) {
-			int height = (slidingCounter <= 60 ? 1 : -1);
-			blocks[lastTouchedBlockIndex].addToPositionY(height);
-
-			if (slidingCounter > 60 && blocks[lastTouchedBlockIndex].getModel() == BonusWithGreenMushroom) {
-				createGreenMushroom();
-			}
-		}
-		handleIfMonsterCollideWithBlock(*this, blocks[lastTouchedBlockIndex], player);
+		performBlockSliding();
 
 		if (slidingCounter == 0) {
-			createNewBonusIfPossible();
+			if (isLastTouchedBlockBonus()) {
+				createNewBonus();
+			}
+			
 			slideBlockStatus = true;
 		}
 	}
@@ -154,10 +183,9 @@ void World::slideBlock()
 void World::raiseUpMushroom()
 {
 	std::vector<BonusObject*> elements = getBonusElements();
-	for (auto it = elements.begin(); it != elements.end(); ++it) {
+	for (auto it = elements.begin(); it != elements.end(); it++) {
 		if (dynamic_cast<Mushroom*>(*it)) {
-			if (((*it)->getY() + (*it)->getHeight() / 2) == blocks[lastTouchedBlockIndex].getY()
-				- blocks[lastTouchedBlockIndex].getHeight() / 2 && areAtTheSameWidth(*it, blocks[lastTouchedBlockIndex])) {
+			if (((*it)->getY() + (*it)->getHeight() / 2) == blocks[lastTouchedBlockIndex].getY() - blocks[lastTouchedBlockIndex].getHeight() / 2 && areAtTheSameWidth(*it, blocks[lastTouchedBlockIndex])) {
 
 				dynamic_cast<Mushroom*>(*it)->decreasePositionY();
 				dynamic_cast<Mushroom*>(*it)->setStepsUp(30);
@@ -172,14 +200,28 @@ void World::addShards(Position* position)
 	temporaryElements.push_back(new Shards(position));
 }
 
-void World::subtractCoinFromBlockIfPossible()
+void World::performBlockSliding()
+{
+	slidingCounter--;
+	if (slidingCounter % 3 == 0) {
+		int height = (slidingCounter <= 60 ? 1 : -1);
+		blocks[lastTouchedBlockIndex].addToPositionY(height);
+
+		if (slidingCounter > 60 && blocks[lastTouchedBlockIndex].getModel() == BonusWithGreenMushroom) {
+			createGreenMushroom();
+		}
+	}
+
+	handleMonstersAndBlockCollisions(*this, blocks[lastTouchedBlockIndex], player);
+}
+
+void World::subtractCoinFromBlock()
 {
 	if (blocks[lastTouchedBlockIndex].getModel() == Monetary) {
 		blocks[lastTouchedBlockIndex].setAvailableCoins(blocks[lastTouchedBlockIndex].getAvailableCoins() - 1);
 		player->incrementCoins();
 		player->addPoints(200);
-		temporaryElements.push_back(new AnimatedCoin(new Position(blocks[lastTouchedBlockIndex].getX(),
-			blocks[lastTouchedBlockIndex].getY() - 56)));
+		temporaryElements.push_back(new AnimatedCoin(new Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 56)));
 
 		if (!blocks[lastTouchedBlockIndex].getAvailableCoins()) {
 			blocks[lastTouchedBlockIndex].setModel(Empty);
@@ -188,17 +230,15 @@ void World::subtractCoinFromBlockIfPossible()
 	else if (blocks[lastTouchedBlockIndex].getModel() == BonusWithCoin) {
 		player->incrementCoins();
 		player->addPoints(200);
-		temporaryElements.push_back(new AnimatedCoin(new Position(blocks[lastTouchedBlockIndex].getX(),
-			blocks[lastTouchedBlockIndex].getY() - 50)));
+		temporaryElements.push_back(new AnimatedCoin(new Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 50)));
 		blocks[lastTouchedBlockIndex].setModel(Empty);
 	}
 }
 
-void World::createNewBonusIfPossible()
+void World::createNewBonus()
 {
 	if (blocks[lastTouchedBlockIndex].getModel() == BonusWithRedMushroom) {
 		bonusElements.push_back(new Mushroom(new Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY()), false));
-		blocks[lastTouchedBlockIndex].setModel(Empty);
 	}
 	else if (blocks[lastTouchedBlockIndex].getModel() == BonusWithFlower) {
 		if (player->isSmall()) {
@@ -207,19 +247,17 @@ void World::createNewBonusIfPossible()
 		else {
 			bonusElements.push_back(new Flower(new Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY())));
 		}
-
-		blocks[lastTouchedBlockIndex].setModel(Empty);
 	}
 	else if (blocks[lastTouchedBlockIndex].getModel() == BonusWithStar) {
 		bonusElements.push_back(new Star(new Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY())));
-		blocks[lastTouchedBlockIndex].setModel(Empty);
 	}
+
+	blocks[lastTouchedBlockIndex].setModel(Empty);
 }
 
 void World::createGreenMushroom()
 {
-	bonusElements.push_back(new Mushroom(new Position(blocks[lastTouchedBlockIndex].getX(),
-		blocks[lastTouchedBlockIndex].getY()), true));
+	bonusElements.push_back(new Mushroom(new Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY()), true));
 	blocks[lastTouchedBlockIndex].setModel(Empty);
 }
 
@@ -315,9 +353,7 @@ void World::setLastTouchedBlock(int index)
 
 void World::hitBlock()
 {
-	if ((blocks[lastTouchedBlockIndex].getModel() >= Destructible
-		&& blocks[lastTouchedBlockIndex].getModel() <= BonusWithStar) && blocks[lastTouchedBlockIndex].canBeHitted()) {
-
+	if ((blocks[lastTouchedBlockIndex].getModel() >= Destructible && blocks[lastTouchedBlockIndex].getModel() <= BonusWithStar) && blocks[lastTouchedBlockIndex].canBeHitted()) {
 		slidingCounter = 124;
 	}
 }
@@ -334,6 +370,15 @@ void World::switchOnFlag()
 	flag->setActiveState();
 }
 
+bool World::isPlayerFinishingWorld()
+{
+	if (player->getX() >= flag->getX() + 15 && player->getX() <= flag->getX() + 65) {
+		return true;
+	}
+
+	return false;
+}
+
 void World::changeShellMovementParameters(int index, Direction direction)
 {
 	dynamic_cast<Shell*>(monsters[index])->setMovementDirectionAndActiveState(direction);
@@ -343,7 +388,7 @@ void World::changeShellMovementParameters(int index, Direction direction)
 void World::performBlockRemovalActions(int index)
 {
 	addShards(new Position(blocks[index].getX(), blocks[index].getY()));
-	handleIfMonsterCollideWithBlock(*this, blocks[index], player);
+	handleMonstersAndBlockCollisions(*this, blocks[index], player);
 	blocks.erase(blocks.begin() + index);
 	player->addPoints(50);
 
@@ -405,41 +450,43 @@ void World::performActions()
 	gameCounter++;
 	//if (gameCounter % 3 == 0) {
 	performWorldActions();
-	deleteTemporaryElementsIfTimePassed();
+	deleteTemporaryElements();
 	slideTemporaryElements();
 
 	collectBonusIfPossible(player, *this);
-	handleIfCollisionWithMonsterOccurs(player, *this);
-	handleIfShellCollideWithMonsters(*this, player);
-	handleIfFireBallCollideWithMonsters(*this, player);
+	handlePlayerCollisions(player, *this);
+	handleShellsAndMonstersCollisions(*this, player);
+	handleFireBallsAndMonstersCollisions(*this, player);
 
-	changeColoursIfAvailable();
+	if (isTimeToChangeColors()) {
+		changeColors();
+	}
 	//}
 }
 
 void World::draw(SDL_Surface* display, int beginningOfScreen, int endOfScreen, bool playerFlag)
 {
-	for (unsigned int i = 0; i < inanimateElements.size(); ++i) {
+	for (unsigned int i = 0; i < inanimateElements.size(); i++) {
 		inanimateElements[i]->draw(display, beginningOfScreen, endOfScreen);
 	}
 
-	for (unsigned int i = 0; i < bonusElements.size(); ++i) {
+	for (unsigned int i = 0; i < bonusElements.size(); i++) {
 		bonusElements[i]->draw(display, beginningOfScreen, endOfScreen);
 	}
 
-	for (unsigned int i = 0; i < monsters.size(); ++i) {
+	for (unsigned int i = 0; i < monsters.size(); i++) {
 		monsters[i]->draw(display, beginningOfScreen, endOfScreen);
 	}
 
-	for (auto it = fireballs.begin(); it != fireballs.end(); ++it) {
+	for (auto it = fireballs.begin(); it != fireballs.end(); it++) {
 		it->draw(display, beginningOfScreen, endOfScreen);
 	}
 
-	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
+	for (auto it = blocks.begin(); it != blocks.end(); it++) {
 		it->draw(display, beginningOfScreen, endOfScreen);
 	}
 
-	for (unsigned int i = 0; i < temporaryElements.size(); ++i) {
+	for (unsigned int i = 0; i < temporaryElements.size(); i++) {
 		temporaryElements[i]->draw(display, beginningOfScreen, endOfScreen);
 	}
 

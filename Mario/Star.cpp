@@ -4,7 +4,7 @@ SDL_Surface* Star::starImages[4] = { nullptr };
 
 void Star::makeVerticalMove(World& world)
 {
-	int alignment = getAlignmentIfCollisionOccursDuringMovement(movement->getDirection(), movement->getSpeed(), this, world);
+	int alignment = getAlignmentForHorizontalMove(movement->getDirection(), movement->getSpeed(), this, world);
 	int distance = movement->getSpeed() - alignment;
 	if (movement->getDirection() == Left) {
 		distance *= -1;
@@ -18,7 +18,7 @@ void Star::makeVerticalMove(World& world)
 
 void Star::makeHorizontalMove(World& world)
 {
-	int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(movement->getVerticalDirection(), movement->getVerticalSpeed(), this, world);
+	int alignment = getAlignmentForVerticalMove(movement->getVerticalDirection(), movement->getVerticalSpeed(), this, world);
 	int verticalDistance = movement->getVerticalSpeed() - alignment;
 	if (movement->getVerticalDirection() == Up) {
 		verticalDistance *= -1;

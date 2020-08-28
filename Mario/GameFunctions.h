@@ -11,6 +11,9 @@
 #include "SoundController.h"
 
 
+class KeyboardController;
+
+
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions);
 
 void loadBonusObjectsImages(SDL_Surface* display);
@@ -24,6 +27,8 @@ void loadTemporaryObjectImages(SDL_Surface* display);
 void loadBlockImages(SDL_Surface* display);
 
 void loadImages(SDL_Surface* display);
+
+void resetGame(KeyboardController controller, Player* player, World& world, Screen* screen, bool * playerState);
 
 void runGame();
 

@@ -4,7 +4,7 @@ SDL_Surface* Mushroom::mushroomImages[2] = { nullptr };
 
 void Mushroom::makeMoveUp(World& world)
 {
-	int alignment = getAlignmentIfCollisionOccursDuringVerticalMovement(Down, movement->getVerticalSpeed(), this, world);
+	int alignment = getAlignmentForVerticalMove(Down, movement->getVerticalSpeed(), this, world);
 	int verticalDistance = movement->getVerticalSpeed() - alignment;
 	position->setY(position->getY() - verticalDistance);
 }

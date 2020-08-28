@@ -4,9 +4,9 @@
 #include "LivingObject.h"
 
 
-int getAlignmentIfCollisionOccursDuringMovement(Direction direction, int distance, WorldObject* object, World& world);
+int getAlignmentForHorizontalMove(Direction direction, int distance, WorldObject* object, World& world);
 
-int getAlignmentIfCollisionOccursDuringVerticalMovement(Direction direction, int distance, WorldObject* object, World& world);
+int getAlignmentForVerticalMove(Direction direction, int distance, WorldObject* object, World& world);
 
 
 class IndependentLivingObject : public LivingObject

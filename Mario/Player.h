@@ -17,25 +17,6 @@ class World;
 class Screen;
 
 
-enum PlayerState
-{
-	Small = 1,
-	Tall = 2,
-	ArmedFirst = 3,
-	ArmedSecond = 4,
-	ArmedThird = 5,
-	ImmortalFirst = 6,
-	ImmortalSecond = 7,
-	ImmortalThird = 8,
-	InsensitiveSmall = 9,
-	ImmortalSmallFirst = 10,
-	ImmortalSmallSecond = 11,
-	ImmortalSmallThird = 12,
-	ImmortalSmallFourth = 13,
-	ImmortalFourth = 14,
-	Average = 15
-};
-
 enum PlayerAnimation 
 {
 	NoAnimation = 0,
@@ -50,6 +31,25 @@ enum PlayerAnimation
 class Player : public LivingObject
 {
 private:
+	enum PlayerState
+	{
+		Small = 1,
+		Tall = 2,
+		ArmedFirst = 3,
+		ArmedSecond = 4,
+		ArmedThird = 5,
+		ImmortalFirst = 6,
+		ImmortalSecond = 7,
+		ImmortalThird = 8,
+		InsensitiveSmall = 9,
+		ImmortalSmallFirst = 10,
+		ImmortalSmallSecond = 11,
+		ImmortalSmallThird = 12,
+		ImmortalSmallFourth = 13,
+		ImmortalFourth = 14,
+		Average = 15
+	};
+
 	class Statistics
 	{
 	public:
@@ -104,6 +104,10 @@ private:
 	bool isGoingBeyondCamera(int distance, int beginningOfCamera);
 	bool isHittingBlock(int alignment, Direction direction);
 	bool isDuringAnimation();
+	void moveLeft(World& world);
+	void moveRight(World& world);
+	void moveUp(World& world);
+	void moveDown(World& world);
 	friend class KeyboardController;
 
 public:

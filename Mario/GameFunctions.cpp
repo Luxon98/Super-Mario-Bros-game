@@ -2,111 +2,91 @@
 
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions)
 {
-	for (int i = begin, j = 0; j < repetitions; i += shift, ++j) {
+	for (int i = begin, j = 0; j < repetitions; i += shift, j++) {
 		if (difference >= i && difference <= i + 150) {
 			return true;
 		}
 	}
+
 	return false;
 }
 
 void loadBonusObjectsImages(SDL_Surface* display)
 {
-	Flower* tempFlower = new Flower();
-	tempFlower->loadFlowerImages(display);
-	delete tempFlower;
+	Flower tempFlower = Flower();
+	tempFlower.loadFlowerImages(display);
 
-	Mushroom* tempMushroom = new Mushroom();
-	tempMushroom->loadMushroomImages(display);
-	delete tempMushroom;
+	Mushroom tempMushroom = Mushroom();
+	tempMushroom.loadMushroomImages(display);
 
-	Star* tempStar = new Star();
-	tempStar->loadStarImages(display);
-	delete tempStar;
+	Star tempStar = Star();
+	tempStar.loadStarImages(display);
 
-	Coin* tempCoin = new Coin();
-	tempCoin->loadCoinImages(display);
-	delete tempCoin;
+	Coin tempCoin = Coin();
+	tempCoin.loadCoinImages(display);
 }
 
 void loadInanimateObjectImages(SDL_Surface* display)
 {
-	Bush* tempBush = new Bush();
-	tempBush->loadBushImages(display);
-	delete tempBush;
+	Bush tempBush = Bush();
+	tempBush.loadBushImages(display);
 
-	Cloud* tempCloud = new Cloud();
-	tempCloud->loadCloudImages(display);
-	delete tempCloud;
+	Cloud tempCloud = Cloud();
+	tempCloud.loadCloudImages(display);
 
-	Castle* tempCastle = new Castle();
-	tempCastle->loadCastleImages(display);
-	delete tempCastle;
+	Castle tempCastle = Castle();
+	tempCastle.loadCastleImages(display);
 
-	Flag* tempFlag = new Flag();
-	tempFlag->loadFlagImages(display);
-	delete tempFlag;
+	Flag tempFlag = Flag();
+	tempFlag.loadFlagImages(display);
 }
 
 void loadLivingObjectImages(SDL_Surface* display)
 {
-	Creature* tempCreature = new Creature();
-	tempCreature->loadCreatureImages(display);
-	delete tempCreature;
+	Creature tempCreature = Creature();
+	tempCreature.loadCreatureImages(display);
 
-	Turtle* tempTurtle = new Turtle();
-	tempTurtle->loadTurtleImages(display);
-	delete tempTurtle;
+	Turtle tempTurtle = Turtle();
+	tempTurtle.loadTurtleImages(display);
 
-	Shell* tempShell = new Shell();
-	tempShell->loadShellImage(display);
-	delete tempShell;
+	Shell tempShell = Shell();
+	tempShell.loadShellImage(display);
 
-	FireBall* tempFireBall = new FireBall();
-	tempFireBall->loadFireBallImages(display);
-	delete tempFireBall;
+	FireBall tempFireBall = FireBall();
+	tempFireBall.loadFireBallImages(display);
 
-	Player* tempPlayer = new Player();
-	tempPlayer->loadPlayerImages(display);
-	delete tempPlayer;
+	Player tempPlayer = Player();
+	tempPlayer.loadPlayerImages(display);
 }
 
 void loadTemporaryObjectImages(SDL_Surface* display)
 {
-	CrushedCreature* tempCrushedCreature = new CrushedCreature();
-	tempCrushedCreature->loadCrushedCreatureImage(display);
-	delete tempCrushedCreature;
+	CrushedCreature tempCrushedCreature = CrushedCreature();
+	tempCrushedCreature.loadCrushedCreatureImage(display);
 
-	DestroyedCreature* tempDestroyedCreature = new DestroyedCreature();
-	tempDestroyedCreature->loadDestroyedCreatureImage(display);
-	delete tempDestroyedCreature;
+	DestroyedCreature tempDestroyedCreature = DestroyedCreature();
+	tempDestroyedCreature.loadDestroyedCreatureImage(display);
 
-	DestroyedTurtle* tempDestroyedTurtle = new DestroyedTurtle();
-	tempDestroyedTurtle->loadDestroyedTurtleImage(display);
-	delete tempDestroyedTurtle;
+	DestroyedTurtle tempDestroyedTurtle = DestroyedTurtle();
+	tempDestroyedTurtle.loadDestroyedTurtleImage(display);
 
-	Explosion* tempExplosion = new Explosion();
-	tempExplosion->loadExplosionImage(display);
-	delete tempExplosion;
+	Explosion tempExplosion = Explosion();
+	tempExplosion.loadExplosionImage(display);
 
-	Shards* tempShards = new Shards();
-	tempShards->loadShardsImages(display);
-	delete tempShards;
+	Shards tempShards = Shards();
+	tempShards.loadShardsImages(display);
 
-	AnimatedCoin* tempAnimatedCoin = new AnimatedCoin();
-	tempAnimatedCoin->loadAnimatedCoinImages(display);
-	delete tempAnimatedCoin;
+	AnimatedCoin tempAnimatedCoin = AnimatedCoin();
+	tempAnimatedCoin.loadAnimatedCoinImages(display);
 
-	AnimatedText* tempAnimatedText = new AnimatedText();
-	tempAnimatedText->loadAnimatedTextImages(display);
-	delete tempAnimatedText;
+	AnimatedText tempAnimatedText = AnimatedText();
+	tempAnimatedText.loadAnimatedTextImages(display);
 }
 
 void loadBlockImages(SDL_Surface* display)
 {
-	Block* tempBlock = new Block();
-	tempBlock->loadBlockImages(display);
-	delete tempBlock;
+	Block tempBlock = Block();
+	tempBlock.loadBlockImages(display);
 }
 
 void loadImages(SDL_Surface* display)
@@ -118,9 +98,18 @@ void loadImages(SDL_Surface* display)
 	loadBlockImages(display);
 }
 
+void resetGame(KeyboardController controller, Player* player, World& world, Screen* screen, bool * playerState)
+{
+	controller.clearKeysState();
+	player->reborn();
+	*playerState = true;
+	Level::setFirstLevel(world);
+	screen->resetScreen();
+}
+
 void runGame()
 {
-	bool playerState, winStatus = false, timeState = true;
+	bool playerState = true, winStatus = false, timeState = true;
 	std::chrono::steady_clock::time_point timePoint, timeBegin;
 	SDL_Event event;
 	World world = World();
@@ -141,11 +130,8 @@ void runGame()
 		screen->setPlayer(player);
 
 		while (player->getLives() && !winStatus) {
-			controller.clearKeysState();
-			player->reborn();
-			playerState = true;
-			Level::setFirstLevel(world);
-			screen->resetScreen();
+			resetGame(controller, player, world, screen, &playerState);
+
 			timeBegin = std::chrono::steady_clock::now();
 			while (std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - timeBegin).count() <= 3000) {
 				screen->drawStartScreen();
@@ -171,7 +157,7 @@ void runGame()
 					controller.handleKeys(player, world);
 				}
 
-				if (player->getX() >= 6350 && player->getX() <= 6400 && !winStatus) {
+				if (world.isPlayerFinishingWorld() && !winStatus) {
 					SoundController::playFlagDownEffect();
 					world.switchOnFlag();
 					winStatus = true;
@@ -193,6 +179,7 @@ void runGame()
 					timeState = false;
 				}
 			}
+
 			if (!playerState) {
 				screen->drawDeadMario(world);
 			}

@@ -56,9 +56,13 @@ private:
 	int slidingCounter;
 	bool slideBlockStatus;
 	bool fireballStatus;
-	void changeColoursIfAvailable();
-	void setMovementDirectionIfPlayerIsCloseEnough(LivingObject& monster);
-	void deleteTemporaryElementsIfTimePassed();
+	bool isTimeToChangeColors();
+	bool isPlayerCloseEnough(LivingObject& monster);
+	bool hasLastTouchedBlockCoin();
+	bool isLastTouchedBlockBonus();
+	void changeColors();
+	void setMovementDirection(LivingObject& monster);
+	void deleteTemporaryElements();
 	void performBonusElementsActions();
 	void performMonstersActions();
 	void performFireBallsActions();
@@ -67,8 +71,9 @@ private:
 	void slideBlock();
 	void raiseUpMushroom();
 	void addShards(Position* position);
-	void subtractCoinFromBlockIfPossible();
-	void createNewBonusIfPossible();
+	void performBlockSliding();
+	void subtractCoinFromBlock();
+	void createNewBonus();
 	void createGreenMushroom();
 	void playBlockSoundEffects();
 	friend class Level;
@@ -92,6 +97,7 @@ public:
 	void hitBlock();
 	void setFireballStatus();
 	void switchOnFlag();
+	bool isPlayerFinishingWorld();
 	void changeShellMovementParameters(int index, Direction direction);
 	void performBlockRemovalActions(int index);
 	void deleteInanimateElement(int index);
