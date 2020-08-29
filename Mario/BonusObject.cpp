@@ -1,5 +1,8 @@
 #include "BonusObject.h"
 
+#include "Position.h"
+
+
 void BonusObject::grow()
 {
 	this->growCounter--;

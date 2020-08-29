@@ -1,5 +1,11 @@
 #include "Block.h"
 
+#include <string>
+#include "Position.h"
+#include "Size.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Block::blockImages[10] = { nullptr };
 
 bool Block::changesChecker = true;

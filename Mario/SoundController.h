@@ -2,7 +2,8 @@
 #define _SoundController_H
 
 #include <SDL_mixer.h>
-#include "Player.h"
+
+class Player;
 
 
 class SoundController

@@ -1,5 +1,10 @@
 #include "Cloud.h"
 
+#include "Size.h"
+#include "Position.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Cloud::cloudImages[3] = { nullptr };
 
 Cloud::Cloud() {}

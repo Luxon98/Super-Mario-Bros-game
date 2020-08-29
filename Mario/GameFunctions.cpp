@@ -1,5 +1,35 @@
 #include "GameFunctions.h"
 
+#include <chrono>
+#include "KeyboardController.h"
+#include "SoundController.h"
+#include "Player.h"
+#include "Coin.h"
+#include "Flower.h"
+#include "Mushroom.h"
+#include "Star.h"
+#include "FireBall.h"
+#include "Turtle.h"
+#include "Creature.h"
+#include "Shell.h"
+#include "Flag.h"
+#include "AnimatedText.h"
+#include "AnimatedCoin.h"
+#include "Shards.h"
+#include "Explosion.h"
+#include "CrushedCreature.h"
+#include "DestroyedCreature.h"
+#include "DestroyedTurtle.h"
+#include "Bush.h"
+#include "Cloud.h"
+#include "Castle.h"
+#include "Level.h"
+#include "World.h"
+#include "Screen.h"
+#include "Block.h"
+#include "Position.h"
+
+
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions)
 {
 	for (int i = begin, j = 0; j < repetitions; i += shift, j++) {

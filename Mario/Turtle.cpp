@@ -1,5 +1,12 @@
 #include "Turtle.h"
 
+#include "Movement.h"
+#include "Size.h"
+#include "Position.h"
+#include "CollisionHandling.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Turtle::turtleImages[4] = { nullptr };
 
 void Turtle::chooseModel()

@@ -1,5 +1,8 @@
 #include "SDL_Utility.h"
 
+#include <iostream>
+
+
 void drawSurface(SDL_Surface* display, SDL_Surface* sprite, int x, int y)
 {
 	SDL_Rect destination;

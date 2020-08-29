@@ -1,5 +1,23 @@
 #include "CollisionHandling.h"
 
+#include <vector>
+#include <cmath>
+#include "Player.h"
+#include "SoundController.h"
+#include "Block.h"
+#include "World.h"
+#include "Coin.h"
+#include "Flower.h"
+#include "Mushroom.h"
+#include "Star.h"
+#include "Shell.h"
+#include "Turtle.h"
+#include "Creature.h"
+#include "FireBall.h"
+#include "Position.h"
+#include "AnimatedText.h"
+
+
 bool isCharacterHittingBlock(WorldObject* object, Block block, Direction direction, int distance)
 {
 	if (direction == Right && object->getX() < block.getX() && object->getX() + distance + object->getWidth() / 2 >= block.getX() - block.getWidth() / 2) {

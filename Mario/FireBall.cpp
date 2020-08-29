@@ -1,5 +1,13 @@
 #include "FireBall.h"
 
+#include "Movement.h"
+#include "Size.h"
+#include "Position.h"
+#include "CollisionHandling.h"
+#include "SoundController.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* FireBall::fireBallImages[4] = { nullptr };
 
 void FireBall::computeModelIndex()

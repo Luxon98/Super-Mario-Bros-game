@@ -1,8 +1,10 @@
 #ifndef _Coin_H
 #define _Coin_H
 
-#include "SDL_Utility.h"
 #include "InanimateObject.h"
+
+class Position;
+struct SDL_Surface;
 
 
 class Coin : public InanimateObject

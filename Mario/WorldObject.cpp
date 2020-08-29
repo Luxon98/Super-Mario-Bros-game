@@ -1,5 +1,9 @@
 #include "WorldObject.h"
 
+#include "Position.h"
+#include "Size.h"
+
+
 int WorldObject::getX() const
 {
 	return this->position->getX();

@@ -1,5 +1,29 @@
 #include "World.h"
 
+#include "Screen.h"
+#include "CollisionHandling.h"
+#include "Block.h"
+#include "LivingObject.h"
+#include "Player.h"
+#include "Coin.h"
+#include "Flower.h"
+#include "Mushroom.h"
+#include "Star.h"
+#include "FireBall.h"
+#include "Turtle.h"
+#include "Creature.h"
+#include "Shell.h"
+#include "Flag.h"
+#include "AnimatedText.h"
+#include "AnimatedCoin.h"
+#include "Shards.h"
+#include "Explosion.h"
+#include "CrushedCreature.h"
+#include "DestroyedCreature.h"
+#include "DestroyedTurtle.h"
+#include "Position.h"
+#include "SoundController.h"
+
 
 bool World::isTimeToChangeColors()
 {
@@ -20,7 +44,7 @@ bool World::isPlayerCloseEnough(LivingObject& monster)
 	return false;
 }
 
-bool World::hasLastTouchedBlockCoin() 
+bool World::hasLastTouchedBlockCoin()
 {
 	if (blocks[lastTouchedBlockIndex].getModel() == Monetary || blocks[lastTouchedBlockIndex].getModel() == BonusWithCoin) {
 		return true;
@@ -174,7 +198,7 @@ void World::slideBlock()
 			if (isLastTouchedBlockBonus()) {
 				createNewBonus();
 			}
-			
+
 			slideBlockStatus = true;
 		}
 	}
@@ -447,7 +471,7 @@ void World::addAnimatedText(TextType type, Position* position)
 
 void World::performActions()
 {
-	gameCounter++;
+	//gameCounter++;
 	//if (gameCounter % 3 == 0) {
 	performWorldActions();
 	deleteTemporaryElements();
@@ -461,7 +485,7 @@ void World::performActions()
 	if (isTimeToChangeColors()) {
 		changeColors();
 	}
-	//}
+	//k}
 }
 
 void World::draw(SDL_Surface* display, int beginningOfScreen, int endOfScreen, bool playerFlag)

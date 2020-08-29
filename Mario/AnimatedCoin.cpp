@@ -1,5 +1,10 @@
 #include "AnimatedCoin.h"
 
+#include <string>
+#include "Position.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* AnimatedCoin::animatedCoinImages[7] = { nullptr };
 
 AnimatedCoin::AnimatedCoin() {}

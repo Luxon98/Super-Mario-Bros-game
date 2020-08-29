@@ -1,8 +1,10 @@
 #ifndef _Flag_H
 #define _Flag_H
 
-#include "SDL_Utility.h"
 #include "InanimateObject.h"
+
+class Position;
+struct SDL_Surface;
 
 
 class Flag : public InanimateObject

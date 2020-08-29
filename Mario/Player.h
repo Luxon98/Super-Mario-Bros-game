@@ -2,19 +2,14 @@
 #define _Player_H
 
 #include <chrono>
-#include <string>
-#include "SDL_Utility.h"
+#include "Movement.h"
 #include "LivingObject.h"
-#include "World.h"
-#include "Block.h"
-#include "Screen.h"
-#include "GameFunctions.h"
-#include "Direction.h"
 
-
-enum Direction;
 class World;
-class Screen;
+class KeyboardController;
+class Position;
+enum Direction;
+struct SDL_Surface;
 
 
 enum PlayerAnimation 

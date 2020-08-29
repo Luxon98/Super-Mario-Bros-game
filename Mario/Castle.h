@@ -1,8 +1,10 @@
 #ifndef _Castle_H
 #define _Castle_H
 
-#include "SDL_Utility.h"
 #include "InanimateObject.h"
+
+class Position;
+struct SDL_Surface;
 
 
 class Castle : public InanimateObject

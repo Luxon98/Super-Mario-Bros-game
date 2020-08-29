@@ -1,9 +1,10 @@
 #ifndef _AnimatedText_H
 #define _AnimatedText_H
 
-#include "SDL_Utility.h"
 #include "TemporaryObject.h"
 
+class Position;
+struct SDL_Surface;
 
 enum TextType
 {

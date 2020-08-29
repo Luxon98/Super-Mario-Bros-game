@@ -1,5 +1,9 @@
 #include "AnimatedText.h"
 
+#include "Position.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* AnimatedText::animatedTextImages[5] = { nullptr };
 
 AnimatedText::AnimatedText() {}

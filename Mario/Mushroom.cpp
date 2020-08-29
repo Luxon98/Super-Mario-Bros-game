@@ -1,5 +1,12 @@
 #include "Mushroom.h"
 
+#include "Movement.h"
+#include "Size.h"
+#include "Position.h"
+#include "CollisionHandling.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Mushroom::mushroomImages[2] = { nullptr };
 
 void Mushroom::makeMoveUp(World& world)

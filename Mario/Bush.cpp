@@ -1,5 +1,11 @@
 #include "Bush.h"
 
+#include <string>
+#include "Size.h"
+#include "Position.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Bush::bushImages[5] = { nullptr };
 
 Bush::Bush() {}

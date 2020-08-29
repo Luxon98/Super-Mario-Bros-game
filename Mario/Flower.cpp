@@ -1,5 +1,11 @@
 #include "Flower.h"
 
+#include "Movement.h"
+#include "Size.h"
+#include "Position.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Flower::flowerImages[2] = { nullptr };
 
 int Flower::typeOfImage = 2;

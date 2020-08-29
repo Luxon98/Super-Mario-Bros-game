@@ -1,8 +1,10 @@
 #ifndef _Cloud_H
 #define _Cloud_H
 
-#include "SDL_Utility.h"
 #include "InanimateObject.h"
+
+class Position;
+struct SDL_Surface;
 
 
 class Cloud : public InanimateObject

@@ -1,11 +1,12 @@
 #ifndef _FireBall_H
 #define _FireBall_H
 
-
-#include "SDL_Utility.h"
 #include "IndependentLivingObject.h"
-#include "World.h"
-#include "Direction.h"
+
+class World;
+class Position;
+enum Direction;
+struct SDL_Surface;
 
 
 class FireBall : public IndependentLivingObject

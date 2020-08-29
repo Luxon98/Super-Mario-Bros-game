@@ -1,5 +1,12 @@
 #include "Screen.h"
 
+#include <string>
+#include <thread>
+#include "Player.h"
+#include "World.h"
+#include "SoundController.h"
+
+
 Screen::Camera::Camera()
 {
 	beginningOfCamera = 0;

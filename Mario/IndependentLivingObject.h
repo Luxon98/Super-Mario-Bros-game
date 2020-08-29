@@ -3,10 +3,7 @@
 
 #include "LivingObject.h"
 
-
-int getAlignmentForHorizontalMove(Direction direction, int distance, WorldObject* object, World& world);
-
-int getAlignmentForVerticalMove(Direction direction, int distance, WorldObject* object, World& world);
+class World;
 
 
 class IndependentLivingObject : public LivingObject

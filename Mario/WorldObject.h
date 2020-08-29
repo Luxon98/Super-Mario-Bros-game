@@ -1,9 +1,9 @@
 #ifndef _WorldObject_H
 #define _WorldObject_H
 
-#include "SDL_Utility.h"
-#include "Position.h"
-#include "Size.h"
+class Position;
+class Size;
+struct SDL_Surface;
 
 
 class WorldObject 

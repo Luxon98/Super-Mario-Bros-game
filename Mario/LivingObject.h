@@ -2,10 +2,9 @@
 #define _LivingObject_H
 
 #include "WorldObject.h"
-#include "Movement.h"
-
 
 class World;
+class Movement;
 
 
 class LivingObject : public WorldObject 

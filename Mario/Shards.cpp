@@ -1,5 +1,9 @@
 #include "Shards.h"
 
+#include "Position.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Shards::shardsImages[2] = { nullptr };
 
 void Shards::initPositionsVector(Position* position)

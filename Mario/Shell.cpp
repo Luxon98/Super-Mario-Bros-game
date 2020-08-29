@@ -1,5 +1,12 @@
 #include "Shell.h"
 
+#include "Size.h"
+#include "Movement.h"
+#include "Position.h"
+#include "CollisionHandling.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Shell::shellImage = nullptr;
 
 Shell::Shell() {}

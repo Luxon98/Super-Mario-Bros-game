@@ -1,9 +1,12 @@
 #ifndef _Creature_H
 #define _Creature_H
 
-#include "SDL_Utility.h"
-#include "World.h"
 #include "IndependentLivingObject.h"
+
+class World;
+class Position;
+enum Direction;
+struct SDL_Surface;
 
 
 class Creature : public IndependentLivingObject

@@ -1,17 +1,12 @@
 #ifndef _GameFunctions_H
 #define _GameFunctions_H
 
-#include <chrono>
-#include "World.h"
 #include "SDL_Utility.h"
-#include "Player.h"
-#include "Level.h"
-#include "Screen.h"
-#include "KeyboardController.h"
-#include "SoundController.h"
-
 
 class KeyboardController;
+class Player;
+class World;
+class Screen;
 
 
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions);
@@ -28,7 +23,7 @@ void loadBlockImages(SDL_Surface* display);
 
 void loadImages(SDL_Surface* display);
 
-void resetGame(KeyboardController controller, Player* player, World& world, Screen* screen, bool * playerState);
+void resetGame(KeyboardController controller, Player* player, World& world, Screen* screen, bool* playerState);
 
 void runGame();
 

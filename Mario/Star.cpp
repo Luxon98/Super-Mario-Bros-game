@@ -1,5 +1,13 @@
 #include "Star.h"
 
+#include <string>
+#include "Movement.h"
+#include "Size.h"
+#include "Position.h"
+#include "CollisionHandling.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Star::starImages[4] = { nullptr };
 
 void Star::makeVerticalMove(World& world)

@@ -1,5 +1,9 @@
 #include "Explosion.h"
 
+#include "Position.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Explosion::explosionImage = nullptr;
 
 Explosion::Explosion() {}

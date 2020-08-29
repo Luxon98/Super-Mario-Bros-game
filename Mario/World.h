@@ -3,38 +3,21 @@
 
 #include <chrono>
 #include <vector>
-#include "Flower.h"
-#include "Mushroom.h"
-#include "Creature.h"
-#include "Turtle.h"
-#include "Shell.h"
-#include "SDL_Utility.h"
-#include "CollisionHandling.h"
-#include "Block.h"
-#include "Player.h"
-#include "InanimateObject.h"
-#include "Cloud.h"
-#include "Bush.h"
-#include "Coin.h"
-#include "CrushedCreature.h"
-#include "DestroyedCreature.h"
-#include "DestroyedTurtle.h"
-#include "TemporaryObject.h"
-#include "Explosion.h"
-#include "Shards.h"
-#include "AnimatedCoin.h"
-#include "AnimatedText.h"
 #include "FireBall.h"
-#include "Star.h"
-#include "Castle.h"
-#include "Flag.h"
-#include "Direction.h"
-
 
 class Player;
-class FireBall;
 class Screen;
 class BonusObject;
+class Position;
+class Level;
+class Block;
+class InanimateObject;
+class TemporaryObject;
+class LivingObject;
+class Flag;
+enum TextType;
+enum Direction;
+struct SDL_Surface;
 
 
 class World

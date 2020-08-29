@@ -1,5 +1,18 @@
 #include "Player.h"
 
+#include <chrono>
+#include <string>
+#include "SoundController.h"
+#include "Position.h"
+#include "Size.h"
+#include "GameFunctions.h"
+#include "World.h"
+#include "Block.h"
+#include "Screen.h"
+#include "CollisionHandling.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Player::playerImages[132] = { nullptr };
 
 Player::Statistics::Statistics()

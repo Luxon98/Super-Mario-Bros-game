@@ -1,8 +1,10 @@
 #ifndef _Explosion_H
 #define _Explosion_H
 
-#include "SDL_Utility.h"
 #include "TemporaryObject.h"
+
+class Position;
+struct SDL_Surface;
 
 
 class Explosion : public TemporaryObject

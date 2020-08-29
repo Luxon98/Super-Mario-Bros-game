@@ -1,10 +1,10 @@
 #ifndef _Block_H
 #define _Block_H
 
-#include <string>
-#include "SDL_Utility.h"
 #include "InanimateObject.h"
 
+class Position;
+struct SDL_Surface;
 
 enum BlockType
 {

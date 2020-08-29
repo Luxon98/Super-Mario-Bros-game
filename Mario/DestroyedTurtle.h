@@ -1,8 +1,10 @@
 #ifndef _DestroyedTurtle_H
 #define _DestroyedTurtle_H
 
-#include "SDL_Utility.h"
 #include "TemporaryObject.h"
+
+class Position;
+struct SDL_Surface;
 
 
 class DestroyedTurtle : public TemporaryObject

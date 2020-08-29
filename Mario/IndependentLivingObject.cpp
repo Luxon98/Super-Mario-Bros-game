@@ -1,5 +1,10 @@
 #include "IndependentLivingObject.h"
 
+#include "CollisionHandling.h"
+#include "Movement.h"
+#include "Position.h"
+
+
 void IndependentLivingObject::makeHorizontalMove(World& world)
 {
 	int alignment = getAlignmentForHorizontalMove(movement->getDirection(), movement->getSpeed(), this, world);

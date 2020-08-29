@@ -1,18 +1,13 @@
 #ifndef _Screen_H
 #define _Screen_H
 
-#include <string>
 #include <chrono>
-#include <thread>
 #include "SDL_Utility.h"
-#include "Player.h"
-#include "World.h"
-
-#define CAMERA_REFERENCE_POINT 240
-
 
 class Player;
 class World;
+
+#define CAMERA_REFERENCE_POINT 240
 
 
 class Screen

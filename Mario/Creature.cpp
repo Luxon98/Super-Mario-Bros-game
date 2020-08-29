@@ -1,5 +1,12 @@
 #include "Creature.h"
 
+#include "Movement.h"
+#include "Size.h"
+#include "Position.h"
+#include "CollisionHandling.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Creature::creatureImages[2] = { nullptr };
 
 void Creature::changeModel()

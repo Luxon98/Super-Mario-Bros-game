@@ -1,9 +1,10 @@
 #ifndef _Flower_H
 #define _Flower_H
 
-#include "SDL_Utility.h"
-#include "World.h"
 #include "BonusObject.h"
+
+class World;
+struct SDL_Surface;
 
 
 class Flower : public BonusObject

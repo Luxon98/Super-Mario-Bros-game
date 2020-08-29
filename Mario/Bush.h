@@ -1,9 +1,10 @@
 #ifndef _Bush_H
 #define _Bush_H
 
-#include <string>
-#include "SDL_Utility.h"
 #include "InanimateObject.h"
+
+class Position;
+struct SDL_Surface;
 
 
 class Bush : public InanimateObject

@@ -2,8 +2,10 @@
 #define _Shards_H
 
 #include <vector>
-#include "SDL_Utility.h"
 #include "TemporaryObject.h"
+
+class Position;
+struct SDL_Surface;
 
 
 class Shards : public TemporaryObject

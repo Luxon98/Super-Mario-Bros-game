@@ -3,9 +3,10 @@
 
 #include <map>
 #include "SDL_Utility.h"
-#include "World.h"
-#include "Player.h"
-#include "Screen.h"
+
+class World;
+class Player;
+enum Direction;
 
 
 class KeyboardController

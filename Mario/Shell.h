@@ -2,9 +2,12 @@
 #define _Shell_H
 
 #include <chrono>
-#include "SDL_Utility.h"
-#include "World.h"
 #include "IndependentLivingObject.h"
+
+class World;
+class Position;
+enum Direction;
+struct SDL_Surface;
 
 
 class Shell : public IndependentLivingObject

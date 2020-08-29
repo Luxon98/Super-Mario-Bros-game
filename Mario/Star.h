@@ -1,10 +1,10 @@
 #ifndef _Star_H
 #define _Star_H
 
-#include "SDL_Utility.h"
-#include "World.h"
 #include "BonusObject.h"
-#include "Direction.h"
+
+class World;
+struct SDL_Surface;
 
 
 class Star : public BonusObject 

@@ -1,9 +1,10 @@
 #ifndef _AnimatedCoin_H
 #define _AnimatedCoin_H
 
-#include <string>
-#include "SDL_Utility.h"
 #include "TemporaryObject.h"
+
+class Position;
+struct SDL_Surface;
 
 
 class AnimatedCoin : public TemporaryObject 

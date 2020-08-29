@@ -1,5 +1,8 @@
 #include "SoundController.h"
 
+#include "Player.h"
+
+
 Mix_Music* SoundController::backgroundTracks[6] = { nullptr };
 
 Mix_Chunk* SoundController::soundsEffects[13] = { nullptr };

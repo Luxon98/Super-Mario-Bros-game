@@ -1,5 +1,11 @@
 #include "KeyboardController.h"
 
+#include "CollisionHandling.h"
+#include "Player.h"
+#include "SoundController.h"
+#include "World.h"
+
+
 void KeyboardController::handleSpacebar(World& world)
 {
 	if (shotStatusFlag) {

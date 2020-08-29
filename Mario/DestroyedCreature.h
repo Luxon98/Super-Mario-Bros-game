@@ -1,8 +1,10 @@
 #ifndef _DestroyedCreature_H
 #define _DestroyedCreature_H
 
-#include "SDL_Utility.h"
 #include "TemporaryObject.h"
+
+class Position;
+struct SDL_Surface;
 
 
 class DestroyedCreature : public TemporaryObject

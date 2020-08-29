@@ -1,18 +1,13 @@
 #ifndef _CollisionHandling_H
 #define _CollisionHandling_H
 
-#include <cmath>
-#include "WorldObject.h"
-#include "Coin.h"
-#include "Block.h"
-#include "Direction.h"
-#include "Player.h"
-
-
 class World;
 class Player;
+class WorldObject;
 class LivingObject;
 class Mushroom;
+class Block;
+enum Direction;
 
 
 bool isCharacterHittingBlock(WorldObject* object, Block block, Direction direction, int distance);

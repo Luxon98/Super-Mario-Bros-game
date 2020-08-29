@@ -1,5 +1,9 @@
 #include "DestroyedTurtle.h"
 
+#include "Position.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* DestroyedTurtle::destroyedTurtleImage = nullptr;
 
 DestroyedTurtle::DestroyedTurtle() {}

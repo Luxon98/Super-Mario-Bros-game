@@ -1,5 +1,10 @@
 #include "Coin.h"
 
+#include "Size.h"
+#include "Position.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* Coin::coinImages[2] = { nullptr };
 
 int Coin::typeOfImage = 2;

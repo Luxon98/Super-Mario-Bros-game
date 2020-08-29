@@ -1,9 +1,10 @@
 #ifndef _Mushroom_H
 #define _Mushroom_H
 
-#include "SDL_Utility.h"
-#include "World.h"
 #include "BonusObject.h"
+
+class World;
+struct SDL_Surface;
 
 
 class Mushroom : public BonusObject 

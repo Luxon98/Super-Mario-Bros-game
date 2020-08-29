@@ -1,5 +1,17 @@
 #include "Level.h"
 
+#include "World.h"
+#include "Screen.h"
+#include "Block.h"
+#include "Position.h"
+#include "Creature.h"
+#include "Turtle.h"
+#include "Bush.h"
+#include "Cloud.h"
+#include "Flag.h"
+#include "Castle.h"
+
+
 void Level::setFirstLevel(World& world)
 {
 	world.blocks.clear();

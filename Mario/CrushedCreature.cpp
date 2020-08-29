@@ -1,5 +1,9 @@
 #include "CrushedCreature.h"
 
+#include "Position.h"
+#include "SDL_Utility.h"
+
+
 SDL_Surface* CrushedCreature::crushedCreatureImage = nullptr;
 
 CrushedCreature::CrushedCreature() {}
