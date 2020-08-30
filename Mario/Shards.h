@@ -1,6 +1,7 @@
-#ifndef _Shards_H
-#define _Shards_H
+#ifndef Shards_H
+#define Shards_H
 
+#include <array>
 #include <vector>
 #include "TemporaryObject.h"
 
@@ -11,19 +12,18 @@ struct SDL_Surface;
 class Shards : public TemporaryObject
 {
 private:
-	static SDL_Surface* shardsImages[2];
-	std::vector<Position*> shardsPositions;
-	int auxiliaryCounter;
+	static std::array<SDL_Surface*, 2> shardsImages;
+	std::vector<Position> shardsPositions;
 	int imageIndex;
-	void initPositionsVector(Position* position);
+	void initPositionsVector(Position position);
 
 public:
 	Shards();
-	Shards(Position* position);
+	Shards(Position position);
 	void loadShardsImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	bool shouldBeRemoved() override;
 	void slide() override;
 };
 
-#endif //_Shards_H
+#endif //Shards_H

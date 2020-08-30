@@ -6,16 +6,16 @@
 #include "SDL_Utility.h"
 
 
-SDL_Surface* Flower::flowerImages[2] = { nullptr };
+std::array<SDL_Surface*, 2> Flower::flowerImages;
 
 int Flower::typeOfImage = 2;
 
 Flower::Flower() {}
 
-Flower::Flower(Position* position)
+Flower::Flower(Position position)
 {
-	size = new Size(32, 32);
-	movement = new Movement();
+	size = Size(32, 32);
+	movement = Movement();
 	this->position = position;
 	growCounter = 96;
 }
@@ -33,10 +33,10 @@ void Flower::loadFlowerImages(SDL_Surface* display)
 
 void Flower::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	if (position->getX() > beginningOfCamera - 60 && position->getX() < endOfCamera + 60) {
+	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
 		SDL_Surface* flowerImg = nullptr;
 		flowerImg = flowerImages[typeOfImage - 1];
-		drawSurface(display, flowerImg, position->getX() - beginningOfCamera, position->getY());
+		drawSurface(display, flowerImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

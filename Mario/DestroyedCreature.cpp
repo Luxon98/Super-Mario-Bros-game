@@ -8,7 +8,7 @@ SDL_Surface* DestroyedCreature::destroyedCreatureImage = nullptr;
 
 DestroyedCreature::DestroyedCreature() {}
 
-DestroyedCreature::DestroyedCreature(Position* position)
+DestroyedCreature::DestroyedCreature(Position position)
 {
 	this->position = position;
 	creationTime = std::chrono::steady_clock::now();
@@ -22,14 +22,14 @@ void DestroyedCreature::loadDestroyedCreatureImage(SDL_Surface* display)
 
 void DestroyedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	if (position->getX() > beginningOfCamera - 70 && position->getX() < endOfCamera + 70) {
-		drawSurface(display, destroyedCreatureImage, position->getX() - beginningOfCamera, position->getY());
+	if (position.getX() > beginningOfCamera - 70 && position.getX() < endOfCamera + 70) {
+		drawSurface(display, destroyedCreatureImage, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 
 bool DestroyedCreature::shouldBeRemoved()
 {
-	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
+	auto timePoint = std::chrono::steady_clock::now();
 	return (creationTime + std::chrono::milliseconds(2000) < timePoint);
 }
 
@@ -39,23 +39,23 @@ void DestroyedCreature::slide()
 
 	if (auxiliaryCounter & 1) {
 		if (auxiliaryCounter <= 12) {
-			position->setY(position->getY() - 2);
+			position.setY(position.getY() - 2);
 		}
 		else if (auxiliaryCounter >= 13 && auxiliaryCounter <= 24) {
-			position->setX(position->getX() + 2);
-			position->setY(position->getY() - 3);
+			position.setX(position.getX() + 2);
+			position.setY(position.getY() - 3);
 		}
 		else if (auxiliaryCounter >= 25 && auxiliaryCounter <= 32) {
-			position->setX(position->getX() + 2);
+			position.setX(position.getX() + 2);
 		}
 		else if (auxiliaryCounter >= 33 && auxiliaryCounter <= 44) {
-			position->setX(position->getX() + 2);
-			position->setY(position->getY() + 2);
+			position.setX(position.getX() + 2);
+			position.setY(position.getY() + 2);
 		}
 		else {
-			position->setY(position->getY() + 3);
+			position.setY(position.getY() + 3);
 			if (auxiliaryCounter % 3 == 0) {
-				position->setX(position->getX() + 1);
+				position.setX(position.getX() + 1);
 			}
 		}
 	}

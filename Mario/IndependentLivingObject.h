@@ -1,5 +1,5 @@
-#ifndef _IndependentLivingObject_H
-#define _IndependentLivingObject_H
+#ifndef IndependentLivingObject_H
+#define IndependentLivingObject_H
 
 #include "LivingObject.h"
 
@@ -13,5 +13,5 @@ protected:
 	void makeDiagonalMove(World& world);
 };
 
-#endif //_IndependentLivingObject_H
+#endif //IndependentLivingObject_H
 

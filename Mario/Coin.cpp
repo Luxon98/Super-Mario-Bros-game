@@ -5,16 +5,17 @@
 #include "SDL_Utility.h"
 
 
-SDL_Surface* Coin::coinImages[2] = { nullptr };
+std::array<SDL_Surface*, 2> Coin::coinImages;
 
 int Coin::typeOfImage = 2;
 
 Coin::Coin() {}
 
-Coin::Coin(Position* position)
+Coin::Coin(Position position)
 {
 	this->position = position;
-	size = new Size(11, 17);
+
+	size = Size(11, 17);
 }
 
 void Coin::loadCoinImages(SDL_Surface* display)
@@ -30,10 +31,10 @@ void Coin::changeCoinImage()
 
 void Coin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	if (position->getX() > beginningOfCamera - 60 && position->getX() < endOfCamera + 60) {
+	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
 		SDL_Surface* coinImg = nullptr;
 		coinImg = coinImages[typeOfImage - 1];
-		drawSurface(display, coinImg, position->getX() - beginningOfCamera, position->getY());
+		drawSurface(display, coinImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

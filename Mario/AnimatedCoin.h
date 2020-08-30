@@ -1,6 +1,7 @@
-#ifndef _AnimatedCoin_H
-#define _AnimatedCoin_H
+#ifndef AnimatedCoin_H
+#define AnimatedCoin_H
 
+#include <array>
 #include "TemporaryObject.h"
 
 class Position;
@@ -10,19 +11,18 @@ struct SDL_Surface;
 class AnimatedCoin : public TemporaryObject 
 {
 private:
-	static SDL_Surface* animatedCoinImages[7];
+	static std::array<SDL_Surface*, 7> animatedCoinImages;
 	int slideCounter;
-	int auxiliaryCounter;
 	int imageIndex;
 
 public:
 	AnimatedCoin();
-	AnimatedCoin(Position* position);
+	AnimatedCoin(Position position);
 	void loadAnimatedCoinImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	bool shouldBeRemoved() override;
 	void slide() override;
 };
 
-#endif //_AnimatedCoin_H
+#endif //AnimatedCoin_H
 

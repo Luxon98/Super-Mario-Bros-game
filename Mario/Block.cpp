@@ -6,7 +6,7 @@
 #include "SDL_Utility.h"
 
 
-SDL_Surface* Block::blockImages[10] = { nullptr };
+std::array<SDL_Surface*, 10> Block::blockImages;
 
 bool Block::changesChecker = true;
 
@@ -29,28 +29,28 @@ int Block::computeImageIndex()
 	}
 }
 
-Size* Block::getSizeFromBlockType(BlockType type)
+Size Block::getSizeFromBlockType(BlockType type)
 {
 	if (type == Tube) {
-		return new Size(56, 34);
+		return Size(56, 34);
 	}
 	else if (type == TubeEntry) {
-		return new Size(64, 31);
+		return Size(64, 31);
 	}
 	else {
-		return new Size(32, 32);
+		return Size(32, 32);
 	}
 }
 
 Block::Block() {}
 
-Block::Block(BlockType type, Position* position)
+Block::Block(BlockType type, Position position)
 {
 	model = type;
 	this->position = position;
 	size = getSizeFromBlockType(type);
 	availableCoins = (type == Monetary ? 10 : 0);
-	initialPositionY = position->getY();
+	initialPositionY = position.getY();
 }
 
 int Block::getAvailableCoins() const
@@ -60,7 +60,7 @@ int Block::getAvailableCoins() const
 
 bool Block::canBeHitted()
 {
-	return (position->getY() == initialPositionY);
+	return (position.getY() == initialPositionY);
 }
 
 bool Block::isInvisible()
@@ -86,7 +86,7 @@ void Block::setAvailableCoins(int coins)
 
 void Block::addToPositionY(int y)
 {
-	position->setY(position->getY() + y);
+	position.setY(position.getY() + y);
 }
 
 void Block::changeBlockImage()
@@ -112,10 +112,10 @@ void Block::loadBlockImages(SDL_Surface* display)
 
 void Block::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	if (position->getX() > beginningOfCamera - 120 && position->getX() < endOfCamera + 120) {
+	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
 		SDL_Surface* blockImg = nullptr;
 		blockImg = blockImages[computeImageIndex()];
-		drawSurface(display, blockImg, position->getX() - beginningOfCamera, position->getY());
+		drawSurface(display, blockImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

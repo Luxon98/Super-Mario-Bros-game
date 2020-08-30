@@ -1,5 +1,5 @@
-#ifndef _GameFunctions_H
-#define _GameFunctions_H
+#ifndef GameFunctions_H
+#define GameFunctions_H
 
 #include "SDL_Utility.h"
 
@@ -7,6 +7,7 @@ class KeyboardController;
 class Player;
 class World;
 class Screen;
+class SoundController;
 
 
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions);
@@ -27,5 +28,5 @@ void resetGame(KeyboardController controller, Player* player, World& world, Scre
 
 void runGame();
 
-#endif //_GameFunctions_H
+#endif //GameFunctions_H
 

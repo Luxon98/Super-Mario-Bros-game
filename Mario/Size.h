@@ -1,5 +1,5 @@
-#ifndef _Size_H
-#define _Size_H
+#ifndef Size_H
+#define Size_H
 
 
 class Size 
@@ -9,6 +9,7 @@ private:
 	int height;
 
 public:
+	Size();
 	Size(int width, int height);
 	int getWidth() const;
 	int getHeight() const;
@@ -17,5 +18,5 @@ public:
 	void setSize(int width, int height);
 };
 
-#endif //_Size_H
+#endif //Size_H
 

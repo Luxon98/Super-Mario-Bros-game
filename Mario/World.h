@@ -1,9 +1,10 @@
-#ifndef _World_H
-#define _World_H
+#ifndef World_H
+#define World_H
 
 #include <chrono>
 #include <vector>
 #include "FireBall.h"
+#include "Flag.h"
 
 class Player;
 class Screen;
@@ -14,7 +15,6 @@ class Block;
 class InanimateObject;
 class TemporaryObject;
 class LivingObject;
-class Flag;
 enum TextType;
 enum Direction;
 struct SDL_Surface;
@@ -32,8 +32,8 @@ private:
 	std::vector<TemporaryObject*> temporaryElements;
 	std::vector<FireBall> fireballs;
 	Player* player;
-	Flag* flag;
 	Screen* screen;
+	Flag flag;
 	int gameCounter;
 	int lastTouchedBlockIndex;
 	int slidingCounter;
@@ -53,7 +53,7 @@ private:
 	void slideTemporaryElements();
 	void slideBlock();
 	void raiseUpMushroom();
-	void addShards(Position* position);
+	void addShards(Position position);
 	void performBlockSliding();
 	void subtractCoinFromBlock();
 	void createNewBonus();
@@ -87,14 +87,15 @@ public:
 	void deleteLivingElement(int index);
 	void deleteMonster(int index);
 	void deleteFireBall(int index);
-	void addShell(Position* position);
-	void addCrushedCreature(Position* position);
-	void addDestroyedCreature(Position* position);
-	void addDestroyedTurtle(Position* position);
-	void addExplosion(Position* position);
-	void addAnimatedText(TextType type, Position* position);
+	void addShell(Position position);
+	void addCrushedCreature(Position position);
+	void addDestroyedCreature(Position position);
+	void addDestroyedTurtle(Position position);
+	void addExplosion(Position position);
+	void addAnimatedText(TextType type, Position position);
 	void performActions();
-	void draw(SDL_Surface* display, int beginningOfScreen, int endOfScreen, bool playerFlag = true);
+	void draw(SDL_Surface* display, int beginningOfScreen, int endOfScreen, bool drawPlayer = true);
+	~World();
 };
 
-#endif //_World_H
+#endif //World_H

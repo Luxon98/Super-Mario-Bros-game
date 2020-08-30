@@ -1,5 +1,5 @@
-#ifndef _Shell_H
-#define _Shell_H
+#ifndef Shell_H
+#define Shell_H
 
 #include <chrono>
 #include "IndependentLivingObject.h"
@@ -19,7 +19,7 @@ private:
 	
 public:
 	Shell();
-	Shell(Position* position);
+	Shell(Position position);
 	bool isActive();
 	bool shouldTurnIntoTurtle();
 	void setMovementDirectionAndActiveState(Direction direction);
@@ -29,5 +29,5 @@ public:
 	void move(World& world) override;
 };
 
-#endif //_Shell_H
+#endif //Shell_H
 

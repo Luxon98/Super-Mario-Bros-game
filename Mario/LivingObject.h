@@ -1,10 +1,11 @@
-#ifndef _LivingObject_H
-#define _LivingObject_H
+#ifndef LivingObject_H
+#define LivingObject_H
 
 #include "WorldObject.h"
+#include "Movement.h"
+#include "Size.h"
 
 class World;
-class Movement;
 
 
 class LivingObject : public WorldObject 
@@ -12,11 +13,11 @@ class LivingObject : public WorldObject
 protected:
 	int stepsCounter;
 	int changeModelCounter;
-	Movement* movement;
+	Movement movement;
 
 public:
-	Movement* getMovement() const;
+	Movement getMovement() const;
 	virtual void move(World& world) = 0;
 };
 
-#endif //_LivingObject_H
+#endif //LivingObject_H

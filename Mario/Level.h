@@ -1,5 +1,5 @@
-#ifndef _Level_H
-#define _Level_H
+#ifndef Level_H
+#define Level_H
 
 class World;
 
@@ -10,4 +10,4 @@ public:
 	static void setFirstLevel(World& world);
 };
 
-#endif //_Level_H
+#endif //Level_H

@@ -9,7 +9,8 @@ Movement::Movement()
 	verticalDirection = None;
 }
 
-Movement::Movement(int speed, int verticalSpeed, Direction direction, Direction verticalDirection) : speed(speed), verticalSpeed(verticalSpeed), direction(direction), verticalDirection(verticalDirection) {}
+Movement::Movement(int speed, int verticalSpeed, Direction direction, Direction verticalDirection) 
+	: speed(speed), verticalSpeed(verticalSpeed), direction(direction), verticalDirection(verticalDirection) {}
 
 int Movement::getSpeed() const
 {

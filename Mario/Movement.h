@@ -1,5 +1,5 @@
-#ifndef _Movement_H
-#define _Movement_H
+#ifndef Movement_H
+#define Movement_H
 
 #include "Direction.h"
 
@@ -25,4 +25,4 @@ public:
 	void setVerticalDirection(Direction verticalDirection);
 };
 
-#endif //_Movement_H
+#endif //Movement_H

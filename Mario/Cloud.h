@@ -1,6 +1,7 @@
-#ifndef _Cloud_H
-#define _Cloud_H
+#ifndef Cloud_H
+#define Cloud_H
 
+#include <array>
 #include "InanimateObject.h"
 
 class Position;
@@ -10,13 +11,13 @@ struct SDL_Surface;
 class Cloud : public InanimateObject
 {
 private:
-	static SDL_Surface* cloudImages[3];
+	static std::array<SDL_Surface*, 3> cloudImages;
 
 public:
 	Cloud();
-	Cloud(int type, Position* position);
+	Cloud(int type, Position position);
 	void loadCloudImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 };
 
-#endif //_Cloud_H
+#endif //Cloud_H

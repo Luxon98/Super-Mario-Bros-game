@@ -1,5 +1,5 @@
-#ifndef _InanimateObject_H
-#define _InanimateObject_H
+#ifndef InanimateObject_H
+#define InanimateObject_H
 
 #include "WorldObject.h"
 
@@ -13,4 +13,4 @@ public:
 	int getModel() const;
 };
 
-#endif //_InanimateObject_H
+#endif //InanimateObject_H

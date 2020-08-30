@@ -5,11 +5,11 @@
 #include "SDL_Utility.h"
 
 
-SDL_Surface* AnimatedCoin::animatedCoinImages[7] = { nullptr };
+std::array<SDL_Surface*, 7> AnimatedCoin::animatedCoinImages;
 
 AnimatedCoin::AnimatedCoin() {}
 
-AnimatedCoin::AnimatedCoin(Position* position)
+AnimatedCoin::AnimatedCoin(Position position)
 {
 	creationTime = std::chrono::steady_clock::now();
 	this->position = position;
@@ -20,7 +20,7 @@ AnimatedCoin::AnimatedCoin(Position* position)
 
 void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
 {
-	for (int i = 0; i < 7; ++i) {
+	for (unsigned int i = 0; i < animatedCoinImages.size(); ++i) {
 		std::string filename = "./img/a_coin";
 		filename += std::to_string(i + 1);
 		filename += ".png";
@@ -30,9 +30,9 @@ void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
 
 void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	if (position->getX() > beginningOfCamera - 60 && position->getX() < endOfCamera + 60) {
+	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
 		SDL_Surface* animatedCoinImg = animatedCoinImages[imageIndex];
-		drawSurface(display, animatedCoinImg, position->getX() - beginningOfCamera, position->getY());
+		drawSurface(display, animatedCoinImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 
@@ -50,22 +50,22 @@ void AnimatedCoin::slide()
 			imageIndex = 0;
 		}
 		else if (slideCounter <= 13) {
-			position->setY(position->getY() - 2);
+			position.setY(position.getY() - 2);
 			imageIndex = 1;
 		}
 		else if (slideCounter <= 23) {
-			position->setY(position->getY() - 1);
+			position.setY(position.getY() - 1);
 			imageIndex = 2;
 		}
 		else if (slideCounter <= 25) {
 			imageIndex = 3;
 		}
 		else if (slideCounter <= 35) {
-			position->setY(position->getY() + 1);
+			position.setY(position.getY() + 1);
 			imageIndex = 4;
 		}
 		else if (slideCounter <= 45) {
-			position->setY(position->getY() + 2);
+			position.setY(position.getY() + 2);
 			imageIndex = 5;
 		}
 		else if (slideCounter <= 55) {

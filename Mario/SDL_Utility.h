@@ -1,5 +1,5 @@
-#ifndef _SDL_Utility_H
-#define _SDL_Utility_H
+#ifndef SDL_Utility_H
+#define SDL_Utility_H
 
 #include <SDL.h>
 #include <SDL_main.h>
@@ -13,5 +13,5 @@ SDL_Surface* loadBMP(std::string path);
 
 SDL_Surface* loadPNG(std::string path, SDL_Surface* display);
 
-#endif //_SDL_Utility_H
+#endif //SDL_Utility_H
 

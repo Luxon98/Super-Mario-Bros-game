@@ -1,5 +1,5 @@
-#ifndef _BonusObject_H
-#define _BonusObject_H
+#ifndef BonusObject_H
+#define BonusObject_H
 
 #include "IndependentLivingObject.h"
 
@@ -11,5 +11,5 @@ protected:
 	void grow();
 };
 
-#endif //_BonusObject_H
+#endif //BonusObject_H
 

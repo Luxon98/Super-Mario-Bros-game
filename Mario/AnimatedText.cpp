@@ -4,11 +4,11 @@
 #include "SDL_Utility.h"
 
 
-SDL_Surface* AnimatedText::animatedTextImages[5] = { nullptr };
+std::array<SDL_Surface*, 5> AnimatedText::animatedTextImages;
 
 AnimatedText::AnimatedText() {}
 
-AnimatedText::AnimatedText(TextType type, Position* position)
+AnimatedText::AnimatedText(TextType type, Position position)
 {
 	this->type = type;
 	this->position = position;
@@ -26,15 +26,15 @@ void AnimatedText::loadAnimatedTextImages(SDL_Surface* display)
 
 void AnimatedText::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	if (position->getX() > beginningOfCamera - 60 && position->getX() < endOfCamera + 60) {
+	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
 		SDL_Surface* animatedTextImg = animatedTextImages[type - 1];
-		drawSurface(display, animatedTextImg, position->getX() - beginningOfCamera, position->getY());
+		drawSurface(display, animatedTextImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 
 bool AnimatedText::shouldBeRemoved()
 {
-	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
+	auto timePoint = std::chrono::steady_clock::now();
 	return (auxiliaryCounter > 150);
 }
 
@@ -42,7 +42,7 @@ void AnimatedText::slide()
 {
 	auxiliaryCounter++;
 	if (auxiliaryCounter % 3 == 0) {
-		position->setY(position->getY() - 1);
+		position.setY(position.getY() - 1);
 	}
 }
 

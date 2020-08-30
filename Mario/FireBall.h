@@ -1,6 +1,7 @@
-#ifndef _FireBall_H
-#define _FireBall_H
+#ifndef FireBall_H
+#define FireBall_H
 
+#include <array>
 #include "IndependentLivingObject.h"
 
 class World;
@@ -12,7 +13,7 @@ struct SDL_Surface;
 class FireBall : public IndependentLivingObject
 {
 private:
-	static SDL_Surface* fireBallImages[4];
+	static std::array<SDL_Surface*, 4> fireBallImages;
 	int stepsUp;
 	int modelIndex;
 	bool stop;
@@ -22,11 +23,11 @@ private:
 
 public:
 	FireBall();
-	FireBall(Position* position, Direction direction);
+	FireBall(Position position, Direction direction);
 	bool shouldBeRemoved();
 	void loadFireBallImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	void move(World& world) override;
 };
 
-#endif //_FireBall_H
+#endif //FireBall_H

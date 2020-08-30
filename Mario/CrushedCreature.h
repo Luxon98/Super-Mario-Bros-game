@@ -1,5 +1,5 @@
-#ifndef _CrushedCreature_H
-#define _CrushedCreature_H
+#ifndef CrushedCreature_H
+#define CrushedCreature_H
 
 #include "TemporaryObject.h"
 
@@ -14,11 +14,11 @@ private:
 
 public:
 	CrushedCreature(); 
-	CrushedCreature(Position* position);
+	CrushedCreature(Position position);
 	void loadCrushedCreatureImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	bool shouldBeRemoved() override;
 	void slide() override;
 };
 
-#endif //_CrushedCreature_H
+#endif //CrushedCreature_H

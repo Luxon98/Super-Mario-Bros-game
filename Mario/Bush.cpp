@@ -6,21 +6,21 @@
 #include "SDL_Utility.h"
 
 
-SDL_Surface* Bush::bushImages[5] = { nullptr };
+std::array<SDL_Surface*, 5> Bush::bushImages;
 
 Bush::Bush() {}
 
-Bush::Bush(int type, Position* position)
+Bush::Bush(int type, Position position)
 {
 	model = type;
 	this->position = position;
 
-	size = new Size(0, 0);
+	size = Size(0, 0);
 }
 
 void Bush::loadBushImages(SDL_Surface* display)
 {
-	for (int i = 0; i < 5; ++i) {
+	for (unsigned int i = 0; i < bushImages.size(); ++i) {
 		std::string filename = "./img/bush";
 		filename += std::to_string(i + 1);
 		filename += ".png";
@@ -30,10 +30,10 @@ void Bush::loadBushImages(SDL_Surface* display)
 
 void Bush::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	if (position->getX() > beginningOfCamera - 100 && position->getX() < endOfCamera + 100) {
+	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
 		SDL_Surface* bushImg = nullptr;
 		bushImg = bushImages[model - 1];
-		drawSurface(display, bushImg, position->getX() - beginningOfCamera, position->getY());
+		drawSurface(display, bushImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

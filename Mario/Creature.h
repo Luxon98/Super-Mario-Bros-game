@@ -1,6 +1,7 @@
-#ifndef _Creature_H
-#define _Creature_H
+#ifndef Creature_H
+#define Creature_H
 
+#include <array>
 #include "IndependentLivingObject.h"
 
 class World;
@@ -12,17 +13,17 @@ struct SDL_Surface;
 class Creature : public IndependentLivingObject
 {
 private:
-	static SDL_Surface* creatureImages[2];
+	static std::array<SDL_Surface*, 2> creatureImages;
 	int model;
 	void changeModel();
 
 public:
 	Creature();
-	Creature(Position* position);
+	Creature(Position position);
 	void setMoveDirection(Direction direction);
 	void loadCreatureImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	void move(World& world) override;
 };
 
-#endif //_Creature_H
+#endif //Creature_H

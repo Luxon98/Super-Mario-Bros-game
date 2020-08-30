@@ -1,6 +1,7 @@
-#ifndef _Turtle_H
-#define _Turtle_H
+#ifndef Turtle_H
+#define Turtle_H
 
+#include <array>
 #include "IndependentLivingObject.h"
 
 class World;
@@ -12,17 +13,17 @@ struct SDL_Surface;
 class Turtle : public IndependentLivingObject
 {
 private:
-	static SDL_Surface* turtleImages[4];
+	static std::array<SDL_Surface*, 4> turtleImages;
 	int model;
 	void chooseModel();
 
 public:
 	Turtle();
-	Turtle(Position* position);
+	Turtle(Position position);
 	void setMoveDirection(Direction direction);
 	void loadTurtleImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	void move(World& world) override;
 };
 
-#endif //_Turtle_H
+#endif //Turtle_H

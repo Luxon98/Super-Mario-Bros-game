@@ -1,5 +1,5 @@
-#ifndef _Direction_H
-#define _Direction_H
+#ifndef Direction_H
+#define Direction_H
 
 
 enum Direction
@@ -11,4 +11,4 @@ enum Direction
 	Up = 4
 };
 
-#endif //_Direction_H
+#endif //Direction_H

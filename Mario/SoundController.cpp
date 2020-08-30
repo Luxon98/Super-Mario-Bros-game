@@ -3,9 +3,8 @@
 #include "Player.h"
 
 
-Mix_Music* SoundController::backgroundTracks[6] = { nullptr };
-
-Mix_Chunk* SoundController::soundsEffects[13] = { nullptr };
+std::array<Mix_Music*, 5> SoundController::backgroundTracks;
+std::array<Mix_Chunk*, 13> SoundController::soundsEffects;
 
 bool SoundController::initSoundMixer()
 {
@@ -19,12 +18,11 @@ bool SoundController::initSoundMixer()
 
 void SoundController::loadSounds()
 {
-	backgroundTracks[0] = Mix_LoadMUS("./sounds/background.wav");
-	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_normal.wav");
-	backgroundTracks[2] = Mix_LoadMUS("./sounds/background_star.wav");
-	backgroundTracks[3] = Mix_LoadMUS("./sounds/world_finished.wav");
-	backgroundTracks[4] = Mix_LoadMUS("./sounds/gameover.wav");
-	backgroundTracks[5] = Mix_LoadMUS("./sounds/time_passed.wav");
+	backgroundTracks[0] = Mix_LoadMUS("./sounds/background_normal.wav");
+	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_star.wav");
+	backgroundTracks[2] = Mix_LoadMUS("./sounds/world_finished.wav");
+	backgroundTracks[3] = Mix_LoadMUS("./sounds/gameover.wav");
+	backgroundTracks[4] = Mix_LoadMUS("./sounds/time_passed.wav");
 
 	soundsEffects[0] = Mix_LoadWAV("./sounds/1up_collected.wav");
 	soundsEffects[1] = Mix_LoadWAV("./sounds/block_destroyed.wav");
@@ -38,54 +36,42 @@ void SoundController::loadSounds()
 	soundsEffects[9] = Mix_LoadWAV("./sounds/jump_small.wav");
 	soundsEffects[10] = Mix_LoadWAV("./sounds/jump_tall.wav");
 	soundsEffects[11] = Mix_LoadWAV("./sounds/mario_dead.wav");
+	soundsEffects[11] = Mix_LoadWAV("./sounds/mario_dead.wav");
 	soundsEffects[12] = Mix_LoadWAV("./sounds/back_to_small.wav");
-}
-
-void SoundController::closeSoundMixer()
-{
-	for (int i = 1; i < 6; ++i) {
-		Mix_FreeMusic(backgroundTracks[i]);
-		backgroundTracks[i] = nullptr;
-	}
-
-	for (int i = 0; i < 12; ++i) {
-		Mix_FreeChunk(soundsEffects[i]);
-		soundsEffects[i] = nullptr;
-	}
-
-	Mix_Quit();
 }
 
 SoundController::SoundController()
 {
-	if (initSoundMixer()) {
-		loadSounds();
-	}
+	initSoundMixer();
+
+	// all audio can be loaded in the constructor 
+	// sound is not pre-loaded, because there will be only one instance of this class
+	loadSounds();
 }
 
 void SoundController::playBackgroudMarioMusic()
 {
-	Mix_PlayMusic(backgroundTracks[1], -1);
+	Mix_PlayMusic(backgroundTracks[0], -1);
 }
 
 void SoundController::playBackgroudStarMusic()
 {
-	Mix_PlayMusic(backgroundTracks[2], -1);
+	Mix_PlayMusic(backgroundTracks[1], -1);
 }
 
 void SoundController::playWorldFinishedMusic()
 {
-	Mix_PlayMusic(backgroundTracks[3], -1);
+	Mix_PlayMusic(backgroundTracks[2], -1);
 }
 
 void SoundController::playGameoverMusic()
 {
-	Mix_PlayMusic(backgroundTracks[4], -1);
+	Mix_PlayMusic(backgroundTracks[3], -1);
 }
 
 void SoundController::playTimePassedMusic()
 {
-	Mix_PlayMusic(backgroundTracks[5], -1);
+	Mix_PlayMusic(backgroundTracks[4], -1);
 }
 
 void SoundController::playNewLiveAddedEffect()
@@ -155,5 +141,14 @@ void SoundController::stopMusic()
 
 SoundController::~SoundController()
 {
-	closeSoundMixer();
+	// there will be only one instance of this class, so destructor can safely clean all sounds
+	for (unsigned int i = 0; i < backgroundTracks.size(); ++i) {
+		Mix_FreeMusic(backgroundTracks[i]);
+	}
+
+	for (unsigned int j = 0; j < soundsEffects.size(); ++j) {
+		Mix_FreeChunk(soundsEffects[j]);
+	}
+
+	Mix_Quit();
 }

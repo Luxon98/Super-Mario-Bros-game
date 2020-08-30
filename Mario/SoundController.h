@@ -1,7 +1,8 @@
-#ifndef _SoundController_H
-#define _SoundController_H
+#ifndef SoundController_H
+#define SoundController_H
 
 #include <SDL_mixer.h>
+#include <array>
 
 class Player;
 
@@ -9,14 +10,14 @@ class Player;
 class SoundController
 {
 private:
-	static Mix_Music* backgroundTracks[6];
-	static Mix_Chunk* soundsEffects[13];
+	// track and sound effect are declared as static here, because SDL_mixer library requires it
+	static std::array<Mix_Music*, 5> backgroundTracks;
+	static std::array<Mix_Chunk*, 13> soundsEffects;
 	bool initSoundMixer();
-	void loadSounds();
-	void closeSoundMixer();
 
 public:
 	SoundController();
+	void loadSounds();
 	static void playBackgroudMarioMusic();
 	static void playBackgroudStarMusic();
 	static void playWorldFinishedMusic();
@@ -38,4 +39,4 @@ public:
 	~SoundController();
 };
 
-#endif //_SoundController_H
+#endif //SoundController_H

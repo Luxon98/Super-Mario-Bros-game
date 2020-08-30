@@ -1,5 +1,5 @@
-#ifndef _Position_H
-#define _Position_H
+#ifndef Position_H
+#define Position_H
 
 
 class Position 
@@ -9,6 +9,7 @@ private:
 	int y;
 
 public:
+	Position();
 	Position(int x, int y);
 	int getX() const;
 	int getY() const;
@@ -17,4 +18,4 @@ public:
 	void setXY(int x, int y);
 };
 
-#endif //_Position_H
+#endif //Position_H

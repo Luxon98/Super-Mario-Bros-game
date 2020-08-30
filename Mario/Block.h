@@ -1,6 +1,7 @@
-#ifndef _Block_H
-#define _Block_H
+#ifndef Block_H
+#define Block_H
 
+#include <array>
 #include "InanimateObject.h"
 
 class Position;
@@ -26,16 +27,16 @@ enum BlockType
 class Block : public InanimateObject 
 {
 private:
-	static SDL_Surface* blockImages[10];
+	static std::array<SDL_Surface*, 10> blockImages;
 	static bool changesChecker;
 	int availableCoins;
 	int initialPositionY;
 	int computeImageIndex();
-	Size* getSizeFromBlockType(BlockType type);
+	Size getSizeFromBlockType(BlockType type);
 
 public:
 	Block();
-	Block(BlockType type, Position* position);
+	Block(BlockType type, Position position);
 	int getAvailableCoins() const;
 	bool canBeHitted();
 	bool isInvisible();
@@ -47,5 +48,5 @@ public:
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 };
 
-#endif //_Block_H
+#endif //Block_H
 

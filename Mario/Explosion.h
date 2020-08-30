@@ -1,5 +1,5 @@
-#ifndef _Explosion_H
-#define _Explosion_H
+#ifndef Explosion_H
+#define Explosion_H
 
 #include "TemporaryObject.h"
 
@@ -14,12 +14,12 @@ private:
 
 public:
 	Explosion();
-	Explosion(Position* position);
+	Explosion(Position position);
 	void loadExplosionImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	bool shouldBeRemoved() override;
 	void slide() override;
 };
 
-#endif //_Explosion_H
+#endif //Explosion_H
 

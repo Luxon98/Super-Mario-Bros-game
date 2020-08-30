@@ -5,16 +5,16 @@
 #include "SDL_Utility.h"
 
 
-SDL_Surface* Cloud::cloudImages[3] = { nullptr };
+std::array<SDL_Surface*, 3> Cloud::cloudImages;
 
 Cloud::Cloud() {}
 
-Cloud::Cloud(int type, Position* position)
+Cloud::Cloud(int type, Position position)
 {
 	model = type;
 	this->position = position;
 
-	size = new Size(0, 0);
+	size = Size(0, 0);
 }
 
 void Cloud::loadCloudImages(SDL_Surface* display)
@@ -26,10 +26,10 @@ void Cloud::loadCloudImages(SDL_Surface* display)
 
 void Cloud::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	if (position->getX() > beginningOfCamera - 100 && position->getX() < endOfCamera + 100) {
+	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
 		SDL_Surface* cloudImg = nullptr;
 		cloudImg = cloudImages[model - 1];
-		drawSurface(display, cloudImg, position->getX() - beginningOfCamera, position->getY());
+		drawSurface(display, cloudImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

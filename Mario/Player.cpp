@@ -13,7 +13,7 @@
 #include "SDL_Utility.h"
 
 
-SDL_Surface* Player::playerImages[132] = { nullptr };
+std::array<SDL_Surface*, 132> Player::playerImages;
 
 Player::Statistics::Statistics()
 {
@@ -63,7 +63,7 @@ int Player::computeImageIndex()
 
 void Player::changeStateDuringAnimation()
 {
-	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
+	auto timePoint = std::chrono::steady_clock::now();
 	auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - lastAnimationStartTime).count();
 
 	if (currentAnimationState == Growing) {
@@ -88,31 +88,40 @@ void Player::performGrowingAnimation(int difference)
 	movementBlock = true;
 	model = 0;
 
-	if ((difference >= 100 && difference <= 200 && lastDifference < 100) || (difference >= 300 && difference <= 400 && lastDifference < 300) || (difference >= 700 && difference <= 800 && lastDifference < 700)) {
-		size->setHeight(48);
-		position->setY(position->getY() - 8);
+	if ((difference >= 100 && difference <= 200 && lastDifference < 100) 
+		|| (difference >= 300 && difference <= 400 && lastDifference < 300) 
+		|| (difference >= 700 && difference <= 800 && lastDifference < 700)) {
+
+		size.setHeight(48);
+		position.setY(position.getY() - 8);
 		lastDifference = difference;
 		currentState = Average;
 	}
-	else if ((difference > 200 && difference < 300 && lastDifference < 200) || (difference > 600 && difference < 700 && lastDifference < 600)) {
-		size->setHeight(32);
-		position->setY(position->getY() + 8);
+	else if ((difference > 200 && difference < 300 && lastDifference < 200) 
+		|| (difference > 600 && difference < 700 && lastDifference < 600)) {
+
+		size.setHeight(32);
+		position.setY(position.getY() + 8);
 		lastDifference = difference;
 		currentState = Small;
 	}
-	else if ((difference > 400 && difference < 500 && lastDifference < 400) || (difference > 800 && difference <= 900 && lastDifference < 800)) {
-		size->setHeight(64);
-		position->setY(position->getY() - 8);
+	else if ((difference > 400 && difference < 500 && lastDifference < 400)
+		|| (difference > 800 && difference <= 900 && lastDifference < 800)) {
+
+		size.setHeight(64);
+		position.setY(position.getY() - 8);
 		lastDifference = difference;
 		currentState = Tall;
 	}
 	else if (difference >= 500 && difference <= 600 && lastDifference < 500) {
-		size->setHeight(48);
-		position->setY(position->getY() + 8);
+
+		size.setHeight(48);
+		position.setY(position.getY() + 8);
 		lastDifference = difference;
 		currentState = Average;
 	}
 	else if (difference > 900) {
+
 		currentAnimationState = NoAnimation;
 		lastDifference = 0;
 		movementBlock = false;
@@ -123,8 +132,8 @@ void Player::performGrowingAnimation(int difference)
 void Player::performShrinkingAnimation(int difference)
 {
 	if (difference <= 100 && lastDifference < 10) {
-		size->setHeight(32);
-		position->setY(position->getY() + 16);
+		size.setHeight(32);
+		position.setY(position.getY() + 16);
 		lastDifference = difference;
 		currentState = InsensitiveSmall;
 	}
@@ -183,8 +192,8 @@ void Player::performImmortalAnimation(int difference)
 		SoundController::stopMusic();
 		SoundController::playBackgroudMarioMusic();
 
-		playerMovement->setSpeed(1);
-		playerMovement->setVerticalSpeed(1);
+		playerMovement.setSpeed(1);
+		playerMovement.setVerticalSpeed(1);
 	}
 }
 
@@ -210,16 +219,16 @@ void Player::performSmallImmortalAnimation(int difference)
 		SoundController::stopMusic();
 		SoundController::playBackgroudMarioMusic();
 
-		playerMovement->setSpeed(1);
-		playerMovement->setVerticalSpeed(1);
+		playerMovement.setSpeed(1);
+		playerMovement.setVerticalSpeed(1);
 	}
 }
 
 void Player::resetMovement()
 {
 	resetSteps();
-	playerMovement->setSpeed(1);
-	playerMovement->setVerticalSpeed(1);
+	playerMovement.setSpeed(1);
+	playerMovement.setVerticalSpeed(1);
 }
 
 void Player::changeModelAndAirFlagStatus(World& world)
@@ -229,7 +238,7 @@ void Player::changeModelAndAirFlagStatus(World& world)
 		return;
 	}
 
-	if (playerMovement->stepsLeft == 0 && playerMovement->stepsRight == 0) {
+	if (playerMovement.stepsLeft == 0 && playerMovement.stepsRight == 0) {
 		model = 0;
 		return;
 	}
@@ -245,17 +254,17 @@ void Player::changeModelAndAirFlagStatus(World& world)
 
 bool Player::isHittingCeiling(int distance)
 {
-	return (position->getY() - distance - getHeight() / 2 < 0);
+	return (position.getY() - distance - getHeight() / 2 < 0);
 }
 
 bool Player::isFallingIntoAbyss(int distance)
 {
-	return (position->getY() + distance + getHeight() / 2 > World::WORLD_HEIGHT);
+	return (position.getY() + distance + getHeight() / 2 > World::WORLD_HEIGHT);
 }
 
 bool Player::isGoingBeyondCamera(int distance, int beginningOfCamera)
 {
-	if (position->getX() - beginningOfCamera - distance <= getWidth() / 2) {
+	if (position.getX() - beginningOfCamera - distance <= getWidth() / 2) {
 		return true;
 	}
 
@@ -278,18 +287,18 @@ bool Player::isDuringAnimation()
 
 void Player::moveLeft(World& world)
 {
-	int alignment = getAlignmentForHorizontalMove(Left, playerMovement->getSpeed(), this, world);
-	int distance = playerMovement->getSpeed() - alignment;
+	int alignment = getAlignmentForHorizontalMove(Left, playerMovement.getSpeed(), this, world);
+	int distance = playerMovement.getSpeed() - alignment;
 
 	if (!isGoingBeyondCamera(distance, world.getScreen()->getBeginningOfCamera())) {
-		position->setX(position->getX() - distance);
+		position.setX(position.getX() - distance);
 	}
 
-	if (alignment != 0 && playerMovement->stepsUp == 0) {
-		playerMovement->stepsLeft = 0;
+	if (alignment != 0 && playerMovement.stepsUp == 0) {
+		playerMovement.stepsLeft = 0;
 	}
 	else {
-		playerMovement->stepsLeft--;
+		playerMovement.stepsLeft--;
 	}
 
 	flags.orientationFlag = false;
@@ -297,16 +306,16 @@ void Player::moveLeft(World& world)
 
 void Player::moveRight(World& world)
 {
-	int alignment = getAlignmentForHorizontalMove(Right, playerMovement->getSpeed(), this, world);
-	int distance = playerMovement->getSpeed() - alignment;
+	int alignment = getAlignmentForHorizontalMove(Right, playerMovement.getSpeed(), this, world);
+	int distance = playerMovement.getSpeed() - alignment;
 
-	position->setX(position->getX() + distance);
+	position.setX(position.getX() + distance);
 
-	if (alignment != 0 && playerMovement->stepsUp == 0) {
-		playerMovement->stepsRight = 0;
+	if (alignment != 0 && playerMovement.stepsUp == 0) {
+		playerMovement.stepsRight = 0;
 	}
 	else {
-		playerMovement->stepsRight--;
+		playerMovement.stepsRight--;
 	}
 
 	flags.orientationFlag = true;
@@ -314,22 +323,22 @@ void Player::moveRight(World& world)
 
 void Player::moveUp(World& world)
 {
-	int alignment = getAlignmentForVerticalMove(Up, playerMovement->getVerticalSpeed(), this, world);
-	int distance = playerMovement->getVerticalSpeed() - alignment;
+	int alignment = getAlignmentForVerticalMove(Up, playerMovement.getVerticalSpeed(), this, world);
+	int distance = playerMovement.getVerticalSpeed() - alignment;
 
 	if (!isHittingCeiling(distance)) {
-		position->setY(position->getY() - distance);
+		position.setY(position.getY() - distance);
 	}
 	else {
-		playerMovement->stepsUp = 1;
+		playerMovement.stepsUp = 1;
 	}
 
 	if (isHittingBlock(alignment, Up)) {
 		hitBlock(world);
-		playerMovement->stepsUp = 0;
+		playerMovement.stepsUp = 0;
 	}
 	else {
-		playerMovement->stepsUp--;
+		playerMovement.stepsUp--;
 	}
 
 	if (isCharacterStandingOnTheBlock(this, world)) {
@@ -339,11 +348,11 @@ void Player::moveUp(World& world)
 
 void Player::moveDown(World& world)
 {
-	int alignment = getAlignmentForVerticalMove(Down, playerMovement->getVerticalSpeed(), this, world);
-	int distance = playerMovement->getVerticalSpeed() - alignment;
+	int alignment = getAlignmentForVerticalMove(Down, playerMovement.getVerticalSpeed(), this, world);
+	int distance = playerMovement.getVerticalSpeed() - alignment;
 
 	if (!isFallingIntoAbyss(distance)) {
-		position->setY(position->getY() + distance);
+		position.setY(position.getY() + distance);
 	}
 	else {
 		if (!flags.removeLivesFlag) {
@@ -353,17 +362,17 @@ void Player::moveDown(World& world)
 		}
 	}
 
-	playerMovement->stepsDown--;
+	playerMovement.stepsDown--;
 }
 
 Player::Player() {}
 
-Player::Player(Position* position)
+Player::Player(Position position)
 {
-	size = new Size(32, 32);
+	size = Size(32, 32);
 	statistics = Statistics();
 	flags = Flags();
-	playerMovement = new PlayerMovement();
+	playerMovement = PlayerMovement();
 	this->position = position;
 	model = 0;
 	changeModelCounter = 0;
@@ -450,8 +459,8 @@ void Player::incrementLives()
 
 void Player::increaseSpeed()
 {
-	playerMovement->setSpeed(2);
-	playerMovement->setVerticalSpeed(2);
+	playerMovement.setSpeed(2);
+	playerMovement.setVerticalSpeed(2);
 }
 
 void Player::addPoints(int pts)
@@ -467,7 +476,7 @@ void Player::setCurrentAnimation(PlayerAnimation animation)
 
 void Player::loadPlayerImages(SDL_Surface* display)
 {
-	for (int i = 0; i < 66; i++) {
+	for (unsigned int i = 0; i < playerImages.size() / 2; ++i) {
 		std::string filename = "./img/mario_left";
 		filename += std::to_string(i + 1);
 		filename += ".png";
@@ -485,12 +494,14 @@ void Player::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 	int index = computeImageIndex();
 
 	SDL_Surface* playerImg = playerImages[index];
-	drawSurface(display, playerImg, position->getX() - beginningOfCamera, position->getY());
+	drawSurface(display, playerImg, position.getX() - beginningOfCamera, position.getY());
 }
 
 void Player::hitBlock(World& world)
 {
-	if ((currentState >= Tall && currentState <= ImmortalFourth) && world.getBlockModel(world.getLastTouchedBlockIndex()) == Destructible) {
+	if ((currentState >= Tall && currentState <= ImmortalFourth) 
+		&& world.getBlockModel(world.getLastTouchedBlockIndex()) == Destructible) {
+		
 		world.performBlockRemovalActions(world.getLastTouchedBlockIndex());
 	}
 	else {
@@ -517,26 +528,26 @@ void Player::loseBonusOrLife()
 
 void Player::performAdditionalJump()
 {
-	playerMovement->stepsDown = 0;
-	playerMovement->stepsUp = 40;
+	playerMovement.stepsDown = 0;
+	playerMovement.stepsUp = 40;
 }
 
 void Player::move(World& world)
 {
 	if (!movementBlock) {
-		if (playerMovement->stepsLeft > 0) {
+		if (playerMovement.stepsLeft > 0) {
 			moveLeft(world);
 		}
 
-		if (playerMovement->stepsRight > 0) {
+		if (playerMovement.stepsRight > 0) {
 			moveRight(world);
 		}
 
-		if (playerMovement->stepsUp > 0) {
+		if (playerMovement.stepsUp > 0) {
 			moveUp(world);
 		}
 
-		if (playerMovement->stepsDown > 0) {
+		if (playerMovement.stepsDown > 0) {
 			moveDown(world);
 		}
 
@@ -548,8 +559,8 @@ void Player::move(World& world)
 
 void Player::reborn()
 {
-	size->setSize(32, 32);
-	position->setXY(35, 400);
+	size.setSize(32, 32);
+	position.setXY(35, 400);
 	model = 0;
 	changeModelCounter = 0;
 	flags.setDefaultFlags();
@@ -562,18 +573,18 @@ void Player::reborn()
 
 void Player::resetSteps()
 {
-	playerMovement->stepsLeft = 0;
-	playerMovement->stepsRight = 0;
-	playerMovement->stepsUp = 0;
-	playerMovement->stepsDown = 0;
+	playerMovement.stepsLeft = 0;
+	playerMovement.stepsRight = 0;
+	playerMovement.stepsUp = 0;
+	playerMovement.stepsDown = 0;
 }
 
 void Player::setFinishingRunParameters()
 {
 	int posY = (currentState != Small ? 384 : 392);
-	position->setXY(6400, posY);
+	position.setXY(6400, posY);
 	resetMovement();
-	playerMovement->stepsRight = 140;
+	playerMovement.stepsRight = 140;
 	changeModelCounter = 0;
 	model = 0;
 }

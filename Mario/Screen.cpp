@@ -19,10 +19,6 @@ Screen::Camera::Camera(int begX, int endX)
 	endOfCamera = endX;
 }
 
-SDL_Surface* Screen::digitImages[10] = { nullptr };
-
-SDL_Surface* Screen::screenImages[12] = { nullptr };
-
 bool Screen::isPlayerExceedingCameraReferencePoint()
 {
 	if (player->getX() - camera.beginningOfCamera > Screen::SCREEN_WIDTH - CAMERA_REFERENCE_POINT) {
@@ -39,14 +35,16 @@ int Screen::computeDifference()
 
 int Screen::computeTime()
 {
-	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
-	int time = static_cast<int>(INITIAL_TIME - std::chrono::duration_cast<std::chrono::seconds> (timePoint - timeBegin).count());
+	auto timePoint = std::chrono::steady_clock::now();
+	int time = static_cast<int>(INITIAL_TIME - std::chrono::duration_cast<std::chrono::seconds>
+		(timePoint - timeBegin).count());
+
 	return time;
 }
 
 void Screen::loadScreenImages()
 {
-	for (int i = 0; i < 10; i++) {
+	for (unsigned int i = 0; i < digitImages.size(); ++i) {
 		std::string filename = "./img/";
 		filename += std::to_string(i);
 		filename += ".png";
@@ -64,7 +62,7 @@ void Screen::loadScreenImages()
 	screenImages[8] = loadPNG("./img/timeup.png", display);
 	screenImages[9] = loadPNG("./img/gameover.png", display);
 
-	for (int j = 10, k = 1; j < 15; j++, k++) {
+	for (unsigned int j = 10, k = 1; j < screenImages.size(); ++j, ++k) {
 		std::string filename = "./img/mario_dead";
 		filename += std::to_string(k);
 		filename += ".png";
@@ -74,7 +72,7 @@ void Screen::loadScreenImages()
 
 void Screen::changeCoinImageIfAvailable()
 {
-	std::chrono::steady_clock::time_point timePoint = std::chrono::steady_clock::now();
+	auto timePoint = std::chrono::steady_clock::now();
 	if (std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - lastColoursUpdateTime).count() >= 750) {
 		lastColoursUpdateTime = timePoint;
 		coinImage = !coinImage;
@@ -83,13 +81,13 @@ void Screen::changeCoinImageIfAvailable()
 
 void Screen::fillWorldBackground()
 {
-	// 90 149 252
+	// color: 90 149 252 (BLUE)
 	SDL_FillRect(display, NULL, SDL_MapRGB(display->format, 0x5A, 0x95, 0xFC));
 }
 
 void Screen::fillScreenBackground()
 {
-	// 0 0 0
+	// color: 0 0 0 (BLACK)
 	SDL_FillRect(display, NULL, SDL_MapRGB(display->format, 0x00, 0x00, 0x00));
 }
 
@@ -197,7 +195,8 @@ int Screen::initGUI()
 
 	SDL_SetWindowTitle(window, "Super Mario Bros");
 
-	scrtex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, SCREEN_WIDTH, SCREEN_HEIGHT);
+	scrtex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 
+		SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	SDL_ShowCursor(SDL_DISABLE);
 	return status;
@@ -387,13 +386,14 @@ void Screen::updateScreen(World& world)
 
 Screen::~Screen()
 {
-	for (int i = 0; i < 10; ++i) {
+	for (unsigned int i = 0; i < digitImages.size(); ++i) {
 		SDL_FreeSurface(digitImages[i]);
 	}
 
-	for (int i = 0; i < 12; ++i) {
-		SDL_FreeSurface(screenImages[i]);
+	for (unsigned int j = 0; j < screenImages.size(); ++j) {
+		SDL_FreeSurface(screenImages[j]);
 	}
 
 	closeGUI();
+	player = nullptr;
 }

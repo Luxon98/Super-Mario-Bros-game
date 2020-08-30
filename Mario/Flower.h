@@ -1,6 +1,7 @@
-#ifndef _Flower_H
-#define _Flower_H
+#ifndef Flower_H
+#define Flower_H
 
+#include <array>
 #include "BonusObject.h"
 
 class World;
@@ -10,17 +11,17 @@ struct SDL_Surface;
 class Flower : public BonusObject
 {
 private:
-	static SDL_Surface* flowerImages[2];
+	static std::array<SDL_Surface*, 2> flowerImages;
 
 public:
 	static int typeOfImage;
 	Flower();
-	Flower(Position* position);
+	Flower(Position position);
 	static void changeFlowerImage();
 	void loadFlowerImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	void move(World& world) override;
 };
 
-#endif //_Flower_H
+#endif //Flower_H
 

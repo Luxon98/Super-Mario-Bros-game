@@ -1,6 +1,7 @@
-#ifndef _Star_H
-#define _Star_H
+#ifndef Star_H
+#define Star_H
 
+#include <array>
 #include "BonusObject.h"
 
 class World;
@@ -10,7 +11,7 @@ struct SDL_Surface;
 class Star : public BonusObject 
 {
 private:
-	static SDL_Surface* starImages[4];
+	static std::array<SDL_Surface*, 4> starImages;
 	int stepsCounter;
 	int stepsUp;
 	void makeVerticalMove(World& world);
@@ -18,10 +19,10 @@ private:
 
 public:
 	Star();
-	Star(Position* position);
+	Star(Position position);
 	void loadStarImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	void move(World& world) override;
 };
 
-#endif //_Star_H
+#endif //Star_H

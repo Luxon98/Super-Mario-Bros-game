@@ -1,6 +1,7 @@
-#ifndef _Bush_H
-#define _Bush_H
+#ifndef Bush_H
+#define Bush_H
 
+#include <array>
 #include "InanimateObject.h"
 
 class Position;
@@ -10,14 +11,14 @@ struct SDL_Surface;
 class Bush : public InanimateObject
 {
 private:
-	static SDL_Surface* bushImages[5];
+	static std::array<SDL_Surface*, 5> bushImages;
 
 public:
 	Bush();
-	Bush(int type, Position* position);
+	Bush(int type, Position position);
 	void loadBushImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 };
 
-#endif //_Bush_H
+#endif //Bush_H
 

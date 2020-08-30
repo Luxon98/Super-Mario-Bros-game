@@ -1,6 +1,7 @@
-#ifndef _Mushroom_H
-#define _Mushroom_H
+#ifndef Mushroom_H
+#define Mushroom_H
 
+#include <array>
 #include "BonusObject.h"
 
 class World;
@@ -10,14 +11,14 @@ struct SDL_Surface;
 class Mushroom : public BonusObject 
 {
 private:
-	static SDL_Surface* mushroomImages[2];
+	static std::array<SDL_Surface*, 2> mushroomImages;
 	bool greenColor;
 	int stepsUp;
 	void makeMoveUp(World& world);
 
 public:
 	Mushroom();
-	Mushroom(Position* position, bool greenColor);
+	Mushroom(Position position, bool greenColor);
 	bool isGreen();
 	void decreasePositionY();
 	void setStepsUp(int stepsUp);
@@ -26,4 +27,4 @@ public:
 	void move(World& world) override;
 };
 
-#endif //_Mushroom_H
+#endif //Mushroom_H

@@ -1,6 +1,7 @@
-#ifndef _AnimatedText_H
-#define _AnimatedText_H
+#ifndef AnimatedText_H
+#define AnimatedText_H
 
+#include <array>
 #include "TemporaryObject.h"
 
 class Position;
@@ -19,17 +20,16 @@ enum TextType
 class AnimatedText : public TemporaryObject 
 {
 private:
-	static SDL_Surface* animatedTextImages[5];
+	static std::array<SDL_Surface*, 5> animatedTextImages;
 	TextType type;
-	int auxiliaryCounter;
 
 public:
 	AnimatedText();
-	AnimatedText(TextType type, Position* position);
+	AnimatedText(TextType type, Position position);
 	void loadAnimatedTextImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 	bool shouldBeRemoved() override;
 	void slide() override;
 };
 
-#endif //_AnimatedText_H
+#endif //AnimatedText_H

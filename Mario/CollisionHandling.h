@@ -1,5 +1,5 @@
-#ifndef _CollisionHandling_H
-#define _CollisionHandling_H
+#ifndef CollisionHandling_H
+#define CollisionHandling_H
 
 class World;
 class Player;
@@ -50,6 +50,7 @@ void collectBonusIfPossible(Player* player, World& world);
 
 int getAlignmentForHorizontalMove(Direction direction, int distance, WorldObject* object, World& world);
 
+// this method additionaly set the last touched block
 int getAlignmentForVerticalMove(Direction direction, int distance, WorldObject* object, World& world);
 
-#endif //_CollisionHandling_H
+#endif //CollisionHandling_H

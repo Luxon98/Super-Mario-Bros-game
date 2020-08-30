@@ -1,7 +1,8 @@
-#ifndef _Player_H
-#define _Player_H
+#ifndef Player_H
+#define Player_H
 
 #include <chrono>
+#include <array>
 #include "Movement.h"
 #include "LivingObject.h"
 
@@ -75,10 +76,10 @@ private:
 		PlayerMovement();
 	};
 
-	static SDL_Surface* playerImages[132];
+	static std::array<SDL_Surface*, 132> playerImages;
 	Statistics statistics;
 	Flags flags;
-	PlayerMovement* playerMovement;
+	PlayerMovement playerMovement;
 	int model;
 	std::chrono::steady_clock::time_point lastAnimationStartTime;
 	PlayerAnimation currentAnimationState;
@@ -107,7 +108,7 @@ private:
 
 public:
 	Player();
-	Player(Position* position);
+	Player(Position position);
 	int getPoints() const;
 	int getCoins() const;
 	int getLives() const;
@@ -133,5 +134,5 @@ public:
 	void setFinishingRunParameters();
 };
 
-#endif //_Player_H
+#endif //Player_H
 

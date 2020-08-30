@@ -1,16 +1,17 @@
-#ifndef _WorldObject_H
-#define _WorldObject_H
+#ifndef WorldObject_H
+#define WorldObject_H
 
-class Position;
-class Size;
+#include "Size.h"
+#include "Position.h"
+
 struct SDL_Surface;
 
 
 class WorldObject 
 {
 protected:
-	Position* position;
-	Size* size;
+	Position position;
+	Size size;
 
 public:
 	int getX() const;
@@ -20,4 +21,4 @@ public:
 	virtual void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) = 0;
 };
 
-#endif //_WorldObject_H
+#endif //WorldObject_H

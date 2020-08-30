@@ -1,7 +1,8 @@
-#ifndef _Screen_H
-#define _Screen_H
+#ifndef Screen_H
+#define Screen_H
 
 #include <chrono>
+#include <array>
 #include "SDL_Utility.h"
 
 class Player;
@@ -29,8 +30,8 @@ private:
 	int time;
 	std::chrono::steady_clock::time_point timeBegin;
 	std::chrono::steady_clock::time_point lastColoursUpdateTime;
-	static SDL_Surface* digitImages[10];
-	static SDL_Surface* screenImages[12];
+	std::array<SDL_Surface*, 10> digitImages;
+	std::array<SDL_Surface*, 15> screenImages;
 	SDL_Surface* display;
 	SDL_Surface* charset;
 	SDL_Texture* scrtex;
@@ -78,4 +79,4 @@ public:
 	~Screen();
 };
 
-#endif //_Screen_H
+#endif //Screen_H

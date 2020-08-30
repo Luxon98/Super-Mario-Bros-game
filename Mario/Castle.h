@@ -1,5 +1,5 @@
-#ifndef _Castle_H
-#define _Castle_H
+#ifndef Castle_H
+#define Castle_H
 
 #include "InanimateObject.h"
 
@@ -14,10 +14,10 @@ private:
 
 public:
 	Castle();
-	Castle(Position* position);
+	Castle(Position position);
 	void loadCastleImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
 };
 
-#endif //_Castle_H
+#endif //Castle_H
 

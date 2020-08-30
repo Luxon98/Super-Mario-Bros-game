@@ -128,6 +128,7 @@ void loadImages(SDL_Surface* display)
 	loadBlockImages(display);
 }
 
+
 void resetGame(KeyboardController controller, Player* player, World& world, Screen* screen, bool * playerState)
 {
 	controller.clearKeysState();
@@ -147,6 +148,7 @@ void runGame()
 
 	Screen* screen = new Screen();
 	screen->setTimeBegin(std::chrono::steady_clock::now());
+	world.setScreen(screen);
 
 	KeyboardController controller = KeyboardController();
 	const Uint8* state = SDL_GetKeyboardState(NULL);
@@ -154,9 +156,8 @@ void runGame()
 	loadImages(screen->getDisplay());
 
 	if (!screen->getInitStatus()) {
-		Player* player = new Player(new Position(35, 400));
+		Player* player = new Player(Position(35, 400));
 		world.setPlayer(player);
-		world.setScreen(screen);
 		screen->setPlayer(player);
 
 		while (player->getLives() && !winStatus) {
@@ -219,11 +220,18 @@ void runGame()
 				SoundController::playTimePassedMusic();
 			}
 		}
+
+		delete player;
 	}
 
 	timeBegin = std::chrono::steady_clock::now();
-	while (std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - timeBegin).count() <= 3000 && !winStatus) {
+	SoundController::playGameoverMusic();
+	while (std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - timeBegin).count() <= 3200 
+		&& !winStatus) {
+
 		screen->drawGameOverScreen();
 		timePoint = std::chrono::steady_clock::now();
 	}
+
+	delete screen;
 }

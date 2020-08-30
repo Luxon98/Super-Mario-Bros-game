@@ -1,5 +1,5 @@
-#ifndef _KeyboardController_H
-#define _KeyboardController_H
+#ifndef KeyboardController_H
+#define KeyboardController_H
 
 #include <map>
 #include "SDL_Utility.h"
@@ -25,4 +25,4 @@ public:
 	void handleKeys(Player* player, World& world);
 };
 
-#endif //_KeyboardController_H
+#endif //KeyboardController_H

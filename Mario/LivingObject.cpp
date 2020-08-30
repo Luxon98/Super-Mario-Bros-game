@@ -1,7 +1,7 @@
 #include "LivingObject.h"
 
 
-Movement* LivingObject::getMovement() const
+Movement LivingObject::getMovement() const
 {
 	return movement;
 }

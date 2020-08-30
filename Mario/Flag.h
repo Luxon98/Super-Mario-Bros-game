@@ -1,6 +1,7 @@
-#ifndef _Flag_H
-#define _Flag_H
+#ifndef Flag_H
+#define Flag_H
 
+#include <array>
 #include "InanimateObject.h"
 
 class Position;
@@ -10,14 +11,14 @@ struct SDL_Surface;
 class Flag : public InanimateObject
 {
 private:
-	static SDL_Surface* flagImages[2];
+	static std::array<SDL_Surface*, 2> flagImages;
 	int stepsCounter;
 	int stickPositionY;
 	bool active;
 
 public:
 	Flag();
-	Flag(Position* position);
+	Flag(Position position);
 	bool isActive() const;
 	bool isDown() const;
 	void setActiveState();
@@ -26,5 +27,5 @@ public:
 	void changePosition();
 };
 
-#endif //_Flag_H
+#endif //Flag_H
 
