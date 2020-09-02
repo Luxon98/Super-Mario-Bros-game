@@ -13,7 +13,7 @@ private:
 	static SDL_Surface* destroyedCreatureImage;
 
 public:
-	DestroyedCreature();
+	DestroyedCreature() = default;
 	DestroyedCreature(Position position);
 	void loadDestroyedCreatureImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;

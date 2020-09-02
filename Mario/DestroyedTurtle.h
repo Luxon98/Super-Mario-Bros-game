@@ -13,7 +13,7 @@ private:
 	static SDL_Surface* destroyedTurtleImage;
 	
 public:
-	DestroyedTurtle();
+	DestroyedTurtle() = default;
 	DestroyedTurtle(Position position);
 	void loadDestroyedTurtleImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;

@@ -7,8 +7,6 @@
 
 SDL_Surface* Castle::castleImage = nullptr;
 
-Castle::Castle() {}
-
 Castle::Castle(Position position)
 {
 	this->position = position;

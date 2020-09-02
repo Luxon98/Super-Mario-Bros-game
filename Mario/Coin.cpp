@@ -9,8 +9,6 @@ std::array<SDL_Surface*, 2> Coin::coinImages;
 
 int Coin::typeOfImage = 2;
 
-Coin::Coin() {}
-
 Coin::Coin(Position position)
 {
 	this->position = position;

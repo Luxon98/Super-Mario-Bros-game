@@ -15,12 +15,12 @@ private:
 
 public:
 	static int typeOfImage;
-	Flower();
+	Flower() = default;
 	Flower(Position position);
 	static void changeFlowerImage();
 	void loadFlowerImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
-	void move(World& world) override;
+	void move(World &world) override;
 };
 
 #endif //Flower_H

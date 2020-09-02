@@ -10,9 +10,9 @@
 
 std::array<SDL_Surface*, 4> Star::starImages;
 
-void Star::makeVerticalMove(World& world)
+void Star::makeVerticalMove(World &world)
 {
-	int alignment = getAlignmentForHorizontalMove(movement.getDirection(), movement.getSpeed(), this, world);
+	int alignment = getAlignmentForHorizontalMove(movement.getDirection(), movement.getSpeed(), *this, world);
 	int distance = movement.getSpeed() - alignment;
 	if (movement.getDirection() == Left) {
 		distance *= -1;
@@ -24,10 +24,10 @@ void Star::makeVerticalMove(World& world)
 	}
 }
 
-void Star::makeHorizontalMove(World& world)
+void Star::makeHorizontalMove(World &world)
 {
 	int alignment = getAlignmentForVerticalMove(movement.getVerticalDirection(), movement.getVerticalSpeed(), 
-		this, world);
+		*this, world);
 	int verticalDistance = movement.getVerticalSpeed() - alignment;
 	if (movement.getVerticalDirection() == Up) {
 		verticalDistance *= -1;
@@ -47,8 +47,6 @@ void Star::makeHorizontalMove(World& world)
 		stepsUp = 0;
 	}
 }
-
-Star::Star() {}
 
 Star::Star(Position position)
 {
@@ -78,7 +76,7 @@ void Star::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 	}
 }
 
-void Star::move(World& world)
+void Star::move(World &world)
 {
 	if (growCounter) {
 		grow();

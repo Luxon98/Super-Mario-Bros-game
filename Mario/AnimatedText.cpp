@@ -6,8 +6,6 @@
 
 std::array<SDL_Surface*, 5> AnimatedText::animatedTextImages;
 
-AnimatedText::AnimatedText() {}
-
 AnimatedText::AnimatedText(TextType type, Position position)
 {
 	this->type = type;

@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <array>
+#include <memory>
 #include "SDL_Utility.h"
 
 class Player;
@@ -24,7 +25,7 @@ private:
 	};
 
 	static const int INITIAL_TIME = 403;
-	Player* player;
+	std::shared_ptr<Player> player;
 	bool coinImage;
 	int initStatus;
 	int time;
@@ -66,16 +67,15 @@ public:
 	int getEndOfCamera() const;
 	bool isTimePassed() const;
 	SDL_Surface* getDisplay() const;
-	void setPlayer(Player* player);
-	void setTimeBegin(std::chrono::steady_clock::time_point timeBegin);
+	void setPlayer(std::shared_ptr<Player> player);
 	void setPositionOfTheScreen(int begX, int endX);
 	void resetScreen();
 	void drawStartScreen();
 	void drawGameOverScreen();
 	void drawTimeUpScreen();
-	void drawDeadMario(World& world);
-	void drawWorldFinishedScreen(World& world);
-	void updateScreen(World& world);
+	void drawDeadMario(World &world);
+	void drawWorldFinishedScreen(World &world);
+	void updateScreen(World &world);
 	~Screen();
 };
 

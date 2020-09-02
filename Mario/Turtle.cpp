@@ -17,8 +17,6 @@ void Turtle::chooseModel()
 	}
 }
 
-Turtle::Turtle() {}
-
 Turtle::Turtle(Position position)
 {
 	size = Size(26, 38);
@@ -51,10 +49,10 @@ void Turtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 	}
 }
 
-void Turtle::move(World& world)
+void Turtle::move(World &world)
 {
 	if (movement.getDirection() != None && stepsCounter % 3 == 0) {
-		if (isCharacterStandingOnTheBlock(this, world)) {
+		if (isCharacterStandingOnTheBlock(*this, world)) {
 			makeHorizontalMove(world);
 		}
 		else {

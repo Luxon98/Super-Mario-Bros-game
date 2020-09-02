@@ -7,8 +7,6 @@
 
 std::array<SDL_Surface*, 3> Cloud::cloudImages;
 
-Cloud::Cloud() {}
-
 Cloud::Cloud(int type, Position position)
 {
 	model = type;

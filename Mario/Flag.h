@@ -17,7 +17,7 @@ private:
 	bool active;
 
 public:
-	Flag();
+	Flag() = default;
 	Flag(Position position);
 	bool isActive() const;
 	bool isDown() const;

@@ -6,8 +6,6 @@
 
 SDL_Surface* Explosion::explosionImage = nullptr;
 
-Explosion::Explosion() {}
-
 Explosion::Explosion(Position position)
 {
 	this->position = position;

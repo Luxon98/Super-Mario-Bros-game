@@ -8,8 +8,6 @@
 
 std::array<SDL_Surface*, 5> Bush::bushImages;
 
-Bush::Bush() {}
-
 Bush::Bush(int type, Position position)
 {
 	model = type;

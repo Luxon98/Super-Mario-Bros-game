@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <vector>
+#include <memory>
 #include "FireBall.h"
 #include "Flag.h"
 
@@ -26,12 +27,12 @@ private:
 	static const int DISTANCE_FROM_WORLD = 30;
 	std::chrono::steady_clock::time_point lastColoursUpdateTime;
 	std::vector<Block> blocks;
-	std::vector<InanimateObject*> inanimateElements;
-	std::vector<BonusObject*> bonusElements;
-	std::vector<LivingObject*> monsters;
-	std::vector<TemporaryObject*> temporaryElements;
 	std::vector<FireBall> fireballs;
-	Player* player;
+	std::vector<std::shared_ptr<InanimateObject>> inanimateElements;
+	std::vector<std::shared_ptr<BonusObject>> bonusElements;
+	std::vector<std::shared_ptr<LivingObject>> monsters;
+	std::vector<std::shared_ptr<TemporaryObject>> temporaryElements;
+	std::shared_ptr<Player> player;
 	Screen* screen;
 	Flag flag;
 	int gameCounter;
@@ -65,16 +66,16 @@ public:
 	static const int WORLD_WIDTH = 6784;
 	static const int WORLD_HEIGHT = 480;
 	World();
-	std::vector<Block> getBlocks() const;
-	std::vector<InanimateObject*> getInanimateElements() const;
-	std::vector<BonusObject*> getBonusElements() const;
-	std::vector<LivingObject*> getMonsters() const;
-	std::vector<FireBall> getFireBalls() const;
+	std::vector<Block> const& getBlocks() const;
+	std::vector<FireBall> const& getFireBalls() const;
+	std::vector<std::shared_ptr<InanimateObject>> const& getInanimateElements() const;
+	std::vector<std::shared_ptr<BonusObject>> const& getBonusElements() const;
+	std::vector<std::shared_ptr<LivingObject>> const& getMonsters() const;
 	int getLastTouchedBlockIndex() const;
 	int getBlockModel(int index) const;
-	bool isFlagDown() const;
 	Screen* getScreen() const;
-	void setPlayer(Player* player);
+	bool isFlagDown() const;
+	void setPlayer(std::shared_ptr<Player> player);
 	void setScreen(Screen* screen);
 	void setLastTouchedBlock(int index);
 	void hitBlock();

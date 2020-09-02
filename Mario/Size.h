@@ -9,7 +9,7 @@ private:
 	int height;
 
 public:
-	Size();
+	Size() = default;
 	Size(int width, int height);
 	int getWidth() const;
 	int getHeight() const;

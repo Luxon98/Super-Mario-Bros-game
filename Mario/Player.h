@@ -37,7 +37,7 @@ private:
 		ImmortalFirst = 6,
 		ImmortalSecond = 7,
 		ImmortalThird = 8,
-		InsensitiveSmall = 9,
+		Insensitive = 9,
 		ImmortalSmallFirst = 10,
 		ImmortalSmallSecond = 11,
 		ImmortalSmallThird = 12,
@@ -94,26 +94,27 @@ private:
 	long long int lastDifference;
 	bool movementBlock;
 	void resetMovement();
-	void changeModelAndAirFlagStatus(World& world);
+	void changeModelAndAirFlagStatus(World &world);
 	bool isHittingCeiling(int distance);
 	bool isFallingIntoAbyss(int distance);
 	bool isGoingBeyondCamera(int distance, int beginningOfCamera);
 	bool isHittingBlock(int alignment, Direction direction);
 	bool isDuringAnimation();
-	void moveLeft(World& world);
-	void moveRight(World& world);
-	void moveUp(World& world);
-	void moveDown(World& world);
+	void moveLeft(World &world);
+	void moveRight(World &world);
+	void moveUp(World &world);
+	void moveDown(World &world);
 	friend class KeyboardController;
 
 public:
-	Player();
+	Player() = default;
 	Player(Position position);
 	int getPoints() const;
 	int getCoins() const;
 	int getLives() const;
 	bool isSmall() const;
 	bool isArmed() const;
+	bool isInsensitive() const;
 	bool isImmortal() const;
 	bool isDead() const;
 	bool isTurnedRight() const;
@@ -125,10 +126,10 @@ public:
 	void setCurrentAnimation(PlayerAnimation animation);
 	void loadPlayerImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
-	void hitBlock(World& world);
+	void hitBlock(World &world);
 	void loseBonusOrLife();
 	void performAdditionalJump();
-	void move(World& world);
+	void move(World &world);
 	void reborn();
 	void resetSteps();
 	void setFinishingRunParameters();

@@ -13,7 +13,7 @@ private:
 	static SDL_Surface* crushedCreatureImage;
 
 public:
-	CrushedCreature(); 
+	CrushedCreature() = default;
 	CrushedCreature(Position position);
 	void loadCrushedCreatureImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;

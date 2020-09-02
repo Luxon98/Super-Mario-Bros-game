@@ -13,7 +13,7 @@ protected:
 	Direction verticalDirection;
 
 public:
-	Movement();
+	Movement() = default;
 	Movement(int speed, int verticalSpeed, Direction direction, Direction verticalDirection = None);
 	int getSpeed() const;
 	int getVerticalSpeed() const;

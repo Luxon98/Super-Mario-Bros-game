@@ -14,7 +14,7 @@ private:
 	static std::array<SDL_Surface*, 5> bushImages;
 
 public:
-	Bush();
+	Bush() = default;
 	Bush(int type, Position position);
 	void loadBushImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;

@@ -18,7 +18,7 @@ private:
 	bool active;
 	
 public:
-	Shell();
+	Shell() = default;
 	Shell(Position position);
 	bool isActive();
 	bool shouldTurnIntoTurtle();
@@ -26,7 +26,7 @@ public:
 	void resetCreationTime();
 	void loadShellImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
-	void move(World& world) override;
+	void move(World &world) override;
 };
 
 #endif //Shell_H

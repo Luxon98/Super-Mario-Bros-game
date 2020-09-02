@@ -14,8 +14,6 @@ void Shards::initPositionsVector(Position position)
 	shardsPositions.push_back(Position(position.getX() - 15, position.getY() + 15));
 }
 
-Shards::Shards() {}
-
 Shards::Shards(Position position)
 {
 	initPositionsVector(position);

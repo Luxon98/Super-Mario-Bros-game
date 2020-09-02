@@ -16,7 +16,7 @@ private:
 	int imageIndex;
 
 public:
-	AnimatedCoin();
+	AnimatedCoin() = default;
 	AnimatedCoin(Position position);
 	void loadAnimatedCoinImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;

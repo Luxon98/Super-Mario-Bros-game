@@ -24,7 +24,7 @@ void loadBlockImages(SDL_Surface* display);
 
 void loadImages(SDL_Surface* display);
 
-void resetGame(KeyboardController controller, Player* player, World& world, Screen* screen, bool* playerState);
+void resetGame(KeyboardController &controller, Player &player, World &world, Screen* screen, bool * playerState);
 
 void runGame();
 

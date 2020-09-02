@@ -119,9 +119,9 @@ void SoundController::playFlagDownEffect()
 	Mix_PlayChannel(-1, soundsEffects[8], 0);
 }
 
-void SoundController::playJumpEffect(Player* player)
+void SoundController::playJumpEffect(Player &player)
 {
-	Mix_PlayChannel(-1, soundsEffects[player->isSmall() ? 9 : 10], 0);
+	Mix_PlayChannel(-1, soundsEffects[player.isSmall() ? 9 : 10], 0);
 }
 
 void SoundController::playBonusLostEffect()

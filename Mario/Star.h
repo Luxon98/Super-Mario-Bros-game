@@ -14,15 +14,15 @@ private:
 	static std::array<SDL_Surface*, 4> starImages;
 	int stepsCounter;
 	int stepsUp;
-	void makeVerticalMove(World& world);
-	void makeHorizontalMove(World& world);
+	void makeVerticalMove(World &world);
+	void makeHorizontalMove(World &world);
 
 public:
-	Star();
+	Star() = default;
 	Star(Position position);
 	void loadStarImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
-	void move(World& world) override;
+	void move(World &world) override;
 };
 
 #endif //Star_H

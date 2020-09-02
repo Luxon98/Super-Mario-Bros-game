@@ -17,7 +17,7 @@ protected:
 
 public:
 	Movement getMovement() const;
-	virtual void move(World& world) = 0;
+	virtual void move(World &world) = 0;
 };
 
 #endif //LivingObject_H

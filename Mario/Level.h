@@ -7,7 +7,7 @@ class World;
 class Level 
 {
 public:
-	static void setFirstLevel(World& world);
+	static void setFirstLevel(World &world);
 };
 
 #endif //Level_H

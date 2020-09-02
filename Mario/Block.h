@@ -35,7 +35,7 @@ private:
 	Size getSizeFromBlockType(BlockType type);
 
 public:
-	Block();
+	Block() = default;
 	Block(BlockType type, Position position);
 	int getAvailableCoins() const;
 	bool canBeHitted();

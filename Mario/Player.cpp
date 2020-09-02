@@ -133,9 +133,16 @@ void Player::performShrinkingAnimation(int difference)
 {
 	if (difference <= 100 && lastDifference < 10) {
 		size.setHeight(32);
+
 		position.setY(position.getY() + 16);
+		// in a rare case player can get stuck below ground block, the following instruction fixes it
+		if (position.getY() > 400) {
+			position.setY(400);
+		}
+
 		lastDifference = difference;
-		currentState = InsensitiveSmall;
+		currentState = Insensitive;
+		resetSteps();
 	}
 	else if (difference >= 2000) {
 		currentAnimationState = NoAnimation;
@@ -231,9 +238,9 @@ void Player::resetMovement()
 	playerMovement.setVerticalSpeed(1);
 }
 
-void Player::changeModelAndAirFlagStatus(World& world)
+void Player::changeModelAndAirFlagStatus(World &world)
 {
-	if (!isCharacterStandingOnTheBlock(this, world)) {
+	if (!isCharacterStandingOnTheBlock(*this, world)) {
 		model = 4;
 		return;
 	}
@@ -285,9 +292,9 @@ bool Player::isDuringAnimation()
 	return (currentAnimationState != NoAnimation);
 }
 
-void Player::moveLeft(World& world)
+void Player::moveLeft(World &world)
 {
-	int alignment = getAlignmentForHorizontalMove(Left, playerMovement.getSpeed(), this, world);
+	int alignment = getAlignmentForHorizontalMove(Left, playerMovement.getSpeed(), *this, world);
 	int distance = playerMovement.getSpeed() - alignment;
 
 	if (!isGoingBeyondCamera(distance, world.getScreen()->getBeginningOfCamera())) {
@@ -304,9 +311,9 @@ void Player::moveLeft(World& world)
 	flags.orientationFlag = false;
 }
 
-void Player::moveRight(World& world)
+void Player::moveRight(World &world)
 {
-	int alignment = getAlignmentForHorizontalMove(Right, playerMovement.getSpeed(), this, world);
+	int alignment = getAlignmentForHorizontalMove(Right, playerMovement.getSpeed(), *this, world);
 	int distance = playerMovement.getSpeed() - alignment;
 
 	position.setX(position.getX() + distance);
@@ -321,9 +328,9 @@ void Player::moveRight(World& world)
 	flags.orientationFlag = true;
 }
 
-void Player::moveUp(World& world)
+void Player::moveUp(World &world)
 {
-	int alignment = getAlignmentForVerticalMove(Up, playerMovement.getVerticalSpeed(), this, world);
+	int alignment = getAlignmentForVerticalMove(Up, playerMovement.getVerticalSpeed(), *this, world);
 	int distance = playerMovement.getVerticalSpeed() - alignment;
 
 	if (!isHittingCeiling(distance)) {
@@ -341,14 +348,14 @@ void Player::moveUp(World& world)
 		playerMovement.stepsUp--;
 	}
 
-	if (isCharacterStandingOnTheBlock(this, world)) {
+	if (isCharacterStandingOnTheBlock(*this, world)) {
 		model = 0;
 	}
 }
 
-void Player::moveDown(World& world)
+void Player::moveDown(World &world)
 {
-	int alignment = getAlignmentForVerticalMove(Down, playerMovement.getVerticalSpeed(), this, world);
+	int alignment = getAlignmentForVerticalMove(Down, playerMovement.getVerticalSpeed(), *this, world);
 	int distance = playerMovement.getVerticalSpeed() - alignment;
 
 	if (!isFallingIntoAbyss(distance)) {
@@ -364,8 +371,6 @@ void Player::moveDown(World& world)
 
 	playerMovement.stepsDown--;
 }
-
-Player::Player() {}
 
 Player::Player(Position position)
 {
@@ -407,9 +412,14 @@ bool Player::isArmed() const
 	return flags.armedFlag;
 }
 
+bool Player::isInsensitive() const
+{
+	return (currentState == Insensitive);
+}
+
 bool Player::isImmortal() const
 {
-	return (currentState >= ImmortalFirst && currentState <= ImmortalSmallFourth);
+	return (currentState != Insensitive && currentState >= ImmortalFirst && currentState <= ImmortalSmallFourth);
 }
 
 bool Player::isDead() const
@@ -488,16 +498,12 @@ void Player::loadPlayerImages(SDL_Surface* display)
 
 void Player::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 {
-	if (isDuringAnimation()) {
-		changeStateDuringAnimation();
-	}
 	int index = computeImageIndex();
-
 	SDL_Surface* playerImg = playerImages[index];
 	drawSurface(display, playerImg, position.getX() - beginningOfCamera, position.getY());
 }
 
-void Player::hitBlock(World& world)
+void Player::hitBlock(World &world)
 {
 	if ((currentState >= Tall && currentState <= ImmortalFourth) 
 		&& world.getBlockModel(world.getLastTouchedBlockIndex()) == Destructible) {
@@ -532,8 +538,12 @@ void Player::performAdditionalJump()
 	playerMovement.stepsUp = 40;
 }
 
-void Player::move(World& world)
+void Player::move(World &world)
 {
+	if (isDuringAnimation()) {
+		changeStateDuringAnimation();
+	}
+
 	if (!movementBlock) {
 		if (playerMovement.stepsLeft > 0) {
 			moveLeft(world);
@@ -553,7 +563,7 @@ void Player::move(World& world)
 
 		changeModelAndAirFlagStatus(world);
 
-		collectCoinIfPossible(this, world);
+		collectCoinIfPossible(*this, world);
 	}
 }
 

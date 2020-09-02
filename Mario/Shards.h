@@ -18,7 +18,7 @@ private:
 	void initPositionsVector(Position position);
 
 public:
-	Shards();
+	Shards() = default;
 	Shards(Position position);
 	void loadShardsImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;

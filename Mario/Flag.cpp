@@ -6,8 +6,6 @@
 
 std::array<SDL_Surface*, 2> Flag::flagImages;
 
-Flag::Flag() {}
-
 Flag::Flag(Position position)
 {
 	this->position = position;

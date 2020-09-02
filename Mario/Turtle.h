@@ -18,12 +18,12 @@ private:
 	void chooseModel();
 
 public:
-	Turtle();
+	Turtle() = default;
 	Turtle(Position position);
 	void setMoveDirection(Direction direction);
 	void loadTurtleImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
-	void move(World& world) override;
+	void move(World &world) override;
 };
 
 #endif //Turtle_H

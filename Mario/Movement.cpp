@@ -1,14 +1,6 @@
 #include "Movement.h"
 
 
-Movement::Movement()
-{
-	speed = 0;
-	verticalSpeed = 0;
-	direction = None;
-	verticalDirection = None;
-}
-
 Movement::Movement(int speed, int verticalSpeed, Direction direction, Direction verticalDirection) 
 	: speed(speed), verticalSpeed(verticalSpeed), direction(direction), verticalDirection(verticalDirection) {}
 

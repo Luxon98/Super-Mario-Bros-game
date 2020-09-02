@@ -9,8 +9,6 @@
 
 SDL_Surface* Shell::shellImage = nullptr;
 
-Shell::Shell() {}
-
 Shell::Shell(Position position)
 {
 	size = Size(32, 28);
@@ -56,10 +54,10 @@ void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 	}
 }
 
-void Shell::move(World& world)
+void Shell::move(World &world)
 {
 	if (movement.getDirection() != None && stepsCounter & 1) {
-		if (isCharacterStandingOnTheBlock(this, world)) {
+		if (isCharacterStandingOnTheBlock(*this, world)) {
 			makeHorizontalMove(world);
 		}
 		else {

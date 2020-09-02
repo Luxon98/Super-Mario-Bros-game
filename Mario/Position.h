@@ -9,7 +9,7 @@ private:
 	int y;
 
 public:
-	Position();
+	Position() = default;
 	Position(int x, int y);
 	int getX() const;
 	int getY() const;

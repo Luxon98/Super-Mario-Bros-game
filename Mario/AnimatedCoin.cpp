@@ -7,8 +7,6 @@
 
 std::array<SDL_Surface*, 7> AnimatedCoin::animatedCoinImages;
 
-AnimatedCoin::AnimatedCoin() {}
-
 AnimatedCoin::AnimatedCoin(Position position)
 {
 	creationTime = std::chrono::steady_clock::now();

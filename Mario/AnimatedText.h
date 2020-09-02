@@ -24,7 +24,7 @@ private:
 	TextType type;
 
 public:
-	AnimatedText();
+	AnimatedText() = default;
 	AnimatedText(TextType type, Position position);
 	void loadAnimatedTextImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;

@@ -6,8 +6,6 @@
 
 SDL_Surface* DestroyedCreature::destroyedCreatureImage = nullptr;
 
-DestroyedCreature::DestroyedCreature() {}
-
 DestroyedCreature::DestroyedCreature(Position position)
 {
 	this->position = position;

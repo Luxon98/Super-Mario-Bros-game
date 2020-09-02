@@ -10,8 +10,6 @@ std::array<SDL_Surface*, 2> Flower::flowerImages;
 
 int Flower::typeOfImage = 2;
 
-Flower::Flower() {}
-
 Flower::Flower(Position position)
 {
 	size = Size(32, 32);
@@ -40,7 +38,7 @@ void Flower::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 	}
 }
 
-void Flower::move(World& world)
+void Flower::move(World &world)
 {
 	if (growCounter) {
 		grow();

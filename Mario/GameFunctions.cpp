@@ -1,6 +1,7 @@
 #include "GameFunctions.h"
 
 #include <chrono>
+#include <memory>
 #include "KeyboardController.h"
 #include "SoundController.h"
 #include "Player.h"
@@ -129,10 +130,10 @@ void loadImages(SDL_Surface* display)
 }
 
 
-void resetGame(KeyboardController controller, Player* player, World& world, Screen* screen, bool * playerState)
+void resetGame(KeyboardController &controller, Player &player, World &world, Screen* screen, bool * playerState)
 {
 	controller.clearKeysState();
-	player->reborn();
+	player.reborn();
 	*playerState = true;
 	Level::setFirstLevel(world);
 	screen->resetScreen();
@@ -146,8 +147,9 @@ void runGame()
 	World world = World();
 	SoundController soundMixer = SoundController();
 
+	// screen cannot be a smart shared_ptr, because this class contains pointers to types from SDL library
+	// which cause problems (when automatically deleted) due to lack of proper deconstructors
 	Screen* screen = new Screen();
-	screen->setTimeBegin(std::chrono::steady_clock::now());
 	world.setScreen(screen);
 
 	KeyboardController controller = KeyboardController();
@@ -156,12 +158,12 @@ void runGame()
 	loadImages(screen->getDisplay());
 
 	if (!screen->getInitStatus()) {
-		Player* player = new Player(Position(35, 400));
+		std::shared_ptr<Player> player = std::make_shared<Player>(Player(Position(35, 400)));
 		world.setPlayer(player);
 		screen->setPlayer(player);
 
 		while (player->getLives() && !winStatus) {
-			resetGame(controller, player, world, screen, &playerState);
+			resetGame(controller, *player, world, screen, &playerState);
 
 			timeBegin = std::chrono::steady_clock::now();
 			while (std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - timeBegin).count() <= 3000) {
@@ -177,7 +179,7 @@ void runGame()
 
 				while (SDL_PollEvent(&event) && playerState) {
 					controller.handleKeysState(state);
-					controller.handleKeys(player, world);
+					controller.handleKeys(*player, world);
 					if (player->isDead()) {
 						playerState = false;
 					}
@@ -185,7 +187,7 @@ void runGame()
 				}
 
 				if (playerState) {
-					controller.handleKeys(player, world);
+					controller.handleKeys(*player, world);
 				}
 
 				if (world.isPlayerFinishingWorld() && !winStatus) {
@@ -220,8 +222,6 @@ void runGame()
 				SoundController::playTimePassedMusic();
 			}
 		}
-
-		delete player;
 	}
 
 	timeBegin = std::chrono::steady_clock::now();

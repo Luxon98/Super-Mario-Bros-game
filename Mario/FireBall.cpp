@@ -21,9 +21,9 @@ void FireBall::computeModelIndex()
 	}
 }
 
-void FireBall::makeVerticalMove(World& world)
+void FireBall::makeVerticalMove(World &world)
 {
-	int alignment = getAlignmentForHorizontalMove(movement.getDirection(), movement.getSpeed(), this, world);
+	int alignment = getAlignmentForHorizontalMove(movement.getDirection(), movement.getSpeed(), *this, world);
 	int distance = movement.getSpeed() - alignment;
 	if (movement.getDirection() == Left) {
 		distance *= -1;
@@ -36,10 +36,10 @@ void FireBall::makeVerticalMove(World& world)
 	}
 }
 
-void FireBall::makeHorizontalMove(World& world)
+void FireBall::makeHorizontalMove(World &world)
 {
 	int alignment = getAlignmentForVerticalMove(movement.getVerticalDirection(), movement.getVerticalSpeed(), 
-		this, world);
+		*this, world);
 	int verticalDistance = movement.getVerticalSpeed() - alignment;
 	if (movement.getVerticalDirection() == Up) {
 		verticalDistance *= -1;
@@ -61,8 +61,6 @@ void FireBall::makeHorizontalMove(World& world)
 		stepsUp = 0;
 	}
 }
-
-FireBall::FireBall() {}
 
 FireBall::FireBall(Position position, Direction direction)
 {
@@ -99,7 +97,7 @@ void FireBall::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera
 	}
 }
 
-void FireBall::move(World& world)
+void FireBall::move(World &world)
 {
 	if (!stop) {
 		makeVerticalMove(world);

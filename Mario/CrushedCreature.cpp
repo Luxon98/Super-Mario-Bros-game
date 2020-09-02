@@ -6,8 +6,6 @@
 
 SDL_Surface* CrushedCreature::crushedCreatureImage = nullptr;
 
-CrushedCreature::CrushedCreature() {}
-
 CrushedCreature::CrushedCreature(Position position)
 {
 	this->position = position;

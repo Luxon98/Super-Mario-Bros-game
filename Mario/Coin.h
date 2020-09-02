@@ -15,7 +15,7 @@ private:
 
 public:
 	static int typeOfImage;
-	Coin();
+	Coin() = default;
 	Coin(Position position);
 	void loadCoinImages(SDL_Surface* display);
 	static void changeCoinImage();

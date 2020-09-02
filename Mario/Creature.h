@@ -18,12 +18,12 @@ private:
 	void changeModel();
 
 public:
-	Creature();
+	Creature() = default;
 	Creature(Position position);
 	void setMoveDirection(Direction direction);
 	void loadCreatureImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
-	void move(World& world) override;
+	void move(World &world) override;
 };
 
 #endif //Creature_H

@@ -228,6 +228,7 @@ Screen::Screen()
 	initStatus = initGUI();
 	time = 403;
 	loadScreenImages();
+	timeBegin = std::chrono::steady_clock::now();
 }
 
 int Screen::getInitStatus() const
@@ -260,14 +261,9 @@ SDL_Surface* Screen::getDisplay() const
 	return display;
 }
 
-void Screen::setPlayer(Player* player)
+void Screen::setPlayer(std::shared_ptr<Player> player)
 {
-	this->player = player;
-}
-
-void Screen::setTimeBegin(std::chrono::steady_clock::time_point timeBegin)
-{
-	this->timeBegin = timeBegin;
+	this->player = std::move(player);
 }
 
 void Screen::setPositionOfTheScreen(int begX, int endX)
@@ -314,7 +310,7 @@ void Screen::drawTimeUpScreen()
 	updateView();
 }
 
-void Screen::drawDeadMario(World& world)
+void Screen::drawDeadMario(World &world)
 {
 	SoundController::stopMusic();
 	SoundController::playMarioDeadEffect();
@@ -340,7 +336,7 @@ void Screen::drawDeadMario(World& world)
 	}
 }
 
-void Screen::drawWorldFinishedScreen(World& world)
+void Screen::drawWorldFinishedScreen(World &world)
 {
 	SoundController::stopMusic();
 	SoundController::playWorldFinishedMusic();
@@ -364,7 +360,7 @@ void Screen::drawWorldFinishedScreen(World& world)
 	}
 }
 
-void Screen::updateScreen(World& world)
+void Screen::updateScreen(World &world)
 {
 	if (isPlayerExceedingCameraReferencePoint()) {
 		int difference = computeDifference();
@@ -395,5 +391,4 @@ Screen::~Screen()
 	}
 
 	closeGUI();
-	player = nullptr;
 }

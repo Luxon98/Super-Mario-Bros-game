@@ -12,7 +12,7 @@
 #include "Castle.h"
 
 
-void Level::setFirstLevel(World& world)
+void Level::setFirstLevel(World &world)
 {
 	world.blocks.clear();
 	world.inanimateElements.clear();
@@ -131,63 +131,63 @@ void Level::setFirstLevel(World& world)
 	world.blocks.push_back(Block(TubeEntry, Position(5754, 368)));
 	world.blocks.push_back(Block(BonusWithGreenMushroom, Position(2064, 288)));
 
-	world.inanimateElements.push_back(new Bush(5, Position(80, 381)));
-	world.inanimateElements.push_back(new Bush(3, Position(432, 400)));
-	world.inanimateElements.push_back(new Bush(4, Position(560, 397)));
-	world.inanimateElements.push_back(new Cloud(1, Position(656, 72)));
-	world.inanimateElements.push_back(new Bush(1, Position(782, 400)));
-	world.inanimateElements.push_back(new Cloud(3, Position(944, 104)));
-	world.inanimateElements.push_back(new Cloud(2, Position(1214, 72)));
-	world.inanimateElements.push_back(new Bush(2, Position(1374, 400)));
-	world.inanimateElements.push_back(new Bush(5, Position(1614, 381)));
-	world.inanimateElements.push_back(new Cloud(1, Position(1838, 104)));
-	world.inanimateElements.push_back(new Bush(3, Position(1966, 400)));
-	world.inanimateElements.push_back(new Bush(4, Position(2094, 397)));
-	world.inanimateElements.push_back(new Cloud(1, Position(2190, 72)));
-	world.inanimateElements.push_back(new Bush(1, Position(2318, 400)));
-	world.inanimateElements.push_back(new Cloud(3, Position(2478, 104)));
-	world.inanimateElements.push_back(new Cloud(2, Position(2750, 72)));
-	world.inanimateElements.push_back(new Bush(2, Position(2910, 400)));
-	world.inanimateElements.push_back(new Bush(5, Position(3150, 381)));
-	world.inanimateElements.push_back(new Bush(3, Position(3502, 400)));
-	world.inanimateElements.push_back(new Bush(4, Position(3628, 397)));
-	world.inanimateElements.push_back(new Bush(1, Position(3854, 400)));
-	world.inanimateElements.push_back(new Cloud(1, Position(3374, 104)));
-	world.inanimateElements.push_back(new Cloud(1, Position(3726, 72)));
-	world.inanimateElements.push_back(new Cloud(3, Position(4014, 104)));
-	world.inanimateElements.push_back(new Cloud(2, Position(4286, 72)));
-	world.inanimateElements.push_back(new Bush(2, Position(4448, 400)));
-	world.inanimateElements.push_back(new Bush(5, Position(4686, 381)));
-	world.inanimateElements.push_back(new Cloud(1, Position(4910, 104)));
-	world.inanimateElements.push_back(new Bush(1, Position(5050, 400)));
-	world.inanimateElements.push_back(new Bush(4, Position(5166, 397)));
-	world.inanimateElements.push_back(new Bush(1, Position(5390, 400)));
-	world.inanimateElements.push_back(new Bush(5, Position(6222, 381)));
-	world.inanimateElements.push_back(new Bush(1, Position(6608, 400)));
-	world.inanimateElements.push_back(new Bush(4, Position(6702, 397)));
-	world.inanimateElements.push_back(new Cloud(1, Position(5262, 72)));
-	world.inanimateElements.push_back(new Cloud(3, Position(5550, 104)));
-	world.inanimateElements.push_back(new Cloud(2, Position(5822, 72)));
-	world.inanimateElements.push_back(new Cloud(1, Position(6446, 104)));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(5, Position(80, 381))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(3, Position(432, 400))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(4, Position(560, 397))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(656, 72))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(1, Position(782, 400))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(944, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(1214, 72))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(2, Position(1374, 400))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(5, Position(1614, 381))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1838, 104))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(3, Position(1966, 400))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(4, Position(2094, 397))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(2190, 72))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(1, Position(2318, 400))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(2478, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(2750, 72))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(2, Position(2910, 400))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(5, Position(3150, 381))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(3, Position(3502, 400))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(4, Position(3628, 397))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(1, Position(3854, 400))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(3374, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(3726, 72))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(4014, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(4286, 72))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(2, Position(4448, 400))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(5, Position(4686, 381))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(4910, 104))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(1, Position(5050, 400))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(4, Position(5166, 397))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(1, Position(5390, 400))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(5, Position(6222, 381))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(1, Position(6608, 400))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(4, Position(6702, 397))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(5262, 72))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(5550, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(5822, 72))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(6446, 104))));
 
-	world.monsters.push_back(new Creature(Position(730, 400)));
-	world.monsters.push_back(new Creature(Position(1650, 400)));
-	world.monsters.push_back(new Creature(Position(1710, 400)));
-	world.monsters.push_back(new Creature(Position(2650, 128)));
-	world.monsters.push_back(new Creature(Position(2730, 128)));
-	world.monsters.push_back(new Creature(Position(3180, 400)));
-	world.monsters.push_back(new Creature(Position(3220, 400)));
-	world.monsters.push_back(new Turtle(Position(3350, 400)));
-	world.monsters.push_back(new Creature(Position(3800, 400)));
-	world.monsters.push_back(new Creature(Position(3850, 400)));
-	world.monsters.push_back(new Creature(Position(4050, 400)));
-	world.monsters.push_back(new Creature(Position(4100, 400)));
-	world.monsters.push_back(new Creature(Position(4150, 400)));
-	world.monsters.push_back(new Creature(Position(4200, 400)));
-	world.monsters.push_back(new Creature(Position(5200, 400)));
-	world.monsters.push_back(new Creature(Position(5270, 400)));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(730, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1650, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1710, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2650, 128))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2730, 128))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3180, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3220, 400))));
+	world.monsters.push_back(std::make_shared<Turtle>(Turtle(Position(3350, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3800, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3850, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4050, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4100, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4150, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4200, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5200, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5270, 400))));
 
-	world.inanimateElements.push_back(new Castle(Position(6542, 336)));
+	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6542, 336))));
 	world.flag = Flag(Position(6335, 116));
 }
 

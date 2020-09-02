@@ -17,8 +17,6 @@ void Creature::changeModel()
 	}
 }
 
-Creature::Creature() {}
-
 Creature::Creature(Position position)
 {
 	size = Size(32, 32);
@@ -49,10 +47,10 @@ void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera
 	}
 }
 
-void Creature::move(World& world)
+void Creature::move(World &world)
 {
 	if (movement.getDirection() != None && stepsCounter % 3 == 0) {
-		if (isCharacterStandingOnTheBlock(this, world)) {
+		if (isCharacterStandingOnTheBlock(*this, world)) {
 			makeHorizontalMove(world);
 		}
 		else {

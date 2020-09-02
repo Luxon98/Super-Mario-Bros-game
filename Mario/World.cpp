@@ -46,7 +46,7 @@ bool World::isPlayerCloseEnough(LivingObject& monster)
 
 bool World::hasLastTouchedBlockCoin()
 {
-	if (blocks[lastTouchedBlockIndex].getModel() == Monetary || 
+	if (blocks[lastTouchedBlockIndex].getModel() == Monetary ||
 		blocks[lastTouchedBlockIndex].getModel() == BonusWithCoin) {
 
 		return true;
@@ -57,10 +57,9 @@ bool World::hasLastTouchedBlockCoin()
 
 bool World::isLastTouchedBlockBonus()
 {
-	if (blocks[lastTouchedBlockIndex].getModel() == BonusWithRedMushroom 
-		|| blocks[lastTouchedBlockIndex].getModel() == BonusWithFlower 
-		|| blocks[lastTouchedBlockIndex].getModel() == BonusWithStar) {
-		
+	if (blocks[lastTouchedBlockIndex].getModel() >= BonusWithRedMushroom
+		&& blocks[lastTouchedBlockIndex].getModel() <= BonusWithStar) {
+
 		return true;
 	}
 
@@ -90,7 +89,7 @@ void World::deleteTemporaryElements()
 {
 	for (unsigned int i = 0; i < temporaryElements.size(); ++i) {
 		if (temporaryElements[i]->shouldBeRemoved()) {
-			if (dynamic_cast<AnimatedCoin*>(temporaryElements[i])) {
+			if (std::dynamic_pointer_cast<AnimatedCoin>(temporaryElements[i])) {
 				addAnimatedText(TWO_HUNDRED, Position(temporaryElements[i]->getX(), temporaryElements[i]->getY()));
 			}
 
@@ -118,10 +117,11 @@ void World::performMonstersActions()
 
 		monsters[i]->move(*this);
 
-		if (dynamic_cast<Shell*>(monsters[i]) && !(dynamic_cast<Shell*>(monsters[i])->isActive()) 
-			&& dynamic_cast<Shell*>(monsters[i])->shouldTurnIntoTurtle()) {
+		if (std::dynamic_pointer_cast<Shell>(monsters[i]) 
+			&& !(std::dynamic_pointer_cast<Shell>(monsters[i])->isActive())
+			&& std::dynamic_pointer_cast<Shell>(monsters[i])->shouldTurnIntoTurtle()) {
 
-			monsters.push_back(new Turtle(Position(monsters[i]->getX(), monsters[i]->getY())));
+			monsters.push_back(std::make_shared<Turtle>(Turtle(Position(monsters[i]->getX(), monsters[i]->getY()))));
 			monsters.erase(monsters.begin() + i);
 		}
 
@@ -138,7 +138,8 @@ void World::performFireBallsActions()
 
 		if (fireballs[i].shouldBeRemoved()) {
 			int shift = (fireballs[i].getMovement().getDirection() == Left ? -5 : 5);
-			temporaryElements.push_back(new Explosion(Position(fireballs[i].getX() + shift, fireballs[i].getY())));
+			temporaryElements.push_back(std::make_shared<Explosion>(Explosion(
+				Position(fireballs[i].getX() + shift, fireballs[i].getY()))));
 
 			fireballs.erase(fireballs.begin() + i);
 		}
@@ -174,52 +175,46 @@ void World::performWorldActions()
 
 void World::slideTemporaryElements()
 {
-	for (unsigned int i = 0; i < temporaryElements.size(); ++i) {
-		temporaryElements[i]->slide();
+	for (auto &temporaryElement : temporaryElements) {
+		temporaryElement->slide();
 	}
 }
 
 void World::slideBlock()
 {
-	if (isFlowerStandingOnTheBlock(*this, lastTouchedBlockIndex)) {
-		slidingCounter = 0;
+	if (slidingCounter == 124) {
+		playBlockSoundEffects();
+
+		if (hasLastTouchedBlockCoin()) {
+			subtractCoinFromBlock();
+		}
+
+		if (isMushroomStandingOnTheBlock(*this, lastTouchedBlockIndex)) {
+			raiseUpMushroom();
+		}
 	}
-	else {
-		if (slidingCounter == 124) {
-			playBlockSoundEffects();
 
-			if (hasLastTouchedBlockCoin()) {
-				subtractCoinFromBlock();
-			}
+	performBlockSliding();
 
-			if (isMushroomStandingOnTheBlock(*this, lastTouchedBlockIndex)) {
-				raiseUpMushroom();
-			}
+	if (slidingCounter == 0) {
+		if (isLastTouchedBlockBonus()) {
+			createNewBonus();
 		}
 
-		performBlockSliding();
-
-		if (slidingCounter == 0) {
-			if (isLastTouchedBlockBonus()) {
-				createNewBonus();
-			}
-
-			slideBlockStatus = true;
-		}
+		slideBlockStatus = true;
 	}
 }
 
 void World::raiseUpMushroom()
 {
-	std::vector<BonusObject*> elements = getBonusElements();
-	for (auto it = elements.begin(); it != elements.end(); ++it) {
-		if (dynamic_cast<Mushroom*>(*it)) {
-			if (((*it)->getY() + (*it)->getHeight() / 2) == 
-				blocks[lastTouchedBlockIndex].getY() - blocks[lastTouchedBlockIndex].getHeight() / 2 
-				&& areAtTheSameWidth(*it, blocks[lastTouchedBlockIndex])) {
+	for (auto it = bonusElements.begin(); it != bonusElements.end(); ++it) {
+		if (std::dynamic_pointer_cast<Mushroom>(*it)) {
+			if (((*it)->getY() + (*it)->getHeight() / 2) ==
+				blocks[lastTouchedBlockIndex].getY() - blocks[lastTouchedBlockIndex].getHeight() / 2
+				&& areAtTheSameWidth(**it, blocks[lastTouchedBlockIndex])) {
 
-				dynamic_cast<Mushroom*>(*it)->decreasePositionY();
-				dynamic_cast<Mushroom*>(*it)->setStepsUp(30);
+				std::dynamic_pointer_cast<Mushroom>(*it)->decreasePositionY();
+				std::dynamic_pointer_cast<Mushroom>(*it)->setStepsUp(30);
 				return;
 			}
 		}
@@ -228,7 +223,7 @@ void World::raiseUpMushroom()
 
 void World::addShards(Position position)
 {
-	temporaryElements.push_back(new Shards(position));
+	temporaryElements.push_back(std::make_shared<Shards>(Shards(position)));
 }
 
 void World::performBlockSliding()
@@ -243,7 +238,7 @@ void World::performBlockSliding()
 		}
 	}
 
-	handleMonstersAndBlockCollisions(*this, blocks[lastTouchedBlockIndex], player);
+	handleMonstersAndBlockCollisions(*this, blocks[lastTouchedBlockIndex], *player);
 }
 
 void World::subtractCoinFromBlock()
@@ -252,8 +247,8 @@ void World::subtractCoinFromBlock()
 		blocks[lastTouchedBlockIndex].setAvailableCoins(blocks[lastTouchedBlockIndex].getAvailableCoins() - 1);
 		player->incrementCoins();
 		player->addPoints(200);
-		temporaryElements.push_back(new AnimatedCoin(Position(blocks[lastTouchedBlockIndex].getX(), 
-			blocks[lastTouchedBlockIndex].getY() - 56)));
+		temporaryElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(
+			Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 50))));
 
 		if (!blocks[lastTouchedBlockIndex].getAvailableCoins()) {
 			blocks[lastTouchedBlockIndex].setModel(Empty);
@@ -262,8 +257,8 @@ void World::subtractCoinFromBlock()
 	else if (blocks[lastTouchedBlockIndex].getModel() == BonusWithCoin) {
 		player->incrementCoins();
 		player->addPoints(200);
-		temporaryElements.push_back(new AnimatedCoin(Position(blocks[lastTouchedBlockIndex].getX(), 
-			blocks[lastTouchedBlockIndex].getY() - 50)));
+		temporaryElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(
+			Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 56))));
 
 		blocks[lastTouchedBlockIndex].setModel(Empty);
 	}
@@ -272,22 +267,22 @@ void World::subtractCoinFromBlock()
 void World::createNewBonus()
 {
 	if (blocks[lastTouchedBlockIndex].getModel() == BonusWithRedMushroom) {
-		bonusElements.push_back(new Mushroom(Position(blocks[lastTouchedBlockIndex].getX(), 
-			blocks[lastTouchedBlockIndex].getY()), false));
+		bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
+			blocks[lastTouchedBlockIndex].getY()), false)));
 	}
 	else if (blocks[lastTouchedBlockIndex].getModel() == BonusWithFlower) {
 		if (player->isSmall()) {
-			bonusElements.push_back(new Mushroom(Position(blocks[lastTouchedBlockIndex].getX(), 
-				blocks[lastTouchedBlockIndex].getY()), false));
+			bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
+				blocks[lastTouchedBlockIndex].getY()), false)));
 		}
 		else {
-			bonusElements.push_back(new Flower(Position(blocks[lastTouchedBlockIndex].getX(), 
-				blocks[lastTouchedBlockIndex].getY())));
+			bonusElements.push_back(std::make_shared<Flower>(Flower(Position(blocks[lastTouchedBlockIndex].getX(),
+				blocks[lastTouchedBlockIndex].getY()))));
 		}
 	}
 	else if (blocks[lastTouchedBlockIndex].getModel() == BonusWithStar) {
-		bonusElements.push_back(new Star(Position(blocks[lastTouchedBlockIndex].getX(), 
-			blocks[lastTouchedBlockIndex].getY())));
+		bonusElements.push_back(std::make_shared<Star>(Star(Position(blocks[lastTouchedBlockIndex].getX(),
+			blocks[lastTouchedBlockIndex].getY()))));
 	}
 
 	blocks[lastTouchedBlockIndex].setModel(Empty);
@@ -295,8 +290,8 @@ void World::createNewBonus()
 
 void World::createGreenMushroom()
 {
-	bonusElements.push_back(new Mushroom(Position(blocks[lastTouchedBlockIndex].getX(), 
-		blocks[lastTouchedBlockIndex].getY()), true));
+	bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
+		blocks[lastTouchedBlockIndex].getY()), true)));
 
 	blocks[lastTouchedBlockIndex].setModel(Empty);
 }
@@ -329,29 +324,29 @@ World::World()
 	fireballStatus = false;
 }
 
-std::vector<Block> World::getBlocks() const
+std::vector<Block> const& World::getBlocks() const
 {
 	return blocks;
 }
 
-std::vector<InanimateObject*> World::getInanimateElements() const
+std::vector<FireBall> const& World::getFireBalls() const
+{
+	return fireballs;
+}
+
+std::vector<std::shared_ptr<InanimateObject>> const& World::getInanimateElements() const
 {
 	return inanimateElements;
 }
 
-std::vector<BonusObject*> World::getBonusElements() const
+std::vector<std::shared_ptr<BonusObject>> const& World::getBonusElements() const
 {
 	return bonusElements;
 }
 
-std::vector<LivingObject*> World::getMonsters() const
+std::vector<std::shared_ptr<LivingObject>> const& World::getMonsters() const
 {
 	return monsters;
-}
-
-std::vector<FireBall> World::getFireBalls() const
-{
-	return fireballs;
 }
 
 int World::getLastTouchedBlockIndex() const
@@ -364,21 +359,20 @@ int World::getBlockModel(int index) const
 	return blocks[index].getModel();
 }
 
-bool World::isFlagDown() const
-{
-	return flag.isDown();
-}
-
 Screen* World::getScreen() const
 {
 	return screen;
 }
 
-void World::setPlayer(Player* player)
+bool World::isFlagDown() const
 {
-	this->player = player;
+	return flag.isDown();
 }
 
+void World::setPlayer(std::shared_ptr<Player> player)
+{
+	this->player = std::move(player);
+}
 void World::setScreen(Screen* screen)
 {
 	this->screen = screen;
@@ -423,14 +417,14 @@ bool World::isPlayerFinishingWorld()
 
 void World::changeShellMovementParameters(int index, Direction direction)
 {
-	dynamic_cast<Shell*>(monsters[index])->setMovementDirectionAndActiveState(direction);
-	dynamic_cast<Shell*>(monsters[index])->resetCreationTime();
+	std::dynamic_pointer_cast<Shell>(monsters[index])->setMovementDirectionAndActiveState(direction);
+	std::dynamic_pointer_cast<Shell>(monsters[index])->resetCreationTime();
 }
 
 void World::performBlockRemovalActions(int index)
 {
 	addShards(Position(blocks[index].getX(), blocks[index].getY()));
-	handleMonstersAndBlockCollisions(*this, blocks[index], player);
+	handleMonstersAndBlockCollisions(*this, blocks[index], *player);
 	blocks.erase(blocks.begin() + index);
 	player->addPoints(50);
 
@@ -459,32 +453,32 @@ void World::deleteFireBall(int index)
 
 void World::addShell(Position position)
 {
-	monsters.push_back(new Shell(position));
+	monsters.push_back(std::make_shared<Shell>(Shell(position)));
 }
 
 void World::addCrushedCreature(Position position)
 {
-	temporaryElements.push_back(new CrushedCreature(position));
+	temporaryElements.push_back(std::make_shared<CrushedCreature>(CrushedCreature(position)));
 }
 
 void World::addDestroyedCreature(Position position)
 {
-	temporaryElements.push_back(new DestroyedCreature(position));
+	temporaryElements.push_back(std::make_shared<DestroyedCreature>(DestroyedCreature(position)));
 }
 
 void World::addDestroyedTurtle(Position position)
 {
-	temporaryElements.push_back(new DestroyedTurtle(position));
+	temporaryElements.push_back(std::make_shared<DestroyedTurtle>(DestroyedTurtle(position)));
 }
 
 void World::addExplosion(Position position)
 {
-	temporaryElements.push_back(new Explosion(position));
+	temporaryElements.push_back(std::make_shared<Explosion>(Explosion(position)));
 }
 
 void World::addAnimatedText(TextType type, Position position)
 {
-	temporaryElements.push_back(new AnimatedText(type, position));
+	temporaryElements.push_back(std::make_shared<AnimatedText>(AnimatedText(type, position)));
 }
 
 void World::performActions()
@@ -495,15 +489,15 @@ void World::performActions()
 		deleteTemporaryElements();
 		slideTemporaryElements();
 
-		collectBonusIfPossible(player, *this);
-		handlePlayerCollisions(player, *this);
-		handleShellsAndMonstersCollisions(*this, player);
-		handleFireBallsAndMonstersCollisions(*this, player);
+		collectBonusIfPossible(*player, *this);
+		handleShellsAndMonstersCollisions(*this, *player);
+		handleFireBallsAndMonstersCollisions(*this, *player);
 
 		if (isTimeToChangeColors()) {
 			changeColors();
 		}
 	}
+	handlePlayerCollisions(*player, *this);
 }
 
 void World::draw(SDL_Surface* display, int beginningOfScreen, int endOfScreen, bool drawPlayer)
@@ -541,7 +535,6 @@ void World::draw(SDL_Surface* display, int beginningOfScreen, int endOfScreen, b
 
 World::~World()
 {
-	player = nullptr;
 	screen = nullptr;
 }
 

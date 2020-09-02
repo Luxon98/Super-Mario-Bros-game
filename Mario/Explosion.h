@@ -13,7 +13,7 @@ private:
 	static SDL_Surface* explosionImage;
 
 public:
-	Explosion();
+	Explosion() = default;
 	Explosion(Position position);
 	void loadExplosionImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;

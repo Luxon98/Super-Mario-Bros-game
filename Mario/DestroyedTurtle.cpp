@@ -6,8 +6,6 @@
 
 SDL_Surface* DestroyedTurtle::destroyedTurtleImage = nullptr;
 
-DestroyedTurtle::DestroyedTurtle() {}
-
 DestroyedTurtle::DestroyedTurtle(Position position)
 {
 	this->position = position;

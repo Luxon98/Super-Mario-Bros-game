@@ -42,8 +42,6 @@ Size Block::getSizeFromBlockType(BlockType type)
 	}
 }
 
-Block::Block() {}
-
 Block::Block(BlockType type, Position position)
 {
 	model = type;
