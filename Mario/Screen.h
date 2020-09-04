@@ -39,7 +39,7 @@ private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	Camera camera;
-	bool isPlayerExceedingCameraReferencePoint();
+	bool isPlayerExceedingCameraReferencePoint() const;
 	int computeDifference();
 	int computeTime();
 	void loadScreenImages();

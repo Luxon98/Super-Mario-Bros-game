@@ -12,7 +12,7 @@ protected:
 	int auxiliaryCounter;
 
 public:
-	virtual bool shouldBeRemoved() = 0;
+	virtual bool shouldBeRemoved() const = 0;
 	virtual void slide() = 0;
 };
 

@@ -142,11 +142,11 @@ void SoundController::stopMusic()
 SoundController::~SoundController()
 {
 	// there will be only one instance of this class, so destructor can safely clean all sounds
-	for (unsigned int i = 0; i < backgroundTracks.size(); ++i) {
+	for (std::size_t i = 0; i < backgroundTracks.size(); ++i) {
 		Mix_FreeMusic(backgroundTracks[i]);
 	}
 
-	for (unsigned int j = 0; j < soundsEffects.size(); ++j) {
+	for (std::size_t j = 0; j < soundsEffects.size(); ++j) {
 		Mix_FreeChunk(soundsEffects[j]);
 	}
 

@@ -11,7 +11,7 @@ std::array<SDL_Surface*, 2> Mushroom::mushroomImages;
 
 void Mushroom::makeMoveUp(World &world)
 {
-	int alignment = getAlignmentForVerticalMove(Down, movement.getVerticalSpeed(), *this, world);
+	int alignment = getAlignmentForVerticalMove(Direction::Down, movement.getVerticalSpeed(), *this, world);
 	int verticalDistance = movement.getVerticalSpeed() - alignment;
 	position.setY(position.getY() - verticalDistance);
 }
@@ -19,7 +19,7 @@ void Mushroom::makeMoveUp(World &world)
 Mushroom::Mushroom(Position position, bool greenColor)
 {
 	size = Size(32, 32);
-	movement = Movement(1, 2, Right);
+	movement = Movement(1, 2, Direction::Right);
 	this->position = position;
 	stepsCounter = 0;
 	this->greenColor = greenColor;
@@ -27,7 +27,7 @@ Mushroom::Mushroom(Position position, bool greenColor)
 	growCounter = 96;
 }
 
-bool Mushroom::isGreen()
+bool Mushroom::isGreen() const
 {
 	return greenColor;
 }
@@ -50,7 +50,7 @@ void Mushroom::loadMushroomImages(SDL_Surface* display)
 	mushroomImages[1] = loadPNG("./img/mushroom_red.png", display);
 }
 
-void Mushroom::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void Mushroom::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 75 && position.getX() < endOfCamera + 75) {
 		SDL_Surface* mushroomImg = nullptr;

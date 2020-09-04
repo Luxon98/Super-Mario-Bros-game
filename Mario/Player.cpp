@@ -48,12 +48,12 @@ Player::PlayerMovement::PlayerMovement()
 	verticalSpeed = 1;
 }
 
-int Player::computeImageIndex()
+int Player::computeImageIndex() const
 {
-	if (currentState >= Small && currentState <= ImmortalSmallFourth) {
+	if (currentState >= PlayerState::Small && currentState <= PlayerState::ImmortalSmallFourth) {
 		return (model + 66 * flags.orientationFlag + 5 * (static_cast<int>(currentState) - 1));
 	}
-	else if (currentState == ImmortalFourth) {
+	else if (currentState == PlayerState::ImmortalFourth) {
 		return (model + 66 * flags.orientationFlag + 10);
 	}
 	else {
@@ -64,21 +64,21 @@ int Player::computeImageIndex()
 void Player::changeStateDuringAnimation()
 {
 	auto timePoint = std::chrono::steady_clock::now();
-	auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - lastAnimationStartTime).count();
+	auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - animationStartTime).count();
 
-	if (currentAnimationState == Growing) {
+	if (currentAnimationState == PlayerAnimation::Growing) {
 		performGrowingAnimation(static_cast<int>(difference));
 	}
-	else if (currentAnimationState == Shrinking) {
+	else if (currentAnimationState == PlayerAnimation::Shrinking) {
 		performShrinkingAnimation(static_cast<int>(difference));
 	}
-	else if (currentAnimationState == Arming) {
+	else if (currentAnimationState == PlayerAnimation::Arming) {
 		performArmingAnimation(static_cast<int>(difference));
 	}
-	else if (currentAnimationState == Immortal) {
+	else if (currentAnimationState == PlayerAnimation::Immortal) {
 		performImmortalAnimation(static_cast<int>(difference));
 	}
-	else if (currentAnimationState == ImmortalSmall) {
+	else if (currentAnimationState == PlayerAnimation::ImmortalSmall) {
 		performSmallImmortalAnimation(static_cast<int>(difference));
 	}
 }
@@ -95,7 +95,7 @@ void Player::performGrowingAnimation(int difference)
 		size.setHeight(48);
 		position.setY(position.getY() - 8);
 		lastDifference = difference;
-		currentState = Average;
+		currentState = PlayerState::Average;
 	}
 	else if ((difference > 200 && difference < 300 && lastDifference < 200) 
 		|| (difference > 600 && difference < 700 && lastDifference < 600)) {
@@ -103,7 +103,7 @@ void Player::performGrowingAnimation(int difference)
 		size.setHeight(32);
 		position.setY(position.getY() + 8);
 		lastDifference = difference;
-		currentState = Small;
+		currentState = PlayerState::Small;
 	}
 	else if ((difference > 400 && difference < 500 && lastDifference < 400)
 		|| (difference > 800 && difference <= 900 && lastDifference < 800)) {
@@ -111,18 +111,18 @@ void Player::performGrowingAnimation(int difference)
 		size.setHeight(64);
 		position.setY(position.getY() - 8);
 		lastDifference = difference;
-		currentState = Tall;
+		currentState = PlayerState::Tall;
 	}
 	else if (difference >= 500 && difference <= 600 && lastDifference < 500) {
 
 		size.setHeight(48);
 		position.setY(position.getY() + 8);
 		lastDifference = difference;
-		currentState = Average;
+		currentState = PlayerState::Average;
 	}
 	else if (difference > 900) {
 
-		currentAnimationState = NoAnimation;
+		currentAnimationState = PlayerAnimation::NoAnimation;
 		lastDifference = 0;
 		movementBlock = false;
 		resetMovement();
@@ -141,12 +141,12 @@ void Player::performShrinkingAnimation(int difference)
 		}
 
 		lastDifference = difference;
-		currentState = Insensitive;
+		currentState = PlayerState::Insensitive;
 		resetSteps();
 	}
 	else if (difference >= 2000) {
-		currentAnimationState = NoAnimation;
-		currentState = Small;
+		currentAnimationState = PlayerAnimation::NoAnimation;
+		currentState = PlayerState::Small;
 		lastDifference = 0;
 	}
 }
@@ -156,20 +156,20 @@ void Player::performArmingAnimation(int difference)
 	movementBlock = true;
 
 	if (isDifferenceInInterval(difference, 0, 600, 3)) {
-		currentState = ArmedFirst;
+		currentState = PlayerState::ArmedFirst;
 	}
 	else if (isDifferenceInInterval(difference, 150, 600, 3)) {
-		currentState = Tall;
+		currentState = PlayerState::Tall;
 	}
 	else if (isDifferenceInInterval(difference, 300, 600, 3)) {
-		currentState = ArmedSecond;
+		currentState = PlayerState::ArmedSecond;
 	}
 	else if (isDifferenceInInterval(difference, 450, 600, 3)) {
-		currentState = ArmedThird;
+		currentState = PlayerState::ArmedThird;
 	}
 	else {
-		currentAnimationState = NoAnimation;
-		currentState = ArmedFirst;
+		currentAnimationState = PlayerAnimation::NoAnimation;
+		currentState = PlayerState::ArmedFirst;
 		flags.armedFlag = true;
 		lastDifference = 0;
 		movementBlock = false;
@@ -180,20 +180,20 @@ void Player::performArmingAnimation(int difference)
 void Player::performImmortalAnimation(int difference)
 {
 	if (isDifferenceInInterval(difference, 0, 600, 20)) {
-		currentState = ImmortalFirst;
+		currentState = PlayerState::ImmortalFirst;
 	}
 	else if (isDifferenceInInterval(difference, 150, 600, 20)) {
-		currentState = ImmortalSecond;
+		currentState = PlayerState::ImmortalSecond;
 	}
 	else if (isDifferenceInInterval(difference, 300, 600, 20)) {
-		currentState = ImmortalThird;
+		currentState = PlayerState::ImmortalThird;
 	}
 	else if (isDifferenceInInterval(difference, 450, 600, 20)) {
-		currentState = ImmortalFourth;
+		currentState = PlayerState::ImmortalFourth;
 	}
 	else {
-		currentAnimationState = NoAnimation;
-		currentState = (flags.armedFlag ? ArmedFirst : Tall);
+		currentAnimationState = PlayerAnimation::NoAnimation;
+		currentState = (flags.armedFlag ? PlayerState::ArmedFirst : PlayerState::Tall);
 		lastDifference = 0;
 
 		SoundController::stopMusic();
@@ -207,20 +207,20 @@ void Player::performImmortalAnimation(int difference)
 void Player::performSmallImmortalAnimation(int difference)
 {
 	if (isDifferenceInInterval(difference, 0, 600, 20)) {
-		currentState = ImmortalSmallFirst;
+		currentState = PlayerState::ImmortalSmallFirst;
 	}
 	else if (isDifferenceInInterval(difference, 150, 600, 20)) {
-		currentState = ImmortalSmallSecond;
+		currentState = PlayerState::ImmortalSmallSecond;
 	}
 	else if (isDifferenceInInterval(difference, 300, 600, 20)) {
-		currentState = ImmortalSmallThird;
+		currentState = PlayerState::ImmortalSmallThird;
 	}
 	else if (isDifferenceInInterval(difference, 450, 600, 20)) {
-		currentState = ImmortalSmallFourth;
+		currentState = PlayerState::ImmortalSmallFourth;
 	}
 	else {
-		currentAnimationState = NoAnimation;
-		currentState = Small;
+		currentAnimationState = PlayerAnimation::NoAnimation;
+		currentState = PlayerState::Small;
 		lastDifference = 0;
 
 		SoundController::stopMusic();
@@ -259,17 +259,17 @@ void Player::changeModelAndAirFlagStatus(World &world)
 	}
 }
 
-bool Player::isHittingCeiling(int distance)
+bool Player::isHittingCeiling(int distance) const
 {
 	return (position.getY() - distance - getHeight() / 2 < 0);
 }
 
-bool Player::isFallingIntoAbyss(int distance)
+bool Player::isFallingIntoAbyss(int distance) const
 {
 	return (position.getY() + distance + getHeight() / 2 > World::WORLD_HEIGHT);
 }
 
-bool Player::isGoingBeyondCamera(int distance, int beginningOfCamera)
+bool Player::isGoingBeyondCamera(int distance, int beginningOfCamera) const
 {
 	if (position.getX() - beginningOfCamera - distance <= getWidth() / 2) {
 		return true;
@@ -278,23 +278,23 @@ bool Player::isGoingBeyondCamera(int distance, int beginningOfCamera)
 	return false;
 }
 
-bool Player::isHittingBlock(int alignment, Direction direction)
+bool Player::isHittingBlock(int alignment, Direction direction) const
 {
-	if (alignment > 0 && direction == Up) {
+	if (alignment > 0 && direction == Direction::Up) {
 		return true;
 	}
 
 	return false;
 }
 
-bool Player::isDuringAnimation()
+bool Player::isDuringAnimation() const
 {
-	return (currentAnimationState != NoAnimation);
+	return (currentAnimationState != PlayerAnimation::NoAnimation);
 }
 
 void Player::moveLeft(World &world)
 {
-	int alignment = getAlignmentForHorizontalMove(Left, playerMovement.getSpeed(), *this, world);
+	int alignment = getAlignmentForHorizontalMove(Direction::Left, playerMovement.getSpeed(), *this, world);
 	int distance = playerMovement.getSpeed() - alignment;
 
 	if (!isGoingBeyondCamera(distance, world.getScreen()->getBeginningOfCamera())) {
@@ -313,7 +313,7 @@ void Player::moveLeft(World &world)
 
 void Player::moveRight(World &world)
 {
-	int alignment = getAlignmentForHorizontalMove(Right, playerMovement.getSpeed(), *this, world);
+	int alignment = getAlignmentForHorizontalMove(Direction::Right, playerMovement.getSpeed(), *this, world);
 	int distance = playerMovement.getSpeed() - alignment;
 
 	position.setX(position.getX() + distance);
@@ -330,7 +330,7 @@ void Player::moveRight(World &world)
 
 void Player::moveUp(World &world)
 {
-	int alignment = getAlignmentForVerticalMove(Up, playerMovement.getVerticalSpeed(), *this, world);
+	int alignment = getAlignmentForVerticalMove(Direction::Up, playerMovement.getVerticalSpeed(), *this, world);
 	int distance = playerMovement.getVerticalSpeed() - alignment;
 
 	if (!isHittingCeiling(distance)) {
@@ -340,7 +340,7 @@ void Player::moveUp(World &world)
 		playerMovement.stepsUp = 1;
 	}
 
-	if (isHittingBlock(alignment, Up)) {
+	if (isHittingBlock(alignment, Direction::Up)) {
 		hitBlock(world);
 		playerMovement.stepsUp = 0;
 	}
@@ -355,7 +355,7 @@ void Player::moveUp(World &world)
 
 void Player::moveDown(World &world)
 {
-	int alignment = getAlignmentForVerticalMove(Down, playerMovement.getVerticalSpeed(), *this, world);
+	int alignment = getAlignmentForVerticalMove(Direction::Down, playerMovement.getVerticalSpeed(), *this, world);
 	int distance = playerMovement.getVerticalSpeed() - alignment;
 
 	if (!isFallingIntoAbyss(distance)) {
@@ -382,8 +382,8 @@ Player::Player(Position position)
 	model = 0;
 	changeModelCounter = 0;
 	lastDifference = 0;
-	currentAnimationState = NoAnimation;
-	currentState = Small;
+	currentAnimationState = PlayerAnimation::NoAnimation;
+	currentState = PlayerState::Small;
 	movementBlock = false;
 }
 
@@ -404,7 +404,7 @@ int Player::getLives() const
 
 bool Player::isSmall() const
 {
-	return (currentState == Small);
+	return (currentState == PlayerState::Small);
 }
 
 bool Player::isArmed() const
@@ -414,12 +414,13 @@ bool Player::isArmed() const
 
 bool Player::isInsensitive() const
 {
-	return (currentState == Insensitive);
+	return (currentState == PlayerState::Insensitive);
 }
 
 bool Player::isImmortal() const
 {
-	return (currentState != Insensitive && currentState >= ImmortalFirst && currentState <= ImmortalSmallFourth);
+	return (currentState != PlayerState::Insensitive && currentState >= PlayerState::ImmortalFirst 
+		&& currentState <= PlayerState::ImmortalSmallFourth);
 }
 
 bool Player::isDead() const
@@ -432,18 +433,19 @@ bool Player::isTurnedRight() const
 	return flags.orientationFlag;
 }
 
-int Player::getDeadMarioImageIndex()
+int Player::getDeadMarioImageIndex() const
 {
-	if (currentState == ArmedFirst || currentState == ImmortalFourth || currentState == ImmortalSmallFourth) {
+	if (currentState == PlayerState::ArmedFirst || currentState == PlayerState::ImmortalFourth 
+		|| currentState == PlayerState::ImmortalSmallFourth) {
 		return 1;
 	}
-	else if (currentState == ImmortalFirst || currentState == ImmortalSmallFirst) {
+	else if (currentState == PlayerState::ImmortalFirst || currentState == PlayerState::ImmortalSmallFirst) {
 		return 2;
 	}
-	else if (currentState == ImmortalSecond || currentState == ImmortalSmallSecond) {
+	else if (currentState == PlayerState::ImmortalSecond || currentState == PlayerState::ImmortalSmallSecond) {
 		return 3;
 	}
-	else if (currentState == ImmortalThird || currentState == ImmortalSmallThird) {
+	else if (currentState == PlayerState::ImmortalThird || currentState == PlayerState::ImmortalSmallThird) {
 		return 4;
 	}
 
@@ -481,12 +483,12 @@ void Player::addPoints(int pts)
 void Player::setCurrentAnimation(PlayerAnimation animation)
 {
 	currentAnimationState = animation;
-	lastAnimationStartTime = std::chrono::steady_clock::now();
+	animationStartTime = std::chrono::steady_clock::now();
 }
 
 void Player::loadPlayerImages(SDL_Surface* display)
 {
-	for (unsigned int i = 0; i < playerImages.size() / 2; ++i) {
+	for (std::size_t i = 0; i < playerImages.size() / 2; ++i) {
 		std::string filename = "./img/mario_left";
 		filename += std::to_string(i + 1);
 		filename += ".png";
@@ -496,7 +498,7 @@ void Player::loadPlayerImages(SDL_Surface* display)
 	}
 }
 
-void Player::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void Player::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	int index = computeImageIndex();
 	SDL_Surface* playerImg = playerImages[index];
@@ -505,10 +507,10 @@ void Player::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 
 void Player::hitBlock(World &world)
 {
-	if ((currentState >= Tall && currentState <= ImmortalFourth) 
-		&& world.getBlockModel(world.getLastTouchedBlockIndex()) == Destructible) {
+	if ((currentState >= PlayerState::Tall && currentState <= PlayerState::ImmortalFourth)
+		&& world.getLastTouchedBlockType() == BlockType::Destructible) {
 		
-		world.performBlockRemovalActions(world.getLastTouchedBlockIndex());
+		world.destroyLastTouchedBlock();
 	}
 	else {
 		world.hitBlock();
@@ -517,10 +519,10 @@ void Player::hitBlock(World &world)
 
 void Player::loseBonusOrLife()
 {
-	if (currentState == Tall || currentState == ArmedFirst) {
-		currentAnimationState = Shrinking;
+	if (currentState == PlayerState::Tall || currentState == PlayerState::ArmedFirst) {
+		currentAnimationState = PlayerAnimation::Shrinking;
 		flags.armedFlag = false;
-		lastAnimationStartTime = std::chrono::steady_clock::now();
+		animationStartTime = std::chrono::steady_clock::now();
 		SoundController::playBonusLostEffect();
 	}
 	else if (!isDuringAnimation()) {
@@ -575,8 +577,8 @@ void Player::reborn()
 	changeModelCounter = 0;
 	flags.setDefaultFlags();
 	lastDifference = 0;
-	currentState = Small;
-	currentAnimationState = NoAnimation;
+	currentState = PlayerState::Small;
+	currentAnimationState = PlayerAnimation::NoAnimation;
 	movementBlock = false;
 	resetMovement();
 }
@@ -591,7 +593,7 @@ void Player::resetSteps()
 
 void Player::setFinishingRunParameters()
 {
-	int posY = (currentState != Small ? 384 : 392);
+	int posY = (currentState == PlayerState::Small ? 400 : 384);
 	position.setXY(6400, posY);
 	resetMovement();
 	playerMovement.stepsRight = 140;

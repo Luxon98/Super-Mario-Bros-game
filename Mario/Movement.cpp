@@ -40,14 +40,16 @@ void Movement::setVerticalSpeed(int verticalSpeed)
 
 void Movement::setDirection(Direction direction)
 {
-	if (direction == Left || direction == Right || direction == None) {
+	if (direction == Direction::Left || direction == Direction::Right || direction == Direction::None) {
 		this->direction = direction;
 	}
 }
 
 void Movement::setVerticalDirection(Direction verticalDirection)
 {
-	if (verticalDirection == Up || verticalDirection == Down || verticalDirection == None) {
+	if (verticalDirection == Direction::Up || verticalDirection == Direction::Down 
+		|| verticalDirection == Direction::None) {
+
 		this->verticalDirection = verticalDirection;
 	}
 }

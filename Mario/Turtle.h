@@ -6,7 +6,7 @@
 
 class World;
 class Position;
-enum Direction;
+enum class Direction;
 struct SDL_Surface;
 
 
@@ -22,7 +22,7 @@ public:
 	Turtle(Position position);
 	void setMoveDirection(Direction direction);
 	void loadTurtleImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };
 

@@ -18,14 +18,14 @@ void DestroyedCreature::loadDestroyedCreatureImage(SDL_Surface* display)
 	destroyedCreatureImage = loadPNG("./img/destroyed_creature.png", display);
 }
 
-void DestroyedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void DestroyedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 70 && position.getX() < endOfCamera + 70) {
 		drawSurface(display, destroyedCreatureImage, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 
-bool DestroyedCreature::shouldBeRemoved()
+bool DestroyedCreature::shouldBeRemoved() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
 	return (creationTime + std::chrono::milliseconds(2000) < timePoint);

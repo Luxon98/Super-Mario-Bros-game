@@ -22,15 +22,15 @@ void AnimatedText::loadAnimatedTextImages(SDL_Surface* display)
 	animatedTextImages[4] = loadPNG("./img/1UP.png", display);
 }
 
-void AnimatedText::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void AnimatedText::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
-		SDL_Surface* animatedTextImg = animatedTextImages[type - 1];
+		SDL_Surface* animatedTextImg = animatedTextImages[static_cast<int>(type) - 1];
 		drawSurface(display, animatedTextImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 
-bool AnimatedText::shouldBeRemoved()
+bool AnimatedText::shouldBeRemoved() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
 	return (auxiliaryCounter > 150);

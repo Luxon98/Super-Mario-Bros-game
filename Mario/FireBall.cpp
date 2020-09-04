@@ -25,7 +25,7 @@ void FireBall::makeVerticalMove(World &world)
 {
 	int alignment = getAlignmentForHorizontalMove(movement.getDirection(), movement.getSpeed(), *this, world);
 	int distance = movement.getSpeed() - alignment;
-	if (movement.getDirection() == Left) {
+	if (movement.getDirection() == Direction::Left) {
 		distance *= -1;
 	}
 	position.setX(position.getX() + distance);
@@ -41,23 +41,25 @@ void FireBall::makeHorizontalMove(World &world)
 	int alignment = getAlignmentForVerticalMove(movement.getVerticalDirection(), movement.getVerticalSpeed(), 
 		*this, world);
 	int verticalDistance = movement.getVerticalSpeed() - alignment;
-	if (movement.getVerticalDirection() == Up) {
+	if (movement.getVerticalDirection() == Direction::Up) {
 		verticalDistance *= -1;
 	}
 	position.setY(position.getY() + verticalDistance);
 
 	computeModelIndex();
 
-	if (movement.getVerticalDirection() == Up) {
+	if (movement.getVerticalDirection() == Direction::Up) {
 		stepsUp++;
 	}
 
 	if (alignment > 0) {
-		movement.setVerticalDirection(movement.getVerticalDirection() == Down ? Up : Down);
+		movement.setVerticalDirection(
+			movement.getVerticalDirection() == Direction::Down ? Direction::Up : Direction::Down);
+
 		stepsUp = 0;
 	}
-	else if (stepsUp % 20 == 0 && movement.getVerticalDirection() == Up) {
-		movement.setVerticalDirection(Down);
+	else if (stepsUp % 20 == 0 && movement.getVerticalDirection() == Direction::Up) {
+		movement.setVerticalDirection(Direction::Down);
 		stepsUp = 0;
 	}
 }
@@ -65,7 +67,7 @@ void FireBall::makeHorizontalMove(World &world)
 FireBall::FireBall(Position position, Direction direction)
 {
 	size = Size(16, 16);
-	movement = Movement(3, 2, direction, Down);
+	movement = Movement(3, 2, direction, Direction::Down);
 	this->position = position;
 	changeModelCounter = 0;
 	stepsUp = 0;
@@ -73,14 +75,14 @@ FireBall::FireBall(Position position, Direction direction)
 	stop = false;
 }
 
-bool FireBall::shouldBeRemoved()
+bool FireBall::shouldBeRemoved() const
 {
 	return stop;
 }
 
 void FireBall::loadFireBallImages(SDL_Surface* display)
 {
-	for (unsigned int i = 0; i < fireBallImages.size(); ++i) {
+	for (std::size_t i = 0; i < fireBallImages.size(); ++i) {
 		std::string filename = "./img/fireball";
 		filename += std::to_string(i + 1);
 		filename += ".png";
@@ -88,7 +90,7 @@ void FireBall::loadFireBallImages(SDL_Surface* display)
 	}
 }
 
-void FireBall::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void FireBall::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
 		SDL_Surface* fireballImg = nullptr;

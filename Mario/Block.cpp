@@ -10,18 +10,18 @@ std::array<SDL_Surface*, 10> Block::blockImages;
 
 bool Block::changesChecker = true;
 
-int Block::computeImageIndex()
+int Block::computeImageIndex() const
 {
-	if (model <= Destructible) {
-		return model - 1;
+	if (type <= BlockType::Destructible) {
+		return (static_cast<int>(type) - 1);
 	}
-	else if (model == Monetary || model == BonusWithStar) {
+	else if (type == BlockType::Monetary || type == BlockType::BonusWithStar) {
 		return 3;
 	}
-	else if (model == Tube || model == TubeEntry) {
-		return model - 4;
+	else if (type == BlockType::Tube || type == BlockType::TubeEntry) {
+		return (static_cast<int>(type) - 4);
 	}
-	else if (model == BonusWithGreenMushroom) {
+	else if (type == BlockType::BonusWithGreenMushroom) {
 		return 9;
 	}
 	else {
@@ -31,10 +31,10 @@ int Block::computeImageIndex()
 
 Size Block::getSizeFromBlockType(BlockType type)
 {
-	if (type == Tube) {
+	if (type == BlockType::Tube) {
 		return Size(56, 34);
 	}
-	else if (type == TubeEntry) {
+	else if (type == BlockType::TubeEntry) {
 		return Size(64, 31);
 	}
 	else {
@@ -44,10 +44,10 @@ Size Block::getSizeFromBlockType(BlockType type)
 
 Block::Block(BlockType type, Position position)
 {
-	model = type;
+	this->type = type;
 	this->position = position;
 	size = getSizeFromBlockType(type);
-	availableCoins = (type == Monetary ? 10 : 0);
+	availableCoins = (type == BlockType::Monetary ? 10 : 0);
 	initialPositionY = position.getY();
 }
 
@@ -56,23 +56,23 @@ int Block::getAvailableCoins() const
 	return availableCoins;
 }
 
-bool Block::canBeHitted()
+bool Block::canBeHitted() const
 {
 	return (position.getY() == initialPositionY);
 }
 
-bool Block::isInvisible()
+bool Block::isInvisible() const
 {
-	if (model == BonusWithGreenMushroom) {
+	if (type == BlockType::BonusWithGreenMushroom) {
 		return true;
 	}
 
 	return false;
 }
 
-void Block::setModel(BlockType type)
+BlockType Block::getType() const
 {
-	model = type;
+	return type;
 }
 
 void Block::setAvailableCoins(int coins)
@@ -80,6 +80,11 @@ void Block::setAvailableCoins(int coins)
 	if (coins >= 0) {
 		availableCoins = coins;
 	}
+}
+
+void Block::setType(BlockType type)
+{
+	this->type = type;
 }
 
 void Block::addToPositionY(int y)
@@ -108,7 +113,7 @@ void Block::loadBlockImages(SDL_Surface* display)
 	blockImages[9] = loadPNG("./img/block_empty.png", display);
 }
 
-void Block::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void Block::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
 		SDL_Surface* blockImg = nullptr;

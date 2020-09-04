@@ -29,7 +29,7 @@ void Flower::loadFlowerImages(SDL_Surface* display)
 	flowerImages[1] = loadPNG("./img/flower2.png", display);
 }
 
-void Flower::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void Flower::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
 		SDL_Surface* flowerImg = nullptr;

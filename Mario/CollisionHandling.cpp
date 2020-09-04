@@ -19,25 +19,25 @@
 #include "AnimatedText.h"
 
 
-bool isCharacterHittingBlock(WorldObject &object, Block &block, Direction direction, int distance)
+bool isCharacterHittingBlock(const WorldObject &object, const Block &block, Direction direction, int distance)
 {
-	if (direction == Right && object.getX() < block.getX() && object.getX() + distance + object.getWidth() / 2 
-		>= block.getX() - block.getWidth() / 2) {
+	if (direction == Direction::Right && object.getX() < block.getX() 
+		&& object.getX() + distance + object.getWidth() / 2 >= block.getX() - block.getWidth() / 2) {
 
 		return true;
 	}
-	else if (direction == Left && object.getX() > block.getX() && object.getX() - distance - object.getWidth() / 2 
-		<= block.getX() + block.getWidth() / 2) {
+	else if (direction == Direction::Left && object.getX() > block.getX() 
+		&& object.getX() - distance - object.getWidth() / 2 <= block.getX() + block.getWidth() / 2) {
 
 		return true;
 	}
-	else if (direction == Up && object.getY() > block.getY() && object.getY() - distance - object.getHeight() / 2 
-		<= block.getY() + block.getHeight() / 2) {
+	else if (direction == Direction::Up && object.getY() > block.getY() 
+		&& object.getY() - distance - object.getHeight() / 2 <= block.getY() + block.getHeight() / 2) {
 
 		return true;
 	}
-	else if (direction == Down && object.getY() < block.getY() && object.getY() + distance + object.getHeight() / 2 
-		>= block.getY() - block.getHeight() / 2) {
+	else if (direction == Direction::Down && object.getY() < block.getY() 
+		&& object.getY() + distance + object.getHeight() / 2 >= block.getY() - block.getHeight() / 2) {
 
 		return true;
 	}
@@ -45,12 +45,12 @@ bool isCharacterHittingBlock(WorldObject &object, Block &block, Direction direct
 	return false;
 }
 
-bool isCharacterStandingOnTheBlock(WorldObject &object, World &world)
+bool isCharacterStandingOnTheBlock(const WorldObject &object, const World &world)
 {
 	std::vector<Block> blocks = world.getBlocks();
-	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
-		if (object.getY() + object.getHeight() / 2 == it->getY() - it->getHeight() / 2 
-			&& areAtTheSameWidth(object, *it) && !it->isInvisible()) {
+	for (auto &block : blocks) {
+		if (object.getY() + object.getHeight() / 2 == block.getY() - block.getHeight() / 2
+			&& areAtTheSameWidth(object, block) && !block.isInvisible()) {
 
 			return true;
 		}
@@ -59,7 +59,7 @@ bool isCharacterStandingOnTheBlock(WorldObject &object, World &world)
 	return false;
 }
 
-bool isMonsterStandingOnTheBlock(LivingObject &object, Block &block)
+bool isMonsterStandingOnTheBlock(const LivingObject &object, const Block &block)
 {
 	if (abs((object.getY() + object.getHeight() / 2) - (block.getY() - block.getHeight() / 2)) < 2 
 		&& areAtTheSameWidth(object, block)) {
@@ -70,14 +70,14 @@ bool isMonsterStandingOnTheBlock(LivingObject &object, Block &block)
 	return false;
 }
 
-bool isMushroomStandingOnTheBlock(World &world, int index)
+bool isMushroomStandingOnTheBlock(const World &world, int index)
 {
-	std::vector<std::shared_ptr<BonusObject>> elements = world.getBonusElements();
+	std::vector<std::shared_ptr<BonusObject>> bonusElements = world.getBonusElements();
 	std::vector<Block> blocks = world.getBlocks();
-	for (auto it = elements.begin(); it != elements.end(); ++it) {
-		if (std::dynamic_pointer_cast<Mushroom>(*it)) {
-			if (((*it)->getY() + (*it)->getHeight() / 2) == blocks[index].getY() - blocks[index].getHeight() / 2 
-				&& areAtTheSameWidth(**it, blocks[index])) {
+	for (auto bonusElement : bonusElements) {
+		if (std::dynamic_pointer_cast<Mushroom>(bonusElement)) {
+			if ((bonusElement->getY() + bonusElement->getHeight() / 2) == (blocks[index].getY() 
+				- blocks[index].getHeight() / 2) && areAtTheSameWidth(*bonusElement, blocks[index])) {
 
 				return true;
 			}
@@ -86,7 +86,7 @@ bool isMushroomStandingOnTheBlock(World &world, int index)
 	return false;
 }
 
-bool areAtTheSameWidth(WorldObject &object, Block &block)
+bool areAtTheSameWidth(const WorldObject &object, const Block &block)
 {
 	if (object.getX() + object.getWidth() / 2 > block.getX() - block.getWidth() / 2 
 		&& object.getX() <= block.getX()) {
@@ -102,7 +102,7 @@ bool areAtTheSameWidth(WorldObject &object, Block &block)
 	return false;
 }
 
-bool areAtTheSameHeight(WorldObject &object, Block &block)
+bool areAtTheSameHeight(const WorldObject &object, const Block &block)
 {
 	if (object.getY() >= block.getY() && object.getY() - object.getHeight() / 2 
 		< block.getY() + block.getHeight() / 2) {
@@ -118,7 +118,7 @@ bool areAtTheSameHeight(WorldObject &object, Block &block)
 	return false;
 }
 
-bool areAtTheSameWidth(WorldObject &firstObject, WorldObject &secondObject)
+bool areAtTheSameWidth(const WorldObject &firstObject, const WorldObject &secondObject)
 {
 	if (firstObject.getX() + firstObject.getWidth() / 2 > secondObject.getX() - secondObject.getWidth() / 2 
 		&& firstObject.getX() <= secondObject.getX()) {
@@ -134,7 +134,7 @@ bool areAtTheSameWidth(WorldObject &firstObject, WorldObject &secondObject)
 	return false;
 }
 
-bool areAtTheSameHeight(WorldObject &firstObject, WorldObject &secondObject)
+bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secondObject)
 {
 	if (firstObject.getY() >= secondObject.getY() && firstObject.getY() - firstObject.getHeight() / 2 
 		< secondObject.getY() + secondObject.getHeight() / 2) {
@@ -150,7 +150,7 @@ bool areAtTheSameHeight(WorldObject &firstObject, WorldObject &secondObject)
 	return false;
 }
 
-bool isPlayerJumpingOnMonster(Player &player, LivingObject& monster)
+bool isPlayerJumpingOnMonster(const Player &player, const LivingObject &monster)
 {
 	return (monster.getY() - player.getY() > 25);
 }
@@ -166,11 +166,11 @@ void handlePlayerCollisions(Player &player, World &world)
 
 				if (std::dynamic_pointer_cast<Shell>(*it)) {
 					if (std::dynamic_pointer_cast<Shell>(*it)->isActive()) {
-						world.changeShellMovementParameters(i, None);
+						world.changeShellMovementParameters(i, Direction::None);
 					}
 					else {
 						Direction direction = (player.getX() >= std::dynamic_pointer_cast<Shell>(*it)->getX() 
-							? Left : Right);
+							? Direction::Left : Direction::Right);
 
 						world.changeShellMovementParameters(i, direction);
 					}
@@ -185,14 +185,14 @@ void handlePlayerCollisions(Player &player, World &world)
 						std::dynamic_pointer_cast<Creature>(*it)->getY() + 8));
 				}
 				player.addPoints(100);
-				world.addAnimatedText(ONE_HUNDRED, Position(player.getX() - 22, player.getY() - 22));
+				world.addAnimatedText(TextType::ONE_HUNDRED, Position(player.getX() - 22, player.getY() - 22));
 				world.deleteMonster(i);
 				SoundController::playEnemyDestroyedEffect();
 			}
 			else {
 				if (std::dynamic_pointer_cast<Shell>(*it) && !(std::dynamic_pointer_cast<Shell>(*it)->isActive())) {
 					Direction direction = (player.getX() >= std::dynamic_pointer_cast<Shell>(*it)->getX() 
-						? Left : Right);
+						? Direction::Left : Direction::Right);
 
 					world.changeShellMovementParameters(i, direction);
 					break;
@@ -208,7 +208,7 @@ void handlePlayerCollisions(Player &player, World &world)
 						world.addDestroyedCreature(Position((*it)->getX(), (*it)->getY()));
 					}
 					player.addPoints(100);
-					world.addAnimatedText(ONE_HUNDRED, Position(player.getX() - 22, player.getY() - 22));
+					world.addAnimatedText(TextType::ONE_HUNDRED, Position(player.getX() - 22, player.getY() - 22));
 					world.deleteMonster(i);
 					SoundController::playEnemyDestroyedEffect();
 				}
@@ -241,7 +241,7 @@ void handleShellsAndMonstersCollisions(World &world, Player &player)
 					world.deleteMonster(i);
 					SoundController::playEnemyDestroyedEffect();
 					player.addPoints(200);
-					world.addAnimatedText(TWO_HUNDRED, Position((*it)->getX() - 20, (*it)->getY() - 15));
+					world.addAnimatedText(TextType::TWO_HUNDRED, Position((*it)->getX() - 20, (*it)->getY() - 15));
 				}
 			}
 		}
@@ -257,7 +257,7 @@ void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 		int j = 0;
 		for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2, ++j) {
 			if (areAtTheSameWidth(*it, **it2) && areAtTheSameHeight(*it, **it2)) {
-				int alignment = (fireballs[i].getMovement().getDirection() == Left ? -5 : 5);
+				int alignment = (fireballs[i].getMovement().getDirection() == Direction::Left ? -5 : 5);
 
 				if (std::dynamic_pointer_cast<Creature>(*it2)) {
 					world.addDestroyedCreature(Position((*it2)->getX() + alignment, (*it2)->getY()));
@@ -270,7 +270,9 @@ void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 				SoundController::playEnemyDestroyedEffect();
 
 				player.addPoints(100);
-				world.addAnimatedText(ONE_HUNDRED, Position(fireballs[i].getX() - 22, fireballs[i].getY() - 22));
+				world.addAnimatedText(TextType::ONE_HUNDRED, Position(fireballs[i].getX() - 22, 
+					fireballs[i].getY() - 22));
+
 				world.addExplosion(Position(it->getX(), it->getY()));
 				world.deleteFireBall(i);
 			}
@@ -278,7 +280,7 @@ void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 	}
 }
 
-void handleMonstersAndBlockCollisions(World &world, Block &block, Player &player)
+void handleMonstersAndBlockCollisions(World &world, const Block &block, Player &player)
 {
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
 	int i = 0;
@@ -292,7 +294,7 @@ void handleMonstersAndBlockCollisions(World &world, Block &block, Player &player
 			}
 
 			player.addPoints(100);
-			world.addAnimatedText(ONE_HUNDRED, Position((*it)->getX(), (*it)->getY() - 15));
+			world.addAnimatedText(TextType::ONE_HUNDRED, Position((*it)->getX(), (*it)->getY() - 15));
 			world.deleteMonster(i);
 			SoundController::playEnemyDestroyedEffect();
 		}
@@ -317,7 +319,7 @@ void collectCoinIfPossible(Player &player, World &world)
 void collectMushroom(Mushroom &mushroom, int index, Player &player, World &world)
 {
 	if (!mushroom.isGreen()) {
-		player.setCurrentAnimation(Growing);
+		player.setCurrentAnimation(PlayerAnimation::Growing);
 		SoundController::playBonusCollectedEffect();
 	}
 	else {
@@ -325,7 +327,7 @@ void collectMushroom(Mushroom &mushroom, int index, Player &player, World &world
 		SoundController::playNewLiveAddedEffect();
 	}
 
-	TextType type = (!mushroom.isGreen() ? ONE_THOUSAND : ONE_UP);
+	TextType type = (!mushroom.isGreen() ? TextType::ONE_THOUSAND : TextType::ONE_UP);
 	world.addAnimatedText(type, Position(player.getX(), player.getY() - 20));
 	world.deleteLivingElement(index);
 	player.addPoints(1000);
@@ -334,10 +336,10 @@ void collectMushroom(Mushroom &mushroom, int index, Player &player, World &world
 void collectFlower(Player &player, World &world)
 {
 	if (player.isSmall()) {
-		player.setCurrentAnimation(Growing);
+		player.setCurrentAnimation(PlayerAnimation::Growing);
 	}
 	else if (!player.isImmortal() && !player.isArmed()) {
-		player.setCurrentAnimation(Arming);
+		player.setCurrentAnimation(PlayerAnimation::Arming);
 	}
 
 	SoundController::playBonusCollectedEffect();
@@ -346,10 +348,10 @@ void collectFlower(Player &player, World &world)
 void collectStar(Player &player, World &world)
 {
 	if (player.isSmall()) {
-		player.setCurrentAnimation(ImmortalSmall);
+		player.setCurrentAnimation(PlayerAnimation::ImmortalSmall);
 	}
 	else {
-		player.setCurrentAnimation(Immortal);
+		player.setCurrentAnimation(PlayerAnimation::Immortal);
 	}
 	player.increaseSpeed();
 
@@ -362,7 +364,7 @@ void collectBonusIfPossible(Player &player, World &world)
 	std::vector<std::shared_ptr<BonusObject>> elements = world.getBonusElements();
 	int i = 0;
 	for (auto it = elements.begin(); it != elements.end(); ++it, ++i) {
-		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it)) {
+		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it) && (*it)->isActive()) {
 			if (std::dynamic_pointer_cast<Mushroom>(*it)) {
 				collectMushroom(dynamic_cast<Mushroom&>(**it), i, player, world);
 				break;
@@ -376,28 +378,28 @@ void collectBonusIfPossible(Player &player, World &world)
 
 			world.deleteLivingElement(i);
 			player.addPoints(1000);
-			world.addAnimatedText(ONE_THOUSAND, Position(player.getX(), player.getY() - 20));
+			world.addAnimatedText(TextType::ONE_THOUSAND, Position(player.getX(), player.getY() - 20));
 		}
 	}
 }
 
-int getAlignmentForHorizontalMove(Direction direction, int distance, WorldObject &object, World &world)
+int getAlignmentForHorizontalMove(Direction direction, int distance, const WorldObject &object, const World &world)
 {
 	std::vector<Block> blocks = world.getBlocks();
 	int alignment = 0;
-	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
-		if (areAtTheSameHeight(object, *it) && isCharacterHittingBlock(object, *it, direction, distance) 
-			&& !it->isInvisible()) {
+	for (auto &block : blocks) {
+		if (areAtTheSameHeight(object, block) && isCharacterHittingBlock(object, block, direction, distance)
+			&& !block.isInvisible()) {
 
-			if ((object.getX() + distance + object.getWidth() / 2) - (it->getX() - it->getWidth() / 2) > alignment 
-				&& direction == Right) {
+			if ((object.getX() + distance + object.getWidth() / 2) - (block.getX() - block.getWidth() / 2) > alignment
+				&& direction == Direction::Right) {
 
-				alignment = (object.getX() + distance + object.getWidth() / 2) - (it->getX() - it->getWidth() / 2);
+				alignment = (object.getX() + distance + object.getWidth() / 2) - (block.getX() - block.getWidth() / 2);
 			}
-			else if ((it->getX() + it->getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2) 
-				> alignment && direction == Left) {
+			else if ((block.getX() + block.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2)
+				> alignment && direction == Direction::Left) {
 				
-				alignment = (it->getX() + it->getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2);
+				alignment = (block.getX() + block.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2);
 			}
 		}
 	}
@@ -406,20 +408,20 @@ int getAlignmentForHorizontalMove(Direction direction, int distance, WorldObject
 }
 
 // this method additionaly set the last touched block
-int getAlignmentForVerticalMove(Direction direction, int distance, WorldObject &object, World &world)
+int getAlignmentForVerticalMove(Direction direction, int distance, const WorldObject &object, World &world)
 {
 	std::vector<Block> blocks = world.getBlocks();
 	int alignment = 0;
 	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
 		if (areAtTheSameWidth(object, *it) && isCharacterHittingBlock(object, *it, direction, distance)) {
 			if ((it->getY() + it->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2) 
-				> alignment && direction == Up) {
+				> alignment && direction == Direction::Up) {
 
 				world.setLastTouchedBlock(it - blocks.begin());	// 
 				alignment = (it->getY() + it->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2);
 			}
 			else if ((object.getY() + distance + object.getHeight() / 2) - (it->getY() - it->getHeight() / 2) 
-				> alignment && direction == Down && !it->isInvisible()) {
+				> alignment && direction == Direction::Down && !it->isInvisible()) {
 				
 				alignment = (object.getY() + distance + object.getHeight() / 2) - (it->getY() - it->getHeight() / 2);
 			}

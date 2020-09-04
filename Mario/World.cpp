@@ -25,7 +25,7 @@
 #include "SoundController.h"
 
 
-bool World::isTimeToChangeColors()
+bool World::isTimeToChangeColors() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
 	if (std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - lastColoursUpdateTime).count() >= 750) {
@@ -35,7 +35,7 @@ bool World::isTimeToChangeColors()
 	return false;
 }
 
-bool World::isPlayerCloseEnough(LivingObject& monster)
+bool World::isPlayerCloseEnough(LivingObject &monster) const
 {
 	if (monster.getX() < player->getX() + 2 * CAMERA_REFERENCE_POINT) {
 		return true;
@@ -44,10 +44,10 @@ bool World::isPlayerCloseEnough(LivingObject& monster)
 	return false;
 }
 
-bool World::hasLastTouchedBlockCoin()
+bool World::hasLastTouchedBlockCoin() const
 {
-	if (blocks[lastTouchedBlockIndex].getModel() == Monetary ||
-		blocks[lastTouchedBlockIndex].getModel() == BonusWithCoin) {
+	if (blocks[lastTouchedBlockIndex].getType() == BlockType::Monetary ||
+		blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithCoin) {
 
 		return true;
 	}
@@ -55,10 +55,10 @@ bool World::hasLastTouchedBlockCoin()
 	return false;
 }
 
-bool World::isLastTouchedBlockBonus()
+bool World::isLastTouchedBlockBonus() const
 {
-	if (blocks[lastTouchedBlockIndex].getModel() >= BonusWithRedMushroom
-		&& blocks[lastTouchedBlockIndex].getModel() <= BonusWithStar) {
+	if (blocks[lastTouchedBlockIndex].getType() >= BlockType::BonusWithRedMushroom
+		&& blocks[lastTouchedBlockIndex].getType() <= BlockType::BonusWithStar) {
 
 		return true;
 	}
@@ -75,22 +75,23 @@ void World::changeColors()
 	Flower::changeFlowerImage();
 }
 
-void World::setMovementDirection(LivingObject& monster)
+void World::setMovementDirection(LivingObject &monster)
 {
 	if (dynamic_cast<Turtle*>(&monster)) {
-		dynamic_cast<Turtle*>(&monster)->setMoveDirection(Left);
+		dynamic_cast<Turtle*>(&monster)->setMoveDirection(Direction::Left);
 	}
 	else if (dynamic_cast<Creature*>(&monster)) {
-		dynamic_cast<Creature*>(&monster)->setMoveDirection(Left);
+		dynamic_cast<Creature*>(&monster)->setMoveDirection(Direction::Left);
 	}
 }
 
 void World::deleteTemporaryElements()
 {
-	for (unsigned int i = 0; i < temporaryElements.size(); ++i) {
+	for (std::size_t i = 0; i < temporaryElements.size(); ++i) {
 		if (temporaryElements[i]->shouldBeRemoved()) {
 			if (std::dynamic_pointer_cast<AnimatedCoin>(temporaryElements[i])) {
-				addAnimatedText(TWO_HUNDRED, Position(temporaryElements[i]->getX(), temporaryElements[i]->getY()));
+				addAnimatedText(TextType::TWO_HUNDRED, Position(temporaryElements[i]->getX(), 
+					temporaryElements[i]->getY()));
 			}
 
 			temporaryElements.erase(temporaryElements.begin() + i);
@@ -100,7 +101,7 @@ void World::deleteTemporaryElements()
 
 void World::performBonusElementsActions()
 {
-	for (unsigned int i = 0; i < bonusElements.size(); ++i) {
+	for (std::size_t i = 0; i < bonusElements.size(); ++i) {
 		bonusElements[i]->move(*this);
 		if (bonusElements[i]->getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
 			deleteLivingElement(i);
@@ -110,8 +111,8 @@ void World::performBonusElementsActions()
 
 void World::performMonstersActions()
 {
-	for (unsigned int i = 0; i < monsters.size(); ++i) {
-		if (monsters[i]->getMovement().getDirection() == None && isPlayerCloseEnough(*monsters[i])) {
+	for (std::size_t i = 0; i < monsters.size(); ++i) {
+		if (monsters[i]->getMovement().getDirection() == Direction::None && isPlayerCloseEnough(*monsters[i])) {
 			setMovementDirection(*monsters[i]);
 		}
 
@@ -133,11 +134,11 @@ void World::performMonstersActions()
 
 void World::performFireBallsActions()
 {
-	for (unsigned int i = 0; i < fireballs.size(); ++i) {
+	for (std::size_t i = 0; i < fireballs.size(); ++i) {
 		fireballs[i].move(*this);
 
 		if (fireballs[i].shouldBeRemoved()) {
-			int shift = (fireballs[i].getMovement().getDirection() == Left ? -5 : 5);
+			int shift = (fireballs[i].getMovement().getDirection() == Direction::Left ? -5 : 5);
 			temporaryElements.push_back(std::make_shared<Explosion>(Explosion(
 				Position(fireballs[i].getX() + shift, fireballs[i].getY()))));
 
@@ -146,11 +147,16 @@ void World::performFireBallsActions()
 		else if (fireballs[i].getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
 			fireballs.erase(fireballs.begin() + i);
 		}
+		else if (fireballs[i].getX() < screen->getBeginningOfCamera() 
+			|| fireballs[i].getX() > screen->getEndOfCamera()) {
+
+			fireballs.erase(fireballs.begin() + i);
+		}
 	}
 
 	if (fireballStatus && player->isArmed()) {
 		SoundController::playFireballPoppedEffect();
-		Direction direction = player->isTurnedRight() ? Right : Left;
+		Direction direction = (player->isTurnedRight() ? Direction::Right : Direction::Left);
 		fireballs.push_back(FireBall(Position(player->getX() + 5, player->getY() - 15), direction));
 
 		fireballStatus = false;
@@ -207,14 +213,14 @@ void World::slideBlock()
 
 void World::raiseUpMushroom()
 {
-	for (auto it = bonusElements.begin(); it != bonusElements.end(); ++it) {
-		if (std::dynamic_pointer_cast<Mushroom>(*it)) {
-			if (((*it)->getY() + (*it)->getHeight() / 2) ==
+	for (auto &bonusElement : bonusElements) {
+		if (std::dynamic_pointer_cast<Mushroom>(bonusElement)) {
+			if ((bonusElement->getY() + bonusElement->getHeight() / 2) ==
 				blocks[lastTouchedBlockIndex].getY() - blocks[lastTouchedBlockIndex].getHeight() / 2
-				&& areAtTheSameWidth(**it, blocks[lastTouchedBlockIndex])) {
+				&& areAtTheSameWidth(*bonusElement, blocks[lastTouchedBlockIndex])) {
 
-				std::dynamic_pointer_cast<Mushroom>(*it)->decreasePositionY();
-				std::dynamic_pointer_cast<Mushroom>(*it)->setStepsUp(30);
+				std::dynamic_pointer_cast<Mushroom>(bonusElement)->decreasePositionY();
+				std::dynamic_pointer_cast<Mushroom>(bonusElement)->setStepsUp(30);
 				return;
 			}
 		}
@@ -233,7 +239,7 @@ void World::performBlockSliding()
 		int height = (slidingCounter <= 60 ? 1 : -1);
 		blocks[lastTouchedBlockIndex].addToPositionY(height);
 
-		if (slidingCounter > 60 && blocks[lastTouchedBlockIndex].getModel() == BonusWithGreenMushroom) {
+		if (slidingCounter > 60 && blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithGreenMushroom) {
 			createGreenMushroom();
 		}
 	}
@@ -243,7 +249,7 @@ void World::performBlockSliding()
 
 void World::subtractCoinFromBlock()
 {
-	if (blocks[lastTouchedBlockIndex].getModel() == Monetary) {
+	if (blocks[lastTouchedBlockIndex].getType() == BlockType::Monetary) {
 		blocks[lastTouchedBlockIndex].setAvailableCoins(blocks[lastTouchedBlockIndex].getAvailableCoins() - 1);
 		player->incrementCoins();
 		player->addPoints(200);
@@ -251,26 +257,26 @@ void World::subtractCoinFromBlock()
 			Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 50))));
 
 		if (!blocks[lastTouchedBlockIndex].getAvailableCoins()) {
-			blocks[lastTouchedBlockIndex].setModel(Empty);
+			blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 		}
 	}
-	else if (blocks[lastTouchedBlockIndex].getModel() == BonusWithCoin) {
+	else if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithCoin) {
 		player->incrementCoins();
 		player->addPoints(200);
 		temporaryElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(
 			Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 56))));
 
-		blocks[lastTouchedBlockIndex].setModel(Empty);
+		blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 	}
 }
 
 void World::createNewBonus()
 {
-	if (blocks[lastTouchedBlockIndex].getModel() == BonusWithRedMushroom) {
+	if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithRedMushroom) {
 		bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
 			blocks[lastTouchedBlockIndex].getY()), false)));
 	}
-	else if (blocks[lastTouchedBlockIndex].getModel() == BonusWithFlower) {
+	else if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithFlower) {
 		if (player->isSmall()) {
 			bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
 				blocks[lastTouchedBlockIndex].getY()), false)));
@@ -280,12 +286,12 @@ void World::createNewBonus()
 				blocks[lastTouchedBlockIndex].getY()))));
 		}
 	}
-	else if (blocks[lastTouchedBlockIndex].getModel() == BonusWithStar) {
+	else if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithStar) {
 		bonusElements.push_back(std::make_shared<Star>(Star(Position(blocks[lastTouchedBlockIndex].getX(),
 			blocks[lastTouchedBlockIndex].getY()))));
 	}
 
-	blocks[lastTouchedBlockIndex].setModel(Empty);
+	blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 }
 
 void World::createGreenMushroom()
@@ -293,17 +299,17 @@ void World::createGreenMushroom()
 	bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
 		blocks[lastTouchedBlockIndex].getY()), true)));
 
-	blocks[lastTouchedBlockIndex].setModel(Empty);
+	blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 }
 
 void World::playBlockSoundEffects()
 {
-	if (blocks[lastTouchedBlockIndex].getModel() >= BonusWithGreenMushroom &&
-		blocks[lastTouchedBlockIndex].getModel() <= BonusWithStar) {
+	if (blocks[lastTouchedBlockIndex].getType() >= BlockType::BonusWithGreenMushroom &&
+		blocks[lastTouchedBlockIndex].getType() <= BlockType::BonusWithStar) {
 		SoundController::playBonusAppeardEffect();
 	}
-	else if (blocks[lastTouchedBlockIndex].getModel() >= Monetary &&
-		blocks[lastTouchedBlockIndex].getModel() <= BonusWithCoin) {
+	else if (blocks[lastTouchedBlockIndex].getType() >= BlockType::Monetary &&
+		blocks[lastTouchedBlockIndex].getType() <= BlockType::BonusWithCoin) {
 		SoundController::playCoinCollectedEffect();
 	}
 	else {
@@ -316,7 +322,6 @@ World::World()
 	gameCounter = 0;
 	lastColoursUpdateTime = std::chrono::steady_clock::now();
 	lastTouchedBlockIndex = 0;
-	player = nullptr;
 	screen = nullptr;
 	flag = Flag();
 	slidingCounter = 0;
@@ -354,9 +359,9 @@ int World::getLastTouchedBlockIndex() const
 	return lastTouchedBlockIndex;
 }
 
-int World::getBlockModel(int index) const
+BlockType World::getLastTouchedBlockType() const
 {
-	return blocks[index].getModel();
+	return blocks[lastTouchedBlockIndex].getType();
 }
 
 Screen* World::getScreen() const
@@ -367,6 +372,15 @@ Screen* World::getScreen() const
 bool World::isFlagDown() const
 {
 	return flag.isDown();
+}
+
+bool World::isPlayerFinishingWorld() const
+{
+	if (player->getX() >= flag.getX() + 15 && player->getX() <= flag.getX() + 65) {
+		return true;
+	}
+
+	return false;
 }
 
 void World::setPlayer(std::shared_ptr<Player> player)
@@ -387,8 +401,8 @@ void World::setLastTouchedBlock(int index)
 
 void World::hitBlock()
 {
-	if ((blocks[lastTouchedBlockIndex].getModel() >= Destructible && blocks[lastTouchedBlockIndex].getModel()
-		<= BonusWithStar) && blocks[lastTouchedBlockIndex].canBeHitted()) {
+	if ((blocks[lastTouchedBlockIndex].getType() >= BlockType::Destructible && blocks[lastTouchedBlockIndex].getType()
+		<= BlockType::BonusWithStar) && blocks[lastTouchedBlockIndex].canBeHitted()) {
 
 		slidingCounter = 124;
 	}
@@ -396,7 +410,7 @@ void World::hitBlock()
 
 void World::setFireballStatus()
 {
-	if (fireballs.size() != 3) {
+	if (fireballs.size() != 2) {
 		fireballStatus = true;
 	}
 }
@@ -406,26 +420,17 @@ void World::switchOnFlag()
 	flag.setActiveState();
 }
 
-bool World::isPlayerFinishingWorld()
-{
-	if (player->getX() >= flag.getX() + 15 && player->getX() <= flag.getX() + 65) {
-		return true;
-	}
-
-	return false;
-}
-
 void World::changeShellMovementParameters(int index, Direction direction)
 {
 	std::dynamic_pointer_cast<Shell>(monsters[index])->setMovementDirectionAndActiveState(direction);
 	std::dynamic_pointer_cast<Shell>(monsters[index])->resetCreationTime();
 }
 
-void World::performBlockRemovalActions(int index)
+void World::destroyLastTouchedBlock()
 {
-	addShards(Position(blocks[index].getX(), blocks[index].getY()));
-	handleMonstersAndBlockCollisions(*this, blocks[index], *player);
-	blocks.erase(blocks.begin() + index);
+	addShards(Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY()));
+	handleMonstersAndBlockCollisions(*this, blocks[lastTouchedBlockIndex], *player);
+	blocks.erase(blocks.begin() + lastTouchedBlockIndex);
 	player->addPoints(50);
 
 	SoundController::playBlockDestroyedEffect();
@@ -502,27 +507,27 @@ void World::performActions()
 
 void World::draw(SDL_Surface* display, int beginningOfScreen, int endOfScreen, bool drawPlayer)
 {
-	for (auto &inanimateElement : inanimateElements) {
+	for (const auto &inanimateElement : inanimateElements) {
 		inanimateElement->draw(display, beginningOfScreen, endOfScreen);
 	}
 
-	for (auto &bonusElement : bonusElements) {
+	for (const auto &bonusElement : bonusElements) {
 		bonusElement->draw(display, beginningOfScreen, endOfScreen);
 	}
 
-	for (auto &monster : monsters) {
+	for (const auto &monster : monsters) {
 		monster->draw(display, beginningOfScreen, endOfScreen);
 	}
 
-	for (auto &fireball : fireballs) {
+	for (const auto &fireball : fireballs) {
 		fireball.draw(display, beginningOfScreen, endOfScreen);
 	}
 
-	for (auto &block : blocks) {
+	for (const auto &block : blocks) {
 		block.draw(display, beginningOfScreen, endOfScreen);
 	}
 
-	for (auto &temporaryElement : temporaryElements) {
+	for (const auto &temporaryElement : temporaryElements) {
 		temporaryElement->draw(display, beginningOfScreen, endOfScreen);
 	}
 
@@ -537,4 +542,3 @@ World::~World()
 {
 	screen = nullptr;
 }
-

@@ -19,7 +19,7 @@ Screen::Camera::Camera(int begX, int endX)
 	endOfCamera = endX;
 }
 
-bool Screen::isPlayerExceedingCameraReferencePoint()
+bool Screen::isPlayerExceedingCameraReferencePoint() const
 {
 	if (player->getX() - camera.beginningOfCamera > Screen::SCREEN_WIDTH - CAMERA_REFERENCE_POINT) {
 		return true;
@@ -44,7 +44,7 @@ int Screen::computeTime()
 
 void Screen::loadScreenImages()
 {
-	for (unsigned int i = 0; i < digitImages.size(); ++i) {
+	for (std::size_t i = 0; i < digitImages.size(); ++i) {
 		std::string filename = "./img/";
 		filename += std::to_string(i);
 		filename += ".png";
@@ -62,7 +62,7 @@ void Screen::loadScreenImages()
 	screenImages[8] = loadPNG("./img/timeup.png", display);
 	screenImages[9] = loadPNG("./img/gameover.png", display);
 
-	for (unsigned int j = 10, k = 1; j < screenImages.size(); ++j, ++k) {
+	for (std::size_t j = 10, k = 1; j < screenImages.size(); ++j, ++k) {
 		std::string filename = "./img/mario_dead";
 		filename += std::to_string(k);
 		filename += ".png";
@@ -216,7 +216,6 @@ void Screen::closeGUI()
 
 Screen::Screen()
 {
-	player = nullptr;
 	coinImage = true;
 	lastColoursUpdateTime = std::chrono::steady_clock::now();
 	display = nullptr;
@@ -382,11 +381,11 @@ void Screen::updateScreen(World &world)
 
 Screen::~Screen()
 {
-	for (unsigned int i = 0; i < digitImages.size(); ++i) {
+	for (std::size_t i = 0; i < digitImages.size(); ++i) {
 		SDL_FreeSurface(digitImages[i]);
 	}
 
-	for (unsigned int j = 0; j < screenImages.size(); ++j) {
+	for (std::size_t j = 0; j < screenImages.size(); ++j) {
 		SDL_FreeSurface(screenImages[j]);
 	}
 

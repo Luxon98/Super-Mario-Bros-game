@@ -20,7 +20,7 @@ void Creature::changeModel()
 Creature::Creature(Position position)
 {
 	size = Size(32, 32);
-	movement = Movement(1, 2, None);
+	movement = Movement(1, 2, Direction::None);
 	this->position = position;
 	model = 1;
 	stepsCounter = 0;
@@ -38,7 +38,7 @@ void Creature::loadCreatureImages(SDL_Surface* display)
 	creatureImages[1] = loadPNG("./img/creature2.png", display);
 }
 
-void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) {
 		SDL_Surface* creatureImg = nullptr;
@@ -49,7 +49,7 @@ void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera
 
 void Creature::move(World &world)
 {
-	if (movement.getDirection() != None && stepsCounter % 3 == 0) {
+	if (movement.getDirection() != Direction::None && stepsCounter % 3 == 0) {
 		if (isCharacterStandingOnTheBlock(*this, world)) {
 			makeHorizontalMove(world);
 		}

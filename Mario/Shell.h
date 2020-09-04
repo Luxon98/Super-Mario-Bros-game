@@ -6,7 +6,7 @@
 
 class World;
 class Position;
-enum Direction;
+enum class Direction;
 struct SDL_Surface;
 
 
@@ -20,12 +20,12 @@ private:
 public:
 	Shell() = default;
 	Shell(Position position);
-	bool isActive();
-	bool shouldTurnIntoTurtle();
+	bool isActive() const;
+	bool shouldTurnIntoTurtle() const;
 	void setMovementDirectionAndActiveState(Direction direction);
 	void resetCreationTime();
 	void loadShellImage(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };
 

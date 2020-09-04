@@ -21,7 +21,7 @@ public:
 	Star() = default;
 	Star(Position position);
 	void loadStarImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };
 

@@ -14,7 +14,7 @@ protected:
 
 public:
 	Movement() = default;
-	Movement(int speed, int verticalSpeed, Direction direction, Direction verticalDirection = None);
+	Movement(int speed, int verticalSpeed, Direction direction, Direction verticalDirection = Direction::None);
 	int getSpeed() const;
 	int getVerticalSpeed() const;
 	Direction getDirection() const;

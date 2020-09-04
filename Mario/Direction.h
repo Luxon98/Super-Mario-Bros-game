@@ -2,7 +2,7 @@
 #define Direction_H
 
 
-enum Direction
+enum class Direction
 {
 	None = 0,
 	Left = 1,

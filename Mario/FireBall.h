@@ -6,7 +6,7 @@
 
 class World;
 class Position;
-enum Direction;
+enum class Direction;
 struct SDL_Surface;
 
 
@@ -24,9 +24,9 @@ private:
 public:
 	FireBall() = default;
 	FireBall(Position position, Direction direction);
-	bool shouldBeRemoved();
+	bool shouldBeRemoved() const;
 	void loadFireBallImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };
 

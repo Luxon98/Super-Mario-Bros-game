@@ -7,7 +7,7 @@
 
 class World;
 class Player;
-enum Direction;
+enum class Direction;
 
 
 class KeyboardController

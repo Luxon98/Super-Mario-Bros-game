@@ -19,7 +19,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 		if (isCharacterStandingOnTheBlock(player, world)) {
 			doubleJumpFlag = false;
 
-			if (keysState[Left] && keysState[Right]) {
+			if (keysState[Direction::Left] && keysState[Direction::Right]) {
 				if (player.playerMovement.stepsLeft > 0) {
 					player.playerMovement.stepsLeft -= 4;
 				}
@@ -28,7 +28,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 				}
 				return;
 			}
-			else if (keysState[Left] && keysState[Up]) {
+			else if (keysState[Direction::Left] && keysState[Direction::Up]) {
 				if (player.playerMovement.stepsLeft > 0) {
 					player.playerMovement.stepsLeft += 18;
 					player.playerMovement.stepsUp = 2 * player.playerMovement.stepsLeft;
@@ -41,7 +41,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 				SoundController::playJumpEffect(player);
 				return;
 			}
-			else if (keysState[Right] && keysState[Up]) {
+			else if (keysState[Direction::Right] && keysState[Direction::Up]) {
 				if (player.playerMovement.stepsRight > 0) {
 					player.playerMovement.stepsRight += 18;
 					player.playerMovement.stepsUp = 2 * player.playerMovement.stepsRight;
@@ -54,7 +54,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 				SoundController::playJumpEffect(player);
 				return;
 			}
-			else if (keysState[Left]) {
+			else if (keysState[Direction::Left]) {
 				if (player.playerMovement.stepsLeft > 0 && player.playerMovement.stepsLeft < 60) {
 					player.playerMovement.stepsLeft += 8;
 				}
@@ -63,7 +63,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 				}
 				return;
 			}
-			else if (keysState[Right]) {
+			else if (keysState[Direction::Right]) {
 				if (player.playerMovement.stepsRight > 0 && player.playerMovement.stepsRight < 60) {
 					player.playerMovement.stepsRight += 8;
 				}
@@ -72,7 +72,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 				}
 				return;
 			}
-			else if (keysState[Up]) {
+			else if (keysState[Direction::Up]) {
 				player.playerMovement.stepsUp = 101;
 				SoundController::playJumpEffect(player);
 				return;
@@ -82,16 +82,16 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 			if (player.playerMovement.stepsUp == 0) {
 				player.playerMovement.stepsDown = 1;
 
-				if (keysState[Left] && player.playerMovement.stepsLeft == 0) {
+				if (keysState[Direction::Left] && player.playerMovement.stepsLeft == 0) {
 					player.playerMovement.stepsLeft = 24;
 				}
-				else if (keysState[Right] && player.playerMovement.stepsRight == 0) {
+				else if (keysState[Direction::Right] && player.playerMovement.stepsRight == 0) {
 					player.playerMovement.stepsRight = 24;
 				}
 				return;
 			}
 
-			if (keysState[Left] && keysState[Up]) {
+			if (keysState[Direction::Left] && keysState[Direction::Up]) {
 				if (player.playerMovement.stepsLeft > 0) {
 					player.playerMovement.stepsLeft += 8;
 				}
@@ -105,7 +105,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 				}
 				return;
 			}
-			else if (keysState[Right] && keysState[Up]) {
+			else if (keysState[Direction::Right] && keysState[Direction::Up]) {
 				if (player.playerMovement.stepsRight > 0) {
 					player.playerMovement.stepsRight += 8;
 				}
@@ -119,14 +119,14 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 				}
 				return;
 			}
-			else if (keysState[Up]) {
+			else if (keysState[Direction::Up]) {
 				if (!doubleJumpFlag && player.getY() > 200 && !player.isImmortal()) {
 					player.playerMovement.stepsUp += 65;
 					doubleJumpFlag = true;
 				}
 				return;
 			}
-			else if (keysState[Left]) {
+			else if (keysState[Direction::Left]) {
 				if (player.playerMovement.stepsLeft > 0) {
 					player.playerMovement.stepsLeft += 12;
 				}
@@ -135,7 +135,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 				}
 				return;
 			}
-			else if (keysState[Right]) {
+			else if (keysState[Direction::Right]) {
 				if (player.playerMovement.stepsRight > 0) {
 					player.playerMovement.stepsRight += 12;
 				}
@@ -152,7 +152,7 @@ KeyboardController::KeyboardController()
 {
 	doubleJumpFlag = false;
 	shotStatusFlag = false;
-	keysState = { {Left, false}, {Right, false}, {Up, false} };
+	keysState = { {Direction::Left, false}, {Direction::Right, false}, {Direction::Up, false} };
 	lastShotTime = std::chrono::steady_clock::now();
 }
 
@@ -161,28 +161,28 @@ void KeyboardController::handleKeysState(const Uint8* state)
 	if (state[SDL_SCANCODE_SPACE]) {
 		auto timePoint = std::chrono::steady_clock::now();
 		auto difference = std::chrono::duration_cast<std::chrono::milliseconds>(timePoint - lastShotTime).count();
-		if (difference > 330) {
+		if (difference > 250) {
 			shotStatusFlag = true;
 			lastShotTime = timePoint;
 		}
 	}
 
 	if (state[SDL_SCANCODE_LEFT]) {
-		keysState[Left] = true;
+		keysState[Direction::Left] = true;
 	}
 	if (state[SDL_SCANCODE_RIGHT]) {
-		keysState[Right] = true;
+		keysState[Direction::Right] = true;
 	}
 	if (state[SDL_SCANCODE_UP]) {
-		keysState[Up] = true;
+		keysState[Direction::Up] = true;
 	}
 }
 
 void KeyboardController::clearKeysState()
 {
-	keysState[Up] = false;
-	keysState[Left] = false;
-	keysState[Right] = false;
+	keysState[Direction::Up] = false;
+	keysState[Direction::Left] = false;
+	keysState[Direction::Right] = false;
 	shotStatusFlag = false;
 }
 

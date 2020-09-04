@@ -17,14 +17,14 @@ void Explosion::loadExplosionImage(SDL_Surface* display)
 	explosionImage = loadPNG("./img/explosion.png", display);
 }
 
-void Explosion::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void Explosion::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 50 && position.getX() < endOfCamera + 50) {
 		drawSurface(display, explosionImage, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 
-bool Explosion::shouldBeRemoved()
+bool Explosion::shouldBeRemoved() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
 	return (creationTime + std::chrono::milliseconds(75) < timePoint);

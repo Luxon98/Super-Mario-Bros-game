@@ -28,19 +28,15 @@ void Shards::loadShardsImages(SDL_Surface* display)
 	shardsImages[1] = loadPNG("./img/shard2.png", display);
 }
 
-void Shards::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void Shards::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (auxiliaryCounter % 30 == 0) {
-		imageIndex = (imageIndex == 0 ? 1 : 0);
-	}
-
 	SDL_Surface* shardImg = shardsImages[imageIndex];
 	for (int i = 0; i < 4; ++i) {
 		drawSurface(display, shardImg, shardsPositions[i].getX() - beginningOfCamera, shardsPositions[i].getY());
 	}
 }
 
-bool Shards::shouldBeRemoved()
+bool Shards::shouldBeRemoved() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
 	return (creationTime + std::chrono::milliseconds(3000) < timePoint);
@@ -91,6 +87,10 @@ void Shards::slide()
 				shardsPositions[i].setY(shardsPositions[i].getY() + 6);
 			}
 		}
+	}
+
+	if (auxiliaryCounter % 30 == 0) {
+		imageIndex = (imageIndex == 0 ? 1 : 0);
 	}
 }
 

@@ -12,19 +12,19 @@ SDL_Surface* Shell::shellImage = nullptr;
 Shell::Shell(Position position)
 {
 	size = Size(32, 28);
-	movement = Movement(3, 2, None);
+	movement = Movement(3, 2, Direction::None);
 	this->position = position;
 	stepsCounter = 0;
 	creationTime = std::chrono::steady_clock::now();
 	active = false;
 }
 
-bool Shell::isActive()
+bool Shell::isActive() const
 {
 	return active;
 }
 
-bool Shell::shouldTurnIntoTurtle()
+bool Shell::shouldTurnIntoTurtle() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
 	return (creationTime + std::chrono::milliseconds(25000) < timePoint);
@@ -33,7 +33,7 @@ bool Shell::shouldTurnIntoTurtle()
 void Shell::setMovementDirectionAndActiveState(Direction direction)
 {
 	movement.setDirection(direction);
-	active = (movement.getDirection() != None);
+	active = (movement.getDirection() != Direction::None);
 }
 
 void Shell::resetCreationTime()
@@ -47,7 +47,7 @@ void Shell::loadShellImage(SDL_Surface* display)
 	shellImage = loadPNG("./img/shell.png", display);
 }
 
-void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
 		drawSurface(display, shellImage, position.getX() - beginningOfCamera, position.getY());
@@ -56,7 +56,7 @@ void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
 
 void Shell::move(World &world)
 {
-	if (movement.getDirection() != None && stepsCounter & 1) {
+	if (movement.getDirection() != Direction::None && stepsCounter & 1) {
 		if (isCharacterStandingOnTheBlock(*this, world)) {
 			makeHorizontalMove(world);
 		}

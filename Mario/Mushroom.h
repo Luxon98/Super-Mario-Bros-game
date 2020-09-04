@@ -19,11 +19,11 @@ private:
 public:
 	Mushroom() = default;
 	Mushroom(Position position, bool greenColor);
-	bool isGreen();
+	bool isGreen() const;
 	void decreasePositionY();
 	void setStepsUp(int stepsUp);
 	void loadMushroomImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };
 

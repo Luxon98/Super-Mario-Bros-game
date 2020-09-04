@@ -18,7 +18,7 @@ Bush::Bush(int type, Position position)
 
 void Bush::loadBushImages(SDL_Surface* display)
 {
-	for (unsigned int i = 0; i < bushImages.size(); ++i) {
+	for (std::size_t i = 0; i < bushImages.size(); ++i) {
 		std::string filename = "./img/bush";
 		filename += std::to_string(i + 1);
 		filename += ".png";
@@ -26,7 +26,7 @@ void Bush::loadBushImages(SDL_Surface* display)
 	}
 }
 
-void Bush::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void Bush::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
 		SDL_Surface* bushImg = nullptr;

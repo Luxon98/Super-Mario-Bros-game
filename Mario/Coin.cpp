@@ -27,7 +27,7 @@ void Coin::changeCoinImage()
 	Coin::typeOfImage = (Coin::typeOfImage == 1 ? 2 : 1);
 }
 
-void Coin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void Coin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
 		SDL_Surface* coinImg = nullptr;

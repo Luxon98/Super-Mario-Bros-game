@@ -7,7 +7,7 @@
 class Position;
 struct SDL_Surface;
 
-enum BlockType
+enum class BlockType
 {
 	Ground = 1,
 	Indestructible = 2,
@@ -31,21 +31,23 @@ private:
 	static bool changesChecker;
 	int availableCoins;
 	int initialPositionY;
-	int computeImageIndex();
+	BlockType type;
+	int computeImageIndex() const;
 	Size getSizeFromBlockType(BlockType type);
 
 public:
 	Block() = default;
 	Block(BlockType type, Position position);
 	int getAvailableCoins() const;
-	bool canBeHitted();
-	bool isInvisible();
-	void setModel(BlockType type);
+	bool canBeHitted() const;
+	bool isInvisible() const;
+	BlockType getType() const;
 	void addToPositionY(int y);
 	void setAvailableCoins(int coins);
+	void setType(BlockType type);
 	static void changeBlockImage();
 	void loadBlockImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //Block_H

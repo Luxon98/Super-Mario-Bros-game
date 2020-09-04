@@ -18,7 +18,7 @@ AnimatedCoin::AnimatedCoin(Position position)
 
 void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
 {
-	for (unsigned int i = 0; i < animatedCoinImages.size(); ++i) {
+	for (std::size_t i = 0; i < animatedCoinImages.size(); ++i) {
 		std::string filename = "./img/a_coin";
 		filename += std::to_string(i + 1);
 		filename += ".png";
@@ -26,7 +26,7 @@ void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
 	}
 }
 
-void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera)
+void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
 		SDL_Surface* animatedCoinImg = animatedCoinImages[imageIndex];
@@ -34,7 +34,7 @@ void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCa
 	}
 }
 
-bool AnimatedCoin::shouldBeRemoved() 
+bool AnimatedCoin::shouldBeRemoved() const
 { 
 	return (slideCounter > 57); 
 }

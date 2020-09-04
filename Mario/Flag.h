@@ -23,7 +23,7 @@ public:
 	bool isDown() const;
 	void setActiveState();
 	void loadFlagImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void changePosition();
 };
 

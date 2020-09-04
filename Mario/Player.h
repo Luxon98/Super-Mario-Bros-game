@@ -9,11 +9,11 @@
 class World;
 class KeyboardController;
 class Position;
-enum Direction;
+enum class Direction;
 struct SDL_Surface;
 
 
-enum PlayerAnimation 
+enum class PlayerAnimation 
 {
 	NoAnimation = 0,
 	Growing = 1,
@@ -27,7 +27,7 @@ enum PlayerAnimation
 class Player : public LivingObject
 {
 private:
-	enum PlayerState
+	enum class PlayerState
 	{
 		Small = 1,
 		Tall = 2,
@@ -81,10 +81,10 @@ private:
 	Flags flags;
 	PlayerMovement playerMovement;
 	int model;
-	std::chrono::steady_clock::time_point lastAnimationStartTime;
+	std::chrono::steady_clock::time_point animationStartTime;
 	PlayerAnimation currentAnimationState;
 	PlayerState currentState;
-	int computeImageIndex();
+	int computeImageIndex() const;
 	void changeStateDuringAnimation();
 	void performGrowingAnimation(int difference);
 	void performShrinkingAnimation(int difference);
@@ -95,11 +95,11 @@ private:
 	bool movementBlock;
 	void resetMovement();
 	void changeModelAndAirFlagStatus(World &world);
-	bool isHittingCeiling(int distance);
-	bool isFallingIntoAbyss(int distance);
-	bool isGoingBeyondCamera(int distance, int beginningOfCamera);
-	bool isHittingBlock(int alignment, Direction direction);
-	bool isDuringAnimation();
+	bool isHittingCeiling(int distance) const;
+	bool isFallingIntoAbyss(int distance) const;
+	bool isGoingBeyondCamera(int distance, int beginningOfCamera) const;
+	bool isHittingBlock(int alignment, Direction direction) const;
+	bool isDuringAnimation() const;
 	void moveLeft(World &world);
 	void moveRight(World &world);
 	void moveUp(World &world);
@@ -118,18 +118,18 @@ public:
 	bool isImmortal() const;
 	bool isDead() const;
 	bool isTurnedRight() const;
-	int getDeadMarioImageIndex();
+	int getDeadMarioImageIndex() const;
 	void incrementCoins();
 	void incrementLives();
 	void increaseSpeed();
 	void addPoints(int pts);
 	void setCurrentAnimation(PlayerAnimation animation);
 	void loadPlayerImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void hitBlock(World &world);
 	void loseBonusOrLife();
 	void performAdditionalJump();
-	void move(World &world);
+	void move(World &world) override;
 	void reborn();
 	void resetSteps();
 	void setFinishingRunParameters();

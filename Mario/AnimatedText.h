@@ -7,7 +7,7 @@
 class Position;
 struct SDL_Surface;
 
-enum TextType
+enum class TextType
 {
 	ONE_HUNDRED = 1,
 	TWO_HUNDRED = 2,
@@ -27,8 +27,8 @@ public:
 	AnimatedText() = default;
 	AnimatedText(TextType type, Position position);
 	void loadAnimatedTextImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) override;
-	bool shouldBeRemoved() override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
+	bool shouldBeRemoved() const override;
 	void slide() override;
 };
 
