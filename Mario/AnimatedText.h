@@ -7,6 +7,7 @@
 class Position;
 struct SDL_Surface;
 
+
 enum class TextType
 {
 	ONE_HUNDRED = 1,

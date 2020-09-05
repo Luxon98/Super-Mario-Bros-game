@@ -9,8 +9,6 @@
 class Player;
 class World;
 
-#define CAMERA_REFERENCE_POINT 240
-
 
 class Screen
 {
@@ -60,6 +58,7 @@ private:
 public:
 	static const int SCREEN_WIDTH = 640;
 	static const int SCREEN_HEIGHT = 480;
+	static const int CAMERA_REFERENCE_POINT = 240;
 	Screen();
 	int getInitStatus() const;
 	int getTime() const;

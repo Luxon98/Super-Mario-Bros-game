@@ -15,12 +15,12 @@ struct SDL_Surface;
 
 enum class PlayerAnimation 
 {
-	NoAnimation = 0,
-	Growing = 1,
-	Arming = 2,
-	Shrinking = 3,
-	Immortal = 4,
-	ImmortalSmall = 5
+	NoAnimation,
+	Growing,
+	Arming,
+	Shrinking,
+	Immortal,
+	ImmortalSmall
 };
 
 

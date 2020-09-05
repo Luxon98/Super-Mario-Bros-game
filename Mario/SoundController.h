@@ -10,7 +10,7 @@ class Player;
 class SoundController
 {
 private:
-	// track and sound effect are declared as static here, because SDL_mixer library requires it
+	// tracks and sound effects are declared as static here, because functions from SDL_mixer library require it
 	static std::array<Mix_Music*, 5> backgroundTracks;
 	static std::array<Mix_Chunk*, 13> soundsEffects;
 	bool initSoundMixer();

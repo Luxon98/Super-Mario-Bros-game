@@ -7,6 +7,7 @@
 class Position;
 struct SDL_Surface;
 
+
 enum class BlockType
 {
 	Ground = 1,

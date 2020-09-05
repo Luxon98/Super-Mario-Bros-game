@@ -37,7 +37,7 @@ bool World::isTimeToChangeColors() const
 
 bool World::isPlayerCloseEnough(LivingObject &monster) const
 {
-	if (monster.getX() < player->getX() + 2 * CAMERA_REFERENCE_POINT) {
+	if (monster.getX() < player->getX() + 2 * Screen::CAMERA_REFERENCE_POINT) {
 		return true;
 	}
 
