@@ -22,7 +22,7 @@ private:
 		Camera(int begX, int endX);
 	};
 
-	static const int INITIAL_TIME = 403;
+	static constexpr int INITIAL_TIME = 403;
 	std::shared_ptr<Player> player;
 	bool coinImage;
 	int initStatus;
@@ -56,9 +56,9 @@ private:
 	void closeGUI();
 
 public:
-	static const int SCREEN_WIDTH = 640;
-	static const int SCREEN_HEIGHT = 480;
-	static const int CAMERA_REFERENCE_POINT = 240;
+	static constexpr int SCREEN_WIDTH = 640;
+	static constexpr int SCREEN_HEIGHT = 480;
+	static constexpr int CAMERA_REFERENCE_POINT = 240;
 	Screen();
 	int getInitStatus() const;
 	int getTime() const;

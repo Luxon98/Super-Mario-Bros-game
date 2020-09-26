@@ -25,7 +25,7 @@ struct SDL_Surface;
 class World
 {
 private:
-	static const int DISTANCE_FROM_WORLD = 30;
+	static constexpr int DISTANCE_FROM_WORLD = 30;
 	std::chrono::steady_clock::time_point lastColoursUpdateTime;
 	std::vector<Block> blocks;
 	std::vector<FireBall> fireballs;
@@ -64,8 +64,8 @@ private:
 	friend class Level;
 
 public:
-	static const int WORLD_WIDTH = 6784;
-	static const int WORLD_HEIGHT = 480;
+	static constexpr int WORLD_WIDTH = 6784;
+	static constexpr int WORLD_HEIGHT = 480;
 	World();
 	std::vector<Block> const& getBlocks() const;
 	std::vector<FireBall> const& getFireBalls() const;

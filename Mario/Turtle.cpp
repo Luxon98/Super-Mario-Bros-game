@@ -36,7 +36,7 @@ void Turtle::loadTurtleImages(SDL_Surface* display)
 {
 	turtleImages[0] = loadPNG("./img/turtle_left1.png", display);
 	turtleImages[1] = loadPNG("./img/turtle_left2.png", display);
-	turtleImages[2] = loadPNG("./img/turtle_rigth1.png", display);
+	turtleImages[2] = loadPNG("./img/turtle_right1.png", display);
 	turtleImages[3] = loadPNG("./img/turtle_right2.png", display);
 }
 

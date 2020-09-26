@@ -151,6 +151,7 @@
     <ClCompile Include="DestroyedCreature.cpp" />
     <ClCompile Include="DestroyedTurtle.cpp" />
     <ClCompile Include="Explosion.cpp" />
+    <ClCompile Include="FileNotLoadedException.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="Flower.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="DestroyedTurtle.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Explosion.h" />
+    <ClInclude Include="FileNotLoadedException.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="Flower.h" />

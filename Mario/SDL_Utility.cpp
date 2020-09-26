@@ -1,37 +1,56 @@
 #include "SDL_Utility.h"
 
-#include <iostream>
+#include "FileNotLoadedException.h"
 
 
 void drawSurface(SDL_Surface* display, SDL_Surface* sprite, int x, int y)
 {
 	SDL_Rect destination;
-	destination.x = x - sprite->w / 2;
-	destination.y = y - sprite->h / 2;
+	destination.x = x - (sprite->w / 2);
+	destination.y = y - (sprite->h / 2);
 	destination.w = sprite->w;
 	destination.h = sprite->h;
-	SDL_BlitSurface(sprite, NULL, display, &destination);
+	SDL_BlitSurface(sprite, nullptr, display, &destination);
 }
 
-SDL_Surface* loadBMP(std::string path)
+void showFileErrorWindow(std::string errorText)
 {
-	const char* converted_path = path.c_str();
+	errorText += "\nThe game will be closed. Please check if you have the correct file in the game directory.";
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Missing or corrupted file", errorText.c_str(), nullptr);
+}
+
+SDL_Surface* loadBMP(std::string filename)
+{
+	const char* converted_path = filename.c_str();
 	SDL_Surface* bitmap = SDL_LoadBMP(converted_path);
 
-	return bitmap != nullptr ? bitmap : nullptr;
+	if (bitmap != nullptr) {
+		return bitmap;
+	}
+	else {
+		std::string exceptionReason = std::string("The file ").append(filename)
+			.append(" couldn't be loaded. Maybe this file is missing or corrupted.");
+
+		throw FileNotLoadedException(exceptionReason);
+	}
 }
 
-SDL_Surface* loadPNG(std::string path, SDL_Surface* display)
+SDL_Surface* loadPNG(std::string filename, SDL_Surface* display)
 {
 	SDL_Surface* optimizedSurface = nullptr;
-	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+	SDL_Surface* loadedSurface = IMG_Load(filename.c_str());
 
 	if (loadedSurface != nullptr) {
 		optimizedSurface = SDL_ConvertSurface(loadedSurface, display->format, 0);
 		SDL_FreeSurface(loadedSurface);
+		return optimizedSurface;
 	}
+	else {
+		std::string exceptionReason = std::string("The file ").append(filename)
+			.append(" couldn't be loaded. Maybe this file is missing or corrupted.");
 
-	return optimizedSurface;
+		throw FileNotLoadedException(exceptionReason);
+	}
 }
 
 

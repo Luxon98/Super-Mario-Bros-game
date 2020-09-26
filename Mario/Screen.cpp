@@ -82,13 +82,13 @@ void Screen::changeCoinImageIfAvailable()
 void Screen::fillWorldBackground()
 {
 	// color: 90 149 252 (BLUE)
-	SDL_FillRect(display, NULL, SDL_MapRGB(display->format, 0x5A, 0x95, 0xFC));
+	SDL_FillRect(display, nullptr, SDL_MapRGB(display->format, 0x5A, 0x95, 0xFC));
 }
 
 void Screen::fillScreenBackground()
 {
 	// color: 0 0 0 (BLACK)
-	SDL_FillRect(display, NULL, SDL_MapRGB(display->format, 0x00, 0x00, 0x00));
+	SDL_FillRect(display, nullptr, SDL_MapRGB(display->format, 0x00, 0x00, 0x00));
 }
 
 void Screen::drawScreenElements()
@@ -172,8 +172,8 @@ void Screen::drawCoins(int coins)
 
 void Screen::updateView()
 {
-	SDL_UpdateTexture(scrtex, NULL, display->pixels, display->pitch);
-	SDL_RenderCopy(renderer, scrtex, NULL, NULL);
+	SDL_UpdateTexture(scrtex, nullptr, display->pixels, display->pitch);
+	SDL_RenderCopy(renderer, scrtex, nullptr, nullptr);
 	SDL_RenderPresent(renderer);
 }
 

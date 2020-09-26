@@ -22,7 +22,7 @@ void Level::setFirstLevel(World &world)
 	world.fireballs.clear();
 	world.slidingCounter = 0;
 
-	for (int i = 0; i < World::WORLD_WIDTH + CAMERA_REFERENCE_POINT; i += 32) {
+	for (int i = 0; i < World::WORLD_WIDTH + Screen::CAMERA_REFERENCE_POINT; i += 32) {
 		if (i != 2208 && i != 2240 && i != 4896 && i != 4928 && i != 2752 && i != 2784 && i != 2816) {
 			world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 16)));
 			world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 48)));

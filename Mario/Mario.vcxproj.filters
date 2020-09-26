@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Other">
       <UniqueIdentifier>{b9fbe667-97c0-455d-b864-c20e83098226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Exceptions">
+      <UniqueIdentifier>{5024f5b7-5eba-417a-8f0c-bb6c3cee210e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Exceptions">
+      <UniqueIdentifier>{bb6cff5c-ebc3-40ed-a0b7-80672595b828}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -174,6 +180,9 @@
     <ClCompile Include="IndependentLivingObject.cpp">
       <Filter>Source Files\AbstractClasses</Filter>
     </ClCompile>
+    <ClCompile Include="FileNotLoadedException.cpp">
+      <Filter>Source Files\Exceptions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -292,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="IndependentLivingObject.h">
       <Filter>Header Files\AbstractClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="FileNotLoadedException.h">
+      <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

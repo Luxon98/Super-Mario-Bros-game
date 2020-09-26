@@ -9,9 +9,11 @@
 
 void drawSurface(SDL_Surface* display, SDL_Surface* sprite, int x, int y);
 
-SDL_Surface* loadBMP(std::string path);
+void showFileErrorWindow(std::string errorText);
 
-SDL_Surface* loadPNG(std::string path, SDL_Surface* display);
+SDL_Surface* loadBMP(std::string filename);
+
+SDL_Surface* loadPNG(std::string filename, SDL_Surface* display);
 
 #endif //SDL_Utility_H
 

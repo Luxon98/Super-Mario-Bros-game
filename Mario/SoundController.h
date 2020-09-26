@@ -32,7 +32,7 @@ public:
 	static void playEnemyDestroyedEffect();
 	static void playFireballPoppedEffect();
 	static void playFlagDownEffect();
-	static void playJumpEffect(Player &player);
+	static void playJumpEffect(Player& player);
 	static void playBonusLostEffect();
 	static void playMarioDeadEffect();
 	static void stopMusic();
