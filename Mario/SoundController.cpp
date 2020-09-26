@@ -36,7 +36,6 @@ void SoundController::loadSounds()
 	soundsEffects[9] = Mix_LoadWAV("./sounds/jump_small.wav");
 	soundsEffects[10] = Mix_LoadWAV("./sounds/jump_tall.wav");
 	soundsEffects[11] = Mix_LoadWAV("./sounds/mario_dead.wav");
-	soundsEffects[11] = Mix_LoadWAV("./sounds/mario_dead.wav");
 	soundsEffects[12] = Mix_LoadWAV("./sounds/back_to_small.wav");
 }
 
@@ -119,7 +118,7 @@ void SoundController::playFlagDownEffect()
 	Mix_PlayChannel(-1, soundsEffects[8], 0);
 }
 
-void SoundController::playJumpEffect(Player& player)
+void SoundController::playJumpEffect(Player &player)
 {
 	Mix_PlayChannel(-1, soundsEffects[player.isSmall() ? 9 : 10], 0);
 }

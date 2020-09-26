@@ -292,6 +292,17 @@ bool Player::isDuringAnimation() const
 	return (currentAnimationState != PlayerAnimation::NoAnimation);
 }
 
+bool Player::isAbleToDestroyBlock() const
+{
+	if ((currentState >= PlayerState::Tall && currentState <= PlayerState::ImmortalThird)
+		|| currentState == PlayerState::ImmortalFourth) {
+		
+		return true;
+	}
+
+	return false;
+}
+
 void Player::moveLeft(World &world)
 {
 	int alignment = getAlignmentForHorizontalMove(Direction::Left, playerMovement.getSpeed(), *this, world);
@@ -507,9 +518,7 @@ void Player::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) 
 
 void Player::hitBlock(World &world)
 {
-	if ((currentState >= PlayerState::Tall && currentState <= PlayerState::ImmortalFourth)
-		&& world.getLastTouchedBlockType() == BlockType::Destructible) {
-		
+	if (isAbleToDestroyBlock() && world.getLastTouchedBlockType() == BlockType::Destructible) {
 		world.destroyLastTouchedBlock();
 	}
 	else {

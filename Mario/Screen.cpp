@@ -141,6 +141,7 @@ void Screen::drawPoints(int points)
 		SDL_Surface* img = digitImages[pointsStr[i] - '0'];
 		drawSurface(display, img, 168 - j * 16, 40);
 	}
+
 	if (pointsStr.length() < 6) {
 		SDL_Surface* img = digitImages[0];
 		for (int m = 6 - pointsStr.length() - 1, n = 1; m >= 0; --m, ++n) {
@@ -151,13 +152,14 @@ void Screen::drawPoints(int points)
 
 void Screen::drawCoins(int coins)
 {
-	std::string coinsStr = std::to_string(coins);
 	SDL_Surface* img1, * img2;
 	img1 = screenImages[4 + coinImage];
 	drawSurface(display, img1, 230, 41);
+
 	img1 = screenImages[3];
 	drawSurface(display, img1, 250, 42);
 
+	std::string coinsStr = std::to_string(coins);
 	if (coinsStr.length() == 2) {
 		img1 = digitImages[coinsStr[0] - '0'];
 		img2 = digitImages[coinsStr[1] - '0'];

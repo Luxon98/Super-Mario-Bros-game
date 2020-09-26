@@ -148,6 +148,7 @@ void runGame()
 	SDL_Event event;
 
 	World world = World();
+
 	SoundController soundMixer = SoundController();
 
 	// screen cannot be a smart shared_ptr, because this class contains pointers to types from SDL library

@@ -321,7 +321,7 @@ World::World()
 {
 	gameCounter = 0;
 	lastColoursUpdateTime = std::chrono::steady_clock::now();
-	lastTouchedBlockIndex = 0;
+	lastTouchedBlockIndex = -1;
 	screen = nullptr;
 	flag = Flag();
 	slidingCounter = 0;

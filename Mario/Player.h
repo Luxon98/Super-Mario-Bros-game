@@ -100,6 +100,7 @@ private:
 	bool isGoingBeyondCamera(int distance, int beginningOfCamera) const;
 	bool isHittingBlock(int alignment, Direction direction) const;
 	bool isDuringAnimation() const;
+	bool isAbleToDestroyBlock() const;
 	void moveLeft(World &world);
 	void moveRight(World &world);
 	void moveUp(World &world);
