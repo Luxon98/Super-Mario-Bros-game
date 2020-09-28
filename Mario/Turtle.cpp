@@ -11,7 +11,7 @@ std::array<SDL_Surface*, 4> Turtle::turtleImages;
 
 void Turtle::chooseModel()
 {
-	changeModelCounter++;
+	++changeModelCounter;
 	if (changeModelCounter % 30 == 0) {
 		model += (model & 1 ? 1 : -1);
 	}
@@ -60,6 +60,6 @@ void Turtle::move(World &world)
 		}
 		chooseModel();
 	}
-	stepsCounter++;
+	++stepsCounter;
 }
 

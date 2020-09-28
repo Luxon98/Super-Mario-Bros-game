@@ -12,9 +12,9 @@ std::array<SDL_Surface*, 4> FireBall::fireBallImages;
 
 void FireBall::computeModelIndex()
 {
-	changeModelCounter++;
+	++changeModelCounter;
 	if (changeModelCounter % 8 == 0) {
-		modelIndex++;
+		++modelIndex;
 		if (modelIndex == 4) {
 			modelIndex = 0;
 		}
@@ -49,7 +49,7 @@ void FireBall::makeHorizontalMove(World &world)
 	computeModelIndex();
 
 	if (movement.getVerticalDirection() == Direction::Up) {
-		stepsUp++;
+		++stepsUp;
 	}
 
 	if (alignment > 0) {

@@ -38,7 +38,7 @@ bool AnimatedText::shouldBeRemoved() const
 
 void AnimatedText::slide()
 {
-	auxiliaryCounter++;
+	++auxiliaryCounter;
 	if (auxiliaryCounter % 3 == 0) {
 		position.setY(position.getY() - 1);
 	}

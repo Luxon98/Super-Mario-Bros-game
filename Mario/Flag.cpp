@@ -46,7 +46,7 @@ void Flag::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) co
 void Flag::changePosition()
 {
 	if (active && stepsCounter < 506) {
-		stepsCounter++;
+		++stepsCounter;
 		if (stepsCounter & 1) {
 			position.setY(position.getY() + 1);
 		}

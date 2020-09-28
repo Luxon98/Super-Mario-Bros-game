@@ -64,6 +64,6 @@ void Shell::move(World &world)
 			makeDiagonalMove(world);
 		}
 	}
-	stepsCounter++;
+	++stepsCounter;
 }
 

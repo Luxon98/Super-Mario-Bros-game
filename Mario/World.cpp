@@ -234,7 +234,7 @@ void World::addShards(Position position)
 
 void World::performBlockSliding()
 {
-	slidingCounter--;
+	--slidingCounter;
 	if (slidingCounter % 3 == 0) {
 		int height = (slidingCounter <= 60 ? 1 : -1);
 		blocks[lastTouchedBlockIndex].addToPositionY(height);
@@ -488,7 +488,7 @@ void World::addAnimatedText(TextType type, Position position)
 
 void World::performActions()
 {
-	gameCounter++;
+	++gameCounter;
 	if (gameCounter % 3 == 0) {
 		performWorldActions();
 		deleteTemporaryElements();

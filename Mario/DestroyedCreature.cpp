@@ -33,7 +33,7 @@ bool DestroyedCreature::shouldBeRemoved() const
 
 void DestroyedCreature::slide()
 {
-	auxiliaryCounter++;
+	++auxiliaryCounter;
 
 	if (auxiliaryCounter & 1) {
 		if (auxiliaryCounter <= 12) {

@@ -31,7 +31,7 @@ void Star::makeHorizontalMove(World &world)
 	int verticalDistance = movement.getVerticalSpeed() - alignment;
 	if (movement.getVerticalDirection() == Direction::Up) {
 		verticalDistance *= -1;
-		stepsUp++;
+		++stepsUp;
 	}
 	position.setY(position.getY() + verticalDistance);
 
@@ -85,6 +85,6 @@ void Star::move(World &world)
 		makeVerticalMove(world);
 		makeHorizontalMove(world);
 	}
-	stepsCounter++;
+	++stepsCounter;
 }
 

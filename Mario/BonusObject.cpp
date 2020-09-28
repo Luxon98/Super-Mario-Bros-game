@@ -5,7 +5,7 @@
 
 void BonusObject::grow()
 {
-	growCounter--;
+	--growCounter;
 	if (growCounter % 3 == 0) {
 		position.setY(position.getY() - 1);
 	}

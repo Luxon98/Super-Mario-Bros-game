@@ -131,7 +131,6 @@ void loadImages(SDL_Surface* display)
 	loadBlockImages(display);
 }
 
-
 void resetGame(KeyboardController &controller, Player &player, World &world, Screen* screen, bool * playerState)
 {
 	controller.clearKeysState();
@@ -205,7 +204,7 @@ void runGame()
 						SoundController::playFlagDownEffect();
 						world.switchOnFlag();
 						winStatus = true;
-						player->resetSteps();
+						player->setSlidingParameters();
 
 						while (!world.isFlagDown()) {
 							world.performActions();

@@ -44,7 +44,7 @@ bool Shards::shouldBeRemoved() const
 
 void Shards::slide()
 {
-	auxiliaryCounter++;
+	++auxiliaryCounter;
 	if (auxiliaryCounter % 3 == 0) {
 		if (auxiliaryCounter < 46) {
 			shardsPositions[0].setY(shardsPositions[0].getY() - 5);

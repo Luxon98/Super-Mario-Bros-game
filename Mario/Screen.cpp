@@ -342,7 +342,7 @@ void Screen::drawWorldFinishedScreen(World &world)
 	SoundController::stopMusic();
 	SoundController::playWorldFinishedMusic();
 
-	for (int i = 2 * time; i >= 0; i--) {
+	for (int i = 2 * time; i >= 0; --i) {
 		world.performActions();
 		bool drawPlayer = (player->getX() < 6540);
 		world.draw(display, getBeginningOfCamera(), getEndOfCamera(), drawPlayer);
@@ -355,8 +355,8 @@ void Screen::drawWorldFinishedScreen(World &world)
 			drawTime(time);
 			drawPoints(player->getPoints());
 			drawCoins(player->getCoins());
-			time--;
-			std::this_thread::sleep_for(std::chrono::milliseconds(25));
+			--time;
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		}
 	}
 }

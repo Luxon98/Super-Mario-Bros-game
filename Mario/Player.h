@@ -62,6 +62,8 @@ private:
 		bool aliveFlag;
 		bool removeLivesFlag;
 		bool armedFlag;
+		bool slideFlag;
+		bool changeDirectionFlag;
 		Flags();
 		void setDefaultFlags();
 	};
@@ -76,7 +78,7 @@ private:
 		PlayerMovement();
 	};
 
-	static std::array<SDL_Surface*, 132> playerImages;
+	static std::array<SDL_Surface*, 140> playerImages;
 	Statistics statistics;
 	Flags flags;
 	PlayerMovement playerMovement;
@@ -84,6 +86,7 @@ private:
 	std::chrono::steady_clock::time_point animationStartTime;
 	PlayerAnimation currentAnimationState;
 	PlayerState currentState;
+	int computeImageIndexWhenSliding() const;
 	int computeImageIndex() const;
 	void changeStateDuringAnimation();
 	void performGrowingAnimation(int difference);
@@ -105,6 +108,7 @@ private:
 	void moveRight(World &world);
 	void moveUp(World &world);
 	void moveDown(World &world);
+	void slide(World& world);
 	friend class KeyboardController;
 
 public:
@@ -133,6 +137,7 @@ public:
 	void move(World &world) override;
 	void reborn();
 	void resetSteps();
+	void setSlidingParameters();
 	void setFinishingRunParameters();
 };
 

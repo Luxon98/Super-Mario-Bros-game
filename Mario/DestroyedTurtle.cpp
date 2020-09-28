@@ -33,7 +33,7 @@ bool DestroyedTurtle::shouldBeRemoved() const
 
 void DestroyedTurtle::slide()
 {
-	auxiliaryCounter++;
+	++auxiliaryCounter;
 
 	if (auxiliaryCounter & 1) {
 		if (auxiliaryCounter <= 12) {

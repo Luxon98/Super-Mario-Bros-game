@@ -11,7 +11,7 @@ std::array<SDL_Surface*, 2> Creature::creatureImages;
 
 void Creature::changeModel()
 {
-	changeModelCounter++;
+	++changeModelCounter;
 	if (changeModelCounter % 30 == 0) {
 		model = (model == 1 ? 2 : 1);
 	}
@@ -58,6 +58,6 @@ void Creature::move(World &world)
 		}
 		changeModel();
 	}
-	stepsCounter++;
+	++stepsCounter;
 }
 

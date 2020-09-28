@@ -41,8 +41,8 @@ bool AnimatedCoin::shouldBeRemoved() const
 
 void AnimatedCoin::slide()
 {
-	slideCounter++;
-	auxiliaryCounter++;
+	++slideCounter;
+	++auxiliaryCounter;
 	if (auxiliaryCounter & 1) {
 		if (slideCounter <= 3) {
 			imageIndex = 0;

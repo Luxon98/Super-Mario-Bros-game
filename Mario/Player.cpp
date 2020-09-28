@@ -13,7 +13,7 @@
 #include "SDL_Utility.h"
 
 
-std::array<SDL_Surface*, 132> Player::playerImages;
+std::array<SDL_Surface*, 140> Player::playerImages;
 
 Player::Statistics::Statistics()
 {
@@ -28,6 +28,8 @@ Player::Flags::Flags()
 	aliveFlag = true;
 	removeLivesFlag = false;
 	armedFlag = false;
+	slideFlag = false;
+	changeDirectionFlag = false;
 }
 
 void Player::Flags::setDefaultFlags()
@@ -36,6 +38,8 @@ void Player::Flags::setDefaultFlags()
 	aliveFlag = true;
 	removeLivesFlag = false;
 	armedFlag = false;
+	slideFlag = false;
+	changeDirectionFlag = false;
 }
 
 Player::PlayerMovement::PlayerMovement()
@@ -48,16 +52,37 @@ Player::PlayerMovement::PlayerMovement()
 	verticalSpeed = 1;
 }
 
-int Player::computeImageIndex() const
+int Player::computeImageIndexWhenSliding() const
 {
-	if (currentState >= PlayerState::Small && currentState <= PlayerState::ImmortalSmallFourth) {
-		return (model + 66 * flags.orientationFlag + 5 * (static_cast<int>(currentState) - 1));
+	if (currentState == PlayerState::Small) {
+		return (68 + 70 * flags.orientationFlag);
 	}
-	else if (currentState == PlayerState::ImmortalFourth) {
-		return (model + 66 * flags.orientationFlag + 10);
+	else if (currentState >= PlayerState::ImmortalSmallFirst && currentState <= PlayerState::ImmortalSmallFourth) {
+		return (69 + 70 * flags.orientationFlag);
+	}
+	else if (currentState == PlayerState::Tall) {
+		return (66 + 70 * flags.orientationFlag);
 	}
 	else {
-		return (66 * flags.orientationFlag + 65);
+		return (67 + 70 * flags.orientationFlag);
+	}
+}
+
+int Player::computeImageIndex() const
+{
+	if (flags.slideFlag) {
+		return computeImageIndexWhenSliding();
+	}
+	else {
+		if (currentState >= PlayerState::Small && currentState <= PlayerState::ImmortalSmallFourth) {
+			return (model + 70 * flags.orientationFlag + 5 * (static_cast<int>(currentState) - 1));
+		}
+		else if (currentState == PlayerState::ImmortalFourth) {
+			return (model + 70 * flags.orientationFlag + 10);
+		}
+		else {
+			return (70 * flags.orientationFlag + 65);
+		}
 	}
 }
 
@@ -250,9 +275,9 @@ void Player::changeModelAndAirFlagStatus(World &world)
 		return;
 	}
 
-	changeModelCounter++;
+	++changeModelCounter;
 	if (changeModelCounter % 12 == 0) {
-		model++;
+		++model;
 		if (model > 3) {
 			model = 1;
 		}	
@@ -316,7 +341,7 @@ void Player::moveLeft(World &world)
 		playerMovement.stepsLeft = 0;
 	}
 	else {
-		playerMovement.stepsLeft--;
+		--playerMovement.stepsLeft;
 	}
 
 	flags.orientationFlag = false;
@@ -333,7 +358,7 @@ void Player::moveRight(World &world)
 		playerMovement.stepsRight = 0;
 	}
 	else {
-		playerMovement.stepsRight--;
+		--playerMovement.stepsRight;
 	}
 
 	flags.orientationFlag = true;
@@ -356,7 +381,7 @@ void Player::moveUp(World &world)
 		playerMovement.stepsUp = 0;
 	}
 	else {
-		playerMovement.stepsUp--;
+		--playerMovement.stepsUp;
 	}
 
 	if (isCharacterStandingOnTheBlock(*this, world)) {
@@ -375,12 +400,27 @@ void Player::moveDown(World &world)
 	else {
 		if (!flags.removeLivesFlag) {
 			flags.removeLivesFlag = true;
-			statistics.lives--;
+			--statistics.lives;
 			flags.aliveFlag = false;
 		}
 	}
 
-	playerMovement.stepsDown--;
+	--playerMovement.stepsDown;
+}
+
+void Player::slide(World &world)
+{
+	int alignment = getAlignmentForVerticalMove(Direction::Down, playerMovement.getVerticalSpeed(), *this, world);
+	int distance = playerMovement.getVerticalSpeed() - alignment;
+	
+	if (distance == 0 && !flags.changeDirectionFlag) {
+		flags.orientationFlag = false;
+		flags.changeDirectionFlag = true;
+		position.setX(position.getX() + 16);
+	}
+	else {
+		position.setY(position.getY() + distance);
+	}
 }
 
 Player::Player(Position position)
@@ -467,17 +507,17 @@ void Player::incrementCoins()
 {
 	if (statistics.coins == 99) {
 		statistics.coins = 0;
-		statistics.lives++;
+		++statistics.lives;
 		SoundController::playNewLiveAddedEffect();
 	}
 	else {
-		statistics.coins++;
+		++statistics.coins;
 	}
 }
 
 void Player::incrementLives()
 {
-	statistics.lives++;
+	++statistics.lives;
 }
 
 void Player::increaseSpeed()
@@ -505,7 +545,7 @@ void Player::loadPlayerImages(SDL_Surface* display)
 		filename += ".png";
 		playerImages[i] = loadPNG(filename, display);
 		filename.replace(12, 4, "right");
-		playerImages[i + 66] = loadPNG(filename, display);
+		playerImages[i + 70] = loadPNG(filename, display);
 	}
 }
 
@@ -537,7 +577,7 @@ void Player::loseBonusOrLife()
 	else if (!isDuringAnimation()) {
 		if (!flags.removeLivesFlag) {
 			flags.removeLivesFlag = true;
-			statistics.lives--;
+			--statistics.lives;
 			flags.aliveFlag = false;
 		}
 	}
@@ -556,25 +596,30 @@ void Player::move(World &world)
 	}
 
 	if (!movementBlock) {
-		if (playerMovement.stepsLeft > 0) {
-			moveLeft(world);
+		if (flags.slideFlag) {
+			slide(world);
 		}
+		else {
+			if (playerMovement.stepsLeft > 0) {
+				moveLeft(world);
+			}
 
-		if (playerMovement.stepsRight > 0) {
-			moveRight(world);
+			if (playerMovement.stepsRight > 0) {
+				moveRight(world);
+			}
+
+			if (playerMovement.stepsUp > 0) {
+				moveUp(world);
+			}
+
+			if (playerMovement.stepsDown > 0) {
+				moveDown(world);
+			}
+
+			changeModelAndAirFlagStatus(world);
+
+			collectCoinIfPossible(*this, world);
 		}
-
-		if (playerMovement.stepsUp > 0) {
-			moveUp(world);
-		}
-
-		if (playerMovement.stepsDown > 0) {
-			moveDown(world);
-		}
-
-		changeModelAndAirFlagStatus(world);
-
-		collectCoinIfPossible(*this, world);
 	}
 }
 
@@ -600,6 +645,13 @@ void Player::resetSteps()
 	playerMovement.stepsDown = 0;
 }
 
+void Player::setSlidingParameters()
+{
+	resetSteps();
+	flags.slideFlag = true;
+	position.setX(position.getX() - 8);
+}
+
 void Player::setFinishingRunParameters()
 {
 	int posY = (currentState == PlayerState::Small ? 400 : 384);
@@ -608,4 +660,5 @@ void Player::setFinishingRunParameters()
 	playerMovement.stepsRight = 140;
 	changeModelCounter = 0;
 	model = 0;
+	flags.setDefaultFlags();
 }

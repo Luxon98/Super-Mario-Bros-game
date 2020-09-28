@@ -67,7 +67,7 @@ void Mushroom::move(World &world)
 	else if (stepsCounter & 1) {
 		if (stepsUp > 0) {
 			makeMoveUp(world);
-			stepsUp--;
+			--stepsUp;
 			makeHorizontalMove(world);
 		}
 		else {
@@ -79,6 +79,6 @@ void Mushroom::move(World &world)
 			}
 		}
 	}
-	stepsCounter++;
+	++stepsCounter;
 }
 
