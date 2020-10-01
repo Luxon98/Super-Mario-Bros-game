@@ -2,9 +2,20 @@
 
 #include "Position.h"
 #include "SDL_Utility.h"
+#include "World.h"
+#include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 2> Shards::shardsImages;
+std::array<SDL_Surface*, 4> Shards::shardsImages;
+
+int Shards::computeBaseIndex() const {
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		return 0;
+	}
+	else {
+		return 2;
+	}
+}
 
 void Shards::initPositionsVector(Position position)
 {
@@ -24,13 +35,17 @@ Shards::Shards(Position position)
 
 void Shards::loadShardsImages(SDL_Surface* display)
 {
-	shardsImages[0] = loadPNG("./img/shard1.png", display);
-	shardsImages[1] = loadPNG("./img/shard2.png", display);
+	for (std::size_t i = 0; i < shardsImages.size(); ++i) {
+		std::string filename = "./img/shard";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		shardsImages[i] = loadPNG(filename, display);
+	}
 }
 
 void Shards::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	SDL_Surface* shardImg = shardsImages[imageIndex];
+	SDL_Surface* shardImg = shardsImages[imageIndex + computeBaseIndex()];
 	for (int i = 0; i < 4; ++i) {
 		drawSurface(display, shardImg, shardsPositions[i].getX() - beginningOfCamera, shardsPositions[i].getY());
 	}
@@ -45,8 +60,8 @@ bool Shards::shouldBeRemoved() const
 void Shards::slide()
 {
 	++auxiliaryCounter;
-	if (auxiliaryCounter % 3 == 0) {
-		if (auxiliaryCounter < 46) {
+	if (auxiliaryCounter & 1) {
+		if (auxiliaryCounter < 30) {
 			shardsPositions[0].setY(shardsPositions[0].getY() - 5);
 			shardsPositions[0].setX(shardsPositions[0].getX() - 5);
 			shardsPositions[1].setY(shardsPositions[1].getY() - 5);
@@ -56,7 +71,7 @@ void Shards::slide()
 			shardsPositions[3].setY(shardsPositions[3].getY() - 3);
 			shardsPositions[3].setX(shardsPositions[3].getX() - 3);
 		}
-		else if (auxiliaryCounter >= 46 && auxiliaryCounter < 55) {
+		else if (auxiliaryCounter >= 30 && auxiliaryCounter < 36) {
 			shardsPositions[0].setY(shardsPositions[0].getY() - 2);
 			shardsPositions[0].setX(shardsPositions[0].getX() - 2);
 			shardsPositions[1].setY(shardsPositions[1].getY() - 2);
@@ -66,7 +81,7 @@ void Shards::slide()
 			shardsPositions[3].setY(shardsPositions[3].getY() - 2);
 			shardsPositions[3].setX(shardsPositions[3].getX() - 2);
 		}
-		else if (auxiliaryCounter >= 55 && auxiliaryCounter < 72) {
+		else if (auxiliaryCounter >= 36 && auxiliaryCounter < 48) {
 			shardsPositions[0].setY(shardsPositions[0].getY() + 5);
 			shardsPositions[0].setX(shardsPositions[0].getX() - 2);
 			shardsPositions[1].setY(shardsPositions[1].getY() + 5);
@@ -76,7 +91,7 @@ void Shards::slide()
 			shardsPositions[3].setY(shardsPositions[3].getY() + 4);
 			shardsPositions[3].setX(shardsPositions[3].getX() + 2);
 		}
-		else if (auxiliaryCounter >= 72 && auxiliaryCounter < 146) {
+		else if (auxiliaryCounter >= 48 && auxiliaryCounter < 98) {
 			shardsPositions[0].setY(shardsPositions[0].getY() + 5);
 			shardsPositions[1].setY(shardsPositions[1].getY() + 5);
 			shardsPositions[2].setY(shardsPositions[2].getY() + 3);

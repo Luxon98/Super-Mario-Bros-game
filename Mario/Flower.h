@@ -11,13 +11,14 @@ struct SDL_Surface;
 class Flower : public BonusObject
 {
 private:
-	static std::array<SDL_Surface*, 2> flowerImages;
+	static std::array<SDL_Surface*, 8> flowerImages;
+	int imageIndex;
+	int computeBaseIndex() const;
+	void changeModel();
 
 public:
-	static int typeOfImage;
 	Flower() = default;
 	Flower(Position position);
-	static void changeFlowerImage();
 	void loadFlowerImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;

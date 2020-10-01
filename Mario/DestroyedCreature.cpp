@@ -2,9 +2,21 @@
 
 #include "Position.h"
 #include "SDL_Utility.h"
+#include "World.h"
+#include "LayoutStyle.h"
 
 
-SDL_Surface* DestroyedCreature::destroyedCreatureImage = nullptr;
+std::array<SDL_Surface*, 2> DestroyedCreature::destroyedCreatureImages;
+
+int DestroyedCreature::computeIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		return 0;
+	}
+	else {
+		return 1;
+	}
+}
 
 DestroyedCreature::DestroyedCreature(Position position)
 {
@@ -15,13 +27,16 @@ DestroyedCreature::DestroyedCreature(Position position)
 
 void DestroyedCreature::loadDestroyedCreatureImage(SDL_Surface* display)
 {
-	destroyedCreatureImage = loadPNG("./img/destroyed_creature.png", display);
+	destroyedCreatureImages[0] = loadPNG("./img/destroyed_creature1.png", display);
+	destroyedCreatureImages[1] = loadPNG("./img/destroyed_creature2.png", display);
 }
 
 void DestroyedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 70 && position.getX() < endOfCamera + 70) {
-		drawSurface(display, destroyedCreatureImage, position.getX() - beginningOfCamera, position.getY());
+		SDL_Surface* dcImg = nullptr;
+		dcImg = destroyedCreatureImages[computeIndex()];
+		drawSurface(display, dcImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

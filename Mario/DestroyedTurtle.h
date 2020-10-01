@@ -1,6 +1,7 @@
 #ifndef DestroyedTurtle_H
 #define DestroyedTurtle_H
 
+#include <array>
 #include "TemporaryObject.h"
 
 class Position;
@@ -10,7 +11,8 @@ struct SDL_Surface;
 class DestroyedTurtle : public TemporaryObject
 {
 private:
-	static SDL_Surface* destroyedTurtleImage;
+	static std::array<SDL_Surface*, 2> destroyedTurtleImages;
+	int computeIndex() const;
 	
 public:
 	DestroyedTurtle() = default;

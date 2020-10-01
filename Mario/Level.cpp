@@ -8,8 +8,11 @@
 #include "Turtle.h"
 #include "Bush.h"
 #include "Cloud.h"
+#include "Coin.h"
 #include "Flag.h"
 #include "Castle.h"
+#include "LayoutStyle.h"
+#include "Flower.h"
 
 
 void Level::setFirstLevel(World &world)
@@ -21,6 +24,8 @@ void Level::setFirstLevel(World &world)
 	world.temporaryElements.clear();
 	world.fireballs.clear();
 	world.slidingCounter = 0;
+
+	world.LAYOUT_STYLE = LayoutStyle::OpenWorld;
 
 	for (int i = 0; i < World::WORLD_WIDTH + Screen::CAMERA_REFERENCE_POINT; i += 32) {
 		if (i != 2208 && i != 2240 && i != 4896 && i != 4928 && i != 2752 && i != 2784 && i != 2816) {
@@ -106,11 +111,18 @@ void Level::setFirstLevel(World &world)
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(4976, 336)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(5008, 336)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(4976, 304)));
+
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 9 - i; ++j) {
-			world.blocks.push_back(Block(BlockType::Indestructible, Position(5806 + i * 32 + j * 32, 400 - i * 32)));
+			world.blocks.push_back(Block(BlockType::Indestructible, 
+				Position(5806 + i * 32 + j * 32, 400 - i * 32)));
 		}
 	}
+
+	world.blocks.push_back(Block(BlockType::Destructible, Position(5390, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(5422, 288)));
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(5454, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(5486, 288)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(6350, 400)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(926, 399)));
 	world.blocks.push_back(Block(BlockType::TubeEntry, Position(926, 368)));

@@ -13,8 +13,9 @@ struct SDL_Surface;
 class Creature : public IndependentLivingObject
 {
 private:
-	static std::array<SDL_Surface*, 2> creatureImages;
+	static std::array<SDL_Surface*, 4> creatureImages; 
 	int model;
+	int computeBaseIndex() const;
 	void changeModel();
 
 public:

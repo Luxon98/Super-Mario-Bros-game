@@ -11,7 +11,8 @@ struct SDL_Surface;
 class Coin : public InanimateObject
 {
 private:
-	static std::array<SDL_Surface*, 2> coinImages; 
+	static std::array<SDL_Surface*, 4> coinImages; 
+	int computeBaseIndex() const;
 
 public:
 	static int typeOfImage;

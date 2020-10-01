@@ -13,8 +13,9 @@ struct SDL_Surface;
 class Turtle : public IndependentLivingObject
 {
 private:
-	static std::array<SDL_Surface*, 4> turtleImages;
+	static std::array<SDL_Surface*, 8> turtleImages;
 	int model;
+	int computeBaseIndex() const;
 	void chooseModel();
 
 public:

@@ -5,9 +5,21 @@
 #include "Position.h"
 #include "CollisionHandling.h"
 #include "SDL_Utility.h"
+#include "World.h"
+#include "LayoutStyle.h"
 
 
-SDL_Surface* Shell::shellImage = nullptr;
+std::array<SDL_Surface*, 2> Shell::shellImages;
+
+int Shell::computeIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		return 0;
+	}
+	else {
+		return 1;
+	}
+}
 
 Shell::Shell(Position position)
 {
@@ -44,13 +56,15 @@ void Shell::resetCreationTime()
 
 void Shell::loadShellImage(SDL_Surface* display)
 {
-	shellImage = loadPNG("./img/shell.png", display);
+	shellImages[0] = loadPNG("./img/shell1.png", display);
+	shellImages[1] = loadPNG("./img/shell2.png", display);
 }
 
 void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
-		drawSurface(display, shellImage, position.getX() - beginningOfCamera, position.getY());
+		SDL_Surface* shellImg = shellImages[computeIndex()];
+		drawSurface(display, shellImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

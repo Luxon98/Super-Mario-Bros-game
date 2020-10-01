@@ -30,7 +30,7 @@ private:
 	std::chrono::steady_clock::time_point timeBegin;
 	std::chrono::steady_clock::time_point lastColoursUpdateTime;
 	std::array<SDL_Surface*, 10> digitImages;
-	std::array<SDL_Surface*, 15> screenImages;
+	std::array<SDL_Surface*, 17> screenImages;
 	SDL_Surface* display;
 	SDL_Surface* charset;
 	SDL_Texture* scrtex;
@@ -38,12 +38,14 @@ private:
 	SDL_Renderer* renderer;
 	Camera camera;
 	bool isPlayerExceedingCameraReferencePoint() const;
-	int computeDifference();
-	int computeTime();
+	int computeCoinBaseIndex() const;
+	int computeDifference() const;
+	int computeTime() const;
 	void loadScreenImages();
 	void changeCoinImageIfAvailable();
-	void fillWorldBackground();
-	void fillScreenBackground();
+	void setBlueBackground();
+	void setBlackBackground();
+	void fillBackground();
 	void drawScreenElements();
 	void drawStartScreenElements(int lives);
 	void drawGameOver();

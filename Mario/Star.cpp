@@ -6,9 +6,21 @@
 #include "Position.h"
 #include "CollisionHandling.h"
 #include "SDL_Utility.h"
+#include "World.h"
+#include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 4> Star::starImages;
+std::array<SDL_Surface*, 8> Star::starImages;
+
+int Star::computeBaseIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		return 0;
+	}
+	else {
+		return 4;
+	}
+}
 
 void Star::makeVerticalMove(World &world)
 {
@@ -71,7 +83,8 @@ void Star::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) co
 {
 	if (position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) {
 		SDL_Surface* starImg = nullptr;
-		starImg = starImages[stepsCounter % 4];
+		int baseIndex = computeBaseIndex();
+		starImg = starImages[baseIndex + (stepsCounter % 4)];
 		drawSurface(display, starImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

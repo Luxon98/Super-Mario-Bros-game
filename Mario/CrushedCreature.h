@@ -1,6 +1,7 @@
 #ifndef CrushedCreature_H
 #define CrushedCreature_H
 
+#include <array>
 #include "TemporaryObject.h"
 
 class Position;
@@ -10,7 +11,8 @@ struct SDL_Surface;
 class CrushedCreature : public TemporaryObject
 {
 private:
-	static SDL_Surface* crushedCreatureImage;
+	static std::array<SDL_Surface*, 2> crushedCreatureImages;
+	int computeIndex() const;
 
 public:
 	CrushedCreature() = default;

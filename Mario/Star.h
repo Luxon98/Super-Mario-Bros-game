@@ -11,9 +11,10 @@ struct SDL_Surface;
 class Star : public BonusObject 
 {
 private:
-	static std::array<SDL_Surface*, 4> starImages;
+	static std::array<SDL_Surface*, 8> starImages;
 	int stepsCounter;
 	int stepsUp;
+	int computeBaseIndex() const;
 	void makeVerticalMove(World &world);
 	void makeHorizontalMove(World &world);
 

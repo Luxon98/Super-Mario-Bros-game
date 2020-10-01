@@ -2,9 +2,21 @@
 
 #include "Position.h"
 #include "SDL_Utility.h"
+#include "World.h"
+#include "LayoutStyle.h"
 
 
-SDL_Surface* CrushedCreature::crushedCreatureImage = nullptr;
+std::array<SDL_Surface*, 2> CrushedCreature::crushedCreatureImages;
+
+int CrushedCreature::computeIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		return 0;
+	}
+	else {
+		return 1;
+	}
+}
 
 CrushedCreature::CrushedCreature(Position position)
 {
@@ -14,13 +26,16 @@ CrushedCreature::CrushedCreature(Position position)
 
 void CrushedCreature::loadCrushedCreatureImage(SDL_Surface* display)
 {
-	crushedCreatureImage = loadPNG("./img/crushed_creature.png", display);
+	crushedCreatureImages[0] = loadPNG("./img/crushed_creature1.png", display);
+	crushedCreatureImages[1] = loadPNG("./img/crushed_creature2.png", display);
 }
 
 void CrushedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
-		drawSurface(display, crushedCreatureImage, position.getX() - beginningOfCamera, position.getY());
+		SDL_Surface* ccImg = nullptr;
+		ccImg = crushedCreatureImages[computeIndex()];
+		drawSurface(display, ccImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

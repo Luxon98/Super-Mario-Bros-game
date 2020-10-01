@@ -305,5 +305,8 @@
     <ClInclude Include="FileNotLoadedException.h">
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="LayoutStyle.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

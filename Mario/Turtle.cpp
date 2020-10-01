@@ -5,9 +5,21 @@
 #include "Position.h"
 #include "CollisionHandling.h"
 #include "SDL_Utility.h"
+#include "World.h"
+#include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 4> Turtle::turtleImages;
+std::array<SDL_Surface*, 8> Turtle::turtleImages;
+
+int Turtle::computeBaseIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		return 0;
+	}
+	else {
+		return 4;
+	}
+}
 
 void Turtle::chooseModel()
 {
@@ -38,13 +50,18 @@ void Turtle::loadTurtleImages(SDL_Surface* display)
 	turtleImages[1] = loadPNG("./img/turtle_left2.png", display);
 	turtleImages[2] = loadPNG("./img/turtle_right1.png", display);
 	turtleImages[3] = loadPNG("./img/turtle_right2.png", display);
+	turtleImages[4] = loadPNG("./img/turtle_left3.png", display);
+	turtleImages[5] = loadPNG("./img/turtle_left4.png", display);
+	turtleImages[6] = loadPNG("./img/turtle_right3.png", display);
+	turtleImages[7] = loadPNG("./img/turtle_right4.png", display);
 }
 
 void Turtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
 		SDL_Surface* turtleImg = nullptr;
-		turtleImg = turtleImages[model - 1];
+		int baseIndex = computeBaseIndex();
+		turtleImg = turtleImages[baseIndex + (model - 1)];
 		drawSurface(display, turtleImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

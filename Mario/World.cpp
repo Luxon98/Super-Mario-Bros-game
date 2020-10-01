@@ -23,7 +23,10 @@
 #include "DestroyedTurtle.h"
 #include "Position.h"
 #include "SoundController.h"
+#include "LayoutStyle.h"
 
+
+LayoutStyle World::LAYOUT_STYLE = LayoutStyle::OpenWorld;
 
 bool World::isTimeToChangeColors() const
 {
@@ -72,7 +75,6 @@ void World::changeColors()
 	lastColoursUpdateTime = timePoint;
 	Coin::changeCoinImage();
 	Block::changeBlockImage();
-	Flower::changeFlowerImage();
 }
 
 void World::setMovementDirection(LivingObject &monster)

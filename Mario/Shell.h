@@ -2,6 +2,7 @@
 #define Shell_H
 
 #include <chrono>
+#include <array>
 #include "IndependentLivingObject.h"
 
 class World;
@@ -13,9 +14,10 @@ struct SDL_Surface;
 class Shell : public IndependentLivingObject
 {
 private:
-	static SDL_Surface* shellImage;
+	static std::array<SDL_Surface*, 2> shellImages;
 	std::chrono::steady_clock::time_point creationTime;
 	bool active;
+	int computeIndex() const;
 	
 public:
 	Shell() = default;

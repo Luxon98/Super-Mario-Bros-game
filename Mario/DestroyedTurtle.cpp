@@ -2,9 +2,21 @@
 
 #include "Position.h"
 #include "SDL_Utility.h"
+#include "World.h"
+#include "LayoutStyle.h"
 
 
-SDL_Surface* DestroyedTurtle::destroyedTurtleImage = nullptr;
+std::array<SDL_Surface*, 2> DestroyedTurtle::destroyedTurtleImages;
+
+int DestroyedTurtle::computeIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		return 0;
+	}
+	else {
+		return 1;
+	}
+}
 
 DestroyedTurtle::DestroyedTurtle(Position position)
 {
@@ -15,13 +27,16 @@ DestroyedTurtle::DestroyedTurtle(Position position)
 
 void DestroyedTurtle::loadDestroyedTurtleImage(SDL_Surface* display)
 {
-	destroyedTurtleImage = loadPNG("./img/destroyed_turtle.png", display);
+	destroyedTurtleImages[0] = loadPNG("./img/destroyed_turtle1.png", display);
+	destroyedTurtleImages[1] = loadPNG("./img/destroyed_turtle2.png", display);
 }
 
 void DestroyedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 70 && position.getX() < endOfCamera + 70) {
-		drawSurface(display, destroyedTurtleImage, position.getX() - beginningOfCamera, position.getY());
+		SDL_Surface* dtImg = nullptr;
+		dtImg = destroyedTurtleImages[computeIndex()];
+		drawSurface(display, dtImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

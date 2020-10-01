@@ -19,6 +19,7 @@ class LivingObject;
 enum class TextType;
 enum class Direction;
 enum class BlockType;
+enum class LayoutStyle;
 struct SDL_Surface;
 
 
@@ -66,6 +67,7 @@ private:
 public:
 	static constexpr int WORLD_WIDTH = 6784;
 	static constexpr int WORLD_HEIGHT = 480;
+	static LayoutStyle LAYOUT_STYLE;
 	World();
 	std::vector<Block> const& getBlocks() const;
 	std::vector<FireBall> const& getFireBalls() const;

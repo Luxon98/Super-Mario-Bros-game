@@ -202,6 +202,7 @@
     <ClInclude Include="InanimateObject.h" />
     <ClInclude Include="IndependentLivingObject.h" />
     <ClInclude Include="KeyboardController.h" />
+    <ClInclude Include="LayoutStyle.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LivingObject.h" />
     <ClInclude Include="Movement.h" />

@@ -5,9 +5,21 @@
 #include "Position.h"
 #include "CollisionHandling.h"
 #include "SDL_Utility.h"
+#include "World.h"
+#include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 2> Creature::creatureImages;
+std::array<SDL_Surface*, 4> Creature::creatureImages;
+
+int Creature::computeBaseIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		return 0;
+	}
+	else {
+		return 2;
+	}
+}
 
 void Creature::changeModel()
 {
@@ -34,15 +46,20 @@ void Creature::setMoveDirection(Direction direction)
 
 void Creature::loadCreatureImages(SDL_Surface* display)
 {
-	creatureImages[0] = loadPNG("./img/creature1.png", display);
-	creatureImages[1] = loadPNG("./img/creature2.png", display);
+	for (std::size_t i = 0; i < creatureImages.size(); ++i) {
+		std::string filename = "./img/creature";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		creatureImages[i] = loadPNG(filename, display);
+	}
 }
 
 void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) {
 		SDL_Surface* creatureImg = nullptr;
-		creatureImg = creatureImages[model - 1];
+		int baseIndex = computeBaseIndex();
+		creatureImg = creatureImages[baseIndex + (model - 1)];
 		drawSurface(display, creatureImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

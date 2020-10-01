@@ -28,11 +28,12 @@ enum class BlockType
 class Block : public InanimateObject 
 {
 private:
-	static std::array<SDL_Surface*, 10> blockImages;
+	static std::array<SDL_Surface*, 17> blockImages;
 	static bool changesChecker;
 	int availableCoins;
 	int initialPositionY;
 	BlockType type;
+	int computeBaseIndex() const;
 	int computeImageIndex() const;
 	Size getSizeFromBlockType(BlockType type);
 
@@ -43,10 +44,10 @@ public:
 	bool canBeHitted() const;
 	bool isInvisible() const;
 	BlockType getType() const;
+	static void changeBlockImage();
 	void addToPositionY(int y);
 	void setAvailableCoins(int coins);
 	void setType(BlockType type);
-	static void changeBlockImage();
 	void loadBlockImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
