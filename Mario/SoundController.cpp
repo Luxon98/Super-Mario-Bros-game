@@ -50,26 +50,31 @@ SoundController::SoundController()
 
 void SoundController::playBackgroudMarioMusic()
 {
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[0], -1);
 }
 
 void SoundController::playBackgroudStarMusic()
 {
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[1], -1);
 }
 
 void SoundController::playWorldFinishedMusic()
 {
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[2], -1);
 }
 
 void SoundController::playGameoverMusic()
 {
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[3], -1);
 }
 
 void SoundController::playTimePassedMusic()
 {
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[4], -1);
 }
 

@@ -317,6 +317,8 @@ void Screen::drawStartScreen()
 	drawPoints(player->getPoints());
 	drawCoins(player->getCoins());
 	updateView();
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 }
 
 void Screen::drawGameOverScreen()
@@ -327,6 +329,8 @@ void Screen::drawGameOverScreen()
 	drawPoints(player->getPoints());
 	drawCoins(player->getCoins());
 	updateView();
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(6600));
 }
 
 void Screen::drawTimeUpScreen()
@@ -367,7 +371,6 @@ void Screen::drawDeadMario(World &world)
 
 void Screen::drawWorldFinishedScreen(World &world)
 {
-	SoundController::stopMusic();
 	SoundController::playWorldFinishedMusic();
 
 	for (int i = 2 * time; i >= 0; --i) {

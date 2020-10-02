@@ -135,6 +135,7 @@ public:
 	void loseBonusOrLife();
 	void performAdditionalJump();
 	void move(World &world) override;
+	void setStartingXY(int level);
 	void reborn();
 	void resetSteps();
 	void setSlidingParameters();

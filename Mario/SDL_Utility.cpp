@@ -19,6 +19,13 @@ void showFileErrorWindow(std::string errorText)
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Missing or corrupted file", errorText.c_str(), nullptr);
 }
 
+void showScreenErrorWindow()
+{
+	std::string errorText = "Some resources from SDL2 library couldn't be loaded."
+		"Check if you have included all needed .lib and .dll files. The game will be closed.";
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", errorText.c_str(), nullptr);
+}
+
 SDL_Surface* loadBMP(std::string filename)
 {
 	const char* converted_path = filename.c_str();

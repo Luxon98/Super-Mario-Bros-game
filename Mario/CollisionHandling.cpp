@@ -355,7 +355,6 @@ void collectStar(Player &player, World &world)
 	}
 	player.increaseSpeed();
 
-	SoundController::stopMusic();
 	SoundController::playBackgroudStarMusic();
 }
 

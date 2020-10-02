@@ -37,7 +37,6 @@ void Player::Flags::setDefaultFlags()
 	orientationFlag = true;
 	aliveFlag = true;
 	removeLivesFlag = false;
-	armedFlag = false;
 	slideFlag = false;
 	changeDirectionFlag = false;
 }
@@ -221,7 +220,6 @@ void Player::performImmortalAnimation(int difference)
 		currentState = (flags.armedFlag ? PlayerState::ArmedFirst : PlayerState::Tall);
 		lastDifference = 0;
 
-		SoundController::stopMusic();
 		SoundController::playBackgroudMarioMusic();
 
 		playerMovement.setSpeed(1);
@@ -248,7 +246,6 @@ void Player::performSmallImmortalAnimation(int difference)
 		currentState = PlayerState::Small;
 		lastDifference = 0;
 
-		SoundController::stopMusic();
 		SoundController::playBackgroudMarioMusic();
 
 		playerMovement.setSpeed(1);
@@ -620,6 +617,16 @@ void Player::move(World &world)
 
 			collectCoinIfPossible(*this, world);
 		}
+	}
+}
+
+void Player::setStartingXY(int level)
+{
+	if (level == 1) {
+		position.setXY(35, 400);
+	}
+	else {
+		position.setXY(35, 100);
 	}
 }
 
