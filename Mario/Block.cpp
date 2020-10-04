@@ -10,7 +10,7 @@
 
 std::array<SDL_Surface*, 17> Block::blockImages;
 
-bool Block::changesChecker = true;
+bool Block::blockImage = true;
 
 int Block::computeBaseIndex() const
 {
@@ -90,11 +90,16 @@ BlockType Block::getType() const
 	return type;
 }
 
+void Block::resetBlockImage()
+{
+	Block::blockImage = true;
+}
+
 void Block::changeBlockImage()
 {
-	Block::blockImages[4] = Block::blockImages[5 + Block::changesChecker];
-	Block::blockImages[11] = Block::blockImages[12 + Block::changesChecker];
-	Block::changesChecker = !Block::changesChecker;
+	Block::blockImages[4] = Block::blockImages[5 + Block::blockImage];
+	Block::blockImages[11] = Block::blockImages[12 + Block::blockImage];
+	Block::blockImage = !Block::blockImage;
 }
 
 void Block::setAvailableCoins(int coins)

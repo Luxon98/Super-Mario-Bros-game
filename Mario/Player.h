@@ -65,7 +65,7 @@ private:
 		bool slideFlag;
 		bool changeDirectionFlag;
 		Flags();
-		void setDefaultFlags();
+		void setDefaultFlags(bool armedFlag);
 	};
 
 	class PlayerMovement : public Movement

@@ -9,7 +9,7 @@
 
 std::array<SDL_Surface*, 4> Coin::coinImages;
 
-int Coin::typeOfImage = 2;
+bool Coin::coinImage = true;
 
 int Coin::computeBaseIndex() const
 {
@@ -38,9 +38,14 @@ void Coin::loadCoinImages(SDL_Surface* display)
 	}
 }
 
+void Coin::resetCoinImage()
+{
+	Coin::coinImage = true;
+}
+
 void Coin::changeCoinImage()
 {
-	Coin::typeOfImage = (Coin::typeOfImage == 1 ? 2 : 1);
+	Coin::coinImage = !Coin::coinImage;
 }
 
 void Coin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
@@ -48,7 +53,7 @@ void Coin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) co
 	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
 		SDL_Surface* coinImg = nullptr;
 		int baseIndex = computeBaseIndex();
-		coinImg = coinImages[baseIndex + (typeOfImage - 1)];
+		coinImg = coinImages[baseIndex + coinImage];
 		drawSurface(display, coinImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

@@ -15,7 +15,7 @@
 #include "Flower.h"
 
 
-void Level::setFirstLevel(World &world)
+void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 {
 	world.blocks.clear();
 	world.inanimateElements.clear();
@@ -23,7 +23,9 @@ void Level::setFirstLevel(World &world)
 	world.monsters.clear();
 	world.temporaryElements.clear();
 	world.fireballs.clear();
+
 	world.slidingCounter = 0;
+	world.resetImages();
 
 	world.LAYOUT_STYLE = LayoutStyle::OpenWorld;
 
@@ -141,7 +143,10 @@ void Level::setFirstLevel(World &world)
 	world.blocks.push_back(Block(BlockType::TubeEntry, Position(5246, 368)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(5754, 399)));
 	world.blocks.push_back(Block(BlockType::TubeEntry, Position(5754, 368)));
-	world.blocks.push_back(Block(BlockType::BonusWithGreenMushroom, Position(2064, 288)));
+
+	if (bonusLifeBlockFlag) {
+		world.blocks.push_back(Block(BlockType::BonusWithGreenMushroom, Position(2064, 288)));
+	}
 
 	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(5, Position(80, 381))));
 	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(3, Position(432, 400))));
@@ -211,7 +216,9 @@ void Level::setSecondLevel(World& world)
 	world.monsters.clear();
 	world.temporaryElements.clear();
 	world.fireballs.clear();
+	
 	world.slidingCounter = 0;
+	world.resetImages();
 
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
 

@@ -29,7 +29,7 @@ class Block : public InanimateObject
 {
 private:
 	static std::array<SDL_Surface*, 17> blockImages;
-	static bool changesChecker;
+	static bool blockImage;
 	int availableCoins;
 	int initialPositionY;
 	BlockType type;
@@ -44,6 +44,7 @@ public:
 	bool canBeHitted() const;
 	bool isInvisible() const;
 	BlockType getType() const;
+	static void resetBlockImage();
 	static void changeBlockImage();
 	void addToPositionY(int y);
 	void setAvailableCoins(int coins);

@@ -32,11 +32,12 @@ Player::Flags::Flags()
 	changeDirectionFlag = false;
 }
 
-void Player::Flags::setDefaultFlags()
+void Player::Flags::setDefaultFlags(bool armedFlag)
 {
 	orientationFlag = true;
 	aliveFlag = true;
 	removeLivesFlag = false;
+	this->armedFlag = armedFlag;
 	slideFlag = false;
 	changeDirectionFlag = false;
 }
@@ -467,8 +468,8 @@ bool Player::isInsensitive() const
 
 bool Player::isImmortal() const
 {
-	return (currentState != PlayerState::Insensitive && currentState >= PlayerState::ImmortalFirst 
-		&& currentState <= PlayerState::ImmortalSmallFourth);
+	return ((currentState >= PlayerState::ImmortalFirst && currentState <= PlayerState::ImmortalFourth) 
+		&& currentState != PlayerState::Insensitive);
 }
 
 bool Player::isDead() const
@@ -636,7 +637,7 @@ void Player::reborn()
 	position.setXY(35, 400);
 	model = 0;
 	changeModelCounter = 0;
-	flags.setDefaultFlags();
+	flags.setDefaultFlags(false);
 	lastDifference = 0;
 	currentState = PlayerState::Small;
 	currentAnimationState = PlayerAnimation::NoAnimation;
@@ -667,5 +668,5 @@ void Player::setFinishingRunParameters()
 	playerMovement.stepsRight = 140;
 	changeModelCounter = 0;
 	model = 0;
-	flags.setDefaultFlags();
+	flags.setDefaultFlags(flags.armedFlag);
 }

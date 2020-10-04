@@ -40,7 +40,7 @@ bool World::isTimeToChangeColors() const
 
 bool World::isPlayerCloseEnough(LivingObject &monster) const
 {
-	if (monster.getX() < player->getX() + 2 * Screen::CAMERA_REFERENCE_POINT) {
+	if (monster.getX() < player->getX() + Screen::CAMERA_REFERENCE_POINT * 1.5) {
 		return true;
 	}
 
@@ -75,6 +75,7 @@ void World::changeColors()
 	lastColoursUpdateTime = timePoint;
 	Coin::changeCoinImage();
 	Block::changeBlockImage();
+	Screen::changeCoinImage();
 }
 
 void World::setMovementDirection(LivingObject &monster)
@@ -426,6 +427,13 @@ void World::changeShellMovementParameters(int index, Direction direction)
 {
 	std::dynamic_pointer_cast<Shell>(monsters[index])->setMovementDirectionAndActiveState(direction);
 	std::dynamic_pointer_cast<Shell>(monsters[index])->resetCreationTime();
+}
+
+void World::resetImages()
+{
+	Screen::resetCoinImage();
+	Block::resetBlockImage();
+	Coin::resetCoinImage();
 }
 
 void World::destroyLastTouchedBlock()

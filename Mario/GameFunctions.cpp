@@ -148,7 +148,7 @@ void setWorld(int level, Player &player, World &world, bool playerState)
 	}
 
 	if (level == 1) {
-		Level::setFirstLevel(world);
+		Level::setFirstLevel(world, playerState);
 	}
 	else if (level == 2) {
 		Level::setSecondLevel(world);
@@ -234,6 +234,7 @@ void runGame()
 					screen->drawWorldFinishedScreen(world);
 					
 					++level;
+					screen->setLevel(level);
 					if (level == 3) {
 						winStatus = true;
 					}

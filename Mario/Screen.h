@@ -24,13 +24,14 @@ private:
 
 	static constexpr int INITIAL_TIME = 403;
 	std::shared_ptr<Player> player;
-	bool coinImage;
+	static bool coinImage;
 	int initStatus;
 	int time;
+	int level;
 	std::chrono::steady_clock::time_point timeBegin;
-	std::chrono::steady_clock::time_point lastColoursUpdateTime;
 	std::array<SDL_Surface*, 10> digitImages;
-	std::array<SDL_Surface*, 17> screenImages;
+	std::array<SDL_Surface*, 15> screenImages;
+	std::array<SDL_Surface*, 8> worldImages;
 	SDL_Surface* display;
 	SDL_Surface* charset;
 	SDL_Texture* scrtex;
@@ -41,8 +42,12 @@ private:
 	int computeCoinBaseIndex() const;
 	int computeDifference() const;
 	int computeTime() const;
+	void loadDigitImages();
+	void loadOtherImages();
+	void loadWorldImages();
+	void loadCoinImages();
+	void loadDeadMarioImages();
 	void loadScreenImages();
-	void changeCoinImageIfAvailable();
 	void setBlueBackground();
 	void setBlackBackground();
 	void fillBackground();
@@ -60,7 +65,7 @@ private:
 public:
 	static constexpr int SCREEN_WIDTH = 640;
 	static constexpr int SCREEN_HEIGHT = 480;
-	static constexpr int CAMERA_REFERENCE_POINT = 240;
+	static constexpr int CAMERA_REFERENCE_POINT = 320;
 	Screen();
 	int getInitStatus() const;
 	int getTime() const;
@@ -70,6 +75,9 @@ public:
 	SDL_Surface* getDisplay() const;
 	void setPlayer(std::shared_ptr<Player> player);
 	void setPositionOfTheScreen(int begX, int endX);
+	void setLevel(int level);
+	static void resetCoinImage();
+	static void changeCoinImage();
 	void resetScreen();
 	void drawStartScreen();
 	void drawGameOverScreen();
