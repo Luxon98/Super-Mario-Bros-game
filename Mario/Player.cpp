@@ -221,7 +221,7 @@ void Player::performImmortalAnimation(int difference)
 		currentState = (flags.armedFlag ? PlayerState::ArmedFirst : PlayerState::Tall);
 		lastDifference = 0;
 
-		SoundController::playBackgroudMarioMusic();
+		SoundController::playOpenWorldMusic();
 
 		playerMovement.setSpeed(1);
 		playerMovement.setVerticalSpeed(1);
@@ -247,7 +247,7 @@ void Player::performSmallImmortalAnimation(int difference)
 		currentState = PlayerState::Small;
 		lastDifference = 0;
 
-		SoundController::playBackgroudMarioMusic();
+		SoundController::playOpenWorldMusic();
 
 		playerMovement.setSpeed(1);
 		playerMovement.setVerticalSpeed(1);
@@ -482,6 +482,18 @@ bool Player::isTurnedRight() const
 	return flags.orientationFlag;
 }
 
+bool Player::isPerformingJumpAsSmall() const
+{
+	if (isSmall() || isInsensitive()) {
+		return true;
+	}
+	else if (currentState >= PlayerState::ImmortalSmallFirst && currentState <= PlayerState::ImmortalSmallFourth) {
+		return true;
+	}
+
+	return false;
+}
+
 int Player::getDeadMarioImageIndex() const
 {
 	if (currentState == PlayerState::ArmedFirst || currentState == PlayerState::ImmortalFourth 
@@ -521,7 +533,7 @@ void Player::incrementLives()
 void Player::increaseSpeed()
 {
 	playerMovement.setSpeed(2);
-	playerMovement.setVerticalSpeed(2);
+	//playerMovement.setVerticalSpeed(2);
 }
 
 void Player::addPoints(int pts)
@@ -631,10 +643,10 @@ void Player::setStartingXY(int level)
 	}
 }
 
-void Player::reborn()
+void Player::reborn(int level)
 {
 	size.setSize(32, 32);
-	position.setXY(35, 400);
+	setStartingXY(level);
 	model = 0;
 	changeModelCounter = 0;
 	flags.setDefaultFlags(false);

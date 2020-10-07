@@ -24,6 +24,8 @@ void loadBlockImages(SDL_Surface* display);
 
 void loadImages(SDL_Surface* display);
 
+void playBackgroundMusic(int level);
+
 void reset(KeyboardController &controller, Screen* screen, bool * playerState);
 
 void setWorld(int level, Player &player, World &world, bool playerState);

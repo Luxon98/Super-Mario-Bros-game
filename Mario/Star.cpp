@@ -63,7 +63,7 @@ Star::Star(Position position)
 {
 	size = Size(28, 32);
 	this->position = position;
-	movement = Movement(2, 1, Direction::Right, Direction::Up);
+	movement = Movement(1, 1, Direction::Right, Direction::Up);
 	stepsUp = 0;
 	stepsCounter = 0;
 	growCounter = 90;

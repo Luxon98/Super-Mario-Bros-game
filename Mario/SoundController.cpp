@@ -3,7 +3,7 @@
 #include "Player.h"
 
 
-std::array<Mix_Music*, 5> SoundController::backgroundTracks;
+std::array<Mix_Music*, 7> SoundController::backgroundTracks;
 std::array<Mix_Chunk*, 13> SoundController::soundsEffects;
 
 bool SoundController::initSoundMixer()
@@ -16,14 +16,19 @@ bool SoundController::initSoundMixer()
 	return success;
 }
 
-void SoundController::loadSounds()
+void SoundController::loadBackgroundTracks()
 {
-	backgroundTracks[0] = Mix_LoadMUS("./sounds/background_normal.wav");
+	backgroundTracks[0] = Mix_LoadMUS("./sounds/background_open.wav");
 	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_star.wav");
 	backgroundTracks[2] = Mix_LoadMUS("./sounds/world_finished.wav");
 	backgroundTracks[3] = Mix_LoadMUS("./sounds/gameover.wav");
 	backgroundTracks[4] = Mix_LoadMUS("./sounds/time_passed.wav");
+	backgroundTracks[5] = Mix_LoadMUS("./sounds/background_underground.wav");
+	backgroundTracks[6] = Mix_LoadMUS("./sounds/background_castle.wav");
+}
 
+void SoundController::loadSoundEffects()
+{
 	soundsEffects[0] = Mix_LoadWAV("./sounds/1up_collected.wav");
 	soundsEffects[1] = Mix_LoadWAV("./sounds/block_destroyed.wav");
 	soundsEffects[2] = Mix_LoadWAV("./sounds/block_hitted.wav");
@@ -39,6 +44,12 @@ void SoundController::loadSounds()
 	soundsEffects[12] = Mix_LoadWAV("./sounds/back_to_small.wav");
 }
 
+void SoundController::loadSounds()
+{
+	loadBackgroundTracks();
+	loadSoundEffects();
+}
+
 SoundController::SoundController()
 {
 	initSoundMixer();
@@ -48,13 +59,25 @@ SoundController::SoundController()
 	loadSounds();
 }
 
-void SoundController::playBackgroudMarioMusic()
+void SoundController::playOpenWorldMusic()
 {
 	stopMusic();
 	Mix_PlayMusic(backgroundTracks[0], -1);
 }
 
-void SoundController::playBackgroudStarMusic()
+void SoundController::playUndergroundMusic()
+{
+	stopMusic();
+	Mix_PlayMusic(backgroundTracks[5], -1);
+}
+
+void SoundController::playCastleMusic()
+{
+	stopMusic();
+	Mix_PlayMusic(backgroundTracks[6], -1);
+}
+
+void SoundController::playStarMusic()
 {
 	stopMusic();
 	Mix_PlayMusic(backgroundTracks[1], -1);
@@ -125,7 +148,7 @@ void SoundController::playFlagDownEffect()
 
 void SoundController::playJumpEffect(Player &player)
 {
-	Mix_PlayChannel(-1, soundsEffects[player.isSmall() ? 9 : 10], 0);
+	Mix_PlayChannel(-1, soundsEffects[player.isPerformingJumpAsSmall() ? 9 : 10], 0);
 }
 
 void SoundController::playBonusLostEffect()

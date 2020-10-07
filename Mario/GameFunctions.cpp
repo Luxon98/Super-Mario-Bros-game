@@ -131,6 +131,19 @@ void loadImages(SDL_Surface* display)
 	loadBlockImages(display);
 }
 
+void playBackgroundMusic(int level)
+{
+	if (level == 1 || level == 3) {
+		SoundController::playOpenWorldMusic();
+	}
+	else if (level == 2) {
+		SoundController::playUndergroundMusic();
+	}
+	else {
+		SoundController::playCastleMusic();
+	}
+}
+
 void reset(KeyboardController &controller, Screen* screen, bool * playerState)
 {
 	controller.clearKeysState();
@@ -144,7 +157,7 @@ void setWorld(int level, Player &player, World &world, bool playerState)
 		player.setStartingXY(level);
 	}
 	else {
-		player.reborn();
+		player.reborn(level);
 	}
 
 	if (level == 1) {
@@ -201,7 +214,7 @@ void runGame()
 			SoundController::stopMusic();
 
 			screen->drawStartScreen();
-			SoundController::playBackgroudMarioMusic();
+			playBackgroundMusic(level);
 
 			while (playerState && timeState && !winStatus) {
 				screen->updateScreen(world);

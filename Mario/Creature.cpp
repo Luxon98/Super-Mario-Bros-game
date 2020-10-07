@@ -32,7 +32,7 @@ void Creature::changeModel()
 Creature::Creature(Position position)
 {
 	size = Size(32, 32);
-	movement = Movement(1, 2, Direction::None);
+	movement = Movement(1, 3, Direction::None);
 	this->position = position;
 	model = 1;
 	stepsCounter = 0;

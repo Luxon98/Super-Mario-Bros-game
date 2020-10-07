@@ -123,6 +123,7 @@ public:
 	bool isImmortal() const;
 	bool isDead() const;
 	bool isTurnedRight() const;
+	bool isPerformingJumpAsSmall() const;
 	int getDeadMarioImageIndex() const;
 	void incrementCoins();
 	void incrementLives();
@@ -136,7 +137,7 @@ public:
 	void performAdditionalJump();
 	void move(World &world) override;
 	void setStartingXY(int level);
-	void reborn();
+	void reborn(int level);
 	void resetSteps();
 	void setSlidingParameters();
 	void setFinishingRunParameters();

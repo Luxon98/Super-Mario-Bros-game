@@ -32,7 +32,7 @@ void Turtle::chooseModel()
 Turtle::Turtle(Position position)
 {
 	size = Size(26, 38);
-	movement = Movement(1, 2, Direction::None);
+	movement = Movement(1, 3, Direction::None);
 	this->position = position;
 	model = 1;
 	stepsCounter = 0;

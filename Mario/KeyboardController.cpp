@@ -18,7 +18,6 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 	if (!player.movementBlock) {
 		if (isCharacterStandingOnTheBlock(player, world)) {
 			doubleJumpFlag = false;
-			double upMultiplier = (player.isImmortal() ? 0.75 : 1);
 
 			if (keysState[Direction::Left] && keysState[Direction::Right]) {
 				if (player.playerMovement.stepsLeft > 0) {
@@ -32,12 +31,11 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 			else if (keysState[Direction::Left] && keysState[Direction::Up]) {
 				if (player.playerMovement.stepsLeft > 0) {
 					player.playerMovement.stepsLeft += 18;
-					player.playerMovement.stepsUp = static_cast<int>((2 * player.playerMovement.stepsLeft) 
-						* upMultiplier);
+					player.playerMovement.stepsUp = 2 * player.playerMovement.stepsLeft;
 				}
 				else {
 					player.playerMovement.stepsLeft = 36;
-					player.playerMovement.stepsUp = static_cast<int>(72 * upMultiplier);
+					player.playerMovement.stepsUp = 72;
 				}
 
 				SoundController::playJumpEffect(player);
@@ -46,12 +44,11 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 			else if (keysState[Direction::Right] && keysState[Direction::Up]) {
 				if (player.playerMovement.stepsRight > 0) {
 					player.playerMovement.stepsRight += 18;
-					player.playerMovement.stepsUp = static_cast<int>((2 * player.playerMovement.stepsRight) 
-						* upMultiplier);
+					player.playerMovement.stepsUp = 2 * player.playerMovement.stepsRight;
 				}
 				else {
 					player.playerMovement.stepsRight = 36;
-					player.playerMovement.stepsUp = static_cast<int>(72 * upMultiplier);
+					player.playerMovement.stepsUp = 72;
 				}
 
 				SoundController::playJumpEffect(player);
@@ -76,7 +73,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 				return;
 			}
 			else if (keysState[Direction::Up]) {
-				player.playerMovement.stepsUp = static_cast<int>(101 * upMultiplier);
+				player.playerMovement.stepsUp = 101;
 				SoundController::playJumpEffect(player);
 				return;
 			}
@@ -102,7 +99,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 					player.playerMovement.stepsLeft = 16;
 				}
 
-				if (!doubleJumpFlag && player.getY() > 200 && !player.isImmortal()) {
+				if (!doubleJumpFlag && player.getY() > 200) {
 					player.playerMovement.stepsUp += 65;
 					doubleJumpFlag = true;
 				}
@@ -116,14 +113,14 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 					player.playerMovement.stepsRight = 16;
 				}
 
-				if (!doubleJumpFlag && player.getY() > 200 && !player.isImmortal()) {
+				if (!doubleJumpFlag && player.getY() > 200) {
 					player.playerMovement.stepsUp += 65;
 					doubleJumpFlag = true;
 				}
 				return;
 			}
 			else if (keysState[Direction::Up]) {
-				if (!doubleJumpFlag && player.getY() > 200 && !player.isImmortal()) {
+				if (!doubleJumpFlag && player.getY() > 200) {
 					player.playerMovement.stepsUp += 65;
 					doubleJumpFlag = true;
 				}
