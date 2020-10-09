@@ -639,7 +639,7 @@ void Player::setStartingXY(int level)
 		position.setXY(35, 400);
 	}
 	else {
-		position.setXY(35, 100);
+		position.setXY(50, 140);
 	}
 }
 

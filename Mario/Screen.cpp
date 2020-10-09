@@ -394,11 +394,12 @@ void Screen::drawDeadMario(World& world)
 		if (i % 3 == 0) {
 			time = computeTime();
 			fillBackground();
+			world.draw(display, getBeginningOfCamera(), getEndOfCamera(), false);
+
 			drawScreenElements();
 			drawTime(time);
 			drawPoints(player->getPoints());
 			drawCoins(player->getCoins());
-			world.draw(display, getBeginningOfCamera(), getEndOfCamera(), false);
 
 			drawSurface(display, img, player->getX() - getBeginningOfCamera(), player->getY() + shift);
 			updateView();
@@ -440,12 +441,12 @@ void Screen::updateScreen(World& world)
 	}
 	time = computeTime();
 	fillBackground();
+	world.performActions();
+	world.draw(display, getBeginningOfCamera(), getEndOfCamera());
+
 	drawScreenElements();
 	drawTime(time);
 	drawPoints(player->getPoints());
-
-	world.performActions();
-	world.draw(display, getBeginningOfCamera(), getEndOfCamera());
 	drawCoins(player->getCoins());
 	updateView();
 }
