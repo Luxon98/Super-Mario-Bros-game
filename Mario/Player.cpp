@@ -280,12 +280,12 @@ void Player::changeModelAndAirFlagStatus(World &world)
 
 bool Player::isHittingCeiling(int distance) const
 {
-	return (position.getY() - distance - (getHeight() / 2) < -50);
+	return (position.getY() - distance - (getHeight() / 2) < -25);
 }
 
 bool Player::isFallingIntoAbyss(int distance) const
 {
-	return (position.getY() + distance + getHeight() / 2 > World::WORLD_HEIGHT);
+	return (position.getY() + distance + (getHeight() / 2) > World::WORLD_HEIGHT);
 }
 
 bool Player::isGoingBeyondCamera(int distance, int beginningOfCamera) const

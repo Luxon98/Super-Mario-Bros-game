@@ -191,7 +191,7 @@ void World::slideTemporaryElements()
 
 void World::slideBlock()
 {
-	if (slidingCounter == 124) {
+	if (slidingCounter == SLIDING_BLOCK_VALUE) {
 		playBlockSoundEffects();
 
 		if (hasLastTouchedBlockCoin()) {
@@ -238,11 +238,11 @@ void World::addShards(Position position)
 void World::performBlockSliding()
 {
 	--slidingCounter;
-	if (slidingCounter % 3 == 0) {
-		int height = (slidingCounter <= 60 ? 1 : -1);
+	if (slidingCounter & 1) {
+		int height = (slidingCounter <= 40 ? 1 : -1);
 		blocks[lastTouchedBlockIndex].addToPositionY(height);
 
-		if (slidingCounter > 60 && blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithGreenMushroom) {
+		if (slidingCounter > 40 && blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithGreenMushroom) {
 			createGreenMushroom();
 		}
 	}
@@ -300,7 +300,7 @@ void World::createNewBonus()
 void World::createGreenMushroom()
 {
 	bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
-		blocks[lastTouchedBlockIndex].getY()), true)));
+		blocks[lastTouchedBlockIndex].getY() - 8), true)));
 
 	blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 }
@@ -407,13 +407,13 @@ void World::hitBlock()
 	if ((blocks[lastTouchedBlockIndex].getType() >= BlockType::Destructible && blocks[lastTouchedBlockIndex].getType()
 		<= BlockType::BonusWithStar) && blocks[lastTouchedBlockIndex].canBeHitted()) {
 
-		slidingCounter = 124;
+		slidingCounter = SLIDING_BLOCK_VALUE;
 	}
 }
 
 void World::setFireballStatus()
 {
-	if (fireballs.size() != 2) {
+	if (fireballs.size() != MAX_NUMBER_OF_FIREBALLS) {
 		fireballStatus = true;
 	}
 }

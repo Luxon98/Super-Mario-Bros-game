@@ -27,6 +27,8 @@ class World
 {
 private:
 	static constexpr int DISTANCE_FROM_WORLD = 30;
+	static constexpr int MAX_NUMBER_OF_FIREBALLS = 2;
+	static constexpr int SLIDING_BLOCK_VALUE = 81;
 	std::chrono::steady_clock::time_point lastColoursUpdateTime;
 	std::vector<Block> blocks;
 	std::vector<FireBall> fireballs;
@@ -65,7 +67,6 @@ private:
 	friend class Level;
 
 public:
-	static constexpr int WORLD_WIDTH = 6784;
 	static constexpr int WORLD_HEIGHT = 480;
 	static LayoutStyle LAYOUT_STYLE;
 	World();

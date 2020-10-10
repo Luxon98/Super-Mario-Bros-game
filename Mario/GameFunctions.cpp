@@ -206,12 +206,11 @@ void runGame()
 		world.setPlayer(player);
 		screen->setPlayer(player);
 
-		int level = 2;
+		int level = 1;
 
 		while (player->getLives() && !winStatus) {
 			setWorld(level, *player, world, playerState);
 			reset(controller, screen, &playerState);
-			SoundController::stopMusic();
 
 			screen->drawStartScreen();
 			playBackgroundMusic(level);

@@ -29,10 +29,10 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 
 	world.LAYOUT_STYLE = LayoutStyle::OpenWorld;
 
-	for (int i = 0; i < World::WORLD_WIDTH + Screen::CAMERA_REFERENCE_POINT; i += 32) {
+	for (int i = 0; i < 7120; i += 32) {
 		if (i != 2208 && i != 2240 && i != 4896 && i != 4928 && i != 2752 && i != 2784 && i != 2816) {
-			world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 16)));
-			world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 48)));
+			world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 464)));
+			world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 432)));
 		}
 	}
 
@@ -226,19 +226,19 @@ void Level::setSecondLevel(World& world)
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
 
 	for (int i = 0; i < 2560; i += 32) {
-		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 16)));
-		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 48)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 432)));
 	}
 
 	for (int i = 2656; i < 3840; i += 32) {
-		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 16)));
-		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 48)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 432)));
 	}
 
-	world.blocks.push_back(Block(BlockType::Ground, Position(3920, Screen::SCREEN_HEIGHT - 16)));
-	world.blocks.push_back(Block(BlockType::Ground, Position(3920, Screen::SCREEN_HEIGHT - 48)));
-	world.blocks.push_back(Block(BlockType::Ground, Position(3952, Screen::SCREEN_HEIGHT - 16)));
-	world.blocks.push_back(Block(BlockType::Ground, Position(3952, Screen::SCREEN_HEIGHT - 48)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(3920, 464)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(3920, 432)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(3952, 464)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(3952, 432)));
 
 	for (int i = 0; i < 3; ++i) {
 		world.blocks.push_back(Block(BlockType::Destructible, Position(3920, 400 - (i * 32))));
@@ -247,13 +247,13 @@ void Level::setSecondLevel(World& world)
 
 
 	for (int i = 4032; i < 4416; i += 32) {
-		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 16)));
-		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 48)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 432)));
 	}
 
 	for (int i = 4640; i < 4896; i += 32) {
-		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 16)));
-		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, Screen::SCREEN_HEIGHT - 48)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 432)));
 
 		if (i != 4864 && i != 4832) {
 			world.blocks.push_back(Block(BlockType::Destructible, Position(16 + i, 272)));
