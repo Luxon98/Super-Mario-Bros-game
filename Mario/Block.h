@@ -2,7 +2,7 @@
 #define Block_H
 
 #include <array>
-#include "InanimateObject.h"
+#include "WorldObject.h"
 
 class Position;
 struct SDL_Surface;
@@ -25,10 +25,10 @@ enum class BlockType
 };
 
 
-class Block : public InanimateObject 
+class Block : public WorldObject 
 {
 private:
-	static std::array<SDL_Surface*, 17> blockImages;
+	static std::array<SDL_Surface*, 20> blockImages;
 	static bool blockImage;
 	int availableCoins;
 	int initialPositionY;
@@ -40,14 +40,14 @@ private:
 public:
 	Block() = default;
 	Block(BlockType type, Position position);
-	int getAvailableCoins() const;
+	bool hasCoins() const;
 	bool canBeHitted() const;
 	bool isInvisible() const;
 	BlockType getType() const;
 	static void resetBlockImage();
 	static void changeBlockImage();
 	void addToPositionY(int y);
-	void setAvailableCoins(int coins);
+	void decrementCoins();
 	void setType(BlockType type);
 	void loadBlockImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

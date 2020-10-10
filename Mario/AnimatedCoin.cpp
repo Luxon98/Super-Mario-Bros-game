@@ -36,7 +36,7 @@ void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCa
 
 bool AnimatedCoin::shouldBeRemoved() const
 { 
-	return (slideCounter > 57); 
+	return (slideCounter > 96); 
 }
 
 void AnimatedCoin::slide()
@@ -44,29 +44,29 @@ void AnimatedCoin::slide()
 	++slideCounter;
 	++auxiliaryCounter;
 	if (auxiliaryCounter & 1) {
-		if (slideCounter <= 3) {
+		if (slideCounter <= 8) {
 			imageIndex = 0;
 		}
-		else if (slideCounter <= 13) {
-			position.setY(position.getY() - 2);
+		else if (slideCounter <= 24) {
+			position.setY(position.getY() - 3);
 			imageIndex = 1;
 		}
-		else if (slideCounter <= 23) {
-			position.setY(position.getY() - 1);
+		else if (slideCounter <= 48) {
+			position.setY(position.getY() - 2);
 			imageIndex = 2;
 		}
-		else if (slideCounter <= 25) {
+		else if (slideCounter <= 58) {
 			imageIndex = 3;
 		}
-		else if (slideCounter <= 35) {
-			position.setY(position.getY() + 1);
+		else if (slideCounter <= 72) {
+			position.setY(position.getY() + 2);
 			imageIndex = 4;
 		}
-		else if (slideCounter <= 45) {
-			position.setY(position.getY() + 2);
+		else if (slideCounter <= 88) {
+			position.setY(position.getY() + 3);
 			imageIndex = 5;
 		}
-		else if (slideCounter <= 55) {
+		else if (slideCounter <= 96) {
 			imageIndex = 6;
 		}
 	}

@@ -8,39 +8,32 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 17> Block::blockImages;
+std::array<SDL_Surface*, 20> Block::blockImages;
 
 bool Block::blockImage = true;
 
 int Block::computeBaseIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
-		return 7;
-	}
-	else {
-		return 0;
-	}
+	return (World::LAYOUT_STYLE == LayoutStyle::Underground ? 10 : 0);
 }
 
 int Block::computeImageIndex() const
 {
-	if (type == BlockType::Tube || type == BlockType::TubeEntry) {
-		return (static_cast<int>(type) + 3);
+	int baseIndex = computeBaseIndex();
+	if (type <= BlockType::Destructible) {
+		return (baseIndex + (static_cast<int>(type) - 1));
+	}
+	else if (type == BlockType::Monetary || type == BlockType::BonusWithStar) {
+		return (baseIndex + 3);
+	}
+	else if (type == BlockType::Tube || type == BlockType::TubeEntry) {
+		return (baseIndex + (static_cast<int>(type) - 4));
 	}
 	else if (type == BlockType::BonusWithGreenMushroom) {
-		return 16;
+		return (baseIndex + (static_cast<int>(type) + 2));
 	}
 	else {
-		int baseIndex = computeBaseIndex();
-		if (type <= BlockType::Destructible) {
-			return (baseIndex + (static_cast<int>(type) - 1));
-		}
-		else if (type == BlockType::Monetary || type == BlockType::BonusWithStar) {
-			return (baseIndex + 3);
-		}
-		else {
-			return (baseIndex + 4);
-		}
+		return (baseIndex + 4);
 	}
 }
 
@@ -66,9 +59,9 @@ Block::Block(BlockType type, Position position)
 	initialPositionY = position.getY();
 }
 
-int Block::getAvailableCoins() const
+bool Block::hasCoins() const
 {
-	return availableCoins;
+	return (availableCoins > 0);
 }
 
 bool Block::canBeHitted() const
@@ -78,7 +71,7 @@ bool Block::canBeHitted() const
 
 bool Block::isInvisible() const
 {
-	if (type == BlockType::BonusWithGreenMushroom) {
+	if (type == BlockType::BonusWithGreenMushroom && World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
 		return true;
 	}
 
@@ -98,14 +91,14 @@ void Block::resetBlockImage()
 void Block::changeBlockImage()
 {
 	Block::blockImages[4] = Block::blockImages[5 + Block::blockImage];
-	Block::blockImages[11] = Block::blockImages[12 + Block::blockImage];
+	Block::blockImages[14] = Block::blockImages[15 + Block::blockImage];
 	Block::blockImage = !Block::blockImage;
 }
 
-void Block::setAvailableCoins(int coins)
+void Block::decrementCoins()
 {
-	if (coins >= 0) {
-		availableCoins = coins;
+	if (availableCoins > 0) {
+		--availableCoins;
 	}
 }
 
@@ -130,18 +123,21 @@ void Block::loadBlockImages(SDL_Surface* display)
 	blockImages[5] = loadPNG("./img/block5.png", display);
 	blockImages[6] = loadPNG("./img/block6.png", display);
 
-	for (int j = 7; j < 12; ++j) {
+	for (int j = 7; j < 15; ++j) {
 		std::string filename = "./img/block";
 		filename += std::to_string(j);
 		filename += ".png";
 		blockImages[j] = loadPNG(filename, display);
 	}
-	blockImages[12] = loadPNG("./img/block11.png", display);
-	blockImages[13] = loadPNG("./img/block12.png", display);
+	blockImages[15] = loadPNG("./img/block14.png", display);
+	blockImages[16] = loadPNG("./img/block15.png", display);
 
-	blockImages[14] = loadPNG("./img/tube.png", display);
-	blockImages[15] = loadPNG("./img/entry.png", display);
-	blockImages[16] = loadPNG("./img/block_invisible.png", display);
+	for (int j = 17; j < 20; ++j) {
+		std::string filename = "./img/block";
+		filename += std::to_string(j - 1);
+		filename += ".png";
+		blockImages[j] = loadPNG(filename, display);
+	}
 }
 
 void Block::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

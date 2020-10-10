@@ -47,7 +47,6 @@ Player::PlayerMovement::PlayerMovement()
 	stepsLeft = 0;
 	stepsRight = 0;
 	stepsUp = 0;
-	stepsDown = 0;
 	speed = 1;
 	verticalSpeed = 1;
 }
@@ -224,7 +223,6 @@ void Player::performImmortalAnimation(int difference)
 		SoundController::playOpenWorldMusic();
 
 		playerMovement.setSpeed(1);
-		playerMovement.setVerticalSpeed(1);
 	}
 }
 
@@ -250,7 +248,6 @@ void Player::performSmallImmortalAnimation(int difference)
 		SoundController::playOpenWorldMusic();
 
 		playerMovement.setSpeed(1);
-		playerMovement.setVerticalSpeed(1);
 	}
 }
 
@@ -258,7 +255,6 @@ void Player::resetMovement()
 {
 	resetSteps();
 	playerMovement.setSpeed(1);
-	playerMovement.setVerticalSpeed(1);
 }
 
 void Player::changeModelAndAirFlagStatus(World &world)
@@ -284,7 +280,7 @@ void Player::changeModelAndAirFlagStatus(World &world)
 
 bool Player::isHittingCeiling(int distance) const
 {
-	return (position.getY() - distance - getHeight() / 2 < 0);
+	return (position.getY() - distance - (getHeight() / 2) < -50);
 }
 
 bool Player::isFallingIntoAbyss(int distance) const
@@ -402,8 +398,6 @@ void Player::moveDown(World &world)
 			flags.aliveFlag = false;
 		}
 	}
-
-	--playerMovement.stepsDown;
 }
 
 void Player::slide(World &world)
@@ -533,7 +527,6 @@ void Player::incrementLives()
 void Player::increaseSpeed()
 {
 	playerMovement.setSpeed(2);
-	//playerMovement.setVerticalSpeed(2);
 }
 
 void Player::addPoints(int pts)
@@ -595,7 +588,6 @@ void Player::loseBonusOrLife()
 
 void Player::performAdditionalJump()
 {
-	playerMovement.stepsDown = 0;
 	playerMovement.stepsUp = 40;
 }
 
@@ -613,16 +605,14 @@ void Player::move(World &world)
 			if (playerMovement.stepsLeft > 0) {
 				moveLeft(world);
 			}
-
-			if (playerMovement.stepsRight > 0) {
+			else if (playerMovement.stepsRight > 0) {
 				moveRight(world);
 			}
 
 			if (playerMovement.stepsUp > 0) {
 				moveUp(world);
 			}
-
-			if (playerMovement.stepsDown > 0) {
+			else if (!isCharacterStandingOnTheBlock(*this, world)) {
 				moveDown(world);
 			}
 
@@ -662,7 +652,6 @@ void Player::resetSteps()
 	playerMovement.stepsLeft = 0;
 	playerMovement.stepsRight = 0;
 	playerMovement.stepsUp = 0;
-	playerMovement.stepsDown = 0;
 }
 
 void Player::setSlidingParameters()
@@ -674,10 +663,8 @@ void Player::setSlidingParameters()
 
 void Player::setFinishingRunParameters()
 {
-	int posY = (currentState == PlayerState::Small ? 400 : 384);
-	position.setXY(6400, posY);
 	resetMovement();
-	playerMovement.stepsRight = 140;
+	playerMovement.stepsRight = 190;
 	changeModelCounter = 0;
 	model = 0;
 	flags.setDefaultFlags(flags.armedFlag);

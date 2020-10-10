@@ -253,13 +253,13 @@ void World::performBlockSliding()
 void World::subtractCoinFromBlock()
 {
 	if (blocks[lastTouchedBlockIndex].getType() == BlockType::Monetary) {
-		blocks[lastTouchedBlockIndex].setAvailableCoins(blocks[lastTouchedBlockIndex].getAvailableCoins() - 1);
+		blocks[lastTouchedBlockIndex].decrementCoins();
 		player->incrementCoins();
 		player->addPoints(200);
 		temporaryElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(
 			Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 50))));
 
-		if (!blocks[lastTouchedBlockIndex].getAvailableCoins()) {
+		if (!blocks[lastTouchedBlockIndex].hasCoins()) {
 			blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 		}
 	}

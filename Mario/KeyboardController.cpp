@@ -59,7 +59,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 					player.playerMovement.stepsLeft += 8;
 				}
 				else {
-					player.playerMovement.stepsLeft = 40;
+					player.playerMovement.stepsLeft = 56;
 				}
 				return;
 			}
@@ -68,7 +68,7 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 					player.playerMovement.stepsRight += 8;
 				}
 				else {
-					player.playerMovement.stepsRight = 40;
+					player.playerMovement.stepsRight = 56;
 				}
 				return;
 			}
@@ -80,8 +80,6 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 		}
 		else {
 			if (player.playerMovement.stepsUp == 0) {
-				player.playerMovement.stepsDown = 1;
-
 				if (keysState[Direction::Left] && player.playerMovement.stepsLeft == 0) {
 					player.playerMovement.stepsLeft = 24;
 				}
@@ -99,8 +97,8 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 					player.playerMovement.stepsLeft = 16;
 				}
 
-				if (!doubleJumpFlag && player.getY() > 200) {
-					player.playerMovement.stepsUp += 65;
+				if (!doubleJumpFlag) {
+					player.playerMovement.stepsUp += (player.getY() > 200 ? 45 : 20);
 					doubleJumpFlag = true;
 				}
 				return;
@@ -113,15 +111,15 @@ void KeyboardController::handleArrowKeys(Player &player, World &world)
 					player.playerMovement.stepsRight = 16;
 				}
 
-				if (!doubleJumpFlag && player.getY() > 200) {
-					player.playerMovement.stepsUp += 65;
+				if (!doubleJumpFlag) {						
+					player.playerMovement.stepsUp += (player.getY() > 200 ? 45 : 20);
 					doubleJumpFlag = true;
 				}
 				return;
 			}
 			else if (keysState[Direction::Up]) {
-				if (!doubleJumpFlag && player.getY() > 200) {
-					player.playerMovement.stepsUp += 65;
+				if (!doubleJumpFlag) {						
+					player.playerMovement.stepsUp += (player.getY() > 200 ? 65 : 30);
 					doubleJumpFlag = true;
 				}
 				return;

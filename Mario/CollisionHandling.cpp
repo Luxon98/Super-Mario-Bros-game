@@ -20,7 +20,7 @@
 #include "Screen.h"
 
 
-bool isCharacterHittingBlock(const WorldObject& object, const Block& block, Direction direction, int distance)
+bool isCharacterHittingBlock(const WorldObject &object, const Block &block, Direction direction, int distance)
 {
 	if (direction == Direction::Right && object.getX() < block.getX()
 		&& object.getX() + distance + object.getWidth() / 2 >= block.getX() - block.getWidth() / 2) {
@@ -46,10 +46,10 @@ bool isCharacterHittingBlock(const WorldObject& object, const Block& block, Dire
 	return false;
 }
 
-bool isCharacterStandingOnTheBlock(const WorldObject& object, const World& world)
+bool isCharacterStandingOnTheBlock(const WorldObject &object, const World &world)
 {
 	std::vector<Block> blocks = world.getBlocks();
-	for (auto& block : blocks) {
+	for (auto &block : blocks) {
 		if (object.getY() + object.getHeight() / 2 == block.getY() - block.getHeight() / 2
 			&& areAtTheSameWidth(object, block) && !block.isInvisible()) {
 
@@ -71,7 +71,7 @@ bool isMonsterStandingOnTheBlock(const LivingObject& object, const Block& block)
 	return false;
 }
 
-bool isMushroomStandingOnTheBlock(const World& world, int index)
+bool isMushroomStandingOnTheBlock(const World &world, int index)
 {
 	std::vector<std::shared_ptr<BonusObject>> bonusElements = world.getBonusElements();
 	std::vector<Block> blocks = world.getBlocks();
@@ -87,39 +87,7 @@ bool isMushroomStandingOnTheBlock(const World& world, int index)
 	return false;
 }
 
-bool areAtTheSameWidth(const WorldObject& object, const Block& block)
-{
-	if (object.getX() + object.getWidth() / 2 > block.getX() - block.getWidth() / 2
-		&& object.getX() <= block.getX()) {
-
-		return true;
-	}
-	else if (object.getX() - object.getWidth() / 2 < block.getX() + block.getWidth() / 2
-		&& object.getX() >= block.getX()) {
-
-		return true;
-	}
-
-	return false;
-}
-
-bool areAtTheSameHeight(const WorldObject& object, const Block& block)
-{
-	if (object.getY() >= block.getY() && object.getY() - object.getHeight() / 2
-		< block.getY() + block.getHeight() / 2) {
-
-		return true;
-	}
-	else if (object.getY() <= block.getY() && object.getY() + object.getHeight() / 2
-		> block.getY() - block.getHeight() / 2) {
-
-		return true;
-	}
-
-	return false;
-}
-
-bool areAtTheSameWidth(const WorldObject& firstObject, const WorldObject& secondObject)
+bool areAtTheSameWidth(const WorldObject &firstObject, const WorldObject &secondObject)
 {
 	if (firstObject.getX() + firstObject.getWidth() / 2 > secondObject.getX() - secondObject.getWidth() / 2
 		&& firstObject.getX() <= secondObject.getX()) {
@@ -135,7 +103,7 @@ bool areAtTheSameWidth(const WorldObject& firstObject, const WorldObject& second
 	return false;
 }
 
-bool areAtTheSameHeight(const WorldObject& firstObject, const WorldObject& secondObject)
+bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secondObject)
 {
 	if (firstObject.getY() >= secondObject.getY() && firstObject.getY() - firstObject.getHeight() / 2
 		< secondObject.getY() + secondObject.getHeight() / 2) {
@@ -151,12 +119,12 @@ bool areAtTheSameHeight(const WorldObject& firstObject, const WorldObject& secon
 	return false;
 }
 
-bool isPlayerJumpingOnMonster(const Player& player, const LivingObject& monster)
+bool isPlayerJumpingOnMonster(const Player &player, const LivingObject &monster)
 {
 	return (monster.getY() - player.getY() > 25);
 }
 
-void handlePlayerCollisions(Player& player, World& world)
+void handlePlayerCollisions(Player &player, World &world)
 {
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
 	int i = 0;
@@ -222,7 +190,7 @@ void handlePlayerCollisions(Player& player, World& world)
 	}
 }
 
-void handleShellsAndMonstersCollisions(World& world, Player& player)
+void handleShellsAndMonstersCollisions(World &world, Player &player)
 {
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
@@ -249,7 +217,7 @@ void handleShellsAndMonstersCollisions(World& world, Player& player)
 	}
 }
 
-void handleFireBallsAndMonstersCollisions(World& world, Player& player)
+void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 {
 	std::vector<FireBall> fireballs = world.getFireBalls();
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
@@ -281,7 +249,7 @@ void handleFireBallsAndMonstersCollisions(World& world, Player& player)
 	}
 }
 
-void handleMonstersAndBlockCollisions(World& world, const Block& block, Player& player)
+void handleMonstersAndBlockCollisions(World &world, const Block &block, Player &player)
 {
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
 	int i = 0;
@@ -302,7 +270,7 @@ void handleMonstersAndBlockCollisions(World& world, const Block& block, Player& 
 	}
 }
 
-void collectCoinIfPossible(Player& player, World& world)
+void collectCoinIfPossible(Player &player, World &world)
 {
 	std::vector<std::shared_ptr<InanimateObject>> elements = world.getInanimateElements();
 	int i = 0;
@@ -317,7 +285,7 @@ void collectCoinIfPossible(Player& player, World& world)
 	}
 }
 
-void collectMushroom(Mushroom& mushroom, int index, Player& player, World& world)
+void collectMushroom(Mushroom &mushroom, int index, Player &player, World &world)
 {
 	if (!mushroom.isGreen()) {
 		if (player.isSmall()) {
@@ -336,7 +304,7 @@ void collectMushroom(Mushroom& mushroom, int index, Player& player, World& world
 	player.addPoints(1000);
 }
 
-void collectFlower(Player& player, World& world)
+void collectFlower(Player &player, World &world)
 {
 	if (player.isSmall()) {
 		player.setCurrentAnimation(PlayerAnimation::Growing);
@@ -348,7 +316,7 @@ void collectFlower(Player& player, World& world)
 	SoundController::playBonusCollectedEffect();
 }
 
-void collectStar(Player& player, World& world)
+void collectStar(Player &player, World &world)
 {
 	if (player.isSmall()) {
 		player.setCurrentAnimation(PlayerAnimation::ImmortalSmall);
@@ -361,7 +329,7 @@ void collectStar(Player& player, World& world)
 	SoundController::playStarMusic();
 }
 
-void collectBonusIfPossible(Player& player, World& world)
+void collectBonusIfPossible(Player &player, World &world)
 {
 	std::vector<std::shared_ptr<BonusObject>> elements = world.getBonusElements();
 	int i = 0;
@@ -385,7 +353,7 @@ void collectBonusIfPossible(Player& player, World& world)
 	}
 }
 
-int getAlignmentForHorizontalMove(Direction direction, int distance, const WorldObject& object, const World& world)
+int getAlignmentForHorizontalMove(Direction direction, int distance, const WorldObject &object, const World &world)
 {
 	std::vector<Block> blocks = world.getBlocks();
 	int alignment = 0;
@@ -410,7 +378,7 @@ int getAlignmentForHorizontalMove(Direction direction, int distance, const World
 }
 
 // this method additionaly set the last touched block
-int getAlignmentForVerticalMove(Direction direction, int distance, const WorldObject& object, World& world)
+int getAlignmentForVerticalMove(Direction direction, int distance, const WorldObject &object, World &world)
 {
 	std::vector<Block> blocks = world.getBlocks();
 	int alignment = 0;

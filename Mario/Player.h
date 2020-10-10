@@ -74,7 +74,6 @@ private:
 		int stepsLeft;
 		int stepsRight;
 		int stepsUp;
-		int stepsDown;
 		PlayerMovement();
 	};
 

@@ -18,10 +18,6 @@ bool isMonsterStandingOnTheBlock(const LivingObject &object, const Block &block)
 
 bool isMushroomStandingOnTheBlock(const World &world, int index);
 
-bool areAtTheSameWidth(const WorldObject &object, const Block &block);
-
-bool areAtTheSameHeight(const WorldObject &object, const Block &block);
-
 bool areAtTheSameWidth(const WorldObject &firstObject, const WorldObject &secondObject);
 
 bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secondObject);

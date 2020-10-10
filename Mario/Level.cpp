@@ -268,13 +268,13 @@ void Level::setSecondLevel(World& world)
 		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 336)));
 	}
 
-	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(336, 320)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(336, 288))); 
 	for (int i = 352; i < 480; i += 32) {
-		world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(16 + i, 320)));
+		world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(16 + i, 288))); 
 	}
 
-	for (int i = 416; i > 32; i -= 32) {
-		world.blocks.push_back(Block(BlockType::Destructible, Position(16, i - 16)));
+	for (int i = 416; i > 64; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(16, i - 16))); 
 	}
 
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(560, 400)));
@@ -294,7 +294,7 @@ void Level::setSecondLevel(World& world)
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(878, 400)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(878, 368)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(878, 336)));
-	world.blocks.push_back(Block(BlockType::Monetary, Position(942, 240)));
+	world.blocks.push_back(Block(BlockType::Monetary, Position(942, 272)));        
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(1006, 400)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(1006, 368)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(1006, 336)));
@@ -302,7 +302,7 @@ void Level::setSecondLevel(World& world)
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(1070, 368)));
 
 	for (int i = 192; i < 4416; i += 32) {
-		world.blocks.push_back(Block(BlockType::Destructible, Position(i + 16, 48)));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i + 16, 80))); 
 	}
 
 	for (int i = 0; i < 3; ++i) {
@@ -341,48 +341,50 @@ void Level::setSecondLevel(World& world)
 	world.blocks.push_back(Block(BlockType::Tube, Position(3712, 399)));
 	world.blocks.push_back(Block(BlockType::TubeEntry, Position(3712, 368)));
 
+	
 	for (int i = 2448; i < 2576; i += 32) {
-		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 80)));
-		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 112)));
-		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 272)));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 112))); 
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 144))); 
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 304))); 
 	}
 
+	
 	for (int i = 2704; i < 2896; i += 32) {
-		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 208)));
-		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 240)));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 240))); 
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 272))); 
 	}
-
+	
 	for (int i = 0; i < 5; ++i) {
-		world.blocks.push_back(Block(BlockType::Destructible, Position(1680, 144 + (i * 32))));
-		world.blocks.push_back(Block(BlockType::Destructible, Position(1712, 144 + (i * 32))));
-		world.blocks.push_back(Block(BlockType::Destructible, Position(2000, 144 + (i * 32))));
-		world.blocks.push_back(Block(BlockType::Destructible, Position(2032, 144 + (i * 32))));
-		world.blocks.push_back(Block(BlockType::Destructible, Position(2160, 144 + (i * 32))));
-		world.blocks.push_back(Block(BlockType::Destructible, Position(2320, 144 + (i * 32))));
-		world.blocks.push_back(Block(BlockType::Destructible, Position(2352, 144 + (i * 32))));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(1680, 176 + (i * 32))));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(1712, 176 + (i * 32))));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(2000, 176 + (i * 32))));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(2032, 176 + (i * 32))));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(2160, 176 + (i * 32))));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(2320, 176 + (i * 32))));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(2352, 176 + (i * 32)))); 
 	}
 
 	for (int i = 1744; i < 2256; i += 32) {
 		if (i != 1808 && i != 1840 && i != 2064 && i != 2096) {
-			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 80)));
-			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 112)));
+			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 112))); 
+			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 144))); 
 		}
 	}
 
 	for (int i = 1744; i < 2000; i += 32) {
 		if (i != 1808 && i != 1840) {
-			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 272)));
+			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 304)));
 		}
 	}
 
-	world.blocks.push_back(Block(BlockType::Destructible, Position(2192, 272)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(2192, 304)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(2224, 304)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(2224, 272)));
-	world.blocks.push_back(Block(BlockType::Destructible, Position(2224, 240)));
-	world.blocks.push_back(Block(BlockType::Destructible, Position(1744, 304)));
-	world.blocks.push_back(Block(BlockType::Destructible, Position(1776, 304)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(1744, 336)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(1776, 336)));
-	
+	world.blocks.push_back(Block(BlockType::Destructible, Position(1744, 368)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(1776, 368)));
+
 	for (int i = 0; i < 9; ++i) {
 		world.blocks.push_back(Block(BlockType::Destructible, Position(5456, 48 + (i * 32))));
 		world.blocks.push_back(Block(BlockType::Destructible, Position(5488, 48 + (i * 32))));

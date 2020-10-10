@@ -93,9 +93,6 @@
     <ClCompile Include="WorldObject.cpp">
       <Filter>Source Files\AbstractClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Source Files\InanimateObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Bush.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
@@ -183,6 +180,9 @@
     <ClCompile Include="FileNotLoadedException.cpp">
       <Filter>Source Files\Exceptions</Filter>
     </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Source Files\Other</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -193,9 +193,6 @@
     </ClInclude>
     <ClInclude Include="KeyboardController.h">
       <Filter>Header Files\HandlingAndControlling</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
     <ClInclude Include="Bush.h">
       <Filter>Header Files\InanimateObjects</Filter>
@@ -306,6 +303,9 @@
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="LayoutStyle.h">
+      <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
       <Filter>Header Files\Other</Filter>
     </ClInclude>
   </ItemGroup>
