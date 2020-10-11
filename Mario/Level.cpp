@@ -6,6 +6,7 @@
 #include "Position.h"
 #include "Creature.h"
 #include "Turtle.h"
+#include "Plant.h"
 #include "Bush.h"
 #include "Cloud.h"
 #include "Coin.h"
@@ -389,6 +390,10 @@ void Level::setSecondLevel(World& world)
 		world.blocks.push_back(Block(BlockType::Destructible, Position(5456, 48 + (i * 32))));
 		world.blocks.push_back(Block(BlockType::Destructible, Position(5488, 48 + (i * 32))));
 	}
+
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3328, 388))));
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3520, 356))));
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3712, 420))));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6684, 336))));
 	world.flag = Flag(Position(6635, 116));

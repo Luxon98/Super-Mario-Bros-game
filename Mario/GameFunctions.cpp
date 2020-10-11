@@ -13,6 +13,7 @@
 #include "FireBall.h"
 #include "Turtle.h"
 #include "Creature.h"
+#include "Plant.h"
 #include "Shell.h"
 #include "Flag.h"
 #include "AnimatedText.h"
@@ -81,6 +82,9 @@ void loadLivingObjectImages(SDL_Surface* display)
 
 	Turtle tempTurtle = Turtle();
 	tempTurtle.loadTurtleImages(display);
+
+	Plant tempPlant = Plant();
+	tempPlant.loadPlantImages(display);
 
 	Shell tempShell = Shell();
 	tempShell.loadShellImage(display);
@@ -206,7 +210,7 @@ void runGame()
 		world.setPlayer(player);
 		screen->setPlayer(player);
 
-		int level = 1;
+		int level = 2;
 
 		while (player->getLives() && !winStatus) {
 			setWorld(level, *player, world, playerState);

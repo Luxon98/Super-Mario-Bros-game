@@ -357,6 +357,11 @@ std::vector<std::shared_ptr<LivingObject>> const& World::getMonsters() const
 	return monsters;
 }
 
+const Player& World::getPlayer() const
+{
+	return *player;
+}
+
 int World::getLastTouchedBlockIndex() const
 {
 	return lastTouchedBlockIndex;

@@ -14,6 +14,7 @@
 #include "Shell.h"
 #include "Turtle.h"
 #include "Creature.h"
+#include "Plant.h"
 #include "FireBall.h"
 #include "Position.h"
 #include "AnimatedText.h"
@@ -87,6 +88,18 @@ bool isMushroomStandingOnTheBlock(const World &world, int index)
 	return false;
 }
 
+bool isPlayerCloseToPlant(const Plant &plant, const World &world)
+{
+	const Player& player = world.getPlayer();
+	int yDifference = plant.getY() - player.getY();
+	if (abs(player.getX() - plant.getX()) < 40 && (yDifference > 30 && yDifference < 60)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 bool areAtTheSameWidth(const WorldObject &firstObject, const WorldObject &secondObject)
 {
 	if (firstObject.getX() + firstObject.getWidth() / 2 > secondObject.getX() - secondObject.getWidth() / 2
@@ -130,7 +143,7 @@ void handlePlayerCollisions(Player &player, World &world)
 	int i = 0;
 	for (auto it = monsters.begin(); it != monsters.end(); ++it, ++i) {
 		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it)) {
-			if (isPlayerJumpingOnMonster(player, **it)) {
+			if (isPlayerJumpingOnMonster(player, **it) && !std::dynamic_pointer_cast<Plant>(*it)) {
 				player.performAdditionalJump();
 
 				if (std::dynamic_pointer_cast<Shell>(*it)) {

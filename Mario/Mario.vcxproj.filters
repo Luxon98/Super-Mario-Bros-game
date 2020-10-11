@@ -183,6 +183,9 @@
     <ClCompile Include="Block.cpp">
       <Filter>Source Files\Other</Filter>
     </ClCompile>
+    <ClCompile Include="Plant.cpp">
+      <Filter>Source Files\LivingObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -307,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="Block.h">
       <Filter>Header Files\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Plant.h">
+      <Filter>Header Files\LivingObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

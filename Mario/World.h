@@ -75,6 +75,7 @@ public:
 	std::vector<std::shared_ptr<InanimateObject>> const& getInanimateElements() const;
 	std::vector<std::shared_ptr<BonusObject>> const& getBonusElements() const;
 	std::vector<std::shared_ptr<LivingObject>> const& getMonsters() const;
+	const Player& getPlayer() const;
 	int getLastTouchedBlockIndex() const;
 	BlockType getLastTouchedBlockType() const;
 	Screen* getScreen() const;
