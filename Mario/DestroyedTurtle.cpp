@@ -6,29 +6,34 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 2> DestroyedTurtle::destroyedTurtleImages;
+std::array<SDL_Surface*, 3> DestroyedTurtle::destroyedTurtleImages;
 
 int DestroyedTurtle::computeIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		return 0;
+	if (!red) {
+		return (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 1);
 	}
 	else {
-		return 1;
+		return 2;
 	}
 }
 
-DestroyedTurtle::DestroyedTurtle(Position position)
+DestroyedTurtle::DestroyedTurtle(Position position, bool red)
 {
 	this->position = position;
+	this->red = red;
 	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
 }
 
 void DestroyedTurtle::loadDestroyedTurtleImage(SDL_Surface* display)
 {
-	destroyedTurtleImages[0] = loadPNG("./img/destroyed_turtle1.png", display);
-	destroyedTurtleImages[1] = loadPNG("./img/destroyed_turtle2.png", display);
+	for (std::size_t i = 0; i < destroyedTurtleImages.size(); ++i) {
+		std::string filename = "./img/destroyed_turtle";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		destroyedTurtleImages[i] = loadPNG(filename, display);
+	}
 }
 
 void DestroyedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

@@ -167,6 +167,7 @@
     <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Position.cpp" />
+    <ClCompile Include="RedTurtle.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="SDL_Utility.cpp" />
     <ClCompile Include="Shards.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Plant.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="RedTurtle.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="SDL_Utility.h" />
     <ClInclude Include="Shards.h" />

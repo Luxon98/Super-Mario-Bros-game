@@ -21,6 +21,8 @@ bool isMushroomStandingOnTheBlock(const World &world, int index);
 
 bool isPlayerCloseToPlant(const Plant &plant, const World &world);
 
+bool isBlockBlockedByAnother(const Block &block, const World& world);
+
 bool areAtTheSameWidth(const WorldObject &firstObject, const WorldObject &secondObject);
 
 bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secondObject);

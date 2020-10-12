@@ -14,14 +14,15 @@ struct SDL_Surface;
 class Shell : public IndependentLivingObject
 {
 private:
-	static std::array<SDL_Surface*, 2> shellImages;
+	static std::array<SDL_Surface*, 3> shellImages;
 	std::chrono::steady_clock::time_point creationTime;
 	bool active;
+	bool red;
 	int computeIndex() const;
 	
 public:
 	Shell() = default;
-	Shell(Position position);
+	Shell(Position position, bool red = false);
 	bool isActive() const;
 	bool shouldTurnIntoTurtle() const;
 	void setMovementDirectionAndActiveState(Direction direction);

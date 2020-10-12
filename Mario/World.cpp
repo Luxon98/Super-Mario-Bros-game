@@ -191,6 +191,11 @@ void World::slideTemporaryElements()
 
 void World::slideBlock()
 {
+	if (isBlockBlockedByAnother(blocks[lastTouchedBlockIndex], *this)) {
+		slidingCounter = 0;
+		return;
+	}
+
 	if (slidingCounter == SLIDING_BLOCK_VALUE) {
 		playBlockSoundEffects();
 
@@ -471,9 +476,9 @@ void World::deleteFireBall(int index)
 	fireballs.erase(fireballs.begin() + index);
 }
 
-void World::addShell(Position position)
+void World::addShell(Position position, bool red)
 {
-	monsters.push_back(std::make_shared<Shell>(Shell(position)));
+	monsters.push_back(std::make_shared<Shell>(Shell(position, red)));
 }
 
 void World::addCrushedCreature(Position position)
@@ -486,9 +491,9 @@ void World::addDestroyedCreature(Position position)
 	temporaryElements.push_back(std::make_shared<DestroyedCreature>(DestroyedCreature(position)));
 }
 
-void World::addDestroyedTurtle(Position position)
+void World::addDestroyedTurtle(Position position, bool red)
 {
-	temporaryElements.push_back(std::make_shared<DestroyedTurtle>(DestroyedTurtle(position)));
+	temporaryElements.push_back(std::make_shared<DestroyedTurtle>(DestroyedTurtle(position, red)));
 }
 
 void World::addExplosion(Position position)

@@ -9,23 +9,24 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 2> Shell::shellImages;
+std::array<SDL_Surface*, 3> Shell::shellImages;
 
 int Shell::computeIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		return 0;
+	if (!red) {
+		return (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 1);
 	}
 	else {
-		return 1;
+		return 2;
 	}
 }
 
-Shell::Shell(Position position)
+Shell::Shell(Position position, bool red)
 {
 	size = Size(32, 28);
 	movement = Movement(3, 2, Direction::None);
 	this->position = position;
+	this->red = red;
 	stepsCounter = 0;
 	creationTime = std::chrono::steady_clock::now();
 	active = false;
@@ -38,6 +39,10 @@ bool Shell::isActive() const
 
 bool Shell::shouldTurnIntoTurtle() const
 {
+	if (red) {
+		return false;
+	}
+
 	auto timePoint = std::chrono::steady_clock::now();
 	return (creationTime + std::chrono::milliseconds(25000) < timePoint);
 }
@@ -56,8 +61,12 @@ void Shell::resetCreationTime()
 
 void Shell::loadShellImage(SDL_Surface* display)
 {
-	shellImages[0] = loadPNG("./img/shell1.png", display);
-	shellImages[1] = loadPNG("./img/shell2.png", display);
+	for (std::size_t i = 0; i < shellImages.size(); ++i) {
+		std::string filename = "./img/shell";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		shellImages[i] = loadPNG(filename, display);
+	}
 }
 
 void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

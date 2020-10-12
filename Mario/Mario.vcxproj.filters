@@ -186,6 +186,9 @@
     <ClCompile Include="Plant.cpp">
       <Filter>Source Files\LivingObjects</Filter>
     </ClCompile>
+    <ClCompile Include="RedTurtle.cpp">
+      <Filter>Source Files\LivingObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -312,6 +315,9 @@
       <Filter>Header Files\Other</Filter>
     </ClInclude>
     <ClInclude Include="Plant.h">
+      <Filter>Header Files\LivingObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="RedTurtle.h">
       <Filter>Header Files\LivingObjects</Filter>
     </ClInclude>
   </ItemGroup>

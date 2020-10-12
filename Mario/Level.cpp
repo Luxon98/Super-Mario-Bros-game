@@ -6,6 +6,7 @@
 #include "Position.h"
 #include "Creature.h"
 #include "Turtle.h"
+#include "RedTurtle.h"
 #include "Plant.h"
 #include "Bush.h"
 #include "Cloud.h"
@@ -212,7 +213,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.flag = Flag(Position(6335, 116));
 }
 
-void Level::setSecondLevel(World& world)
+void Level::setSecondLevel(World &world)
 {
 	world.blocks.clear();
 	world.inanimateElements.clear();
@@ -394,6 +395,8 @@ void Level::setSecondLevel(World& world)
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3328, 388))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3520, 356))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3712, 420))));
+
+	//world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(570, 400), false)));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6684, 336))));
 	world.flag = Flag(Position(6635, 116));

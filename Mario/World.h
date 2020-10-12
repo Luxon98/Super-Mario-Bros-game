@@ -94,10 +94,10 @@ public:
 	void deleteLivingElement(int index);
 	void deleteMonster(int index);
 	void deleteFireBall(int index);
-	void addShell(Position position);
+	void addShell(Position position, bool red = false);
 	void addCrushedCreature(Position position);
 	void addDestroyedCreature(Position position);
-	void addDestroyedTurtle(Position position);
+	void addDestroyedTurtle(Position position, bool red = false);
 	void addExplosion(Position position);
 	void addAnimatedText(TextType type, Position position);
 	void performActions();
