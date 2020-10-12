@@ -29,7 +29,7 @@ int Block::computeImageIndex() const
 	else if (type == BlockType::Tube || type == BlockType::TubeEntry) {
 		return (baseIndex + (static_cast<int>(type) - 4));
 	}
-	else if (type == BlockType::BonusWithGreenMushroom) {
+	else if (type == BlockType::BonusWithOneUpMushroom) {
 		return (baseIndex + (static_cast<int>(type) + 2));
 	}
 	else {
@@ -71,7 +71,7 @@ bool Block::canBeHitted() const
 
 bool Block::isInvisible() const
 {
-	if (type == BlockType::BonusWithGreenMushroom && World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+	if (type == BlockType::BonusWithOneUpMushroom && World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
 		return true;
 	}
 

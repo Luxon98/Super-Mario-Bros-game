@@ -11,15 +11,16 @@ struct SDL_Surface;
 class Mushroom : public BonusObject 
 {
 private:
-	static std::array<SDL_Surface*, 2> mushroomImages;
-	bool greenColor;
+	static std::array<SDL_Surface*, 3> mushroomImages;
+	bool oneUp;
 	int stepsUp;
+	int computeImageIndex() const;
 	void makeMoveUp(World &world);
 
 public:
 	Mushroom() = default;
-	Mushroom(Position position, bool greenColor);
-	bool isGreen() const;
+	Mushroom(Position position, bool oneUp);
+	bool isOneUp() const;
 	void decreasePositionY();
 	void setStepsUp(int stepsUp);
 	void loadMushroomImages(SDL_Surface* display);

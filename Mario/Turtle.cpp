@@ -13,12 +13,12 @@ std::array<SDL_Surface*, 8> Turtle::turtleImages;
 
 int Turtle::computeBaseIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		return 0;
+	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 4);
+	if (movement.getDirection() == Direction::Right) {
+		baseIndex += 2;
 	}
-	else {
-		return 4;
-	}
+
+	return baseIndex;
 }
 
 void Turtle::chooseModel()
@@ -31,7 +31,7 @@ void Turtle::chooseModel()
 
 Turtle::Turtle(Position position)
 {
-	size = Size(26, 38);
+	size = Size(26, 44);
 	movement = Movement(1, 3, Direction::None);
 	this->position = position;
 	model = 1;

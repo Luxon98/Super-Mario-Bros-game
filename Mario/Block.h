@@ -16,7 +16,7 @@ enum class BlockType
 	Destructible = 4,
 	Monetary = 5,
 	BonusWithCoin = 6,
-	BonusWithGreenMushroom = 7,
+	BonusWithOneUpMushroom = 7,
 	BonusWithRedMushroom = 8,
 	BonusWithFlower = 9,
 	BonusWithStar = 10,

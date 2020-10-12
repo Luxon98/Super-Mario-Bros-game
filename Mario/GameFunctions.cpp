@@ -214,7 +214,7 @@ void runGame()
 		world.setPlayer(player);
 		screen->setPlayer(player);
 
-		int level = 1;
+		int level = 2;
 
 		while (player->getLives() && !winStatus) {
 			setWorld(level, *player, world, playerState);

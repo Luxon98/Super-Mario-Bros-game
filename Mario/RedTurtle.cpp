@@ -62,7 +62,7 @@ void RedTurtle::patrol(World &world)
 		}
 	}
 
-	if (stepsCounter == 300) {
+	if (stepsCounter == 510) {
 		movement.setDirection(movement.getDirection() == Direction::Right ? Direction::Left : Direction::Right);
 		stepsCounter = 0;
 	}
@@ -78,7 +78,7 @@ void RedTurtle::chooseModel()
 
 RedTurtle::RedTurtle(Position position, bool flying)
 {
-	size = Size(26, 38);
+	size = Size(26, 44);
 	movement = Movement(1, 3, Direction::Left);
 	this->position = position;
 	this->flying = flying;

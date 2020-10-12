@@ -150,7 +150,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.blocks.push_back(Block(BlockType::TubeEntry, Position(5754, 368)));
 
 	if (bonusLifeBlockFlag) {
-		world.blocks.push_back(Block(BlockType::BonusWithGreenMushroom, Position(2064, 288)));
+		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2064, 288)));
 	}
 
 	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(5, Position(80, 381))));
@@ -199,7 +199,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2730, 128))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3180, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3220, 400))));
-	world.monsters.push_back(std::make_shared<Turtle>(Turtle(Position(3350, 400))));
+	world.monsters.push_back(std::make_shared<Turtle>(Turtle(Position(3350, 397))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3800, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3850, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4050, 400))));
@@ -257,10 +257,12 @@ void Level::setSecondLevel(World &world)
 		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 464)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 432)));
 
-		if (i != 4864 && i != 4832) {
+		if (i < 4800) {
 			world.blocks.push_back(Block(BlockType::Destructible, Position(16 + i, 272)));
 		}
 	}
+
+	world.blocks.push_back(Block(BlockType::Monetary, Position(4816, 272)));
 
 	for (int i = 5136; i < 5616; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
@@ -304,15 +306,22 @@ void Level::setSecondLevel(World &world)
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(1070, 368)));
 
 	for (int i = 192; i < 4416; i += 32) {
-		world.blocks.push_back(Block(BlockType::Destructible, Position(i + 16, 80))); 
+		if (i != 2848) {
+			world.blocks.push_back(Block(BlockType::Destructible, Position(i + 16, 80)));
+		}
 	}
+
+	world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2864, 80)));
 
 	for (int i = 0; i < 3; ++i) {
 		world.blocks.push_back(Block(BlockType::Destructible, Position(1262, 304 - (32 * i))));
 		world.blocks.push_back(Block(BlockType::Destructible, Position(1326, 304 - (32 * i))));
 		world.blocks.push_back(Block(BlockType::Destructible, Position(1422, 304 - (32 * i))));
-		world.blocks.push_back(Block(BlockType::Destructible, Position(1486, 304 - (32 * i))));
 	}
+
+	world.blocks.push_back(Block(BlockType::BonusWithStar, Position(1486, 240)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(1486, 272)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(1486, 304)));
 
 	world.blocks.push_back(Block(BlockType::Destructible, Position(1294, 304)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(1454, 304)));
@@ -353,7 +362,9 @@ void Level::setSecondLevel(World &world)
 	
 	for (int i = 2704; i < 2896; i += 32) {
 		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 240))); 
-		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 272))); 
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 272)));
+
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 176))));
 	}
 	
 	for (int i = 0; i < 5; ++i) {
@@ -392,11 +403,41 @@ void Level::setSecondLevel(World &world)
 		world.blocks.push_back(Block(BlockType::Destructible, Position(5488, 48 + (i * 32))));
 	}
 
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(518, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(558, 368))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(942, 400))));
+	world.monsters.push_back(std::make_shared<Turtle>(Turtle(Position(1525, 397))));
+	world.monsters.push_back(std::make_shared<Turtle>(Turtle(Position(1575, 397))));
+	world.monsters.push_back(std::make_shared<Turtle>(Turtle(Position(1925, 397))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2070, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2125, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2380, 112))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2490, 208))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2535, 208))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3200, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3238, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3276, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3635, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4235, 240))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4385, 272))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3328, 388))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3520, 356))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3712, 420))));
 
-	//world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(570, 400), false)));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4850, 397), false)));
+
+	for (int i = 1326; i < 1454; i += 32) {
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 176))));
+	}
+
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1294, 272))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1454, 272))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(2190, 272))));
+
+	for (int i = 1870; i < 1998; i += 32) {
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 272))));
+	}
+
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6684, 336))));
 	world.flag = Flag(Position(6635, 116));

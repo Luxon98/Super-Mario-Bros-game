@@ -336,7 +336,7 @@ void collectCoinIfPossible(Player &player, World &world)
 
 void collectMushroom(Mushroom &mushroom, int index, Player &player, World &world)
 {
-	if (!mushroom.isGreen()) {
+	if (!mushroom.isOneUp()) {
 		if (player.isSmall()) {
 			player.setCurrentAnimation(PlayerAnimation::Growing);
 		}
@@ -347,7 +347,7 @@ void collectMushroom(Mushroom &mushroom, int index, Player &player, World &world
 		SoundController::playNewLiveAddedEffect();
 	}
 
-	TextType type = (!mushroom.isGreen() ? TextType::ONE_THOUSAND : TextType::ONE_UP);
+	TextType type = (!mushroom.isOneUp() ? TextType::ONE_THOUSAND : TextType::ONE_UP);
 	world.addAnimatedText(type, Position(player.getX(), player.getY() - 20));
 	world.deleteLivingElement(index);
 	player.addPoints(1000);

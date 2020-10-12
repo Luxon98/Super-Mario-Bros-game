@@ -247,7 +247,7 @@ void World::performBlockSliding()
 		int height = (slidingCounter <= 40 ? 1 : -1);
 		blocks[lastTouchedBlockIndex].addToPositionY(height);
 
-		if (slidingCounter > 40 && blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithGreenMushroom) {
+		if (slidingCounter > 40 && blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithOneUpMushroom) {
 			createGreenMushroom();
 		}
 	}
@@ -312,7 +312,7 @@ void World::createGreenMushroom()
 
 void World::playBlockSoundEffects()
 {
-	if (blocks[lastTouchedBlockIndex].getType() >= BlockType::BonusWithGreenMushroom &&
+	if (blocks[lastTouchedBlockIndex].getType() >= BlockType::BonusWithOneUpMushroom &&
 		blocks[lastTouchedBlockIndex].getType() <= BlockType::BonusWithStar) {
 		SoundController::playBonusAppeardEffect();
 	}
