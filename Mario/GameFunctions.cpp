@@ -31,6 +31,7 @@
 #include "World.h"
 #include "Screen.h"
 #include "Block.h"
+#include "MovingPlatform.h"
 #include "Position.h"
 #include "FileNotLoadedException.h"
 
@@ -128,6 +129,9 @@ void loadBlockImages(SDL_Surface* display)
 {
 	Block tempBlock = Block();
 	tempBlock.loadBlockImages(display);
+
+	MovingPlatform tempPlatform = MovingPlatform();
+	tempPlatform.loadPlatformImage(display);
 }
 
 void loadImages(SDL_Surface* display)
@@ -214,7 +218,7 @@ void runGame()
 		world.setPlayer(player);
 		screen->setPlayer(player);
 
-		int level = 2;
+		int level = 1;
 
 		while (player->getLives() && !winStatus) {
 			setWorld(level, *player, world, playerState);

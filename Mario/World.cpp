@@ -342,6 +342,11 @@ std::vector<Block> const& World::getBlocks() const
 	return blocks;
 }
 
+std::vector<MovingPlatform> const& World::getPlatforms() const
+{
+	return platforms;
+}
+
 std::vector<FireBall> const& World::getFireBalls() const
 {
 	return fireballs;
@@ -521,7 +526,14 @@ void World::performActions()
 		if (isTimeToChangeColors()) {
 			changeColors();
 		}
+
+		if (gameCounter & 1) {
+			for (auto &platform : platforms) {
+				platform.slide(*player);
+			}
+		}
 	}
+
 	handlePlayerCollisions(*player, *this);
 }
 
@@ -545,6 +557,10 @@ void World::draw(SDL_Surface* display, int beginningOfScreen, int endOfScreen, b
 
 	for (const auto &block : blocks) {
 		block.draw(display, beginningOfScreen, endOfScreen);
+	}
+
+	for (const auto &platform : platforms) {
+		platform.draw(display, beginningOfScreen, endOfScreen);
 	}
 
 	for (const auto &temporaryElement : temporaryElements) {

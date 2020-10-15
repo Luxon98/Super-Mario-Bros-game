@@ -67,7 +67,7 @@ void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera
 void Creature::move(World &world)
 {
 	if (movement.getDirection() != Direction::None && stepsCounter % 3 == 0) {
-		if (isCharacterStandingOnTheBlock(*this, world)) {
+		if (isCharacterStandingOnSomething(*this, world)) {
 			makeHorizontalMove(world);
 		}
 		else {

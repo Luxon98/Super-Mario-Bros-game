@@ -16,7 +16,7 @@ void KeyboardController::handleSpacebar(World &world)
 void KeyboardController::handleArrowKeys(Player &player, World &world)
 {
 	if (!player.movementBlock) {
-		if (isCharacterStandingOnTheBlock(player, world)) {
+		if (isCharacterStandingOnSomething(player, world)) {
 			doubleJumpFlag = false;
 
 			if (keysState[Direction::Left] && keysState[Direction::Right]) {

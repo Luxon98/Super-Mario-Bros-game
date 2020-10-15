@@ -83,7 +83,7 @@ void Mushroom::move(World &world)
 			makeHorizontalMove(world);
 		}
 		else {
-			if (isCharacterStandingOnTheBlock(*this, world)) {
+			if (isCharacterStandingOnSomething(*this, world)) {
 				makeHorizontalMove(world);
 			}
 			else {

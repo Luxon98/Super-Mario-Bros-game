@@ -259,7 +259,7 @@ void Player::resetMovement()
 
 void Player::changeModelAndAirFlagStatus(World &world)
 {
-	if (!isCharacterStandingOnTheBlock(*this, world)) {
+	if (!isCharacterStandingOnSomething(*this, world)) {
 		model = 4;
 		return;
 	}
@@ -378,7 +378,7 @@ void Player::moveUp(World &world)
 		--playerMovement.stepsUp;
 	}
 
-	if (isCharacterStandingOnTheBlock(*this, world)) {
+	if (isCharacterStandingOnSomething(*this, world)) {
 		model = 0;
 	}
 }
@@ -559,6 +559,27 @@ void Player::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) 
 	drawSurface(display, playerImg, position.getX() - beginningOfCamera, position.getY());
 }
 
+void Player::forceMovement(Direction direction)
+{
+	if (direction == Direction::Left) {
+		//TODO: camera
+		position.setX(position.getX() - 1);
+	}
+	else if (direction == Direction::Right) {
+		position.setX(position.getX() + 1);
+	}
+	else if (direction == Direction::Up) {
+		if (!isHittingCeiling(1)) {
+			position.setY(position.getY() - 1);
+		}
+	}
+	else {
+		if (!isFallingIntoAbyss(1)) {
+			position.setY(position.getY() + 1);
+		}
+	}
+}
+
 void Player::hitBlock(World &world)
 {
 	if (isAbleToDestroyBlock() && world.getLastTouchedBlockType() == BlockType::Destructible) {
@@ -612,7 +633,7 @@ void Player::move(World &world)
 			if (playerMovement.stepsUp > 0) {
 				moveUp(world);
 			}
-			else if (!isCharacterStandingOnTheBlock(*this, world)) {
+			else if (!isCharacterStandingOnSomething(*this, world)) {
 				moveDown(world);
 			}
 

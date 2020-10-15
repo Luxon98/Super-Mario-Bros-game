@@ -44,7 +44,7 @@ void RedTurtle::patrol(World &world)
 {
 	++stepsCounter;
 	if (stepsCounter % 3 == 0) {
-		if (!isCharacterStandingOnTheBlock(*this, world)) {
+		if (!isCharacterStandingOnSomething(*this, world)) {
 			makeDiagonalMove(world);
 		}
 		else {

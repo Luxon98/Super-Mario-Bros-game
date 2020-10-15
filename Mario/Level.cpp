@@ -20,6 +20,7 @@
 void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 {
 	world.blocks.clear();
+	world.platforms.clear();
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
@@ -149,6 +150,8 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.blocks.push_back(Block(BlockType::Tube, Position(5754, 399)));
 	world.blocks.push_back(Block(BlockType::TubeEntry, Position(5754, 368)));
 
+	world.platforms.push_back(MovingPlatform(Position(140, 175), Direction::Right));
+
 	if (bonusLifeBlockFlag) {
 		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2064, 288)));
 	}
@@ -216,6 +219,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 void Level::setSecondLevel(World &world)
 {
 	world.blocks.clear();
+	world.platforms.clear();
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
@@ -402,6 +406,11 @@ void Level::setSecondLevel(World &world)
 		world.blocks.push_back(Block(BlockType::Destructible, Position(5456, 48 + (i * 32))));
 		world.blocks.push_back(Block(BlockType::Destructible, Position(5488, 48 + (i * 32))));
 	}
+
+	world.platforms.push_back(MovingPlatform(Position(4526, 120), Direction::Down));
+	world.platforms.push_back(MovingPlatform(Position(4526, 380), Direction::Down));
+	world.platforms.push_back(MovingPlatform(Position(5010, 120), Direction::Up));
+	world.platforms.push_back(MovingPlatform(Position(5010, 380), Direction::Up));
 
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(518, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(558, 368))));

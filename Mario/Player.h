@@ -107,7 +107,7 @@ private:
 	void moveRight(World &world);
 	void moveUp(World &world);
 	void moveDown(World &world);
-	void slide(World& world);
+	void slide(World &world);
 	friend class KeyboardController;
 
 public:
@@ -131,6 +131,7 @@ public:
 	void setCurrentAnimation(PlayerAnimation animation);
 	void loadPlayerImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
+	void forceMovement(Direction direction);
 	void hitBlock(World &world);
 	void loseBonusOrLife();
 	void performAdditionalJump();

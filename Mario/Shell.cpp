@@ -80,7 +80,7 @@ void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) c
 void Shell::move(World &world)
 {
 	if (movement.getDirection() != Direction::None && stepsCounter & 1) {
-		if (isCharacterStandingOnTheBlock(*this, world)) {
+		if (isCharacterStandingOnSomething(*this, world)) {
 			makeHorizontalMove(world);
 		}
 		else {

@@ -189,6 +189,9 @@
     <ClCompile Include="RedTurtle.cpp">
       <Filter>Source Files\LivingObjects</Filter>
     </ClCompile>
+    <ClCompile Include="MovingPlatform.cpp">
+      <Filter>Source Files\Other</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -319,6 +322,9 @@
     </ClInclude>
     <ClInclude Include="RedTurtle.h">
       <Filter>Header Files\LivingObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatform.h">
+      <Filter>Header Files\Other</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

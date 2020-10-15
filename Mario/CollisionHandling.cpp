@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "SoundController.h"
 #include "Block.h"
+#include "MovingPlatform.h"
 #include "World.h"
 #include "Coin.h"
 #include "Flower.h"
@@ -22,7 +23,7 @@
 #include "Screen.h"
 
 
-bool isCharacterHittingBlock(const WorldObject &object, const Block &block, Direction direction, int distance)
+bool isCharacterHittingObject(const WorldObject &object, const WorldObject &block, Direction direction, int distance)
 {
 	if (direction == Direction::Right && object.getX() < block.getX()
 		&& object.getX() + distance + object.getWidth() / 2 >= block.getX() - block.getWidth() / 2) {
@@ -48,12 +49,21 @@ bool isCharacterHittingBlock(const WorldObject &object, const Block &block, Dire
 	return false;
 }
 
-bool isCharacterStandingOnTheBlock(const WorldObject &object, const World &world)
+bool isCharacterStandingOnSomething(const WorldObject &object, const World &world)
 {
 	std::vector<Block> blocks = world.getBlocks();
 	for (auto &block : blocks) {
 		if (object.getY() + object.getHeight() / 2 == block.getY() - block.getHeight() / 2
 			&& areAtTheSameWidth(object, block) && !block.isInvisible()) {
+
+			return true;
+		}
+	}
+
+	std::vector<MovingPlatform> platforms = world.getPlatforms();
+	for (auto &platform : platforms) {
+		if (object.getY() + object.getHeight() / 2 == platform.getY() - platform.getHeight() / 2
+			&& areAtTheSameWidth(object, platform)) {
 
 			return true;
 		}
@@ -99,6 +109,17 @@ bool isPlayerCloseToPlant(const Plant &plant, const World &world)
 	else {
 		return false;
 	}
+}
+
+bool isPlayerStandingOnThisPlatform(const Player &player, const MovingPlatform &platform)
+{
+	if (player.getY() + player.getHeight() / 2 == platform.getY() - platform.getHeight() / 2
+		&& areAtTheSameWidth(player, platform)) {
+
+		return true;
+	}
+
+	return false;
 }
 
 bool isBlockBlockedByAnother(const Block& block, const World& world)
@@ -329,6 +350,7 @@ void collectCoinIfPossible(Player &player, World &world)
 				player.incrementCoins();
 				world.deleteInanimateElement(i);
 				SoundController::playCoinCollectedEffect();
+				return;
 			}
 		}
 	}
@@ -407,7 +429,7 @@ int getAlignmentForHorizontalMove(Direction direction, int distance, const World
 	std::vector<Block> blocks = world.getBlocks();
 	int alignment = 0;
 	for (auto &block : blocks) {
-		if (areAtTheSameHeight(object, block) && isCharacterHittingBlock(object, block, direction, distance)
+		if (areAtTheSameHeight(object, block) && isCharacterHittingObject(object, block, direction, distance)
 			&& !block.isInvisible()) {
 
 			if ((object.getX() + distance + object.getWidth() / 2) - (block.getX() - block.getWidth() / 2) > alignment
@@ -423,6 +445,24 @@ int getAlignmentForHorizontalMove(Direction direction, int distance, const World
 		}
 	}
 
+	if (alignment == 0) {
+		std::vector<MovingPlatform> platforms = world.getPlatforms();
+		for (auto &platform : platforms) {
+			if (areAtTheSameHeight(object, platform) && isCharacterHittingObject(object, platform, direction, distance)) {
+				if ((object.getX() + distance + object.getWidth() / 2) - (platform.getX() - platform.getWidth() / 2) > alignment
+					&& direction == Direction::Right) {
+
+					alignment = (object.getX() + distance + object.getWidth() / 2) - (platform.getX() - platform.getWidth() / 2);
+				}
+				else if ((platform.getX() + platform.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2)
+				> alignment && direction == Direction::Left) {
+
+					alignment = (platform.getX() + platform.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2);
+				}
+			}
+		}
+	}
+
 	return alignment;
 }
 
@@ -432,7 +472,7 @@ int getAlignmentForVerticalMove(Direction direction, int distance, const WorldOb
 	std::vector<Block> blocks = world.getBlocks();
 	int alignment = 0;
 	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
-		if (areAtTheSameWidth(object, *it) && isCharacterHittingBlock(object, *it, direction, distance)) {
+		if (areAtTheSameWidth(object, *it) && isCharacterHittingObject(object, *it, direction, distance)) {
 			if ((it->getY() + it->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2)
 				> alignment && direction == Direction::Up) {
 
@@ -443,6 +483,24 @@ int getAlignmentForVerticalMove(Direction direction, int distance, const WorldOb
 				> alignment && direction == Direction::Down && !it->isInvisible()) {
 
 				alignment = (object.getY() + distance + object.getHeight() / 2) - (it->getY() - it->getHeight() / 2);
+			}
+		}
+	}
+
+	if (alignment == 0) {
+		std::vector<MovingPlatform> platforms = world.getPlatforms();
+		for (auto it2 = platforms.begin(); it2 != platforms.end(); ++it2) {
+			if (areAtTheSameWidth(object, *it2) && isCharacterHittingObject(object, *it2, direction, distance)) {
+				if ((it2->getY() + it2->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2)
+				> alignment && direction == Direction::Up) {
+
+					alignment = (it2->getY() + it2->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2);
+				}
+				else if ((object.getY() + distance + object.getHeight() / 2) - (it2->getY() - it2->getHeight() / 2)
+				> alignment && direction == Direction::Down) {
+
+					alignment = (object.getY() + distance + object.getHeight() / 2) - (it2->getY() - it2->getHeight() / 2);
+				}
 			}
 		}
 	}
