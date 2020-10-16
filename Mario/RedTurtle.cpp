@@ -38,6 +38,7 @@ void RedTurtle::fly()
 
 		stepsCounter = 0;
 	}
+	changeModel();
 }
 
 void RedTurtle::patrol(World &world)
@@ -59,6 +60,8 @@ void RedTurtle::patrol(World &world)
 				movement.setDirection(
 					movement.getDirection() == Direction::Right ? Direction::Left : Direction::Right);
 			}
+
+			changeModel();
 		}
 	}
 
@@ -68,7 +71,7 @@ void RedTurtle::patrol(World &world)
 	}
 }
 
-void RedTurtle::chooseModel()
+void RedTurtle::changeModel()
 {
 	++changeModelCounter;
 	if (changeModelCounter % 90 == 0) {
@@ -141,5 +144,4 @@ void RedTurtle::move(World &world)
 			patrol(world);
 		}
 	}
-	chooseModel();
 }

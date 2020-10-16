@@ -98,8 +98,8 @@ public:
 	void deleteFireBall(int index);
 	void addShell(Position position, bool red = false);
 	void addCrushedCreature(Position position);
-	void addDestroyedCreature(Position position);
-	void addDestroyedTurtle(Position position, bool red = false);
+	void addDestroyedCreature(Position position, Direction slideDirection);
+	void addDestroyedTurtle(Position position, Direction slideDirection, bool red = false);
 	void addExplosion(Position position);
 	void addAnimatedText(TextType type, Position position);
 	void performActions();

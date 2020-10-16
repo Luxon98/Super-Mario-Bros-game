@@ -497,14 +497,14 @@ void World::addCrushedCreature(Position position)
 	temporaryElements.push_back(std::make_shared<CrushedCreature>(CrushedCreature(position)));
 }
 
-void World::addDestroyedCreature(Position position)
+void World::addDestroyedCreature(Position position, Direction slideDirection)
 {
-	temporaryElements.push_back(std::make_shared<DestroyedCreature>(DestroyedCreature(position)));
+	temporaryElements.push_back(std::make_shared<DestroyedCreature>(DestroyedCreature(position, slideDirection)));
 }
 
-void World::addDestroyedTurtle(Position position, bool red)
+void World::addDestroyedTurtle(Position position, Direction slideDirection, bool red)
 {
-	temporaryElements.push_back(std::make_shared<DestroyedTurtle>(DestroyedTurtle(position, red)));
+	temporaryElements.push_back(std::make_shared<DestroyedTurtle>(DestroyedTurtle(position, slideDirection, red)));
 }
 
 void World::addExplosion(Position position)

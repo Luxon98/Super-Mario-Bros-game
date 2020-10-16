@@ -19,7 +19,7 @@ private:
 	int computeIndex() const;
 	void fly();
 	void patrol(World &world);
-	void chooseModel();
+	void changeModel();
 
 public:
 	RedTurtle() = default;

@@ -72,7 +72,7 @@ bool isCharacterStandingOnSomething(const WorldObject &object, const World &worl
 	return false;
 }
 
-bool isMonsterStandingOnTheBlock(const LivingObject& object, const Block& block)
+bool isMonsterStandingOnTheBlock(const LivingObject &object, const Block &block)
 {
 	if (abs((object.getY() + object.getHeight() / 2) - (block.getY() - block.getHeight() / 2)) < 2
 		&& areAtTheSameWidth(object, block)) {
@@ -228,13 +228,16 @@ void handlePlayerCollisions(Player &player, World &world)
 					if (std::dynamic_pointer_cast<Turtle>(*it) || (std::dynamic_pointer_cast<Shell>(*it)
 						&& std::dynamic_pointer_cast<Shell>(*it)->isActive())) {
 
-						world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()));
+						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
+						world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()), direction);
 					}
 					else if (std::dynamic_pointer_cast<Creature>(*it)) {
-						world.addDestroyedCreature(Position((*it)->getX(), (*it)->getY()));
+						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
+						world.addDestroyedCreature(Position((*it)->getX(), (*it)->getY()), direction);
 					}
 					else if (std::dynamic_pointer_cast<RedTurtle>(*it)) {
-						world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()), true);
+						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
+						world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()), direction, true);
 					}
 
 					player.addPoints(100);
@@ -262,13 +265,16 @@ void handleShellsAndMonstersCollisions(World &world, Player &player)
 					&& areAtTheSameHeight(**it, **it2))) {
 
 					if (std::dynamic_pointer_cast<Creature>(*it2)) {
-						world.addDestroyedCreature(Position((*it2)->getX(), (*it2)->getY()));
+						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
+						world.addDestroyedCreature(Position((*it2)->getX(), (*it2)->getY()), direction);
 					}
 					else if (std::dynamic_pointer_cast<Turtle>(*it2) || std::dynamic_pointer_cast<Shell>(*it2)) {
-						world.addDestroyedTurtle(Position((*it2)->getX(), (*it2)->getY()));
+						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
+						world.addDestroyedTurtle(Position((*it2)->getX(), (*it2)->getY()), direction);
 					}
 					else if (std::dynamic_pointer_cast<RedTurtle>(*it2)) {
-						world.addDestroyedTurtle(Position((*it2)->getX(), (*it2)->getY()), true);
+						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
+						world.addDestroyedTurtle(Position((*it2)->getX(), (*it2)->getY()), direction, true);
 					}
 
 					world.deleteMonster(i);
@@ -293,13 +299,16 @@ void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 				int alignment = (fireballs[i].getMovement().getDirection() == Direction::Left ? -5 : 5);
 
 				if (std::dynamic_pointer_cast<Creature>(*it2)) {
-					world.addDestroyedCreature(Position((*it2)->getX() + alignment, (*it2)->getY()));
+					Direction direction = (player.getX() <= (*it2)->getX() ? Direction::Right : Direction::Left);
+					world.addDestroyedCreature(Position((*it2)->getX() + alignment, (*it2)->getY()), direction);
 				}
 				else if (std::dynamic_pointer_cast<Turtle>(*it2) || std::dynamic_pointer_cast<Shell>(*it2)) {
-					world.addDestroyedTurtle(Position((*it2)->getX() + alignment, (*it2)->getY()));
+					Direction direction = (player.getX() <= (*it2)->getX() ? Direction::Right : Direction::Left);
+					world.addDestroyedTurtle(Position((*it2)->getX() + alignment, (*it2)->getY()), direction);
 				}
 				else if (std::dynamic_pointer_cast<RedTurtle>(*it2)) {
-					world.addDestroyedTurtle(Position((*it2)->getX() + alignment, (*it2)->getY()), true);
+					Direction direction = (player.getX() <= (*it2)->getX() ? Direction::Right : Direction::Left);
+					world.addDestroyedTurtle(Position((*it2)->getX() + alignment, (*it2)->getY()), direction, true);
 				}
 
 				world.deleteMonster(j);
@@ -323,13 +332,16 @@ void handleMonstersAndBlockCollisions(World &world, const Block &block, Player &
 	for (auto it = monsters.begin(); it != monsters.end(); ++it, ++i) {
 		if (isMonsterStandingOnTheBlock(**it, block)) {
 			if (std::dynamic_pointer_cast<Creature>(*it)) {
-				world.addDestroyedCreature(Position((*it)->getX(), (*it)->getY()));
+				Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
+				world.addDestroyedCreature(Position((*it)->getX(), (*it)->getY()), direction);
 			}
 			else if (std::dynamic_pointer_cast<Turtle>(*it)) {
-				world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()));
+				Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
+				world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()), direction);
 			}
 			else if (std::dynamic_pointer_cast<RedTurtle>(*it)) {
-				world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()), true);
+				Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
+				world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()), direction, true);
 			}
 
 			player.addPoints(100);

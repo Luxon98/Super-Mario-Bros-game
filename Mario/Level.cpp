@@ -150,8 +150,6 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.blocks.push_back(Block(BlockType::Tube, Position(5754, 399)));
 	world.blocks.push_back(Block(BlockType::TubeEntry, Position(5754, 368)));
 
-	world.platforms.push_back(MovingPlatform(Position(140, 175), Direction::Right));
-
 	if (bonusLifeBlockFlag) {
 		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2064, 288)));
 	}
@@ -216,7 +214,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.flag = Flag(Position(6335, 116));
 }
 
-void Level::setSecondLevel(World &world)
+void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 {
 	world.blocks.clear();
 	world.platforms.clear();
@@ -315,7 +313,9 @@ void Level::setSecondLevel(World &world)
 		}
 	}
 
-	world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2864, 80)));
+	if (bonusLifeBlockFlag) {
+		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2864, 80)));
+	}
 
 	for (int i = 0; i < 3; ++i) {
 		world.blocks.push_back(Block(BlockType::Destructible, Position(1262, 304 - (32 * i))));

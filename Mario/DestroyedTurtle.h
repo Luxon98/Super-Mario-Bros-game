@@ -3,6 +3,7 @@
 
 #include <array>
 #include "TemporaryObject.h"
+#include "Direction.h"
 
 class Position;
 struct SDL_Surface;
@@ -13,11 +14,12 @@ class DestroyedTurtle : public TemporaryObject
 private:
 	static std::array<SDL_Surface*, 3> destroyedTurtleImages;
 	bool red;
+	Direction slideDirection;
 	int computeIndex() const;
 	
 public:
 	DestroyedTurtle() = default;
-	DestroyedTurtle(Position position, bool red);
+	DestroyedTurtle(Position position, Direction slideDirection, bool red);
 	void loadDestroyedTurtleImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	bool shouldBeRemoved() const override;

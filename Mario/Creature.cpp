@@ -69,11 +69,11 @@ void Creature::move(World &world)
 	if (movement.getDirection() != Direction::None && stepsCounter % 3 == 0) {
 		if (isCharacterStandingOnSomething(*this, world)) {
 			makeHorizontalMove(world);
+			changeModel();
 		}
 		else {
 			makeDiagonalMove(world);
 		}
-		changeModel();
 	}
 	++stepsCounter;
 }

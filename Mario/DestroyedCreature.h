@@ -3,6 +3,7 @@
 
 #include <array>
 #include "TemporaryObject.h"
+#include "Direction.h"
 
 class Position;
 struct SDL_Surface;
@@ -12,11 +13,12 @@ class DestroyedCreature : public TemporaryObject
 {
 private:
 	static std::array<SDL_Surface*, 2> destroyedCreatureImages;
+	Direction slideDirection;
 	int computeIndex() const;
 
 public:
 	DestroyedCreature() = default;
-	DestroyedCreature(Position position);
+	DestroyedCreature(Position position, Direction slideDirection);
 	void loadDestroyedCreatureImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	bool shouldBeRemoved() const override;

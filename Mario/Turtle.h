@@ -16,7 +16,7 @@ private:
 	static std::array<SDL_Surface*, 8> turtleImages;
 	int model;
 	int computeBaseIndex() const;
-	void chooseModel();
+	void changeModel();
 
 public:
 	Turtle() = default;

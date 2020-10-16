@@ -163,7 +163,7 @@ void setWorld(int level, Player &player, World &world, bool playerState)
 		Level::setFirstLevel(world, playerState);
 	}
 	else if (level == 2) {
-		Level::setSecondLevel(world);
+		Level::setSecondLevel(world, playerState);
 	}
 }
 

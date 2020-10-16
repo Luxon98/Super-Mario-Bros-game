@@ -21,7 +21,7 @@ int Turtle::computeBaseIndex() const
 	return baseIndex;
 }
 
-void Turtle::chooseModel()
+void Turtle::changeModel()
 {
 	++changeModelCounter;
 	if (changeModelCounter % 30 == 0) {
@@ -71,11 +71,11 @@ void Turtle::move(World &world)
 	if (movement.getDirection() != Direction::None && stepsCounter % 3 == 0) {
 		if (isCharacterStandingOnSomething(*this, world)) {
 			makeHorizontalMove(world);
+			changeModel();
 		}
 		else {
 			makeDiagonalMove(world);
 		}
-		chooseModel();
 	}
 	++stepsCounter;
 }
