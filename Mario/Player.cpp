@@ -220,7 +220,7 @@ void Player::performImmortalAnimation(int difference)
 		currentState = (flags.armedFlag ? PlayerState::ArmedFirst : PlayerState::Tall);
 		lastDifference = 0;
 
-		SoundController::playOpenWorldMusic();
+		SoundController::playBackgroundMusic();
 
 		playerMovement.setSpeed(1);
 	}
@@ -245,7 +245,7 @@ void Player::performSmallImmortalAnimation(int difference)
 		currentState = PlayerState::Small;
 		lastDifference = 0;
 
-		SoundController::playOpenWorldMusic();
+		SoundController::playBackgroundMusic();
 
 		playerMovement.setSpeed(1);
 	}

@@ -64,6 +64,10 @@ void MovingPlatform::draw(SDL_Surface* display, int beginningOfCamera, int endOf
 
 void MovingPlatform::slide(Player &player)
 {
+	if (isPlayerStandingOnThisPlatform(player, *this)) {
+		player.forceMovement(direction);
+	}
+
 	if (direction == Direction::Right || direction == Direction::Left) {
 		slideHorizontally();
 	}	
@@ -72,9 +76,5 @@ void MovingPlatform::slide(Player &player)
 	}
 	else if (direction == Direction::Down) {
 		slideDown();
-	}
-
-	if (isPlayerStandingOnThisPlatform(player, *this)) {
-		player.forceMovement(direction);
 	}
 }

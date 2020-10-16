@@ -38,7 +38,7 @@ bool World::isTimeToChangeColors() const
 	return false;
 }
 
-bool World::isPlayerCloseEnough(LivingObject &monster) const
+bool World::isPlayerCloseEnough(LivingObject& monster) const
 {
 	if (monster.getX() < player->getX() + Screen::CAMERA_REFERENCE_POINT * 1.5) {
 		return true;
@@ -78,7 +78,7 @@ void World::changeColors()
 	Screen::changeCoinImage();
 }
 
-void World::setMovementDirection(LivingObject &monster)
+void World::setMovementDirection(LivingObject& monster)
 {
 	if (dynamic_cast<Turtle*>(&monster)) {
 		dynamic_cast<Turtle*>(&monster)->setMoveDirection(Direction::Left);
@@ -93,7 +93,7 @@ void World::deleteTemporaryElements()
 	for (std::size_t i = 0; i < temporaryElements.size(); ++i) {
 		if (temporaryElements[i]->shouldBeRemoved()) {
 			if (std::dynamic_pointer_cast<AnimatedCoin>(temporaryElements[i])) {
-				addAnimatedText(TextType::TWO_HUNDRED, Position(temporaryElements[i]->getX(), 
+				addAnimatedText(TextType::TWO_HUNDRED, Position(temporaryElements[i]->getX(),
 					temporaryElements[i]->getY()));
 			}
 
@@ -121,16 +121,26 @@ void World::performMonstersActions()
 
 		monsters[i]->move(*this);
 
-		if (std::dynamic_pointer_cast<Shell>(monsters[i]) 
-			&& !(std::dynamic_pointer_cast<Shell>(monsters[i])->isActive())
-			&& std::dynamic_pointer_cast<Shell>(monsters[i])->shouldTurnIntoTurtle()) {
+		if (std::dynamic_pointer_cast<Shell>(monsters[i])) {
 
-			monsters.push_back(std::make_shared<Turtle>(Turtle(Position(monsters[i]->getX(), monsters[i]->getY()))));
-			monsters.erase(monsters.begin() + i);
-		}
+			if (monsters[i]->getX() < screen->getBeginningOfCamera()
+				|| monsters[i]->getX() > screen->getEndOfCamera()) {
 
-		if (monsters[i]->getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
-			deleteMonster(i);
+				deleteMonster(i);
+				break;
+			}
+
+			if (!(std::dynamic_pointer_cast<Shell>(monsters[i])->isActive())
+				&& std::dynamic_pointer_cast<Shell>(monsters[i])->shouldTurnIntoTurtle()) {
+
+				monsters.push_back(std::make_shared<Turtle>(Turtle(Position(monsters[i]->getX(), 
+					monsters[i]->getY()))));
+				monsters.erase(monsters.begin() + i);
+			}
+
+			if (monsters[i]->getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
+				deleteMonster(i);
+			}
 		}
 	}
 }
@@ -141,7 +151,7 @@ void World::performFireBallsActions()
 		fireballs[i].move(*this);
 
 		if (fireballs[i].shouldBeRemoved()) {
-			int shift = (fireballs[i].getMovement().getDirection() == Direction::Left ? -5 : 5);
+			int shift = (fireballs[i].getMovement().getDirection() == Direction::Left ? -7 : 7);
 			temporaryElements.push_back(std::make_shared<Explosion>(Explosion(
 				Position(fireballs[i].getX() + shift, fireballs[i].getY()))));
 
@@ -150,7 +160,7 @@ void World::performFireBallsActions()
 		else if (fireballs[i].getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
 			fireballs.erase(fireballs.begin() + i);
 		}
-		else if (fireballs[i].getX() < screen->getBeginningOfCamera() 
+		else if (fireballs[i].getX() < screen->getBeginningOfCamera()
 			|| fireballs[i].getX() > screen->getEndOfCamera()) {
 
 			fireballs.erase(fireballs.begin() + i);
@@ -528,7 +538,7 @@ void World::performActions()
 		}
 
 		if (gameCounter & 1) {
-			for (auto &platform : platforms) {
+			for (auto& platform : platforms) {
 				platform.slide(*player);
 			}
 		}

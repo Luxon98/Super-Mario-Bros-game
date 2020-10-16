@@ -13,13 +13,15 @@ private:
 	// tracks and sound effects are declared as static here, because functions from SDL_mixer library require it
 	static std::array<Mix_Music*, 7> backgroundTracks;
 	static std::array<Mix_Chunk*, 13> soundsEffects;
+	static int level;
 	bool initSoundMixer();
 	void loadBackgroundTracks();
 	void loadSoundEffects();
+	void loadSounds();
 
 public:
 	SoundController();
-	void loadSounds();
+	void setLevel(int level);
 	static void playOpenWorldMusic();
 	static void playUndergroundMusic();
 	static void playCastleMusic();
@@ -27,6 +29,7 @@ public:
 	static void playWorldFinishedMusic();
 	static void playGameoverMusic();
 	static void playTimePassedMusic();
+	static void playBackgroundMusic();
 	static void playNewLiveAddedEffect();
 	static void playBlockDestroyedEffect();
 	static void playBlockHittedEffect();

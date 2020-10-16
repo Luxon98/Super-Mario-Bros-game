@@ -350,6 +350,8 @@ void Screen::resetScreen()
 
 void Screen::drawStartScreen()
 {
+	SoundController::stopMusic();
+
 	setBlackBackground();
 	drawScreenElements();
 	drawStartScreenElements(player->getLives());
@@ -362,6 +364,8 @@ void Screen::drawStartScreen()
 
 void Screen::drawGameOverScreen()
 {
+	SoundController::stopMusic();
+
 	setBlackBackground();
 	drawScreenElements();
 	drawGameOver();
@@ -374,6 +378,8 @@ void Screen::drawGameOverScreen()
 
 void Screen::drawTimeUpScreen()
 {
+	SoundController::stopMusic();
+
 	setBlackBackground();
 	drawScreenElements();
 	drawTimeUp();

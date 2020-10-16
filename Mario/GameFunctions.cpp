@@ -143,19 +143,6 @@ void loadImages(SDL_Surface* display)
 	loadBlockImages(display);
 }
 
-void playBackgroundMusic(int level)
-{
-	if (level == 1 || level == 3) {
-		SoundController::playOpenWorldMusic();
-	}
-	else if (level == 2) {
-		SoundController::playUndergroundMusic();
-	}
-	else {
-		SoundController::playCastleMusic();
-	}
-}
-
 void reset(KeyboardController &controller, Screen* screen, bool * playerState)
 {
 	controller.clearKeysState();
@@ -225,7 +212,7 @@ void runGame()
 			reset(controller, screen, &playerState);
 
 			screen->drawStartScreen();
-			playBackgroundMusic(level);
+			soundMixer.playBackgroundMusic();
 
 			while (playerState && timeState && !winStatus) {
 				screen->updateScreen(world);
@@ -259,6 +246,7 @@ void runGame()
 					
 					++level;
 					screen->setLevel(level);
+					soundMixer.setLevel(level);
 					if (level == 3) {
 						winStatus = true;
 					}

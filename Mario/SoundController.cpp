@@ -5,6 +5,7 @@
 
 std::array<Mix_Music*, 7> SoundController::backgroundTracks;
 std::array<Mix_Chunk*, 13> SoundController::soundsEffects;
+int SoundController::level = 1;
 
 bool SoundController::initSoundMixer()
 {
@@ -52,11 +53,17 @@ void SoundController::loadSounds()
 
 SoundController::SoundController()
 {
+	level = 1;
 	initSoundMixer();
 
 	// all audio can be loaded in the constructor 
 	// sound is not pre-loaded, because there will be only one instance of this class
 	loadSounds();
+}
+
+void SoundController::setLevel(int level)
+{
+	this->level = level;
 }
 
 void SoundController::playOpenWorldMusic()
@@ -99,6 +106,19 @@ void SoundController::playTimePassedMusic()
 {
 	stopMusic();
 	Mix_PlayMusic(backgroundTracks[4], -1);
+}
+
+void SoundController::playBackgroundMusic()
+{
+	if (level == 2) {
+		playUndergroundMusic();
+	}
+	else if (level == 4) {
+		playCastleMusic();
+	}
+	else {
+		playOpenWorldMusic();
+	}
 }
 
 void SoundController::playNewLiveAddedEffect()

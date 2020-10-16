@@ -1,6 +1,7 @@
 #ifndef Explosion_H
 #define Explosion_H
 
+#include <array>
 #include "TemporaryObject.h"
 
 class Position;
@@ -10,7 +11,8 @@ struct SDL_Surface;
 class Explosion : public TemporaryObject
 {
 private:
-	static SDL_Surface* explosionImage;
+	static std::array<SDL_Surface*, 3> explosionImages;
+	int computeIndex() const;
 
 public:
 	Explosion() = default;

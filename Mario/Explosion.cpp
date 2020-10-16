@@ -4,7 +4,21 @@
 #include "SDL_Utility.h"
 
 
-SDL_Surface* Explosion::explosionImage = nullptr;
+std::array<SDL_Surface*, 3> Explosion::explosionImages;
+
+int Explosion::computeIndex() const
+{
+	auto timePoint = std::chrono::steady_clock::now();
+	if (creationTime + std::chrono::milliseconds(60) >= timePoint) {
+		return 0;
+	}
+	else if (creationTime + std::chrono::milliseconds(90) >= timePoint) {
+		return 1;
+	}
+	else {
+		return 2;
+	}
+}
 
 Explosion::Explosion(Position position)
 {
@@ -14,20 +28,26 @@ Explosion::Explosion(Position position)
 
 void Explosion::loadExplosionImage(SDL_Surface* display)
 {
-	explosionImage = loadPNG("./img/explosion.png", display);
+	for (std::size_t i = 0; i < explosionImages.size(); ++i) {
+		std::string filename = "./img/explosion";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		explosionImages[i] = loadPNG(filename, display);
+	}
 }
 
 void Explosion::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 50 && position.getX() < endOfCamera + 50) {
-		drawSurface(display, explosionImage, position.getX() - beginningOfCamera, position.getY());
+		SDL_Surface* explosionImg = explosionImages[computeIndex()];
+		drawSurface(display, explosionImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 
 bool Explosion::shouldBeRemoved() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
-	return (creationTime + std::chrono::milliseconds(75) < timePoint);
+	return (creationTime + std::chrono::milliseconds(110) < timePoint);
 }
 
 void Explosion::slide() {}

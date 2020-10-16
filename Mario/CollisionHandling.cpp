@@ -259,7 +259,7 @@ void handleShellsAndMonstersCollisions(World &world, Player &player)
 			int i = 0;
 			for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2, ++i) {
 				if (!(std::dynamic_pointer_cast<Shell>(*it2)) && (areAtTheSameWidth(**it, **it2)
-					&& areAtTheSameHeight(**it, **it2)) && ((*it2)->getX()) < world.getScreen()->getEndOfCamera()) {
+					&& areAtTheSameHeight(**it, **it2))) {
 
 					if (std::dynamic_pointer_cast<Creature>(*it2)) {
 						world.addDestroyedCreature(Position((*it2)->getX(), (*it2)->getY()));
