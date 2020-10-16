@@ -6,25 +6,14 @@
 #include "World.h"
 #include "SoundController.h"
 #include "LayoutStyle.h"
+#include "Camera.h"
 
 
 bool Screen::coinImage = true;
 
-Screen::Camera::Camera()
-{
-	beginningOfCamera = 0;
-	endOfCamera = SCREEN_WIDTH;
-}
-
-Screen::Camera::Camera(int begX, int endX)
-{
-	beginningOfCamera = begX;
-	endOfCamera = endX;
-}
-
 bool Screen::isPlayerExceedingCameraReferencePoint() const
 {
-	if (player->getX() - camera.beginningOfCamera > Screen::SCREEN_WIDTH - CAMERA_REFERENCE_POINT) {
+	if (player->getX() - camera->getBeginningOfCamera() > Screen::SCREEN_WIDTH - Camera::CAMERA_REFERENCE_POINT) {
 		return true;
 	}
 
@@ -43,7 +32,7 @@ int Screen::computeCoinBaseIndex() const
 
 int Screen::computeDifference() const
 {
-	return (player->getX() - camera.beginningOfCamera) - (SCREEN_WIDTH - CAMERA_REFERENCE_POINT);
+	return (player->getX() - camera->getBeginningOfCamera() - (SCREEN_WIDTH - Camera::CAMERA_REFERENCE_POINT));
 }
 
 int Screen::computeTime() const
@@ -53,6 +42,12 @@ int Screen::computeTime() const
 		(timePoint - timeBegin).count());
 
 	return time;
+}
+
+void Screen::setPositionOfTheScreen(int begX, int endX)
+{
+	camera->setBeginningOfCamera(begX);
+	camera->setEndOfCamera(endX);
 }
 
 void Screen::loadDigitImages()
@@ -277,7 +272,6 @@ Screen::Screen()
 	scrtex = nullptr;
 	window = nullptr;
 	renderer = nullptr;
-	camera = Camera(0, SCREEN_WIDTH);
 	initStatus = initGUI();
 	time = 403;
 	level = 1;
@@ -295,16 +289,6 @@ int Screen::getTime() const
 	return time;
 }
 
-int Screen::getBeginningOfCamera() const
-{
-	return camera.beginningOfCamera;
-}
-
-int Screen::getEndOfCamera() const
-{
-	return camera.endOfCamera;
-}
-
 bool Screen::isTimePassed() const
 {
 	return (time <= 0);
@@ -320,10 +304,9 @@ void Screen::setPlayer(std::shared_ptr<Player> player)
 	this->player = std::move(player);
 }
 
-void Screen::setPositionOfTheScreen(int begX, int endX)
+void Screen::setCamera(std::shared_ptr<Camera> camera)
 {
-	camera.beginningOfCamera = begX;
-	camera.endOfCamera = endX;
+	this->camera = std::move(camera);
 }
 
 void Screen::setLevel(int level)
@@ -344,8 +327,8 @@ void Screen::changeCoinImage()
 void Screen::resetScreen()
 {
 	timeBegin = std::chrono::steady_clock::now();
-	camera.beginningOfCamera = 0;
-	camera.endOfCamera = SCREEN_WIDTH;
+	camera->setBeginningOfCamera(0);
+	camera->setEndOfCamera(SCREEN_WIDTH);
 }
 
 void Screen::drawStartScreen()
@@ -388,7 +371,7 @@ void Screen::drawTimeUpScreen()
 	updateView();
 }
 
-void Screen::drawDeadMario(World& world)
+void Screen::drawDeadMario(World &world)
 {
 	SoundController::stopMusic();
 	SoundController::playMarioDeadEffect();
@@ -400,14 +383,14 @@ void Screen::drawDeadMario(World& world)
 		if (i % 3 == 0) {
 			time = computeTime();
 			fillBackground();
-			world.draw(display, getBeginningOfCamera(), getEndOfCamera(), false);
+			world.draw(display, false);
 
 			drawScreenElements();
 			drawTime(time);
 			drawPoints(player->getPoints());
 			drawCoins(player->getCoins());
 
-			drawSurface(display, img, player->getX() - getBeginningOfCamera(), player->getY() + shift);
+			drawSurface(display, img, player->getX() - camera->getBeginningOfCamera(), player->getY() + shift);
 			updateView();
 
 			shift += (i <= 450 ? -1 : 1);
@@ -415,14 +398,14 @@ void Screen::drawDeadMario(World& world)
 	}
 }
 
-void Screen::drawWorldFinishedScreen(World& world)
+void Screen::drawWorldFinishedScreen(World &world)
 {
 	SoundController::playWorldFinishedMusic();
 
 	for (int i = 2 * time; i >= 0; --i) {
 		world.performActions();
 		bool drawPlayer = (player->getX() < 6540);
-		world.draw(display, getBeginningOfCamera(), getEndOfCamera(), drawPlayer);
+		world.draw(display, drawPlayer);
 		updateView();
 
 		if (i & 1) {
@@ -438,17 +421,17 @@ void Screen::drawWorldFinishedScreen(World& world)
 	}
 }
 
-void Screen::updateScreen(World& world)
+void Screen::updateScreen(World &world)
 {
 	if (isPlayerExceedingCameraReferencePoint()) {
 		int difference = computeDifference();
 
-		setPositionOfTheScreen(camera.beginningOfCamera + difference, camera.endOfCamera + difference);
+		setPositionOfTheScreen(camera->getBeginningOfCamera() + difference, camera->getEndOfCamera() + difference);
 	}
 	time = computeTime();
 	fillBackground();
 	world.performActions();
-	world.draw(display, getBeginningOfCamera(), getEndOfCamera());
+	world.draw(display);
 
 	drawScreenElements();
 	drawTime(time);

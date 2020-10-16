@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <chrono>
-#include <memory>
 #include "KeyboardController.h"
 #include "SoundController.h"
 #include "Player.h"
@@ -30,6 +29,7 @@
 #include "Level.h"
 #include "World.h"
 #include "Screen.h"
+#include "Camera.h"
 #include "Block.h"
 #include "MovingPlatform.h"
 #include "Position.h"
@@ -143,10 +143,10 @@ void loadImages(SDL_Surface* display)
 	loadBlockImages(display);
 }
 
-void reset(KeyboardController &controller, Screen* screen, bool * playerState)
+void reset(KeyboardController &controller, Screen &screen, bool * playerState)
 {
 	controller.clearKeysState();
-	screen->resetScreen();
+	screen.resetScreen();
 	*playerState = true;
 }
 
@@ -171,17 +171,16 @@ void runGame()
 {
 	bool loadResourcesStatus = true;
 
-	// screen cannot be a smart shared_ptr, because this class contains pointers to types from SDL library
-	// which cause problems (when automatically deleted) due to lack of proper deconstructors
-	Screen* screen = new Screen();
+	Screen screen = Screen();
+	std::shared_ptr<Camera> camera = std::make_shared<Camera>(Camera(0, Screen::SCREEN_WIDTH));
 
-	if (screen->getInitStatus()) {
+	if (screen.getInitStatus()) {
 		showScreenErrorWindow();
 		return;
 	}
 	
 	try {
-		loadImages(screen->getDisplay());
+		loadImages(screen.getDisplay());
 	}
 	catch (const FileNotLoadedException & e) {
 		loadResourcesStatus = false;
@@ -196,14 +195,17 @@ void runGame()
 		SDL_Event event;
 
 		World world = World();
-		world.setScreen(screen);
-
+	
 		SoundController soundMixer = SoundController();
 
 		std::shared_ptr<Player> player = std::make_shared<Player>(Player(Position(35, 400)));
 
+		player->setCamera(camera);
+		world.setCamera(camera);
+		screen.setCamera(camera);
+
 		world.setPlayer(player);
-		screen->setPlayer(player);
+		screen.setPlayer(player);
 
 		int level = 1;
 
@@ -211,11 +213,11 @@ void runGame()
 			setWorld(level, *player, world, playerState);
 			reset(controller, screen, &playerState);
 
-			screen->drawStartScreen();
+			screen.drawStartScreen();
 			soundMixer.playBackgroundMusic();
 
 			while (playerState && timeState && !winStatus) {
-				screen->updateScreen(world);
+				screen.updateScreen(world);
 
 				while (SDL_PollEvent(&event) && playerState) {
 					controller.handleKeysState(state);
@@ -238,14 +240,14 @@ void runGame()
 
 					while (!world.isFlagDown()) {
 						world.performActions();
-						screen->updateScreen(world);
+						screen.updateScreen(world);
 					}
 					player->setFinishingRunParameters();
 
-					screen->drawWorldFinishedScreen(world);
+					screen.drawWorldFinishedScreen(world);
 					
 					++level;
-					screen->setLevel(level);
+					screen.setLevel(level);
 					soundMixer.setLevel(level);
 					if (level == 3) {
 						winStatus = true;
@@ -256,23 +258,21 @@ void runGame()
 				if (player->isDead()) {
 					playerState = false;
 				}
-				else if (screen->isTimePassed() && !winStatus) {
+				else if (screen.isTimePassed() && !winStatus) {
 					timeState = false;
 				}
 			}
 
 			if (!playerState) {
-				screen->drawDeadMario(world);
+				screen.drawDeadMario(world);
 			}
 			else if (!timeState) {
-				screen->drawTimeUpScreen();
+				screen.drawTimeUpScreen();
 				SoundController::playTimePassedMusic();
 			}
 		}
 
 		SoundController::playGameoverMusic();
-		screen->drawGameOverScreen();
+		screen.drawGameOverScreen();
 	}
-
-	delete screen;
 }

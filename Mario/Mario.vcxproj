@@ -142,6 +142,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BonusObject.cpp" />
     <ClCompile Include="Bush.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Castle.cpp" />
     <ClCompile Include="Cloud.cpp" />
     <ClCompile Include="Coin.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="BonusObject.h" />
     <ClInclude Include="Bush.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Castle.h" />
     <ClInclude Include="Cloud.h" />
     <ClInclude Include="Coin.h" />

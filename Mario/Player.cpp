@@ -8,7 +8,7 @@
 #include "GameFunctions.h"
 #include "World.h"
 #include "Block.h"
-#include "Screen.h"
+#include "Camera.h"
 #include "CollisionHandling.h"
 #include "SDL_Utility.h"
 
@@ -288,9 +288,9 @@ bool Player::isFallingIntoAbyss(int distance) const
 	return (position.getY() + distance + (getHeight() / 2) > World::WORLD_HEIGHT);
 }
 
-bool Player::isGoingBeyondCamera(int distance, int beginningOfCamera) const
+bool Player::isGoingBeyondCamera(int distance) const
 {
-	if (position.getX() - beginningOfCamera - distance <= getWidth() / 2) {
+	if (position.getX() - camera->getBeginningOfCamera() - distance <= getWidth() / 2) {
 		return true;
 	}
 
@@ -327,7 +327,7 @@ void Player::moveLeft(World &world)
 	int alignment = getAlignmentForHorizontalMove(Direction::Left, playerMovement.getSpeed(), *this, world);
 	int distance = playerMovement.getSpeed() - alignment;
 
-	if (!isGoingBeyondCamera(distance, world.getScreen()->getBeginningOfCamera())) {
+	if (!isGoingBeyondCamera(distance)) {
 		position.setX(position.getX() - distance);
 	}
 
@@ -540,6 +540,11 @@ void Player::setCurrentAnimation(PlayerAnimation animation)
 	animationStartTime = std::chrono::steady_clock::now();
 }
 
+void Player::setCamera(std::shared_ptr<Camera> camera)
+{
+	this->camera = std::move(camera);
+}
+
 void Player::loadPlayerImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < playerImages.size() / 2; ++i) {
@@ -562,8 +567,9 @@ void Player::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) 
 void Player::forceMovement(Direction direction)
 {
 	if (direction == Direction::Left) {
-		//TODO: camera
-		position.setX(position.getX() - 1);
+		if (!isGoingBeyondCamera(1)) {
+			position.setX(position.getX() - 1);
+		}
 	}
 	else if (direction == Direction::Right) {
 		position.setX(position.getX() + 1);

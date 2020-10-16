@@ -9,6 +9,7 @@
 class World;
 class KeyboardController;
 class Position;
+class Camera;
 enum class Direction;
 struct SDL_Surface;
 
@@ -78,13 +79,14 @@ private:
 	};
 
 	static std::array<SDL_Surface*, 140> playerImages;
+	int model;
 	Statistics statistics;
 	Flags flags;
 	PlayerMovement playerMovement;
-	int model;
-	std::chrono::steady_clock::time_point animationStartTime;
 	PlayerAnimation currentAnimationState;
 	PlayerState currentState;
+	std::shared_ptr<Camera> camera;
+	std::chrono::steady_clock::time_point animationStartTime;
 	int computeImageIndexWhenSliding() const;
 	int computeImageIndex() const;
 	void changeStateDuringAnimation();
@@ -99,7 +101,7 @@ private:
 	void changeModelAndAirFlagStatus(World &world);
 	bool isHittingCeiling(int distance) const;
 	bool isFallingIntoAbyss(int distance) const;
-	bool isGoingBeyondCamera(int distance, int beginningOfCamera) const;
+	bool isGoingBeyondCamera(int distance) const;
 	bool isHittingBlock(int alignment, Direction direction) const;
 	bool isDuringAnimation() const;
 	bool isAbleToDestroyBlock() const;
@@ -129,6 +131,7 @@ public:
 	void increaseSpeed();
 	void addPoints(int pts);
 	void setCurrentAnimation(PlayerAnimation animation);
+	void setCamera(std::shared_ptr<Camera> camera);
 	void loadPlayerImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void forceMovement(Direction direction);
@@ -140,7 +143,7 @@ public:
 	void reborn(int level);
 	void resetSteps();
 	void setSlidingParameters();
-	void setFinishingRunParameters();
+	void setFinishingRunParameters(); 
 };
 
 #endif //Player_H

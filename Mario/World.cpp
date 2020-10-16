@@ -1,8 +1,8 @@
 #include "World.h"
 
-#include "Screen.h"
 #include "CollisionHandling.h"
 #include "Block.h"
+#include "Camera.h"
 #include "LivingObject.h"
 #include "Player.h"
 #include "Coin.h"
@@ -24,6 +24,7 @@
 #include "Position.h"
 #include "SoundController.h"
 #include "LayoutStyle.h"
+#include "Screen.h"
 
 
 LayoutStyle World::LAYOUT_STYLE = LayoutStyle::OpenWorld;
@@ -38,9 +39,9 @@ bool World::isTimeToChangeColors() const
 	return false;
 }
 
-bool World::isPlayerCloseEnough(LivingObject& monster) const
+bool World::isPlayerCloseEnough(LivingObject &monster) const
 {
-	if (monster.getX() < player->getX() + Screen::CAMERA_REFERENCE_POINT * 1.5) {
+	if (monster.getX() < player->getX() + Camera::CAMERA_REFERENCE_POINT * 1.5) {
 		return true;
 	}
 
@@ -78,7 +79,7 @@ void World::changeColors()
 	Screen::changeCoinImage();
 }
 
-void World::setMovementDirection(LivingObject& monster)
+void World::setMovementDirection(LivingObject &monster)
 {
 	if (dynamic_cast<Turtle*>(&monster)) {
 		dynamic_cast<Turtle*>(&monster)->setMoveDirection(Direction::Left);
@@ -123,8 +124,8 @@ void World::performMonstersActions()
 
 		if (std::dynamic_pointer_cast<Shell>(monsters[i])) {
 
-			if (monsters[i]->getX() < screen->getBeginningOfCamera()
-				|| monsters[i]->getX() > screen->getEndOfCamera()) {
+			if (monsters[i]->getX() < camera->getBeginningOfCamera() 
+				|| monsters[i]->getX() > camera->getEndOfCamera()) {
 
 				deleteMonster(i);
 				break;
@@ -160,8 +161,8 @@ void World::performFireBallsActions()
 		else if (fireballs[i].getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
 			fireballs.erase(fireballs.begin() + i);
 		}
-		else if (fireballs[i].getX() < screen->getBeginningOfCamera()
-			|| fireballs[i].getX() > screen->getEndOfCamera()) {
+		else if (fireballs[i].getX() < camera->getBeginningOfCamera()
+			|| fireballs[i].getX() > camera->getEndOfCamera()) {
 
 			fireballs.erase(fireballs.begin() + i);
 		}
@@ -340,7 +341,6 @@ World::World()
 	gameCounter = 0;
 	lastColoursUpdateTime = std::chrono::steady_clock::now();
 	lastTouchedBlockIndex = -1;
-	screen = nullptr;
 	flag = Flag();
 	slidingCounter = 0;
 	slideBlockStatus = true;
@@ -392,11 +392,6 @@ BlockType World::getLastTouchedBlockType() const
 	return blocks[lastTouchedBlockIndex].getType();
 }
 
-Screen* World::getScreen() const
-{
-	return screen;
-}
-
 bool World::isFlagDown() const
 {
 	return flag.isDown();
@@ -415,9 +410,10 @@ void World::setPlayer(std::shared_ptr<Player> player)
 {
 	this->player = std::move(player);
 }
-void World::setScreen(Screen* screen)
+
+void World::setCamera(std::shared_ptr<Camera> camera)
 {
-	this->screen = screen;
+	this->camera = std::move(camera);
 }
 
 void World::setLastTouchedBlock(int index)
@@ -538,7 +534,7 @@ void World::performActions()
 		}
 
 		if (gameCounter & 1) {
-			for (auto& platform : platforms) {
+			for (auto &platform : platforms) {
 				platform.slide(*player);
 			}
 		}
@@ -547,44 +543,39 @@ void World::performActions()
 	handlePlayerCollisions(*player, *this);
 }
 
-void World::draw(SDL_Surface* display, int beginningOfScreen, int endOfScreen, bool drawPlayer)
+void World::draw(SDL_Surface* display, bool drawPlayer)
 {
 	for (const auto &inanimateElement : inanimateElements) {
-		inanimateElement->draw(display, beginningOfScreen, endOfScreen);
+		inanimateElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 
 	for (const auto &bonusElement : bonusElements) {
-		bonusElement->draw(display, beginningOfScreen, endOfScreen);
+		bonusElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 
 	for (const auto &monster : monsters) {
-		monster->draw(display, beginningOfScreen, endOfScreen);
+		monster->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 
 	for (const auto &fireball : fireballs) {
-		fireball.draw(display, beginningOfScreen, endOfScreen);
+		fireball.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 
 	for (const auto &block : blocks) {
-		block.draw(display, beginningOfScreen, endOfScreen);
+		block.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 
 	for (const auto &platform : platforms) {
-		platform.draw(display, beginningOfScreen, endOfScreen);
+		platform.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 
 	for (const auto &temporaryElement : temporaryElements) {
-		temporaryElement->draw(display, beginningOfScreen, endOfScreen);
+		temporaryElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 
-	flag.draw(display, beginningOfScreen, endOfScreen);
+	flag.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 
 	if (drawPlayer) {
-		player->draw(display, beginningOfScreen, endOfScreen);
+		player->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
-}
-
-World::~World()
-{
-	screen = nullptr;
 }

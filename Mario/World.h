@@ -9,7 +9,6 @@
 #include "Flag.h"
 
 class Player;
-class Screen;
 class BonusObject;
 class Position;
 class Level;
@@ -17,6 +16,7 @@ class Block;
 class InanimateObject;
 class TemporaryObject;
 class LivingObject;
+class Camera;
 enum class TextType;
 enum class Direction;
 enum class BlockType;
@@ -39,7 +39,7 @@ private:
 	std::vector<std::shared_ptr<LivingObject>> monsters;
 	std::vector<std::shared_ptr<TemporaryObject>> temporaryElements;
 	std::shared_ptr<Player> player;
-	Screen* screen;
+	std::shared_ptr<Camera> camera; 
 	Flag flag;
 	int gameCounter;
 	int lastTouchedBlockIndex;
@@ -81,11 +81,10 @@ public:
 	const Player& getPlayer() const;
 	int getLastTouchedBlockIndex() const;
 	BlockType getLastTouchedBlockType() const;
-	Screen* getScreen() const;
 	bool isFlagDown() const;
 	bool isPlayerFinishingWorld() const;
 	void setPlayer(std::shared_ptr<Player> player);
-	void setScreen(Screen* screen);
+	void setCamera(std::shared_ptr<Camera> camera);
 	void setLastTouchedBlock(int index);
 	void hitBlock();
 	void setFireballStatus();
@@ -104,8 +103,7 @@ public:
 	void addExplosion(Position position);
 	void addAnimatedText(TextType type, Position position);
 	void performActions();
-	void draw(SDL_Surface* display, int beginningOfScreen, int endOfScreen, bool drawPlayer = true);
-	~World();
+	void draw(SDL_Surface* display, bool drawPlayer = true);
 };
 
 #endif //World_H

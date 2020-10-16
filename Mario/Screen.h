@@ -8,22 +8,13 @@
 
 class Player;
 class World;
+class Camera;
 
 
 class Screen
 {
 private:
-	class Camera 
-	{
-	public:
-		int beginningOfCamera;
-		int endOfCamera;
-		Camera();
-		Camera(int begX, int endX);
-	};
-
 	static constexpr int INITIAL_TIME = 403;
-	std::shared_ptr<Player> player;
 	static bool coinImage;
 	int initStatus;
 	int time;
@@ -32,16 +23,18 @@ private:
 	std::array<SDL_Surface*, 10> digitImages;
 	std::array<SDL_Surface*, 15> screenImages;
 	std::array<SDL_Surface*, 8> worldImages;
+	std::shared_ptr<Player> player;
+	std::shared_ptr<Camera> camera;
 	SDL_Surface* display;
 	SDL_Surface* charset;
 	SDL_Texture* scrtex;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
-	Camera camera;
 	bool isPlayerExceedingCameraReferencePoint() const;
 	int computeCoinBaseIndex() const;
 	int computeDifference() const;
 	int computeTime() const;
+	void setPositionOfTheScreen(int begX, int endX);
 	void loadDigitImages();
 	void loadOtherImages();
 	void loadWorldImages();
@@ -65,16 +58,13 @@ private:
 public:
 	static constexpr int SCREEN_WIDTH = 640;
 	static constexpr int SCREEN_HEIGHT = 480;
-	static constexpr int CAMERA_REFERENCE_POINT = 320;
 	Screen();
 	int getInitStatus() const;
 	int getTime() const;
-	int getBeginningOfCamera() const;
-	int getEndOfCamera() const;
 	bool isTimePassed() const;
 	SDL_Surface* getDisplay() const;
 	void setPlayer(std::shared_ptr<Player> player);
-	void setPositionOfTheScreen(int begX, int endX);
+	void setCamera(std::shared_ptr<Camera> camera);
 	void setLevel(int level);
 	static void resetCoinImage();
 	static void changeCoinImage();

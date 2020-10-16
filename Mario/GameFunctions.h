@@ -1,13 +1,14 @@
 #ifndef GameFunctions_H
 #define GameFunctions_H
 
+#include <memory>
 #include "SDL_Utility.h"
 
 class KeyboardController;
 class Player;
 class World;
 class Screen;
-class SoundController;
+class Camera;
 
 
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions);
