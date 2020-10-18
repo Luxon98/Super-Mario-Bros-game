@@ -49,31 +49,34 @@
     <Filter Include="Source Files\BonusObjects">
       <UniqueIdentifier>{579abea5-4aca-4349-a604-403ff3bc6223}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Other">
-      <UniqueIdentifier>{58be5088-4f7b-479c-b4d7-e875813587d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Other">
-      <UniqueIdentifier>{b9fbe667-97c0-455d-b864-c20e83098226}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Exceptions">
       <UniqueIdentifier>{5024f5b7-5eba-417a-8f0c-bb6c3cee210e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Exceptions">
       <UniqueIdentifier>{bb6cff5c-ebc3-40ed-a0b7-80672595b828}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\OtherObjects">
+      <UniqueIdentifier>{992bec6a-5e24-4a4d-8757-8e591ea7acc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\OtherObjects">
+      <UniqueIdentifier>{5fe70803-a7fd-4495-8b2e-a479efa647d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\OtherFiles">
+      <UniqueIdentifier>{58be5088-4f7b-479c-b4d7-e875813587d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\OtherFiles">
+      <UniqueIdentifier>{b9fbe667-97c0-455d-b864-c20e83098226}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>Source Files\Other</Filter>
-    </ClCompile>
     <ClCompile Include="Screen.cpp">
-      <Filter>Source Files\Other</Filter>
+      <Filter>Source Files\OtherFiles</Filter>
     </ClCompile>
     <ClCompile Include="Level.cpp">
-      <Filter>Source Files\Other</Filter>
+      <Filter>Source Files\OtherFiles</Filter>
     </ClCompile>
     <ClCompile Include="CollisionHandling.cpp">
       <Filter>Source Files\HandlingAndControlling</Filter>
@@ -166,13 +169,13 @@
       <Filter>Source Files\HandlingAndControlling</Filter>
     </ClCompile>
     <ClCompile Include="Position.cpp">
-      <Filter>Source Files\Other</Filter>
+      <Filter>Source Files\OtherFiles</Filter>
     </ClCompile>
     <ClCompile Include="Size.cpp">
-      <Filter>Source Files\Other</Filter>
+      <Filter>Source Files\OtherFiles</Filter>
     </ClCompile>
     <ClCompile Include="Movement.cpp">
-      <Filter>Source Files\Other</Filter>
+      <Filter>Source Files\OtherFiles</Filter>
     </ClCompile>
     <ClCompile Include="IndependentLivingObject.cpp">
       <Filter>Source Files\AbstractClasses</Filter>
@@ -180,20 +183,26 @@
     <ClCompile Include="FileNotLoadedException.cpp">
       <Filter>Source Files\Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>Source Files\Other</Filter>
-    </ClCompile>
     <ClCompile Include="Plant.cpp">
       <Filter>Source Files\LivingObjects</Filter>
     </ClCompile>
     <ClCompile Include="RedTurtle.cpp">
       <Filter>Source Files\LivingObjects</Filter>
     </ClCompile>
-    <ClCompile Include="MovingPlatform.cpp">
-      <Filter>Source Files\Other</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source Files\Other</Filter>
+      <Filter>Source Files\OtherFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Source Files\OtherObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingPlatform.cpp">
+      <Filter>Source Files\OtherObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Source Files\OtherObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilityFunctions.cpp">
+      <Filter>Source Files\OtherFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,13 +237,10 @@
       <Filter>Header Files\LivingObjects</Filter>
     </ClInclude>
     <ClInclude Include="Level.h">
-      <Filter>Header Files\Other</Filter>
+      <Filter>Header Files\OtherFiles</Filter>
     </ClInclude>
     <ClInclude Include="Screen.h">
-      <Filter>Header Files\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>Header Files\Other</Filter>
+      <Filter>Header Files\OtherFiles</Filter>
     </ClInclude>
     <ClInclude Include="Creature.h">
       <Filter>Header Files\LivingObjects</Filter>
@@ -297,16 +303,16 @@
       <Filter>Header Files\HandlingAndControlling</Filter>
     </ClInclude>
     <ClInclude Include="Position.h">
-      <Filter>Header Files\Other</Filter>
+      <Filter>Header Files\OtherFiles</Filter>
     </ClInclude>
     <ClInclude Include="Size.h">
-      <Filter>Header Files\Other</Filter>
+      <Filter>Header Files\OtherFiles</Filter>
     </ClInclude>
     <ClInclude Include="Movement.h">
-      <Filter>Header Files\Other</Filter>
+      <Filter>Header Files\OtherFiles</Filter>
     </ClInclude>
     <ClInclude Include="Direction.h">
-      <Filter>Header Files\Other</Filter>
+      <Filter>Header Files\OtherFiles</Filter>
     </ClInclude>
     <ClInclude Include="IndependentLivingObject.h">
       <Filter>Header Files\AbstractClasses</Filter>
@@ -315,10 +321,7 @@
       <Filter>Header Files\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="LayoutStyle.h">
-      <Filter>Header Files\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>Header Files\Other</Filter>
+      <Filter>Header Files\OtherFiles</Filter>
     </ClInclude>
     <ClInclude Include="Plant.h">
       <Filter>Header Files\LivingObjects</Filter>
@@ -326,11 +329,20 @@
     <ClInclude Include="RedTurtle.h">
       <Filter>Header Files\LivingObjects</Filter>
     </ClInclude>
-    <ClInclude Include="MovingPlatform.h">
-      <Filter>Header Files\Other</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files\Other</Filter>
+      <Filter>Header Files\OtherFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Header Files\OtherObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Header Files\OtherObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatform.h">
+      <Filter>Header Files\OtherObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilityFunctions.h">
+      <Filter>Header Files\OtherFiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

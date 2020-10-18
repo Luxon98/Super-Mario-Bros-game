@@ -12,23 +12,19 @@ class MovingPlatform;
 enum class Direction;
 
 
-bool isCharacterHittingObject(const WorldObject &object, const WorldObject &block, Direction direction, int distance);
+bool isCharacterHittingObject(const WorldObject &figure, const WorldObject &block, Direction direction, int distance);
 
-bool isCharacterStandingOnSomething(const WorldObject &object, const World &world);
+bool isCharacterStandingOnSomething(const WorldObject &figure, const World &world);
 
-bool isMonsterStandingOnTheBlock(const LivingObject &object, const Block &block);
+bool isMonsterStandingOnBlock(const LivingObject &monster, const Block &block);
 
-bool isMushroomStandingOnTheBlock(const World &world, int index);
+bool isMushroomStandingOnBlock(const World &world, const Block &block);
 
 bool isPlayerCloseToPlant(const Plant &plant, const World &world);
 
 bool isPlayerStandingOnThisPlatform(const Player &player, const MovingPlatform &platform);
 
 bool isBlockBlockedByAnother(const Block &block, const World &world);
-
-bool areAtTheSameWidth(const WorldObject &firstObject, const WorldObject &secondObject);
-
-bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secondObject);
 
 bool isPlayerJumpingOnMonster(const Player &player, const LivingObject &monster);
 

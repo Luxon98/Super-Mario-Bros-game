@@ -11,8 +11,6 @@ class Screen;
 class Camera;
 
 
-bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions);
-
 void loadBonusObjectsImages(SDL_Surface* display);
 
 void loadInanimateObjectImages(SDL_Surface* display);
@@ -25,9 +23,7 @@ void loadBlockImages(SDL_Surface* display);
 
 void loadImages(SDL_Surface* display);
 
-void playBackgroundMusic(int level);
-
-void reset(KeyboardController &controller, Screen* screen, bool * playerState);
+void reset(KeyboardController &controller, Screen &screen, bool * playerState);
 
 void setWorld(int level, Player &player, World &world, bool playerState);
 

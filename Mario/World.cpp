@@ -1,6 +1,7 @@
 #include "World.h"
 
 #include "CollisionHandling.h"
+#include "UtilityFunctions.h"
 #include "Block.h"
 #include "Camera.h"
 #include "LivingObject.h"
@@ -214,7 +215,7 @@ void World::slideBlock()
 			subtractCoinFromBlock();
 		}
 
-		if (isMushroomStandingOnTheBlock(*this, lastTouchedBlockIndex)) {
+		if (isMushroomStandingOnBlock(*this, blocks[lastTouchedBlockIndex])) {
 			raiseUpMushroom();
 		}
 	}
@@ -467,7 +468,7 @@ void World::destroyLastTouchedBlock()
 	SoundController::playBlockDestroyedEffect();
 }
 
-void World::deleteInanimateElement(int index)
+void World::deleteCoin(int index)
 {
 	inanimateElements.erase(inanimateElements.begin() + index);
 }

@@ -179,6 +179,7 @@
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="TemporaryObject.cpp" />
     <ClCompile Include="Turtle.cpp" />
+    <ClCompile Include="UtilityFunctions.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="WorldObject.cpp" />
   </ItemGroup>
@@ -226,6 +227,7 @@
     <ClInclude Include="Star.h" />
     <ClInclude Include="TemporaryObject.h" />
     <ClInclude Include="Turtle.h" />
+    <ClInclude Include="UtilityFunctions.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldObject.h" />
   </ItemGroup>

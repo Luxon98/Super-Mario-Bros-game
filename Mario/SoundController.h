@@ -18,13 +18,13 @@ private:
 	void loadBackgroundTracks();
 	void loadSoundEffects();
 	void loadSounds();
+	static void playOpenWorldMusic();
+	static void playUndergroundMusic();
+	static void playCastleMusic();
 
 public:
 	SoundController();
 	void setLevel(int level);
-	static void playOpenWorldMusic();
-	static void playUndergroundMusic();
-	static void playCastleMusic();
 	static void playStarMusic();
 	static void playWorldFinishedMusic();
 	static void playGameoverMusic();

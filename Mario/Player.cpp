@@ -5,11 +5,11 @@
 #include "SoundController.h"
 #include "Position.h"
 #include "Size.h"
-#include "GameFunctions.h"
 #include "World.h"
 #include "Block.h"
 #include "Camera.h"
 #include "CollisionHandling.h"
+#include "UtilityFunctions.h"
 #include "SDL_Utility.h"
 
 

@@ -21,27 +21,28 @@
 #include "Position.h"
 #include "AnimatedText.h"
 #include "Screen.h"
+#include "UtilityFunctions.h"
 
 
-bool isCharacterHittingObject(const WorldObject &object, const WorldObject &block, Direction direction, int distance)
+bool isCharacterHittingObject(const WorldObject &figure, const WorldObject &block, Direction direction, int distance)
 {
-	if (direction == Direction::Right && object.getX() < block.getX()
-		&& object.getX() + distance + object.getWidth() / 2 >= block.getX() - block.getWidth() / 2) {
+	if (direction == Direction::Right && figure.getX() < block.getX()
+		&& figure.getX() + distance + figure.getWidth() / 2 >= block.getX() - block.getWidth() / 2) {
 
 		return true;
 	}
-	else if (direction == Direction::Left && object.getX() > block.getX()
-		&& object.getX() - distance - object.getWidth() / 2 <= block.getX() + block.getWidth() / 2) {
+	else if (direction == Direction::Left && figure.getX() > block.getX()
+		&& figure.getX() - distance - figure.getWidth() / 2 <= block.getX() + block.getWidth() / 2) {
 
 		return true;
 	}
-	else if (direction == Direction::Up && object.getY() > block.getY()
-		&& object.getY() - distance - object.getHeight() / 2 <= block.getY() + block.getHeight() / 2) {
+	else if (direction == Direction::Up && figure.getY() > block.getY()
+		&& figure.getY() - distance - figure.getHeight() / 2 <= block.getY() + block.getHeight() / 2) {
 
 		return true;
 	}
-	else if (direction == Direction::Down && object.getY() < block.getY()
-		&& object.getY() + distance + object.getHeight() / 2 >= block.getY() - block.getHeight() / 2) {
+	else if (direction == Direction::Down && figure.getY() < block.getY()
+		&& figure.getY() + distance + figure.getHeight() / 2 >= block.getY() - block.getHeight() / 2) {
 
 		return true;
 	}
@@ -49,12 +50,12 @@ bool isCharacterHittingObject(const WorldObject &object, const WorldObject &bloc
 	return false;
 }
 
-bool isCharacterStandingOnSomething(const WorldObject &object, const World &world)
+bool isCharacterStandingOnSomething(const WorldObject &figure, const World &world)
 {
 	std::vector<Block> blocks = world.getBlocks();
 	for (auto &block : blocks) {
-		if (object.getY() + object.getHeight() / 2 == block.getY() - block.getHeight() / 2
-			&& areAtTheSameWidth(object, block) && !block.isInvisible()) {
+		if (isElementDirectlyAboveObject(figure, block) && areAtTheSameWidth(figure, block) 
+			&& !block.isInvisible()) {
 
 			return true;
 		}
@@ -62,9 +63,7 @@ bool isCharacterStandingOnSomething(const WorldObject &object, const World &worl
 
 	std::vector<MovingPlatform> platforms = world.getPlatforms();
 	for (auto &platform : platforms) {
-		if (object.getY() + object.getHeight() / 2 == platform.getY() - platform.getHeight() / 2
-			&& areAtTheSameWidth(object, platform)) {
-
+		if (isElementDirectlyAboveObject(figure, platform) && areAtTheSameWidth(figure, platform)) {
 			return true;
 		}
 	}
@@ -72,30 +71,26 @@ bool isCharacterStandingOnSomething(const WorldObject &object, const World &worl
 	return false;
 }
 
-bool isMonsterStandingOnTheBlock(const LivingObject &object, const Block &block)
+bool isMonsterStandingOnBlock(const LivingObject &monster, const Block &block)
 {
-	if (abs((object.getY() + object.getHeight() / 2) - (block.getY() - block.getHeight() / 2)) < 2
-		&& areAtTheSameWidth(object, block)) {
-
+	if (isMonsterCloseAboveBlock(monster, block) && areAtTheSameWidth(monster, block)) {
 		return true;
 	}
 
 	return false;
 }
 
-bool isMushroomStandingOnTheBlock(const World &world, int index)
+bool isMushroomStandingOnBlock(const World &world, const Block &block)
 {
 	std::vector<std::shared_ptr<BonusObject>> bonusElements = world.getBonusElements();
-	std::vector<Block> blocks = world.getBlocks();
 	for (auto bonusElement : bonusElements) {
 		if (std::dynamic_pointer_cast<Mushroom>(bonusElement)) {
-			if ((bonusElement->getY() + bonusElement->getHeight() / 2) == (blocks[index].getY()
-				- blocks[index].getHeight() / 2) && areAtTheSameWidth(*bonusElement, blocks[index])) {
-
+			if (isElementDirectlyAboveObject(*bonusElement, block) && areAtTheSameWidth(*bonusElement, block)) {
 				return true;
 			}
 		}
 	}
+
 	return false;
 }
 
@@ -103,6 +98,7 @@ bool isPlayerCloseToPlant(const Plant &plant, const World &world)
 {
 	const Player& player = world.getPlayer();
 	int yDifference = plant.getY() - player.getY();
+
 	if (abs(player.getX() - plant.getX()) < 40 && (yDifference > 30 && yDifference < 60)) {
 		return true;
 	}
@@ -113,9 +109,7 @@ bool isPlayerCloseToPlant(const Plant &plant, const World &world)
 
 bool isPlayerStandingOnThisPlatform(const Player &player, const MovingPlatform &platform)
 {
-	if (player.getY() + player.getHeight() / 2 == platform.getY() - platform.getHeight() / 2
-		&& areAtTheSameWidth(player, platform)) {
-
+	if (isElementDirectlyAboveObject(player, platform) && areAtTheSameWidth(player, platform)) {
 		return true;
 	}
 
@@ -129,38 +123,6 @@ bool isBlockBlockedByAnother(const Block& block, const World& world)
 		if (block.getX() == element.getX() && block.getY() == (element.getY() + block.getHeight())) {
 			return true;
 		}
-	}
-
-	return false;
-}
-
-bool areAtTheSameWidth(const WorldObject &firstObject, const WorldObject &secondObject)
-{
-	if (firstObject.getX() + firstObject.getWidth() / 2 > secondObject.getX() - secondObject.getWidth() / 2
-		&& firstObject.getX() <= secondObject.getX()) {
-
-		return true;
-	}
-	else if (firstObject.getX() - firstObject.getWidth() / 2 < secondObject.getX() + secondObject.getWidth() / 2
-		&& firstObject.getX() >= secondObject.getX()) {
-
-		return true;
-	}
-
-	return false;
-}
-
-bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secondObject)
-{
-	if (firstObject.getY() >= secondObject.getY() && firstObject.getY() - firstObject.getHeight() / 2
-		< secondObject.getY() + secondObject.getHeight() / 2) {
-
-		return true;
-	}
-	else if (firstObject.getY() <= secondObject.getY() && firstObject.getY() + firstObject.getHeight() / 2
-		> secondObject.getY() - secondObject.getHeight() / 2) {
-
-		return true;
 	}
 
 	return false;
@@ -330,7 +292,7 @@ void handleMonstersAndBlockCollisions(World &world, const Block &block, Player &
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
 	int i = 0;
 	for (auto it = monsters.begin(); it != monsters.end(); ++it, ++i) {
-		if (isMonsterStandingOnTheBlock(**it, block)) {
+		if (isMonsterStandingOnBlock(**it, block)) {
 			if (std::dynamic_pointer_cast<Creature>(*it)) {
 				Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
 				world.addDestroyedCreature(Position((*it)->getX(), (*it)->getY()), direction);
@@ -360,7 +322,7 @@ void collectCoinIfPossible(Player &player, World &world)
 		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it)) {
 			if (std::dynamic_pointer_cast<Coin>(*it)) {
 				player.incrementCoins();
-				world.deleteInanimateElement(i);
+				world.deleteCoin(i);
 				SoundController::playCoinCollectedEffect();
 				return;
 			}

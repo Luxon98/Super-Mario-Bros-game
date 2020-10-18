@@ -36,17 +36,6 @@
 #include "FileNotLoadedException.h"
 
 
-bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions)
-{
-	for (int i = begin, j = 0; j < repetitions; i += shift, j++) {
-		if (difference >= i && difference <= i + 150) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
 void loadBonusObjectsImages(SDL_Surface* display)
 {
 	Flower tempFlower = Flower();

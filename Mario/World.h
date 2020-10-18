@@ -92,7 +92,7 @@ public:
 	void changeShellMovementParameters(int index, Direction direction);
 	void resetImages();
 	void destroyLastTouchedBlock();
-	void deleteInanimateElement(int index);
+	void deleteCoin(int index);
 	void deleteLivingElement(int index);
 	void deleteMonster(int index);
 	void deleteFireBall(int index);

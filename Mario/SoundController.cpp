@@ -51,21 +51,6 @@ void SoundController::loadSounds()
 	loadSoundEffects();
 }
 
-SoundController::SoundController()
-{
-	level = 1;
-	initSoundMixer();
-
-	// all audio can be loaded in the constructor 
-	// sound is not pre-loaded, because there will be only one instance of this class
-	loadSounds();
-}
-
-void SoundController::setLevel(int level)
-{
-	this->level = level;
-}
-
 void SoundController::playOpenWorldMusic()
 {
 	stopMusic();
@@ -82,6 +67,21 @@ void SoundController::playCastleMusic()
 {
 	stopMusic();
 	Mix_PlayMusic(backgroundTracks[6], -1);
+}
+
+SoundController::SoundController()
+{
+	level = 1;
+	initSoundMixer();
+
+	// all audio can be loaded in the constructor 
+	// sound is not pre-loaded, because there will be only one instance of this class
+	loadSounds();
+}
+
+void SoundController::setLevel(int level)
+{
+	this->level = level;
 }
 
 void SoundController::playStarMusic()
