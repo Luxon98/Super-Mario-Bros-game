@@ -22,8 +22,8 @@ private:
 public:
 	MovingPlatform() = default;
 	MovingPlatform(Position position, Direction direction);
-	Direction getDirection();
-	void loadPlatformImage(SDL_Surface* display);
+	static void loadPlatformImage(SDL_Surface* display);
+	Direction getDirection() const;
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void slide(Player &player);
 };

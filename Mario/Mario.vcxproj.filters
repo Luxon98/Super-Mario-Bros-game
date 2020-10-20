@@ -162,9 +162,6 @@
     <ClCompile Include="Castle.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Flag.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
-    </ClCompile>
     <ClCompile Include="SoundController.cpp">
       <Filter>Source Files\HandlingAndControlling</Filter>
     </ClCompile>
@@ -203,6 +200,12 @@
     </ClCompile>
     <ClCompile Include="UtilityFunctions.cpp">
       <Filter>Source Files\OtherFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldInteractionFunctions.cpp">
+      <Filter>Source Files\OtherFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Flag.cpp">
+      <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -296,9 +299,6 @@
     <ClInclude Include="Castle.h">
       <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Flag.h">
-      <Filter>Header Files\LivingObjects</Filter>
-    </ClInclude>
     <ClInclude Include="SoundController.h">
       <Filter>Header Files\HandlingAndControlling</Filter>
     </ClInclude>
@@ -343,6 +343,12 @@
     </ClInclude>
     <ClInclude Include="UtilityFunctions.h">
       <Filter>Header Files\OtherFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldInteractionFunctions.h">
+      <Filter>Header Files\OtherFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Flag.h">
+      <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

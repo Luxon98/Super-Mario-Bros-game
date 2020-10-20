@@ -1,14 +1,18 @@
 #ifndef CollisionHandling_H
 #define CollisionHandling_H
 
+#include <memory>
+
 class World;
 class Player;
 class WorldObject;
 class LivingObject;
-class Mushroom;
+class BonusObject;
 class Block;
 class Plant;
+class Mushroom;
 class MovingPlatform;
+class FireBall;
 enum class Direction;
 
 
@@ -28,27 +32,60 @@ bool isBlockBlockedByAnother(const Block &block, const World &world);
 
 bool isPlayerJumpingOnMonster(const Player &player, const LivingObject &monster);
 
+bool isMushroomStandingOnBlock(const BonusObject &mushroom, const Block &block);
+
+void handleJumpingOnShell(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
+
+void handleJumpingOnTurtle(std::shared_ptr<LivingObject> monster, World &world, int index);
+
+void handleJumpingOnRedTurtle(std::shared_ptr<LivingObject> monster, World &world, int index);
+
+void handleJumpingOnCreature(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
+
+void handleJumpingOnMonster(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
+
+void handleImmortalPlayerCollisions(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
+
+void handlePlayerAndMonstersCollisions(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
+
 void handlePlayerCollisions(Player &player, World &world);
+
+void handleShellCollisions(const LivingObject &shell, std::shared_ptr<LivingObject> monster, World &world, int * pts);
 
 void handleShellsAndMonstersCollisions(World &world, Player &player);
 
+void handleFireBallCollision(const FireBall &fireball, std::shared_ptr<LivingObject> monster, World &world, int * pts);
+
+void handleMonsterDestruction(const FireBall &fireball, World &world, int fireballIndex, int monsterIndex);
+
 void handleFireBallsAndMonstersCollisions(World &world, Player &player);
 
-void handleMonstersAndBlockCollisions(World &world, const Block &block, Player &player);
+void handleMonsterDestruction(const Block &block, std::shared_ptr<LivingObject> monster, World &world, int * pts);
 
-void collectCoinIfPossible(Player &player, World &world);
+void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &player);
 
-void collectMushroom(Mushroom &mushroom, int index, Player &player, World &world);
+void handleBlockAndMushroomsCollisions(World &world, const Block &block);
 
-void collectFlower(Player &player, World &world);
-
-void collectStar(Player &player, World &world);
+void handleBlockCollisions(World &world, const Block &block, Player &player);
 
 void collectBonusIfPossible(Player &player, World &world);
 
-int getAlignmentForHorizontalMove(Direction direction, int distance, const WorldObject &object, const World &world);
+void collectCoinIfPossible(Player &player, World &world);
 
-// this method additionaly set the last touched block
-int getAlignmentForVerticalMove(Direction direction, int distance, const WorldObject &object, World &world);
+void handleBonusCollecting(Player &player, World &world);
+
+int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject &object, const World &world);
+
+int getHorizontalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject &object, const World &world);
+
+int computeHorizontalAlignment(Direction direction, int distance, const WorldObject &object, const World &world);
+
+// this method additionaly set the last touched block's index
+int getVerticalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject &object, World &world);
+
+// this method additionaly set the last touched block's index to -1
+int getVerticalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject &object, World &world);
+
+int computeVerticalAlignment(Direction direction, int distance, const WorldObject &object, World &world);
 
 #endif //CollisionHandling_H

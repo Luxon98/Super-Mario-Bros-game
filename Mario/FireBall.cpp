@@ -23,7 +23,7 @@ void FireBall::computeModelIndex()
 
 void FireBall::makeVerticalMove(World &world)
 {
-	int alignment = getAlignmentForHorizontalMove(movement.getDirection(), movement.getSpeed(), *this, world);
+	int alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
 	int distance = movement.getSpeed() - alignment;
 	if (movement.getDirection() == Direction::Left) {
 		distance *= -1;
@@ -38,7 +38,7 @@ void FireBall::makeVerticalMove(World &world)
 
 void FireBall::makeHorizontalMove(World &world)
 {
-	int alignment = getAlignmentForVerticalMove(movement.getVerticalDirection(), movement.getVerticalSpeed(), 
+	int alignment = computeVerticalAlignment(movement.getVerticalDirection(), movement.getVerticalSpeed(), 
 		*this, world);
 	int verticalDistance = movement.getVerticalSpeed() - alignment;
 	if (movement.getVerticalDirection() == Direction::Up) {
@@ -75,11 +75,6 @@ FireBall::FireBall(Position position, Direction direction)
 	stop = false;
 }
 
-bool FireBall::shouldBeRemoved() const
-{
-	return stop;
-}
-
 void FireBall::loadFireBallImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < fireBallImages.size(); ++i) {
@@ -88,6 +83,11 @@ void FireBall::loadFireBallImages(SDL_Surface* display)
 		filename += ".png";
 		fireBallImages[i] = loadPNG(filename, display);
 	}
+}
+
+bool FireBall::shouldBeRemoved() const
+{
+	return stop;
 }
 
 void FireBall::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

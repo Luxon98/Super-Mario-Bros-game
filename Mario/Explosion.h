@@ -17,7 +17,7 @@ private:
 public:
 	Explosion() = default;
 	Explosion(Position position);
-	void loadExplosionImage(SDL_Surface* display);
+	static void loadExplosionImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	bool shouldBeRemoved() const override;
 	void slide() override;

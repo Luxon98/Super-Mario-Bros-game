@@ -18,7 +18,7 @@ public:
 	static bool coinImage;
 	Coin() = default;
 	Coin(Position position);
-	void loadCoinImages(SDL_Surface* display);
+	static void loadCoinImages(SDL_Surface* display);
 	static void resetCoinImage();
 	static void changeCoinImage();
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

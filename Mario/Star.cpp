@@ -24,7 +24,7 @@ int Star::computeBaseIndex() const
 
 void Star::makeVerticalMove(World &world)
 {
-	int alignment = getAlignmentForHorizontalMove(movement.getDirection(), movement.getSpeed(), *this, world);
+	int alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
 	int distance = movement.getSpeed() - alignment;
 	if (movement.getDirection() == Direction::Left) {
 		distance *= -1;
@@ -38,7 +38,7 @@ void Star::makeVerticalMove(World &world)
 
 void Star::makeHorizontalMove(World &world)
 {
-	int alignment = getAlignmentForVerticalMove(movement.getVerticalDirection(), movement.getVerticalSpeed(), 
+	int alignment = computeVerticalAlignment(movement.getVerticalDirection(), movement.getVerticalSpeed(), 
 		*this, world);
 	int verticalDistance = movement.getVerticalSpeed() - alignment;
 	if (movement.getVerticalDirection() == Direction::Up) {

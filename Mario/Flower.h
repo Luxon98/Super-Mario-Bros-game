@@ -19,7 +19,7 @@ private:
 public:
 	Flower() = default;
 	Flower(Position position);
-	void loadFlowerImages(SDL_Surface* display);
+	static void loadFlowerImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };

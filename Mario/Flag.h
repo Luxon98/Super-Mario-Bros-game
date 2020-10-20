@@ -19,10 +19,10 @@ private:
 public:
 	Flag() = default;
 	Flag(Position position);
+	static void loadFlagImages(SDL_Surface* display);
 	bool isActive() const;
 	bool isDown() const;
 	void setActiveState();
-	void loadFlagImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void changePosition();
 };

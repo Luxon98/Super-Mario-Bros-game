@@ -4,6 +4,7 @@
 class WorldObject;
 class LivingObject;
 class Block;
+enum class Direction;
 
 
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions);
@@ -15,5 +16,7 @@ bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secon
 bool isElementDirectlyAboveObject(const WorldObject &element, const WorldObject &object);
 
 bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block);
+
+Direction determineDirection(const WorldObject &firstObject, const WorldObject &secondObject);
 
 #endif //UtilityFunctions_H

@@ -15,7 +15,7 @@ private:
 public:
 	Castle() = default;
 	Castle(Position position);
-	void loadCastleImages(SDL_Surface* display);
+	static void loadCastleImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 

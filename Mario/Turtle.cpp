@@ -39,11 +39,6 @@ Turtle::Turtle(Position position)
 	changeModelCounter = 0;
 }
 
-void Turtle::setMoveDirection(Direction direction)
-{
-	movement.setDirection(direction);
-}
-
 void Turtle::loadTurtleImages(SDL_Surface* display)
 {
 	turtleImages[0] = loadPNG("./img/turtle_left1.png", display);
@@ -54,6 +49,11 @@ void Turtle::loadTurtleImages(SDL_Surface* display)
 	turtleImages[5] = loadPNG("./img/turtle_left4.png", display);
 	turtleImages[6] = loadPNG("./img/turtle_right3.png", display);
 	turtleImages[7] = loadPNG("./img/turtle_right4.png", display);
+}
+
+void Turtle::setMoveDirection(Direction direction)
+{
+	movement.setDirection(direction);
 }
 
 void Turtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

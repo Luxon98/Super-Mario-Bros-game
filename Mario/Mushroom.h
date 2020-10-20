@@ -20,10 +20,10 @@ private:
 public:
 	Mushroom() = default;
 	Mushroom(Position position, bool oneUp);
+	static void loadMushroomImages(SDL_Surface* display);
 	bool isOneUp() const;
 	void decreasePositionY();
 	void setStepsUp(int stepsUp);
-	void loadMushroomImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };

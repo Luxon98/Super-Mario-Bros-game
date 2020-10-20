@@ -22,7 +22,7 @@ int Mushroom::computeImageIndex() const
 
 void Mushroom::makeMoveUp(World &world)
 {
-	int alignment = getAlignmentForVerticalMove(Direction::Down, movement.getVerticalSpeed(), *this, world);
+	int alignment = computeVerticalAlignment(Direction::Down, movement.getVerticalSpeed(), *this, world);
 	int verticalDistance = movement.getVerticalSpeed() - alignment;
 	position.setY(position.getY() - verticalDistance);
 }
@@ -36,6 +36,13 @@ Mushroom::Mushroom(Position position, bool oneUp)
 	this->oneUp = oneUp;
 	stepsUp = 0;
 	growCounter = 96;
+}
+
+void Mushroom::loadMushroomImages(SDL_Surface* display)
+{
+	mushroomImages[0] = loadPNG("./img/mushroom_red.png", display);
+	mushroomImages[1] = loadPNG("./img/mushroom_green.png", display);
+	mushroomImages[2] = loadPNG("./img/mushroom_brown_blue.png", display);
 }
 
 bool Mushroom::isOneUp() const
@@ -53,13 +60,6 @@ void Mushroom::setStepsUp(int stepsUp)
 	if (this->stepsUp == 0) {
 		this->stepsUp = stepsUp;
 	}
-}
-
-void Mushroom::loadMushroomImages(SDL_Surface* display)
-{
-	mushroomImages[0] = loadPNG("./img/mushroom_red.png", display);
-	mushroomImages[1] = loadPNG("./img/mushroom_green.png", display);
-	mushroomImages[2] = loadPNG("./img/mushroom_brown_blue.png", display);
 }
 
 void Mushroom::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

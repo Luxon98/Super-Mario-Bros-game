@@ -49,7 +49,7 @@ void RedTurtle::patrol(World &world)
 			makeDiagonalMove(world);
 		}
 		else {
-			int alignment = getAlignmentForHorizontalMove(movement.getDirection(), movement.getSpeed(), *this, world);
+			int alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
 			int distance = movement.getSpeed() - alignment;
 			if (movement.getDirection() == Direction::Left) {
 				distance *= -1;
@@ -95,6 +95,16 @@ RedTurtle::RedTurtle(Position position, bool flying)
 	}
 }
 
+void RedTurtle::loadTurtleImages(SDL_Surface* display)
+{
+	for (std::size_t i = 0; i < redTurtleImages.size(); ++i) {
+		std::string filename = "./img/red_turtle";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		redTurtleImages[i] = loadPNG(filename, display);
+	}
+}
+
 bool RedTurtle::isFlying() const
 {
 	return flying;
@@ -113,16 +123,6 @@ void RedTurtle::loseFlyingAbility()
 void RedTurtle::setMoveDirection(Direction direction)
 {
 	movement.setDirection(direction);
-}
-
-void RedTurtle::loadTurtleImages(SDL_Surface* display)
-{
-	for (std::size_t i = 0; i < redTurtleImages.size(); ++i) {
-		std::string filename = "./img/red_turtle";
-		filename += std::to_string(i + 1);
-		filename += ".png";
-		redTurtleImages[i] = loadPNG(filename, display);
-	}
 }
 
 void RedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

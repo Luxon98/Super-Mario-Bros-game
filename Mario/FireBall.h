@@ -24,8 +24,8 @@ private:
 public:
 	FireBall() = default;
 	FireBall(Position position, Direction direction);
+	static void loadFireBallImages(SDL_Surface* display);
 	bool shouldBeRemoved() const;
-	void loadFireBallImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };

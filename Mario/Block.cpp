@@ -57,6 +57,35 @@ Block::Block(BlockType type, Position position)
 	size = getSizeFromBlockType(type);
 	availableCoins = (type == BlockType::Monetary ? 10 : 0);
 	initialPositionY = position.getY();
+	collisionsFlag = (type != BlockType::BonusWithOneUpMushroom);
+}
+
+void Block::loadBlockImages(SDL_Surface* display)
+{
+	for (int i = 0; i < 5; ++i) {
+		std::string filename = "./img/block";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		blockImages[i] = loadPNG(filename, display);
+	}
+	blockImages[5] = loadPNG("./img/block5.png", display);
+	blockImages[6] = loadPNG("./img/block6.png", display);
+
+	for (int j = 7; j < 15; ++j) {
+		std::string filename = "./img/block";
+		filename += std::to_string(j);
+		filename += ".png";
+		blockImages[j] = loadPNG(filename, display);
+	}
+	blockImages[15] = loadPNG("./img/block14.png", display);
+	blockImages[16] = loadPNG("./img/block15.png", display);
+
+	for (int j = 17; j < 20; ++j) {
+		std::string filename = "./img/block";
+		filename += std::to_string(j - 1);
+		filename += ".png";
+		blockImages[j] = loadPNG(filename, display);
+	}
 }
 
 bool Block::hasCoins() const
@@ -67,6 +96,11 @@ bool Block::hasCoins() const
 bool Block::canBeHitted() const
 {
 	return (position.getY() == initialPositionY);
+}
+
+bool Block::canCollideWithMushrooms() const
+{
+	return collisionsFlag;
 }
 
 bool Block::isInvisible() const
@@ -112,34 +146,6 @@ void Block::addToPositionY(int y)
 	position.setY(position.getY() + y);
 }
 
-void Block::loadBlockImages(SDL_Surface* display)
-{
-	for (int i = 0; i < 5; ++i) {
-		std::string filename = "./img/block";
-		filename += std::to_string(i + 1);
-		filename += ".png";
-		blockImages[i] = loadPNG(filename, display);
-	}
-	blockImages[5] = loadPNG("./img/block5.png", display);
-	blockImages[6] = loadPNG("./img/block6.png", display);
-
-	for (int j = 7; j < 15; ++j) {
-		std::string filename = "./img/block";
-		filename += std::to_string(j);
-		filename += ".png";
-		blockImages[j] = loadPNG(filename, display);
-	}
-	blockImages[15] = loadPNG("./img/block14.png", display);
-	blockImages[16] = loadPNG("./img/block15.png", display);
-
-	for (int j = 17; j < 20; ++j) {
-		std::string filename = "./img/block";
-		filename += std::to_string(j - 1);
-		filename += ".png";
-		blockImages[j] = loadPNG(filename, display);
-	}
-}
-
 void Block::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
@@ -148,4 +154,3 @@ void Block::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) c
 		drawSurface(display, blockImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
-

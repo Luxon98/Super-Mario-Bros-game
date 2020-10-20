@@ -18,6 +18,7 @@ public:
 	int getY() const;
 	int getWidth() const;
 	int getHeight() const;
+	Position getPosition() const;
 	virtual void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const = 0;
 };
 

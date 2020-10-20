@@ -65,3 +65,8 @@ bool isMonsterCloseAboveBlock(const LivingObject& monster, const Block& block)
 
 	return false;
 }
+
+Direction determineDirection(const WorldObject &firstObject, const WorldObject &secondObject)
+{
+	return (firstObject.getX() <= secondObject.getX() ? Direction::Right : Direction::Left);
+}

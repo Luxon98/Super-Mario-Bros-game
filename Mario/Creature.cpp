@@ -39,11 +39,6 @@ Creature::Creature(Position position)
 	changeModelCounter = 0;
 }
 
-void Creature::setMoveDirection(Direction direction)
-{
-	movement.setDirection(direction);
-}
-
 void Creature::loadCreatureImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < creatureImages.size(); ++i) {
@@ -52,6 +47,11 @@ void Creature::loadCreatureImages(SDL_Surface* display)
 		filename += ".png";
 		creatureImages[i] = loadPNG(filename, display);
 	}
+}
+
+void Creature::setMoveDirection(Direction direction)
+{
+	movement.setDirection(direction);
 }
 
 void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

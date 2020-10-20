@@ -324,7 +324,7 @@ bool Player::isAbleToDestroyBlock() const
 
 void Player::moveLeft(World &world)
 {
-	int alignment = getAlignmentForHorizontalMove(Direction::Left, playerMovement.getSpeed(), *this, world);
+	int alignment = computeHorizontalAlignment(Direction::Left, playerMovement.getSpeed(), *this, world);
 	int distance = playerMovement.getSpeed() - alignment;
 
 	if (!isGoingBeyondCamera(distance)) {
@@ -343,7 +343,7 @@ void Player::moveLeft(World &world)
 
 void Player::moveRight(World &world)
 {
-	int alignment = getAlignmentForHorizontalMove(Direction::Right, playerMovement.getSpeed(), *this, world);
+	int alignment = computeHorizontalAlignment(Direction::Right, playerMovement.getSpeed(), *this, world);
 	int distance = playerMovement.getSpeed() - alignment;
 
 	position.setX(position.getX() + distance);
@@ -360,7 +360,7 @@ void Player::moveRight(World &world)
 
 void Player::moveUp(World &world)
 {
-	int alignment = getAlignmentForVerticalMove(Direction::Up, playerMovement.getVerticalSpeed(), *this, world);
+	int alignment = computeVerticalAlignment(Direction::Up, playerMovement.getVerticalSpeed(), *this, world);
 	int distance = playerMovement.getVerticalSpeed() - alignment;
 
 	if (!isHittingCeiling(distance)) {
@@ -385,7 +385,7 @@ void Player::moveUp(World &world)
 
 void Player::moveDown(World &world)
 {
-	int alignment = getAlignmentForVerticalMove(Direction::Down, playerMovement.getVerticalSpeed(), *this, world);
+	int alignment = computeVerticalAlignment(Direction::Down, playerMovement.getVerticalSpeed(), *this, world);
 	int distance = playerMovement.getVerticalSpeed() - alignment;
 
 	if (!isFallingIntoAbyss(distance)) {
@@ -402,7 +402,7 @@ void Player::moveDown(World &world)
 
 void Player::slide(World &world)
 {
-	int alignment = getAlignmentForVerticalMove(Direction::Down, playerMovement.getVerticalSpeed(), *this, world);
+	int alignment = computeVerticalAlignment(Direction::Down, playerMovement.getVerticalSpeed(), *this, world);
 	int distance = playerMovement.getVerticalSpeed() - alignment;
 	
 	if (distance == 0 && !flags.changeDirectionFlag) {
@@ -428,6 +428,18 @@ Player::Player(Position position)
 	currentAnimationState = PlayerAnimation::NoAnimation;
 	currentState = PlayerState::Small;
 	movementBlock = false;
+}
+
+void Player::loadPlayerImages(SDL_Surface* display)
+{
+	for (std::size_t i = 0; i < playerImages.size() / 2; ++i) {
+		std::string filename = "./img/mario_left";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		playerImages[i] = loadPNG(filename, display);
+		filename.replace(12, 4, "right");
+		playerImages[i + 70] = loadPNG(filename, display);
+	}
 }
 
 int Player::getPoints() const
@@ -545,18 +557,6 @@ void Player::setCamera(std::shared_ptr<Camera> camera)
 	this->camera = std::move(camera);
 }
 
-void Player::loadPlayerImages(SDL_Surface* display)
-{
-	for (std::size_t i = 0; i < playerImages.size() / 2; ++i) {
-		std::string filename = "./img/mario_left";
-		filename += std::to_string(i + 1);
-		filename += ".png";
-		playerImages[i] = loadPNG(filename, display);
-		filename.replace(12, 4, "right");
-		playerImages[i + 70] = loadPNG(filename, display);
-	}
-}
-
 void Player::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	int index = computeImageIndex();
@@ -629,13 +629,6 @@ void Player::move(World &world)
 			slide(world);
 		}
 		else {
-			if (playerMovement.stepsLeft > 0) {
-				moveLeft(world);
-			}
-			else if (playerMovement.stepsRight > 0) {
-				moveRight(world);
-			}
-
 			if (playerMovement.stepsUp > 0) {
 				moveUp(world);
 			}
@@ -643,9 +636,14 @@ void Player::move(World &world)
 				moveDown(world);
 			}
 
-			changeModelAndAirFlagStatus(world);
+			if (playerMovement.stepsLeft > 0) {
+				moveLeft(world);
+			}
+			else if (playerMovement.stepsRight > 0) {
+				moveRight(world);
+			}
 
-			collectCoinIfPossible(*this, world);
+			changeModelAndAirFlagStatus(world);
 		}
 	}
 }

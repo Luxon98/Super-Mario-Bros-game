@@ -22,3 +22,8 @@ int WorldObject::getHeight() const
 {
 	return size.getHeight();
 }
+
+Position WorldObject::getPosition() const
+{
+	return position;
+}

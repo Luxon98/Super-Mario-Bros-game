@@ -38,89 +38,46 @@
 
 void loadBonusObjectsImages(SDL_Surface* display)
 {
-	Flower tempFlower = Flower();
-	tempFlower.loadFlowerImages(display);
-
-	Mushroom tempMushroom = Mushroom();
-	tempMushroom.loadMushroomImages(display);
-
-	Star tempStar = Star();
-	tempStar.loadStarImages(display);
-
-	Coin tempCoin = Coin();
-	tempCoin.loadCoinImages(display);
+	Flower::loadFlowerImages(display);
+	Mushroom::loadMushroomImages(display);
+	Star::loadStarImages(display);
 }
 
 void loadInanimateObjectImages(SDL_Surface* display)
 {
-	Bush tempBush = Bush();
-	tempBush.loadBushImages(display);
-
-	Cloud tempCloud = Cloud();
-	tempCloud.loadCloudImages(display);
-
-	Castle tempCastle = Castle();
-	tempCastle.loadCastleImages(display);
-
-	Flag tempFlag = Flag();
-	tempFlag.loadFlagImages(display);
+	Coin::loadCoinImages(display);
+	Bush::loadBushImages(display);
+	Cloud::loadCloudImages(display);
+	Castle::loadCastleImages(display);
+	Flag::loadFlagImages(display);
 }
 
 void loadLivingObjectImages(SDL_Surface* display)
 {
-	Creature tempCreature = Creature();
-	tempCreature.loadCreatureImages(display);
-
-	Turtle tempTurtle = Turtle();
-	tempTurtle.loadTurtleImages(display);
-
-	RedTurtle tempRedTurtle = RedTurtle();
-	tempRedTurtle.loadTurtleImages(display);
-
-	Plant tempPlant = Plant();
-	tempPlant.loadPlantImages(display);
-
-	Shell tempShell = Shell();
-	tempShell.loadShellImage(display);
-
-	FireBall tempFireBall = FireBall();
-	tempFireBall.loadFireBallImages(display);
-
-	Player tempPlayer = Player();
-	tempPlayer.loadPlayerImages(display);
+	Creature::loadCreatureImages(display);
+	Turtle::loadTurtleImages(display);
+	RedTurtle::loadTurtleImages(display);
+	Plant::loadPlantImages(display);
+	Shell::loadShellImage(display);
+	FireBall::loadFireBallImages(display);
+	Player::loadPlayerImages(display);
 }
 
 void loadTemporaryObjectImages(SDL_Surface* display)
 {
-	CrushedCreature tempCrushedCreature = CrushedCreature();
-	tempCrushedCreature.loadCrushedCreatureImage(display);
-
-	DestroyedCreature tempDestroyedCreature = DestroyedCreature();
-	tempDestroyedCreature.loadDestroyedCreatureImage(display);
-
-	DestroyedTurtle tempDestroyedTurtle = DestroyedTurtle();
-	tempDestroyedTurtle.loadDestroyedTurtleImage(display);
-
-	Explosion tempExplosion = Explosion();
-	tempExplosion.loadExplosionImage(display);
-
-	Shards tempShards = Shards();
-	tempShards.loadShardsImages(display);
-
-	AnimatedCoin tempAnimatedCoin = AnimatedCoin();
-	tempAnimatedCoin.loadAnimatedCoinImages(display);
-
-	AnimatedText tempAnimatedText = AnimatedText();
-	tempAnimatedText.loadAnimatedTextImages(display);
+	CrushedCreature::loadCrushedCreatureImage(display);
+	DestroyedCreature::loadDestroyedCreatureImage(display);
+	DestroyedTurtle::loadDestroyedTurtleImage(display);
+	Explosion::loadExplosionImage(display);
+	Shards::loadShardsImages(display);
+	AnimatedCoin::loadAnimatedCoinImages(display);
+	AnimatedText::loadAnimatedTextImages(display);
 }
 
 void loadBlockImages(SDL_Surface* display)
 {
-	Block tempBlock = Block();
-	tempBlock.loadBlockImages(display);
-
-	MovingPlatform tempPlatform = MovingPlatform();
-	tempPlatform.loadPlatformImage(display);
+	Block::loadBlockImages(display);
+	MovingPlatform::loadPlatformImage(display);
 }
 
 void loadImages(SDL_Surface* display)

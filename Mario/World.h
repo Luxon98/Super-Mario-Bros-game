@@ -59,7 +59,6 @@ private:
 	void performWorldActions();
 	void slideTemporaryElements();
 	void slideBlock();
-	void raiseUpMushroom();
 	void addShards(Position position);
 	void performBlockSliding();
 	void subtractCoinFromBlock();

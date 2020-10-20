@@ -14,6 +14,12 @@ Flag::Flag(Position position)
 	stepsCounter = 0;
 }
 
+void Flag::loadFlagImages(SDL_Surface* display)
+{
+	flagImages[0] = loadPNG("./img/flag.png", display);
+	flagImages[1] = loadPNG("./img/stick.png", display);
+}
+
 bool Flag::isActive() const
 {
 	return active;
@@ -27,12 +33,6 @@ bool Flag::isDown() const
 void Flag::setActiveState()
 {
 	active = true;
-}
-
-void Flag::loadFlagImages(SDL_Surface* display)
-{
-	flagImages[0] = loadPNG("./img/flag.png", display);
-	flagImages[1] = loadPNG("./img/stick.png", display);
 }
 
 void Flag::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

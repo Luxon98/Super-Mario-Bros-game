@@ -24,10 +24,10 @@ private:
 public:
 	RedTurtle() = default;
 	RedTurtle(Position position, bool flying);
+	static void loadTurtleImages(SDL_Surface* display);
 	bool isFlying() const;
 	void loseFlyingAbility();
 	void setMoveDirection(Direction direction);
-	void loadTurtleImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };

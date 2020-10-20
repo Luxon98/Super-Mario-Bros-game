@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <cmath>
-#include <memory>
 #include "Player.h"
 #include "SoundController.h"
 #include "Block.h"
@@ -22,6 +21,7 @@
 #include "AnimatedText.h"
 #include "Screen.h"
 #include "UtilityFunctions.h"
+#include "WorldInteractionFunctions.h"
 
 
 bool isCharacterHittingObject(const WorldObject &figure, const WorldObject &block, Direction direction, int distance)
@@ -83,7 +83,7 @@ bool isMonsterStandingOnBlock(const LivingObject &monster, const Block &block)
 bool isMushroomStandingOnBlock(const World &world, const Block &block)
 {
 	std::vector<std::shared_ptr<BonusObject>> bonusElements = world.getBonusElements();
-	for (auto bonusElement : bonusElements) {
+	for (auto &bonusElement : bonusElements) {
 		if (std::dynamic_pointer_cast<Mushroom>(bonusElement)) {
 			if (isElementDirectlyAboveObject(*bonusElement, block) && areAtTheSameWidth(*bonusElement, block)) {
 				return true;
@@ -133,86 +133,136 @@ bool isPlayerJumpingOnMonster(const Player &player, const LivingObject &monster)
 	return (monster.getY() - player.getY() > 25);
 }
 
+bool isMushroomStandingOnBlock(const BonusObject &mushroom, const Block &block)
+{
+	return (isElementDirectlyAboveObject(mushroom, block) && areAtTheSameWidth(mushroom, block));
+}
+
+void handleJumpingOnShell(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
+{
+	if (std::dynamic_pointer_cast<Shell>(monster)->isActive()) {
+		world.changeShellMovementParameters(index, Direction::None);
+	}
+	else {
+		Direction direction = determineDirection(player, *monster);
+		world.changeShellMovementParameters(index, direction);
+	}
+}
+
+void handleJumpingOnTurtle(std::shared_ptr<LivingObject> monster, World& world, int index)
+{
+	world.addShell(Position((monster)->getX(), (monster)->getY() + 6));
+	world.deleteMonster(index);
+	SoundController::playEnemyDestroyedEffect();
+}
+
+void handleJumpingOnRedTurtle(std::shared_ptr<LivingObject> monster, World &world, int index)
+{
+	if (std::dynamic_pointer_cast<RedTurtle>(monster)->isFlying()) {
+		std::dynamic_pointer_cast<RedTurtle>(monster)->loseFlyingAbility();
+	}
+	else {
+		world.addShell(Position(monster->getX(), monster->getY() + 6), true);
+		world.deleteMonster(index);
+	}
+
+	SoundController::playEnemyDestroyedEffect();
+}
+
+void handleJumpingOnCreature(std::shared_ptr<LivingObject> monster, World& world, Player& player, int index)
+{
+	addTextAndPoints(player, world, 100, Position(monster->getX(), monster->getY() - 15));
+	world.addCrushedCreature(Position(monster->getX(), monster->getY() + 8));
+	world.deleteMonster(index);
+	SoundController::playEnemyDestroyedEffect();
+}
+
+void handleJumpingOnMonster(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
+{
+	player.performAdditionalJump();
+
+	if (std::dynamic_pointer_cast<Shell>(monster)) {
+		handleJumpingOnShell(monster, world, player, index);
+	}
+	else if (std::dynamic_pointer_cast<Turtle>(monster)) {
+		handleJumpingOnTurtle(monster, world, index);
+	}
+	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
+		handleJumpingOnRedTurtle(monster, world, index);
+	}
+	else if (std::dynamic_pointer_cast<Creature>(monster)) {
+		handleJumpingOnCreature(monster, world, player, index);
+	}
+}
+
+void handleImmortalPlayerCollisions(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
+{
+	int points = 200;
+	Direction direction = determineDirection(player, *monster);
+
+	if (std::dynamic_pointer_cast<Turtle>(monster) || (std::dynamic_pointer_cast<Shell>(monster)
+		&& std::dynamic_pointer_cast<Shell>(monster)->isActive())) {
+
+		world.addDestroyedTurtle(monster->getPosition(), direction);
+	}
+	else if (std::dynamic_pointer_cast<Creature>(monster)) {
+		world.addDestroyedCreature(monster->getPosition(), direction);
+		points = 100;
+	}
+	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
+		world.addDestroyedTurtle(monster->getPosition(), direction, true);
+	}
+
+	addTextAndPoints(player, world, points, Position(monster->getX(), monster->getY() - 15));
+	world.deleteMonster(index);
+	SoundController::playEnemyDestroyedEffect();
+}
+
+void handlePlayerAndMonstersCollisions(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
+{
+	if (std::dynamic_pointer_cast<Shell>(monster) && !(std::dynamic_pointer_cast<Shell>(monster)->isActive())) {
+		Direction direction = determineDirection(player, *monster);
+		world.changeShellMovementParameters(index, direction);
+		return;
+	}
+
+	if (player.isImmortal()) {
+		handleImmortalPlayerCollisions(monster, world, player, index);
+	}
+	else if (!player.isInsensitive()) {
+		player.loseBonusOrLife();
+	}
+}
+
 void handlePlayerCollisions(Player &player, World &world)
 {
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
-	int i = 0;
-	for (auto it = monsters.begin(); it != monsters.end(); ++it, ++i) {
+	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it)) {
 			if (isPlayerJumpingOnMonster(player, **it) && !std::dynamic_pointer_cast<Plant>(*it)) {
-				player.performAdditionalJump();
-
-				if (std::dynamic_pointer_cast<Shell>(*it)) {
-					if (std::dynamic_pointer_cast<Shell>(*it)->isActive()) {
-						world.changeShellMovementParameters(i, Direction::None);
-					}
-					else {
-						Direction direction = (player.getX() >= std::dynamic_pointer_cast<Shell>(*it)->getX()
-							? Direction::Left : Direction::Right);
-
-						world.changeShellMovementParameters(i, direction);
-					}
-					break;
-				}
-
-				if (std::dynamic_pointer_cast<Turtle>(*it)) {
-					world.addShell(Position((*it)->getX(), (*it)->getY() + 6));
-				}
-				else if (std::dynamic_pointer_cast<RedTurtle>(*it)) {
-					if (std::dynamic_pointer_cast<RedTurtle>(*it)->isFlying()) {
-						std::dynamic_pointer_cast<RedTurtle>(*it)->loseFlyingAbility();
-						return;
-					}
-					else {
-						world.addShell(Position((*it)->getX(), (*it)->getY() + 6), true);
-					}
-				}
-				else if (std::dynamic_pointer_cast<Creature>(*it)) {
-					world.addCrushedCreature(Position(std::dynamic_pointer_cast<Creature>(*it)->getX(),
-						std::dynamic_pointer_cast<Creature>(*it)->getY() + 8));
-				}
-
-				player.addPoints(100);
-				world.addAnimatedText(TextType::ONE_HUNDRED, Position(player.getX() - 22, player.getY() - 22));
-				world.deleteMonster(i);
-				SoundController::playEnemyDestroyedEffect();
+				handleJumpingOnMonster(*it, world, player, it - monsters.begin());
 			}
 			else {
-				if (std::dynamic_pointer_cast<Shell>(*it) && !(std::dynamic_pointer_cast<Shell>(*it)->isActive())) {
-					Direction direction = (player.getX() >= std::dynamic_pointer_cast<Shell>(*it)->getX()
-						? Direction::Left : Direction::Right);
-
-					world.changeShellMovementParameters(i, direction);
-					break;
-				}
-
-				if (player.isImmortal()) {
-					if (std::dynamic_pointer_cast<Turtle>(*it) || (std::dynamic_pointer_cast<Shell>(*it)
-						&& std::dynamic_pointer_cast<Shell>(*it)->isActive())) {
-
-						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
-						world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()), direction);
-					}
-					else if (std::dynamic_pointer_cast<Creature>(*it)) {
-						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
-						world.addDestroyedCreature(Position((*it)->getX(), (*it)->getY()), direction);
-					}
-					else if (std::dynamic_pointer_cast<RedTurtle>(*it)) {
-						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
-						world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()), direction, true);
-					}
-
-					player.addPoints(100);
-					world.addAnimatedText(TextType::ONE_HUNDRED, Position(player.getX() - 22, player.getY() - 22));
-					world.deleteMonster(i);
-					SoundController::playEnemyDestroyedEffect();
-				}
-				else if (!player.isInsensitive()) {
-					player.loseBonusOrLife();
-				}
+				handlePlayerAndMonstersCollisions(*it, world, player, it - monsters.begin());
 			}
 			break;
 		}
+	}
+}
+
+void handleShellCollisions(const LivingObject &shell, std::shared_ptr<LivingObject> monster, World &world, int * pts)
+{
+	Direction direction = determineDirection(shell, *monster);
+
+	if (std::dynamic_pointer_cast<Creature>(monster)) {
+		world.addDestroyedCreature(monster->getPosition(), direction);
+		*pts = 100;
+	}
+	else if (std::dynamic_pointer_cast<Turtle>(monster) || std::dynamic_pointer_cast<Shell>(monster)) {
+		world.addDestroyedTurtle(monster->getPosition(), direction);
+	}
+	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
+		world.addDestroyedTurtle(monster->getPosition(), direction, true);
 	}
 }
 
@@ -221,157 +271,115 @@ void handleShellsAndMonstersCollisions(World &world, Player &player)
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if (std::dynamic_pointer_cast<Shell>(*it) && std::dynamic_pointer_cast<Shell>(*it)->isActive()) {
-			int i = 0;
-			for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2, ++i) {
+			for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
 				if (!(std::dynamic_pointer_cast<Shell>(*it2)) && (areAtTheSameWidth(**it, **it2)
 					&& areAtTheSameHeight(**it, **it2))) {
 
-					if (std::dynamic_pointer_cast<Creature>(*it2)) {
-						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
-						world.addDestroyedCreature(Position((*it2)->getX(), (*it2)->getY()), direction);
-					}
-					else if (std::dynamic_pointer_cast<Turtle>(*it2) || std::dynamic_pointer_cast<Shell>(*it2)) {
-						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
-						world.addDestroyedTurtle(Position((*it2)->getX(), (*it2)->getY()), direction);
-					}
-					else if (std::dynamic_pointer_cast<RedTurtle>(*it2)) {
-						Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
-						world.addDestroyedTurtle(Position((*it2)->getX(), (*it2)->getY()), direction, true);
-					}
+					int points = 200;
+					handleShellCollisions(**it, *it2, world, &points);
 
-					world.deleteMonster(i);
+					world.deleteMonster(it2 - monsters.begin());
+					addTextAndPoints(player, world, points, (*it2)->getPosition());
 					SoundController::playEnemyDestroyedEffect();
-					player.addPoints(200);
-					world.addAnimatedText(TextType::TWO_HUNDRED, Position((*it)->getX() - 20, (*it)->getY() - 15));
 				}
 			}
 		}
 	}
+}
+
+void handleFireBallCollision(const FireBall &fireball, std::shared_ptr<LivingObject> monster, World &world, int * pts)
+{
+	Direction direction = fireball.getMovement().getDirection();
+	int alignment = (direction == Direction::Left ? -5 : 5);
+
+	if (std::dynamic_pointer_cast<Creature>(monster)) {
+		world.addDestroyedCreature(Position(monster->getX() + alignment, monster->getY()), direction);
+		*pts = 100;
+	}
+	else if (std::dynamic_pointer_cast<Turtle>(monster) || std::dynamic_pointer_cast<Shell>(monster)) {
+		world.addDestroyedTurtle(Position((monster)->getX() + alignment, (monster)->getY()), direction);
+	}
+	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
+		world.addDestroyedTurtle(Position(monster->getX() + alignment, monster->getY()), direction, true);
+	}
+}
+
+void handleMonsterDestruction(const FireBall &fireball, World &world, int fireballIndex, int monsterIndex)
+{
+	int alignment = (fireball.getMovement().getDirection() == Direction::Left ? -5 : 5);
+
+	world.deleteFireBall(fireballIndex);
+	world.deleteMonster(monsterIndex);
+	world.addExplosion(Position(fireball.getX() + alignment, fireball.getY()));
 }
 
 void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 {
 	std::vector<FireBall> fireballs = world.getFireBalls();
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
-	int i = 0;
-	for (auto it = fireballs.begin(); it != fireballs.end(); ++it, ++i) {
-		int j = 0;
-		for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2, ++j) {
+	int index = 0;
+	for (auto it = fireballs.begin(); it != fireballs.end(); ++it, ++index) {
+		for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
 			if (areAtTheSameWidth(*it, **it2) && areAtTheSameHeight(*it, **it2)) {
-				int alignment = (fireballs[i].getMovement().getDirection() == Direction::Left ? -5 : 5);
-
-				if (std::dynamic_pointer_cast<Creature>(*it2)) {
-					Direction direction = (player.getX() <= (*it2)->getX() ? Direction::Right : Direction::Left);
-					world.addDestroyedCreature(Position((*it2)->getX() + alignment, (*it2)->getY()), direction);
-				}
-				else if (std::dynamic_pointer_cast<Turtle>(*it2) || std::dynamic_pointer_cast<Shell>(*it2)) {
-					Direction direction = (player.getX() <= (*it2)->getX() ? Direction::Right : Direction::Left);
-					world.addDestroyedTurtle(Position((*it2)->getX() + alignment, (*it2)->getY()), direction);
-				}
-				else if (std::dynamic_pointer_cast<RedTurtle>(*it2)) {
-					Direction direction = (player.getX() <= (*it2)->getX() ? Direction::Right : Direction::Left);
-					world.addDestroyedTurtle(Position((*it2)->getX() + alignment, (*it2)->getY()), direction, true);
-				}
-
-				world.deleteMonster(j);
+				int points = 200;
+				handleFireBallCollision(fireballs[index], *it2, world, &points);
+				handleMonsterDestruction(fireballs[index], world, index, it2 - monsters.begin());
+				
+				addTextAndPoints(player, world, points, Position((*it2)->getX(), (*it2)->getY() - 15));
 				SoundController::playEnemyDestroyedEffect();
-
-				player.addPoints(100);
-				world.addAnimatedText(TextType::ONE_HUNDRED, Position(fireballs[i].getX() - 22,
-					fireballs[i].getY() - 22));
-
-				world.addExplosion(Position(it->getX(), it->getY()));
-				world.deleteFireBall(i);
 			}
 		}
 	}
 }
 
-void handleMonstersAndBlockCollisions(World &world, const Block &block, Player &player)
+void handleMonsterDestruction(const Block &block, std::shared_ptr<LivingObject> monster, World &world, int * pts)
+{
+	Direction direction = determineDirection(block, *monster);
+
+	if (std::dynamic_pointer_cast<Creature>(monster)) {
+		world.addDestroyedCreature(monster->getPosition(), direction);
+		*pts = 100;
+	}
+	else if (std::dynamic_pointer_cast<Turtle>(monster)) {
+		world.addDestroyedTurtle(monster->getPosition(), direction);
+	}
+	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
+		world.addDestroyedTurtle(monster->getPosition(), direction, true);
+	}
+}
+
+void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &player)
 {
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
-	int i = 0;
-	for (auto it = monsters.begin(); it != monsters.end(); ++it, ++i) {
+	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if (isMonsterStandingOnBlock(**it, block)) {
-			if (std::dynamic_pointer_cast<Creature>(*it)) {
-				Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
-				world.addDestroyedCreature(Position((*it)->getX(), (*it)->getY()), direction);
-			}
-			else if (std::dynamic_pointer_cast<Turtle>(*it)) {
-				Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
-				world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()), direction);
-			}
-			else if (std::dynamic_pointer_cast<RedTurtle>(*it)) {
-				Direction direction = (player.getX() <= (*it)->getX() ? Direction::Right : Direction::Left);
-				world.addDestroyedTurtle(Position((*it)->getX(), (*it)->getY()), direction, true);
-			}
-
-			player.addPoints(100);
-			world.addAnimatedText(TextType::ONE_HUNDRED, Position((*it)->getX(), (*it)->getY() - 15));
-			world.deleteMonster(i);
+			int points = 200;
+			handleMonsterDestruction(block, *it, world, &points);
+		
+			addTextAndPoints(player, world, points, Position((*it)->getX(), (*it)->getY() - 15));
+			world.deleteMonster(it - monsters.begin());
 			SoundController::playEnemyDestroyedEffect();
 		}
 	}
 }
 
-void collectCoinIfPossible(Player &player, World &world)
+void handleBlockAndMushroomsCollisions(World &world, const Block &block)
 {
-	std::vector<std::shared_ptr<InanimateObject>> elements = world.getInanimateElements();
-	int i = 0;
-	for (auto it = elements.begin(); it != elements.end(); ++it, ++i) {
-		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it)) {
-			if (std::dynamic_pointer_cast<Coin>(*it)) {
-				player.incrementCoins();
-				world.deleteCoin(i);
-				SoundController::playCoinCollectedEffect();
-				return;
+	std::vector<std::shared_ptr<BonusObject>> bonusElements = world.getBonusElements();
+	for (auto &bonusElement : bonusElements) {
+		if (std::dynamic_pointer_cast<Mushroom>(bonusElement)) {
+			if (isMushroomStandingOnBlock(*bonusElement, block) && block.canCollideWithMushrooms()) {
+				std::dynamic_pointer_cast<Mushroom>(bonusElement)->decreasePositionY();
+				std::dynamic_pointer_cast<Mushroom>(bonusElement)->setStepsUp(30);
 			}
 		}
 	}
 }
 
-void collectMushroom(Mushroom &mushroom, int index, Player &player, World &world)
+void handleBlockCollisions(World &world, const Block &block, Player &player)
 {
-	if (!mushroom.isOneUp()) {
-		if (player.isSmall()) {
-			player.setCurrentAnimation(PlayerAnimation::Growing);
-		}
-		SoundController::playBonusCollectedEffect();
-	}
-	else {
-		player.incrementLives();
-		SoundController::playNewLiveAddedEffect();
-	}
-
-	TextType type = (!mushroom.isOneUp() ? TextType::ONE_THOUSAND : TextType::ONE_UP);
-	world.addAnimatedText(type, Position(player.getX(), player.getY() - 20));
-	world.deleteLivingElement(index);
-	player.addPoints(1000);
-}
-
-void collectFlower(Player &player, World &world)
-{
-	if (player.isSmall()) {
-		player.setCurrentAnimation(PlayerAnimation::Growing);
-	}
-	else if (!player.isImmortal() && !player.isArmed()) {
-		player.setCurrentAnimation(PlayerAnimation::Arming);
-	}
-
-	SoundController::playBonusCollectedEffect();
-}
-
-void collectStar(Player &player, World &world)
-{
-	if (player.isSmall()) {
-		player.setCurrentAnimation(PlayerAnimation::ImmortalSmall);
-	}
-	else {
-		player.setCurrentAnimation(PlayerAnimation::Immortal);
-	}
-	player.increaseSpeed();
-
-	SoundController::playStarMusic();
+	handleBlockAndMonstersCollisions(world, block, player);
+	handleBlockAndMushroomsCollisions(world, block);
 }
 
 void collectBonusIfPossible(Player &player, World &world)
@@ -381,103 +389,141 @@ void collectBonusIfPossible(Player &player, World &world)
 	for (auto it = elements.begin(); it != elements.end(); ++it, ++i) {
 		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it) && (*it)->isActive()) {
 			if (std::dynamic_pointer_cast<Mushroom>(*it)) {
-				collectMushroom(dynamic_cast<Mushroom&>(**it), i, player, world);
-				break;
+				collectMushroom(player, world, dynamic_cast<Mushroom&>(**it), i);
 			}
 			else if (std::dynamic_pointer_cast<Flower>(*it)) {
-				collectFlower(player, world);
+				collectFlower(player, world, i);
 			}
 			else if (std::dynamic_pointer_cast<Star>(*it)) {
-				collectStar(player, world);
+				collectStar(player, world, i);
 			}
-
-			world.deleteLivingElement(i);
-			player.addPoints(1000);
-			world.addAnimatedText(TextType::ONE_THOUSAND, Position(player.getX(), player.getY() - 20));
 		}
 	}
 }
 
-int getAlignmentForHorizontalMove(Direction direction, int distance, const WorldObject &object, const World &world)
+void collectCoinIfPossible(Player &player, World &world)
 {
-	std::vector<Block> blocks = world.getBlocks();
+	std::vector<std::shared_ptr<InanimateObject>> elements = world.getInanimateElements();
+	for (auto it = elements.begin(); it != elements.end(); ++it) {
+		if (std::dynamic_pointer_cast<Coin>(*it) && (areAtTheSameWidth(player, **it) 
+			&& areAtTheSameHeight(player, **it))) {
+			
+			collectCoin(player, world, it - elements.begin());
+			return;
+		}
+	}
+}
+
+void handleBonusCollecting(Player &player, World &world)
+{
+	collectCoinIfPossible(player, world);
+	collectBonusIfPossible(player, world);
+}
+
+int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject& object, const World& world)
+{
 	int alignment = 0;
+	std::vector<Block> blocks = world.getBlocks();
+	
 	for (auto &block : blocks) {
 		if (areAtTheSameHeight(object, block) && isCharacterHittingObject(object, block, direction, distance)
 			&& !block.isInvisible()) {
 
-			if ((object.getX() + distance + object.getWidth() / 2) - (block.getX() - block.getWidth() / 2) > alignment
-				&& direction == Direction::Right) {
-
+			if (direction == Direction::Right) {
 				alignment = (object.getX() + distance + object.getWidth() / 2) - (block.getX() - block.getWidth() / 2);
 			}
-			else if ((block.getX() + block.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2)
-				> alignment && direction == Direction::Left) {
-
+			else if (direction == Direction::Left) {
 				alignment = (block.getX() + block.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2);
 			}
+			break;
 		}
 	}
 
-	if (alignment == 0) {
-		std::vector<MovingPlatform> platforms = world.getPlatforms();
-		for (auto &platform : platforms) {
-			if (areAtTheSameHeight(object, platform) && isCharacterHittingObject(object, platform, direction, distance)) {
-				if ((object.getX() + distance + object.getWidth() / 2) - (platform.getX() - platform.getWidth() / 2) > alignment
-					&& direction == Direction::Right) {
-
-					alignment = (object.getX() + distance + object.getWidth() / 2) - (platform.getX() - platform.getWidth() / 2);
-				}
-				else if ((platform.getX() + platform.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2)
-				> alignment && direction == Direction::Left) {
-
-					alignment = (platform.getX() + platform.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2);
-				}
-			}
-		}
-	}
-
-	return alignment;
+	return (alignment > 0 ? alignment : 0);
 }
 
-// this method additionaly set the last touched block
-int getAlignmentForVerticalMove(Direction direction, int distance, const WorldObject &object, World &world)
+int getHorizontalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject& object, const World& world)
 {
-	std::vector<Block> blocks = world.getBlocks();
 	int alignment = 0;
+	std::vector<MovingPlatform> platforms = world.getPlatforms();
+
+	for (auto &platform : platforms) {
+		if (areAtTheSameHeight(object, platform) && isCharacterHittingObject(object, platform, direction, distance)) {
+			if (direction == Direction::Right) {
+				alignment = (object.getX() + distance + object.getWidth() / 2) - (platform.getX() - platform.getWidth() / 2);
+			}
+			else if (direction == Direction::Left) {
+				alignment = (platform.getX() + platform.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2);
+			}
+			break;
+		}
+	}
+
+	return (alignment > 0 ? alignment : 0);
+}
+
+int computeHorizontalAlignment(Direction direction, int distance, const WorldObject &object, const World &world)
+{
+	int firstAlignment = getHorizontalAlignmentForCollisionWithBlocks(direction, distance, object, world);
+	int secondAlignment = getHorizontalAlignmentForCollisionWithPlatforms(direction, distance, object, world);
+
+	return (firstAlignment >= secondAlignment ? firstAlignment : secondAlignment);
+}
+
+// this method additionaly set the last touched block's index
+int getVerticalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject &object, World &world)
+{
+	int alignment = 0;
+	std::vector<Block> blocks = world.getBlocks();
+
 	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
 		if (areAtTheSameWidth(object, *it) && isCharacterHittingObject(object, *it, direction, distance)) {
-			if ((it->getY() + it->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2)
-				> alignment && direction == Direction::Up) {
-
-				world.setLastTouchedBlock(it - blocks.begin());	// 
+			if (direction == Direction::Up) {
 				alignment = (it->getY() + it->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2);
-			}
-			else if ((object.getY() + distance + object.getHeight() / 2) - (it->getY() - it->getHeight() / 2)
-				> alignment && direction == Direction::Down && !it->isInvisible()) {
 
+				if (alignment > 0) {
+					world.setLastTouchedBlock(it - blocks.begin());	// 
+				}
+			}
+			else if ( direction == Direction::Down && !it->isInvisible()) {
 				alignment = (object.getY() + distance + object.getHeight() / 2) - (it->getY() - it->getHeight() / 2);
 			}
+			break;
 		}
 	}
 
-	if (alignment == 0) {
-		std::vector<MovingPlatform> platforms = world.getPlatforms();
-		for (auto it2 = platforms.begin(); it2 != platforms.end(); ++it2) {
-			if (areAtTheSameWidth(object, *it2) && isCharacterHittingObject(object, *it2, direction, distance)) {
-				if ((it2->getY() + it2->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2)
-				> alignment && direction == Direction::Up) {
+	return (alignment > 0 ? alignment : 0);
+}
 
-					alignment = (it2->getY() + it2->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2);
-				}
-				else if ((object.getY() + distance + object.getHeight() / 2) - (it2->getY() - it2->getHeight() / 2)
-				> alignment && direction == Direction::Down) {
+// this method additionaly set the last touched block's index to -1
+int getVerticalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject &object, World &world)
+{
+	int alignment = 0;
+	std::vector<MovingPlatform> platforms = world.getPlatforms();
 
-					alignment = (object.getY() + distance + object.getHeight() / 2) - (it2->getY() - it2->getHeight() / 2);
+	for (auto it = platforms.begin(); it != platforms.end(); ++it) {
+		if (areAtTheSameWidth(object, *it) && isCharacterHittingObject(object, *it, direction, distance)) {
+			if (direction == Direction::Up) {
+				alignment = (it->getY() + it->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2);
+
+				if (alignment > 0) {
+					world.setLastTouchedBlock(-1);	// 
 				}
 			}
+			else if (direction == Direction::Down) {
+				alignment = (object.getY() + distance + object.getHeight() / 2) - (it->getY() - it->getHeight() / 2);
+			}
+			break;
 		}
 	}
 
-	return alignment;
+	return (alignment > 0 ? alignment : 0);
+}
+
+int computeVerticalAlignment(Direction direction, int distance, const WorldObject &object, World &world)
+{
+	int firstAlignment = getVerticalAlignmentForCollisionWithBlocks(direction, distance, object, world);
+	int secondAlignment = getVerticalAlignmentForCollisionWithPlatforms(direction, distance, object, world);
+
+	return (firstAlignment >= secondAlignment ? firstAlignment : secondAlignment);
 }

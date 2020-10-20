@@ -45,14 +45,14 @@ MovingPlatform::MovingPlatform(Position position, Direction direction)
 	slideCounter = 0;
 }
 
-Direction MovingPlatform::getDirection()
-{
-	return direction;
-}
-
 void MovingPlatform::loadPlatformImage(SDL_Surface* display)
 {
 	platformImage = loadPNG("./img/platform.png", display);
+}
+
+Direction MovingPlatform::getDirection() const
+{
+	return direction;
 }
 
 void MovingPlatform::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

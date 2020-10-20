@@ -21,8 +21,8 @@ private:
 public:
 	Creature() = default;
 	Creature(Position position);
+	static void loadCreatureImages(SDL_Surface* display);
 	void setMoveDirection(Direction direction);
-	void loadCreatureImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };

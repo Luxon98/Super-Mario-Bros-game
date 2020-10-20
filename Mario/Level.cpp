@@ -229,6 +229,13 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
 
+	if (bonusLifeBlockFlag) {
+		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2864, 80)));
+	}
+	else {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(2864, 80)));
+	}
+
 	for (int i = 0; i < 2560; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 464)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 432)));
@@ -311,10 +318,6 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 		if (i != 2848) {
 			world.blocks.push_back(Block(BlockType::Destructible, Position(i + 16, 80)));
 		}
-	}
-
-	if (bonusLifeBlockFlag) {
-		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2864, 80)));
 	}
 
 	for (int i = 0; i < 3; ++i) {

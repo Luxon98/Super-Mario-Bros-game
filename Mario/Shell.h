@@ -23,11 +23,11 @@ private:
 public:
 	Shell() = default;
 	Shell(Position position, bool red = false);
+	static void loadShellImage(SDL_Surface* display);
 	bool isActive() const;
 	bool shouldTurnIntoTurtle() const;
 	void setMovementDirectionAndActiveState(Direction direction);
 	void resetCreationTime();
-	void loadShellImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };

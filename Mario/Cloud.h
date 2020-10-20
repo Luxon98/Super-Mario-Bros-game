@@ -16,7 +16,7 @@ private:
 public:
 	Cloud() = default;
 	Cloud(int type, Position position);
-	void loadCloudImages(SDL_Surface* display);
+	static void loadCloudImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 

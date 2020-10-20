@@ -32,6 +32,16 @@ Shell::Shell(Position position, bool red)
 	active = false;
 }
 
+void Shell::loadShellImage(SDL_Surface* display)
+{
+	for (std::size_t i = 0; i < shellImages.size(); ++i) {
+		std::string filename = "./img/shell";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		shellImages[i] = loadPNG(filename, display);
+	}
+}
+
 bool Shell::isActive() const
 {
 	return active;
@@ -56,17 +66,6 @@ void Shell::setMovementDirectionAndActiveState(Direction direction)
 void Shell::resetCreationTime()
 {
 	creationTime = std::chrono::steady_clock::now();
-}
-
-
-void Shell::loadShellImage(SDL_Surface* display)
-{
-	for (std::size_t i = 0; i < shellImages.size(); ++i) {
-		std::string filename = "./img/shell";
-		filename += std::to_string(i + 1);
-		filename += ".png";
-		shellImages[i] = loadPNG(filename, display);
-	}
 }
 
 void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

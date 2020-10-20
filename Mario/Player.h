@@ -115,6 +115,7 @@ private:
 public:
 	Player() = default;
 	Player(Position position);
+	static void loadPlayerImages(SDL_Surface* display);
 	int getPoints() const;
 	int getCoins() const;
 	int getLives() const;
@@ -132,7 +133,6 @@ public:
 	void addPoints(int pts);
 	void setCurrentAnimation(PlayerAnimation animation);
 	void setCamera(std::shared_ptr<Camera> camera);
-	void loadPlayerImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void forceMovement(Direction direction);
 	void hitBlock(World &world);

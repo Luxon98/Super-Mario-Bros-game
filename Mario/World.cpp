@@ -214,10 +214,6 @@ void World::slideBlock()
 		if (hasLastTouchedBlockCoin()) {
 			subtractCoinFromBlock();
 		}
-
-		if (isMushroomStandingOnBlock(*this, blocks[lastTouchedBlockIndex])) {
-			raiseUpMushroom();
-		}
 	}
 
 	performBlockSliding();
@@ -228,22 +224,6 @@ void World::slideBlock()
 		}
 
 		slideBlockStatus = true;
-	}
-}
-
-void World::raiseUpMushroom()
-{
-	for (auto &bonusElement : bonusElements) {
-		if (std::dynamic_pointer_cast<Mushroom>(bonusElement)) {
-			if ((bonusElement->getY() + bonusElement->getHeight() / 2) ==
-				blocks[lastTouchedBlockIndex].getY() - blocks[lastTouchedBlockIndex].getHeight() / 2
-				&& areAtTheSameWidth(*bonusElement, blocks[lastTouchedBlockIndex])) {
-
-				std::dynamic_pointer_cast<Mushroom>(bonusElement)->decreasePositionY();
-				std::dynamic_pointer_cast<Mushroom>(bonusElement)->setStepsUp(30);
-				return;
-			}
-		}
 	}
 }
 
@@ -264,7 +244,7 @@ void World::performBlockSliding()
 		}
 	}
 
-	handleMonstersAndBlockCollisions(*this, blocks[lastTouchedBlockIndex], *player);
+	handleBlockCollisions(*this, blocks[lastTouchedBlockIndex], *player);
 }
 
 void World::subtractCoinFromBlock()
@@ -426,10 +406,12 @@ void World::setLastTouchedBlock(int index)
 
 void World::hitBlock()
 {
-	if ((blocks[lastTouchedBlockIndex].getType() >= BlockType::Destructible && blocks[lastTouchedBlockIndex].getType()
-		<= BlockType::BonusWithStar) && blocks[lastTouchedBlockIndex].canBeHitted()) {
+	if (lastTouchedBlockIndex != -1) {
+		if ((blocks[lastTouchedBlockIndex].getType() >= BlockType::Destructible && blocks[lastTouchedBlockIndex].getType()
+			<= BlockType::BonusWithStar) && blocks[lastTouchedBlockIndex].canBeHitted()) {
 
-		slidingCounter = SLIDING_BLOCK_VALUE;
+			slidingCounter = SLIDING_BLOCK_VALUE;
+		}
 	}
 }
 
@@ -461,7 +443,7 @@ void World::resetImages()
 void World::destroyLastTouchedBlock()
 {
 	addShards(Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY()));
-	handleMonstersAndBlockCollisions(*this, blocks[lastTouchedBlockIndex], *player);
+	handleBlockCollisions(*this, blocks[lastTouchedBlockIndex], *player);
 	blocks.erase(blocks.begin() + lastTouchedBlockIndex);
 	player->addPoints(50);
 
@@ -526,7 +508,7 @@ void World::performActions()
 		deleteTemporaryElements();
 		slideTemporaryElements();
 
-		collectBonusIfPossible(*player, *this);
+		handleBonusCollecting(*player, *this);
 		handleShellsAndMonstersCollisions(*this, *player);
 		handleFireBallsAndMonstersCollisions(*this, *player);
 
