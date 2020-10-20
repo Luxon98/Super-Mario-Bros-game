@@ -5,7 +5,7 @@
 #include "Position.h"
 
 
-void IndependentLivingObject::makeHorizontalMove(World &world)
+void IndependentLivingObject::moveHorizontally(World &world)
 {
 	int alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
 	int distance = movement.getSpeed() - alignment;
@@ -19,7 +19,7 @@ void IndependentLivingObject::makeHorizontalMove(World &world)
 	}
 }
 
-void IndependentLivingObject::makeDiagonalMove(World &world)
+void IndependentLivingObject::moveDiagonally(World &world)
 {
 	int alignment = computeVerticalAlignment(Direction::Down, movement.getVerticalSpeed(), *this, world);
 	int verticalDistance = movement.getVerticalSpeed() - alignment;

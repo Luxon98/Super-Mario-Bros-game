@@ -14,7 +14,7 @@ private:
 	static std::array<SDL_Surface*, 3> mushroomImages;
 	bool oneUp;
 	int stepsUp;
-	int computeImageIndex() const;
+	int computeImageIndex() const override;
 	void makeMoveUp(World &world);
 
 public:

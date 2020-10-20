@@ -14,6 +14,7 @@ protected:
 	int stepsCounter;
 	int changeModelCounter;
 	Movement movement;
+	virtual int computeImageIndex() const = 0;
 
 public:
 	Movement getMovement() const;

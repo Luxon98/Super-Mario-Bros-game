@@ -6,7 +6,7 @@
 
 std::array<SDL_Surface*, 3> Explosion::explosionImages;
 
-int Explosion::computeIndex() const
+int Explosion::computeImageIndex() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
 	if (creationTime + std::chrono::milliseconds(60) >= timePoint) {
@@ -39,7 +39,7 @@ void Explosion::loadExplosionImage(SDL_Surface* display)
 void Explosion::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 50 && position.getX() < endOfCamera + 50) {
-		SDL_Surface* explosionImg = explosionImages[computeIndex()];
+		SDL_Surface* explosionImg = explosionImages[computeImageIndex()];
 		drawSurface(display, explosionImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

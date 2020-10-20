@@ -11,9 +11,10 @@
 
 std::array<SDL_Surface*, 4> Plant::plantImages;
 
-int Plant::computeBaseIndex() const
+int Plant::computeImageIndex() const
 {
-	return (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
+	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
+	return baseIndex + (model - 1);
 }
 
 void Plant::slide(World &world)
@@ -65,9 +66,7 @@ void Plant::loadPlantImages(SDL_Surface* display)
 void Plant::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 75 && position.getX() < endOfCamera + 75) {
-		SDL_Surface* plantImg = nullptr;
-		int baseIndex = computeBaseIndex();
-		plantImg = plantImages[baseIndex + (model - 1)];
+		SDL_Surface* plantImg = plantImages[computeImageIndex()];
 		drawSurface(display, plantImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

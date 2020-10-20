@@ -11,14 +11,17 @@
 
 std::array<SDL_Surface*, 6> RedTurtle::redTurtleImages;
 
-int RedTurtle::computeIndex() const
+int RedTurtle::computeImageIndex() const
 {
+	int baseIndex;
 	if (flying) {
-		return 4;
+		baseIndex = 4;
 	}
 	else {
-		return (movement.getDirection() == Direction::Left ? 0 : 2);
+		baseIndex = (movement.getDirection() == Direction::Left ? 0 : 2);
 	}
+
+	return baseIndex + (model - 1);
 }
 
 void RedTurtle::fly()
@@ -46,7 +49,7 @@ void RedTurtle::patrol(World &world)
 	++stepsCounter;
 	if (stepsCounter % 3 == 0) {
 		if (!isCharacterStandingOnSomething(*this, world)) {
-			makeDiagonalMove(world);
+			moveDiagonally(world);
 		}
 		else {
 			int alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
@@ -128,8 +131,7 @@ void RedTurtle::setMoveDirection(Direction direction)
 void RedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
-		SDL_Surface* redTurtleImg = nullptr;
-		redTurtleImg = redTurtleImages[computeIndex() + (model - 1)];
+		SDL_Surface* redTurtleImg = redTurtleImages[computeImageIndex()];
 		drawSurface(display, redTurtleImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

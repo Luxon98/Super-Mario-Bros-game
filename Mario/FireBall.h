@@ -17,7 +17,8 @@ private:
 	int stepsUp;
 	int modelIndex;
 	bool stop;
-	void computeModelIndex();
+	int computeImageIndex() const override;
+	void changeModelIndex();
 	void makeVerticalMove(World &world);
 	void makeHorizontalMove(World &world);
 

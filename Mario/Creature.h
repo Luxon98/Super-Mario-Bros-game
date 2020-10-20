@@ -15,7 +15,7 @@ class Creature : public IndependentLivingObject
 private:
 	static std::array<SDL_Surface*, 4> creatureImages; 
 	int model;
-	int computeBaseIndex() const;
+	int computeImageIndex() const override;
 	void changeModel();
 
 public:

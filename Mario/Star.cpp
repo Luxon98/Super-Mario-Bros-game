@@ -12,14 +12,10 @@
 
 std::array<SDL_Surface*, 8> Star::starImages;
 
-int Star::computeBaseIndex() const
+int Star::computeImageIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		return 0;
-	}
-	else {
-		return 4;
-	}
+	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 4);
+	return baseIndex + (stepsCounter % 4);
 }
 
 void Star::makeVerticalMove(World &world)
@@ -82,9 +78,7 @@ void Star::loadStarImages(SDL_Surface* display)
 void Star::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) {
-		SDL_Surface* starImg = nullptr;
-		int baseIndex = computeBaseIndex();
-		starImg = starImages[baseIndex + (stepsCounter % 4)];
+		SDL_Surface* starImg = starImages[computeImageIndex()];
 		drawSurface(display, starImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

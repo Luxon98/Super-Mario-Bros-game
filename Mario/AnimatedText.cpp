@@ -6,6 +6,11 @@
 
 std::array<SDL_Surface*, 5> AnimatedText::animatedTextImages;
 
+int AnimatedText::computeImageIndex() const
+{
+	return (static_cast<int>(type) - 1);
+}
+
 AnimatedText::AnimatedText(TextType type, Position position)
 {
 	this->type = type;
@@ -25,7 +30,7 @@ void AnimatedText::loadAnimatedTextImages(SDL_Surface* display)
 void AnimatedText::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
-		SDL_Surface* animatedTextImg = animatedTextImages[static_cast<int>(type) - 1];
+		SDL_Surface* animatedTextImg = animatedTextImages[computeImageIndex()];
 		drawSurface(display, animatedTextImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

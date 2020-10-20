@@ -28,8 +28,7 @@ void Cloud::loadCloudImages(SDL_Surface* display)
 void Cloud::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
-		SDL_Surface* cloudImg = nullptr;
-		cloudImg = cloudImages[model - 1];
+		SDL_Surface* cloudImg = cloudImages[model - 1];
 		drawSurface(display, cloudImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

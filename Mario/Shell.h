@@ -18,7 +18,7 @@ private:
 	std::chrono::steady_clock::time_point creationTime;
 	bool active;
 	bool red;
-	int computeIndex() const;
+	int computeImageIndex() const override;
 	
 public:
 	Shell() = default;

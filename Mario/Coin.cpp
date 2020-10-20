@@ -11,14 +11,10 @@ std::array<SDL_Surface*, 4> Coin::coinImages;
 
 bool Coin::coinImage = true;
 
-int Coin::computeBaseIndex() const
+int Coin::computeImageIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		return 0;
-	}
-	else {
-		return 2;
-	}
+	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
+	return baseIndex + coinImage;
 }
 
 Coin::Coin(Position position)
@@ -51,9 +47,7 @@ void Coin::changeCoinImage()
 void Coin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
-		SDL_Surface* coinImg = nullptr;
-		int baseIndex = computeBaseIndex();
-		coinImg = coinImages[baseIndex + coinImage];
+		SDL_Surface* coinImg = coinImages[computeImageIndex()];
 		drawSurface(display, coinImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

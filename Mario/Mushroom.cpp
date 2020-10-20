@@ -14,7 +14,7 @@ std::array<SDL_Surface*, 3> Mushroom::mushroomImages;
 int Mushroom::computeImageIndex() const
 {
 	if (oneUp) {
-		return (1 + (World::LAYOUT_STYLE == LayoutStyle::Underground));
+		return 1 + (World::LAYOUT_STYLE == LayoutStyle::Underground);
 	}
 	
 	return 0;
@@ -65,8 +65,7 @@ void Mushroom::setStepsUp(int stepsUp)
 void Mushroom::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 75 && position.getX() < endOfCamera + 75) {
-		SDL_Surface* mushroomImg = nullptr;
-		mushroomImg = mushroomImages[computeImageIndex()];
+		SDL_Surface* mushroomImg = mushroomImages[computeImageIndex()];
 		drawSurface(display, mushroomImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
@@ -80,14 +79,14 @@ void Mushroom::move(World &world)
 		if (stepsUp > 0) {
 			makeMoveUp(world);
 			--stepsUp;
-			makeHorizontalMove(world);
+			moveHorizontally(world);
 		}
 		else {
 			if (isCharacterStandingOnSomething(*this, world)) {
-				makeHorizontalMove(world);
+				moveHorizontally(world);
 			}
 			else {
-				makeDiagonalMove(world);
+				moveDiagonally(world);
 			}
 		}
 	}

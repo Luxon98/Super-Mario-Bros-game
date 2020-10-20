@@ -12,7 +12,7 @@ class Coin : public InanimateObject
 {
 private:
 	static std::array<SDL_Surface*, 4> coinImages; 
-	int computeBaseIndex() const;
+	int computeImageIndex() const;
 
 public:
 	static bool coinImage;

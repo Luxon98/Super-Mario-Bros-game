@@ -8,13 +8,9 @@
 
 std::array<SDL_Surface*, 4> Shards::shardsImages;
 
-int Shards::computeBaseIndex() const {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		return 0;
-	}
-	else {
-		return 2;
-	}
+int Shards::computeImageIndex() const {
+	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
+	return baseIndex + imageIndex;
 }
 
 void Shards::initPositionsVector(Position position)
@@ -45,7 +41,7 @@ void Shards::loadShardsImages(SDL_Surface* display)
 
 void Shards::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	SDL_Surface* shardImg = shardsImages[imageIndex + computeBaseIndex()];
+	SDL_Surface* shardImg = shardsImages[computeImageIndex()];
 	for (int i = 0; i < 4; ++i) {
 		drawSurface(display, shardImg, shardsPositions[i].getX() - beginningOfCamera, shardsPositions[i].getY());
 	}

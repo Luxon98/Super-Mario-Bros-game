@@ -8,7 +8,7 @@
 
 std::array<SDL_Surface*, 3> DestroyedTurtle::destroyedTurtleImages;
 
-int DestroyedTurtle::computeIndex() const
+int DestroyedTurtle::computeImageIndex() const
 {
 	if (!red) {
 		return (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 1);
@@ -40,8 +40,7 @@ void DestroyedTurtle::loadDestroyedTurtleImage(SDL_Surface* display)
 void DestroyedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 70 && position.getX() < endOfCamera + 70) {
-		SDL_Surface* dtImg = nullptr;
-		dtImg = destroyedTurtleImages[computeIndex()];
+		SDL_Surface* dtImg = destroyedTurtleImages[computeImageIndex()];
 		drawSurface(display, dtImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
@@ -75,7 +74,7 @@ void DestroyedTurtle::slide()
 		}
 		else {
 			position.setY(position.getY() + 3);
-			if (auxiliaryCounter % 6 == 0) {
+			if (auxiliaryCounter % 3 == 0) {
 				position.setX(position.getX() + shift);
 			}
 		}

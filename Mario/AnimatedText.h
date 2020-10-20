@@ -23,6 +23,7 @@ class AnimatedText : public TemporaryObject
 private:
 	static std::array<SDL_Surface*, 5> animatedTextImages;
 	TextType type;
+	int computeImageIndex() const override;
 
 public:
 	AnimatedText() = default;

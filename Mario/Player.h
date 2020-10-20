@@ -88,7 +88,7 @@ private:
 	std::shared_ptr<Camera> camera;
 	std::chrono::steady_clock::time_point animationStartTime;
 	int computeImageIndexWhenSliding() const;
-	int computeImageIndex() const;
+	int computeImageIndex() const override;
 	void changeStateDuringAnimation();
 	void performGrowingAnimation(int difference);
 	void performShrinkingAnimation(int difference);

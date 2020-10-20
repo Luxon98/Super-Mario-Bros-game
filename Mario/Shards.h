@@ -15,7 +15,7 @@ private:
 	static std::array<SDL_Surface*, 4> shardsImages;
 	std::vector<Position> shardsPositions;
 	int imageIndex;
-	int computeBaseIndex() const;
+	int computeImageIndex() const;
 	void initPositionsVector(Position position);
 
 public:

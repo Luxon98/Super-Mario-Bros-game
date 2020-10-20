@@ -8,14 +8,9 @@
 
 std::array<SDL_Surface*, 2> CrushedCreature::crushedCreatureImages;
 
-int CrushedCreature::computeIndex() const
+int CrushedCreature::computeImageIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		return 0;
-	}
-	else {
-		return 1;
-	}
+	return (World::LAYOUT_STYLE != LayoutStyle::OpenWorld);
 }
 
 CrushedCreature::CrushedCreature(Position position)
@@ -33,8 +28,7 @@ void CrushedCreature::loadCrushedCreatureImage(SDL_Surface* display)
 void CrushedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
-		SDL_Surface* ccImg = nullptr;
-		ccImg = crushedCreatureImages[computeIndex()];
+		SDL_Surface* ccImg = crushedCreatureImages[computeImageIndex()];
 		drawSurface(display, ccImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

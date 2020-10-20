@@ -10,14 +10,10 @@
 
 std::array<SDL_Surface*, 8> Flower::flowerImages;
 
-int Flower::computeBaseIndex() const
+int Flower::computeImageIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		return 0;
-	}
-	else {
-		return 4;
-	}
+	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 4);
+	return baseIndex + imageIndex;
 }
 
 void Flower::changeModel()
@@ -54,9 +50,7 @@ void Flower::loadFlowerImages(SDL_Surface* display)
 void Flower::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
-		SDL_Surface* flowerImg = nullptr;
-		int baseIndex = computeBaseIndex();
-		flowerImg = flowerImages[baseIndex + imageIndex];
+		SDL_Surface* flowerImg = flowerImages[computeImageIndex()];
 		drawSurface(display, flowerImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

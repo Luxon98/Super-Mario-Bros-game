@@ -12,7 +12,7 @@ class Explosion : public TemporaryObject
 {
 private:
 	static std::array<SDL_Surface*, 3> explosionImages;
-	int computeIndex() const;
+	int computeImageIndex() const override;
 
 public:
 	Explosion() = default;

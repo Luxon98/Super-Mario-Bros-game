@@ -11,14 +11,10 @@
 
 std::array<SDL_Surface*, 4> Creature::creatureImages;
 
-int Creature::computeBaseIndex() const
+int Creature::computeImageIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		return 0;
-	}
-	else {
-		return 2;
-	}
+	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
+	return baseIndex + (model - 1);
 }
 
 void Creature::changeModel()
@@ -57,9 +53,7 @@ void Creature::setMoveDirection(Direction direction)
 void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) {
-		SDL_Surface* creatureImg = nullptr;
-		int baseIndex = computeBaseIndex();
-		creatureImg = creatureImages[baseIndex + (model - 1)];
+		SDL_Surface* creatureImg = creatureImages[computeImageIndex()];
 		drawSurface(display, creatureImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
@@ -68,11 +62,11 @@ void Creature::move(World &world)
 {
 	if (movement.getDirection() != Direction::None && stepsCounter % 3 == 0) {
 		if (isCharacterStandingOnSomething(*this, world)) {
-			makeHorizontalMove(world);
+			moveHorizontally(world);
 			changeModel();
 		}
 		else {
-			makeDiagonalMove(world);
+			moveDiagonally(world);
 		}
 	}
 	++stepsCounter;

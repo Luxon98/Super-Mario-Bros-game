@@ -7,13 +7,20 @@
 
 std::array<SDL_Surface*, 7> AnimatedCoin::animatedCoinImages;
 
+int AnimatedCoin::computeImageIndex() const
+{
+	// this function is unnecessary, but I have to implement it, because it is an inherited pure virtual function
+	// only AnimatedCoin and FireBall classes don't need it, in the rest of the classes it's essential, 
+	// that's why I decided to keep these simple implementations in two classes instead of combining
+	return imageIndex;
+}
+
 AnimatedCoin::AnimatedCoin(Position position)
 {
 	creationTime = std::chrono::steady_clock::now();
 	this->position = position;
 	slideCounter = 0;
 	auxiliaryCounter = 0;
-	imageIndex = 0;
 }
 
 void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
@@ -29,7 +36,7 @@ void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
 void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
-		SDL_Surface* animatedCoinImg = animatedCoinImages[imageIndex];
+		SDL_Surface* animatedCoinImg = animatedCoinImages[computeImageIndex()];
 		drawSurface(display, animatedCoinImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

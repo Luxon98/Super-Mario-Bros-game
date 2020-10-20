@@ -14,7 +14,7 @@ class Plant : public IndependentLivingObject
 private:
 	static std::array<SDL_Surface*, 4> plantImages;
 	int model;
-	int computeBaseIndex() const;
+	int computeImageIndex() const override;
 	void slide(World &world);
 	void changeModel();
 

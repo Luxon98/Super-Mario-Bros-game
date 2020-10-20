@@ -11,7 +11,7 @@
 
 std::array<SDL_Surface*, 3> Shell::shellImages;
 
-int Shell::computeIndex() const
+int Shell::computeImageIndex() const
 {
 	if (!red) {
 		return (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 1);
@@ -71,7 +71,7 @@ void Shell::resetCreationTime()
 void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
-		SDL_Surface* shellImg = shellImages[computeIndex()];
+		SDL_Surface* shellImg = shellImages[computeImageIndex()];
 		drawSurface(display, shellImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
@@ -80,10 +80,10 @@ void Shell::move(World &world)
 {
 	if (movement.getDirection() != Direction::None && stepsCounter & 1) {
 		if (isCharacterStandingOnSomething(*this, world)) {
-			makeHorizontalMove(world);
+			moveHorizontally(world);
 		}
 		else {
-			makeDiagonalMove(world);
+			moveDiagonally(world);
 		}
 	}
 	++stepsCounter;

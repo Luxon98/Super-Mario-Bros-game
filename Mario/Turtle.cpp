@@ -11,14 +11,14 @@
 
 std::array<SDL_Surface*, 8> Turtle::turtleImages;
 
-int Turtle::computeBaseIndex() const
+int Turtle::computeImageIndex() const
 {
 	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 4);
 	if (movement.getDirection() == Direction::Right) {
 		baseIndex += 2;
 	}
 
-	return baseIndex;
+	return baseIndex + (model - 1);
 }
 
 void Turtle::changeModel()
@@ -59,9 +59,7 @@ void Turtle::setMoveDirection(Direction direction)
 void Turtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
-		SDL_Surface* turtleImg = nullptr;
-		int baseIndex = computeBaseIndex();
-		turtleImg = turtleImages[baseIndex + (model - 1)];
+		SDL_Surface* turtleImg = turtleImages[computeImageIndex()];
 		drawSurface(display, turtleImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
@@ -70,11 +68,11 @@ void Turtle::move(World &world)
 {
 	if (movement.getDirection() != Direction::None && stepsCounter % 3 == 0) {
 		if (isCharacterStandingOnSomething(*this, world)) {
-			makeHorizontalMove(world);
+			moveHorizontally(world);
 			changeModel();
 		}
 		else {
-			makeDiagonalMove(world);
+			moveDiagonally(world);
 		}
 	}
 	++stepsCounter;

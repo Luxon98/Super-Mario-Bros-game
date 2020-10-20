@@ -13,7 +13,7 @@ class Flower : public BonusObject
 private:
 	static std::array<SDL_Surface*, 8> flowerImages;
 	int imageIndex;
-	int computeBaseIndex() const;
+	int computeImageIndex() const override;
 	void changeModel();
 
 public:

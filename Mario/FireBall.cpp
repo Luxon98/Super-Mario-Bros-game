@@ -10,7 +10,15 @@
 
 std::array<SDL_Surface*, 4> FireBall::fireBallImages;
 
-void FireBall::computeModelIndex()
+int FireBall::computeImageIndex() const
+{
+	// this function is unnecessary, but I have to implement it, because it is an inherited pure virtual function
+	// only FireBall and AnimatedCoin classes don't need it, in the rest of the classes it's essential, 
+	// that's why I decided to keep these simple implementations in two classes instead of combining
+	return modelIndex;
+}
+
+void FireBall::changeModelIndex()
 {
 	++changeModelCounter;
 	if (changeModelCounter % 8 == 0) {
@@ -21,7 +29,7 @@ void FireBall::computeModelIndex()
 	}
 }
 
-void FireBall::makeVerticalMove(World &world)
+void FireBall::moveVertically(World &world)
 {
 	int alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
 	int distance = movement.getSpeed() - alignment;
@@ -36,7 +44,7 @@ void FireBall::makeVerticalMove(World &world)
 	}
 }
 
-void FireBall::makeHorizontalMove(World &world)
+void FireBall::moveHorizontally(World &world)
 {
 	int alignment = computeVerticalAlignment(movement.getVerticalDirection(), movement.getVerticalSpeed(), 
 		*this, world);
@@ -46,7 +54,7 @@ void FireBall::makeHorizontalMove(World &world)
 	}
 	position.setY(position.getY() + verticalDistance);
 
-	computeModelIndex();
+	changeModelIndex();
 
 	if (movement.getVerticalDirection() == Direction::Up) {
 		++stepsUp;
@@ -93,8 +101,7 @@ bool FireBall::shouldBeRemoved() const
 void FireBall::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
-		SDL_Surface* fireballImg = nullptr;
-		fireballImg = fireBallImages[modelIndex];
+		SDL_Surface* fireballImg = fireBallImages[computeImageIndex()];
 		drawSurface(display, fireballImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
@@ -102,8 +109,8 @@ void FireBall::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera
 void FireBall::move(World &world)
 {
 	if (!stop) {
-		makeVerticalMove(world);
-		makeHorizontalMove(world);
+		moveVertically(world);
+		moveHorizontally(world);
 	}
 }
 

@@ -12,7 +12,7 @@ class CrushedCreature : public TemporaryObject
 {
 private:
 	static std::array<SDL_Surface*, 2> crushedCreatureImages;
-	int computeIndex() const;
+	int computeImageIndex() const override;
 
 public:
 	CrushedCreature() = default;

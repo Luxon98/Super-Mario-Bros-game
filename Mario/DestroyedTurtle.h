@@ -15,7 +15,7 @@ private:
 	static std::array<SDL_Surface*, 3> destroyedTurtleImages;
 	bool red;
 	Direction slideDirection;
-	int computeIndex() const;
+	int computeImageIndex() const override;
 	
 public:
 	DestroyedTurtle() = default;

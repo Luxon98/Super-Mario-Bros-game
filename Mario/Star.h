@@ -14,7 +14,7 @@ private:
 	static std::array<SDL_Surface*, 8> starImages;
 	int stepsCounter;
 	int stepsUp;
-	int computeBaseIndex() const;
+	int computeImageIndex() const override;
 	void makeVerticalMove(World &world);
 	void makeHorizontalMove(World &world);
 

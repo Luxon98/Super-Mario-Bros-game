@@ -15,7 +15,7 @@ class Turtle : public IndependentLivingObject
 private:
 	static std::array<SDL_Surface*, 8> turtleImages;
 	int model;
-	int computeBaseIndex() const;
+	int computeImageIndex() const override;
 	void changeModel();
 
 public:

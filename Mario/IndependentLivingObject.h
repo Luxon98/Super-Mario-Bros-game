@@ -9,8 +9,8 @@ class World;
 class IndependentLivingObject : public LivingObject
 {
 protected:
-	void makeHorizontalMove(World &world);
-	void makeDiagonalMove(World &world);
+	void moveHorizontally(World &world);
+	void moveDiagonally(World &world);
 };
 
 #endif //IndependentLivingObject_H

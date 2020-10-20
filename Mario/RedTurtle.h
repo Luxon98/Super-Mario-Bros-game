@@ -16,7 +16,7 @@ private:
 	static std::array<SDL_Surface*, 6> redTurtleImages;
 	bool flying;
 	int model;
-	int computeIndex() const;
+	int computeImageIndex() const override;
 	void fly();
 	void patrol(World &world);
 	void changeModel();

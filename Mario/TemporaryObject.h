@@ -10,6 +10,7 @@ class TemporaryObject : public WorldObject
 protected:
 	std::chrono::steady_clock::time_point creationTime;
 	int auxiliaryCounter;
+	virtual int computeImageIndex() const = 0;
 
 public:
 	virtual bool shouldBeRemoved() const = 0;

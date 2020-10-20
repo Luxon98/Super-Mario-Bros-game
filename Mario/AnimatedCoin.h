@@ -14,6 +14,7 @@ private:
 	static std::array<SDL_Surface*, 7> animatedCoinImages;
 	int slideCounter;
 	int imageIndex;
+	int computeImageIndex() const override;
 
 public:
 	AnimatedCoin() = default;
