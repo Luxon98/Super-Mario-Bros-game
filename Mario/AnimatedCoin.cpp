@@ -9,9 +9,7 @@ std::array<SDL_Surface*, 7> AnimatedCoin::animatedCoinImages;
 
 int AnimatedCoin::computeImageIndex() const
 {
-	// this function is unnecessary, but I have to implement it, because it is an inherited pure virtual function
-	// only AnimatedCoin and FireBall classes don't need it, in the rest of the classes it's essential, 
-	// that's why I decided to keep these simple implementations in two classes instead of combining
+	// this inherited function is not really needed in this class, but I left it to keep the code simple
 	return imageIndex;
 }
 

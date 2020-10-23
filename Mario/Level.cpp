@@ -133,22 +133,22 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.blocks.push_back(Block(BlockType::Destructible, Position(5486, 288)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(6350, 400)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(926, 399)));
-	world.blocks.push_back(Block(BlockType::TubeEntry, Position(926, 368)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(926, 368)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(1266, 399)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(1266, 367)));
-	world.blocks.push_back(Block(BlockType::TubeEntry, Position(1266, 336)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(1266, 336)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(1502, 399)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(1502, 367)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(1502, 335)));
-	world.blocks.push_back(Block(BlockType::TubeEntry, Position(1502, 304)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(1502, 304)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(1854, 399)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(1854, 367)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(1854, 335)));
-	world.blocks.push_back(Block(BlockType::TubeEntry, Position(1854, 304)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(1854, 304)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(5246, 399)));
-	world.blocks.push_back(Block(BlockType::TubeEntry, Position(5246, 368)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(5246, 368)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(5754, 399)));
-	world.blocks.push_back(Block(BlockType::TubeEntry, Position(5754, 368)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(5754, 368)));
 
 	if (bonusLifeBlockFlag) {
 		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2064, 288)));
@@ -273,7 +273,7 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 
 	world.blocks.push_back(Block(BlockType::Monetary, Position(4816, 272)));
 
-	for (int i = 5136; i < 5616; i += 32) {
+	for (int i = 5136; i < 5712; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
 		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 400)));
@@ -351,13 +351,13 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(4400, 304)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(3328, 399)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(3328, 367)));
-	world.blocks.push_back(Block(BlockType::TubeEntry, Position(3328, 336)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(3328, 336)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(3520, 399)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(3520, 367)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(3520, 335)));
-	world.blocks.push_back(Block(BlockType::TubeEntry, Position(3520, 304)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(3520, 304)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(3712, 399)));
-	world.blocks.push_back(Block(BlockType::TubeEntry, Position(3712, 368)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(3712, 368)));
 
 	
 	for (int i = 2448; i < 2576; i += 32) {
@@ -406,8 +406,27 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 	world.blocks.push_back(Block(BlockType::Destructible, Position(1776, 368)));
 
 	for (int i = 0; i < 9; ++i) {
-		world.blocks.push_back(Block(BlockType::Destructible, Position(5456, 48 + (i * 32))));
-		world.blocks.push_back(Block(BlockType::Destructible, Position(5488, 48 + (i * 32))));
+		for (int j = 0; j < 9; ++j) {
+			world.blocks.push_back(Block(BlockType::Destructible, Position(5456 + (j * 32), 48 + (i * 32))));
+		}
+	}
+
+	world.blocks.push_back(Block(BlockType::Destructible, Position(5712, 16)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(5712, -16)));
+
+	world.blocks.push_back(Block(BlockType::TubeLeftEntry, Position(5347, 288)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(5410, 303)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(5410, 271)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(5410, 239)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(5410, 207)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(5410, 175)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(5410, 143)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(5410, 111)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(5410, 79)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(5410, 49)));
+
+	for (int i = 0; i < 7; ++i) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(5168 + (i * 32), 48)));
 	}
 
 	world.platforms.push_back(MovingPlatform(Position(4526, 120), Direction::Down));

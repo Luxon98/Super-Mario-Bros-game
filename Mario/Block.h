@@ -21,14 +21,15 @@ enum class BlockType
 	BonusWithFlower = 9,
 	BonusWithStar = 10,
 	Tube = 11,
-	TubeEntry = 12
+	TubeTopEntry = 12,
+	TubeLeftEntry = 13
 };
 
 
 class Block : public WorldObject 
 {
 private:
-	static std::array<SDL_Surface*, 20> blockImages;
+	static std::array<SDL_Surface*, 22> blockImages;
 	static bool blockImage;
 	bool collisionsFlag;
 	int availableCoins;
@@ -36,7 +37,7 @@ private:
 	BlockType type;
 	int computeBaseIndex() const;
 	int computeImageIndex() const;
-	Size getSizeFromBlockType(BlockType type);
+	Size getSizeFromBlockType();
 
 public:
 	Block() = default;

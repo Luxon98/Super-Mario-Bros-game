@@ -19,8 +19,8 @@ private:
 	bool stop;
 	int computeImageIndex() const override;
 	void changeModelIndex();
-	void makeVerticalMove(World &world);
-	void makeHorizontalMove(World &world);
+	void moveVertically(World &world);
+	void moveHorizontally(World &world);
 
 public:
 	FireBall() = default;

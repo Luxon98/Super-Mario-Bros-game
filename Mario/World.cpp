@@ -544,10 +544,6 @@ void World::draw(SDL_Surface* display, bool drawPlayer)
 		fireball.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 
-	for (const auto &block : blocks) {
-		block.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
-	}
-
 	for (const auto &platform : platforms) {
 		platform.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
@@ -560,5 +556,9 @@ void World::draw(SDL_Surface* display, bool drawPlayer)
 
 	if (drawPlayer) {
 		player->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+
+	for (const auto &block : blocks) {
+		block.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 }

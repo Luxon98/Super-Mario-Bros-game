@@ -8,13 +8,13 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 20> Block::blockImages;
+std::array<SDL_Surface*, 22> Block::blockImages;
 
 bool Block::blockImage = true;
 
 int Block::computeBaseIndex() const
 {
-	return (World::LAYOUT_STYLE == LayoutStyle::Underground ? 10 : 0);
+	return (World::LAYOUT_STYLE == LayoutStyle::Underground ? 11 : 0);
 }
 
 int Block::computeImageIndex() const
@@ -26,26 +26,30 @@ int Block::computeImageIndex() const
 	else if (type == BlockType::Monetary || type == BlockType::BonusWithStar) {
 		return (baseIndex + 3);
 	}
-	else if (type == BlockType::Tube || type == BlockType::TubeEntry) {
+	else if (type == BlockType::Tube || type == BlockType::TubeTopEntry) {
 		return (baseIndex + (static_cast<int>(type) - 4));
 	}
 	else if (type == BlockType::BonusWithOneUpMushroom) {
 		return (baseIndex + (static_cast<int>(type) + 2));
+	}
+	else if (type == BlockType::TubeLeftEntry) {
+		return (baseIndex + (static_cast<int>(type) - 3));
 	}
 	else {
 		return (baseIndex + 4);
 	}
 }
 
-Size Block::getSizeFromBlockType(BlockType type)
+Size Block::getSizeFromBlockType()
 {
-	if (type == BlockType::Tube) {
+	switch (type) {
+	case BlockType::Tube:
 		return Size(56, 34);
-	}
-	else if (type == BlockType::TubeEntry) {
+	case BlockType::TubeTopEntry:
 		return Size(64, 31);
-	}
-	else {
+	case BlockType::TubeLeftEntry:
+		return Size(12, 64);
+	default:
 		return Size(32, 32);
 	}
 }
@@ -54,7 +58,7 @@ Block::Block(BlockType type, Position position)
 {
 	this->type = type;
 	this->position = position;
-	size = getSizeFromBlockType(type);
+	size = getSizeFromBlockType();
 	availableCoins = (type == BlockType::Monetary ? 10 : 0);
 	initialPositionY = position.getY();
 	collisionsFlag = (type != BlockType::BonusWithOneUpMushroom);
@@ -71,16 +75,16 @@ void Block::loadBlockImages(SDL_Surface* display)
 	blockImages[5] = loadPNG("./img/block5.png", display);
 	blockImages[6] = loadPNG("./img/block6.png", display);
 
-	for (int j = 7; j < 15; ++j) {
+	for (int j = 7; j < 16; ++j) {
 		std::string filename = "./img/block";
 		filename += std::to_string(j);
 		filename += ".png";
 		blockImages[j] = loadPNG(filename, display);
 	}
-	blockImages[15] = loadPNG("./img/block14.png", display);
 	blockImages[16] = loadPNG("./img/block15.png", display);
+	blockImages[17] = loadPNG("./img/block16.png", display);
 
-	for (int j = 17; j < 20; ++j) {
+	for (int j = 18; j < 22; ++j) {
 		std::string filename = "./img/block";
 		filename += std::to_string(j - 1);
 		filename += ".png";
@@ -125,7 +129,7 @@ void Block::resetBlockImage()
 void Block::changeBlockImage()
 {
 	Block::blockImages[4] = Block::blockImages[5 + Block::blockImage];
-	Block::blockImages[14] = Block::blockImages[15 + Block::blockImage];
+	Block::blockImages[15] = Block::blockImages[16 + Block::blockImage];
 	Block::blockImage = !Block::blockImage;
 }
 
