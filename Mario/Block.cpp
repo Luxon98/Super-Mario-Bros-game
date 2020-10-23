@@ -48,7 +48,7 @@ Size Block::getSizeFromBlockType()
 	case BlockType::TubeTopEntry:
 		return Size(64, 31);
 	case BlockType::TubeLeftEntry:
-		return Size(12, 64);
+		return Size(78, 64);
 	default:
 		return Size(32, 32);
 	}

@@ -420,7 +420,7 @@ void handleBonusCollecting(Player &player, World &world)
 	collectBonusIfPossible(player, world);
 }
 
-int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject& object, const World& world)
+int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject &object, const World &world)
 {
 	int alignment = 0;
 	std::vector<Block> blocks = world.getBlocks();
@@ -429,7 +429,7 @@ int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distan
 		if (areAtTheSameHeight(object, block) && isCharacterHittingObject(object, block, direction, distance)
 			&& !block.isInvisible()) {
 
-			if (direction == Direction::Right) {
+			if (direction == Direction::Right && block.getType() != BlockType::TubeLeftEntry) {
 				alignment = (object.getX() + distance + object.getWidth() / 2) - (block.getX() - block.getWidth() / 2);
 			}
 			else if (direction == Direction::Left) {
@@ -442,7 +442,7 @@ int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distan
 	return (alignment > 0 ? alignment : 0);
 }
 
-int getHorizontalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject& object, const World& world)
+int getHorizontalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject &object, const World &world)
 {
 	int alignment = 0;
 	std::vector<MovingPlatform> platforms = world.getPlatforms();

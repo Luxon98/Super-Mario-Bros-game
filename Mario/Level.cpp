@@ -469,7 +469,6 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 272))));
 	}
 
-
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6684, 336))));
 	world.flag = Flag(Position(6635, 116));
 }
