@@ -15,6 +15,7 @@
 #include "Castle.h"
 #include "LayoutStyle.h"
 #include "Flower.h"
+#include "CheckPoint.h"
 
 
 void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
@@ -26,6 +27,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.monsters.clear();
 	world.temporaryElements.clear();
 	world.fireballs.clear();
+	world.checkPoints.clear();
 
 	world.slidingCounter = 0;
 	world.resetImages();
@@ -122,8 +124,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 9 - i; ++j) {
-			world.blocks.push_back(Block(BlockType::Indestructible, 
-				Position(5806 + i * 32 + j * 32, 400 - i * 32)));
+			world.blocks.push_back(Block(BlockType::Indestructible, Position(5806 + i * 32 + j * 32, 400 - i * 32)));
 		}
 	}
 
@@ -223,6 +224,7 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 	world.monsters.clear();
 	world.temporaryElements.clear();
 	world.fireballs.clear();
+	world.checkPoints.clear();
 	
 	world.slidingCounter = 0;
 	world.resetImages();
@@ -469,7 +471,52 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 272))));
 	}
 
+	world.checkPoints.push_back(CheckPoint(Position(5355, 285), true, 25, 1));
+
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6684, 336))));
 	world.flag = Flag(Position(6635, 116));
+}
+
+void Level::setSecondStageOnSecondLevel(World &world)
+{
+	world.blocks.clear();
+	world.platforms.clear();
+	world.inanimateElements.clear();
+	world.bonusElements.clear();
+	world.monsters.clear();
+	world.temporaryElements.clear();
+	world.fireballs.clear();
+	world.checkPoints.clear();
+
+	world.slidingCounter = 0;
+	world.resetImages();
+
+	world.LAYOUT_STYLE = LayoutStyle::OpenWorld;
+
+	for (int i = 0; i < 50; ++i) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(16 + (32 * i), 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(16 + (32 * i), 432)));
+	}
+
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 9 - i; ++j) {
+			world.blocks.push_back(Block(BlockType::Indestructible, Position(176 + i * 32 + j * 32, 400 - i * 32)));
+		}
+	}
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(128, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(128, 368)));
+
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(192, 72))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(816, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1168, 72))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(5, Position(592, 381))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(4, Position(1072, 397))));
+	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(1, Position(972, 400))));
+
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(720, 400)));
+
+	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(915, 336))));
+	world.flag = Flag(Position(703, 116));
 }
 

@@ -11,12 +11,12 @@ bool CheckPoint::isAutomatic() const
 	return automatic;
 }
 
-int CheckPoint::getMark() const
+unsigned int CheckPoint::getMark() const
 {
 	return mark;
 }
 
-bool CheckPoint::isPlayerInRangeOfCheckPoint(const Player &player)
+bool CheckPoint::isPlayerInRangeOfCheckPoint(const Player &player) const
 {
 	if ((player.getX() >= position.getX() - range && player.getX() <= position.getX() + range) 
 		&& (player.getY() >= position.getY() - range && player.getY() <= position.getY() + range)) {

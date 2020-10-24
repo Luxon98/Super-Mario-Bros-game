@@ -387,6 +387,17 @@ bool World::isPlayerFinishingWorld() const
 	return false;
 }
 
+int World::getLastReachedCheckPointMark() const
+{
+	for (const auto &checkPoint : checkPoints) {
+		if (checkPoint.isPlayerInRangeOfCheckPoint(*player) && checkPoint.isAutomatic()) {
+			return checkPoint.getMark();
+		}
+	}
+
+	return -1;
+}
+
 void World::setPlayer(std::shared_ptr<Player> player)
 {
 	this->player = std::move(player);

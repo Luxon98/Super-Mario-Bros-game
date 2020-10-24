@@ -25,7 +25,13 @@ void loadImages(SDL_Surface* display);
 
 void reset(KeyboardController &controller, Screen &screen, bool * playerState);
 
-void setWorld(int level, Player &player, World &world, bool playerState);
+void changeLevel(int level, World& world, bool playerState);
+
+void setWorld(int level, Player& player, World& world, bool playerState);
+
+void setSubWorld(int level, int checkPointMark, Player &player, World &world);
+
+void changeSubWorld(Screen &screen);
 
 void runGame();
 

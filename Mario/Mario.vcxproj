@@ -144,6 +144,7 @@
     <ClCompile Include="Bush.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Castle.cpp" />
+    <ClCompile Include="CheckPoint.cpp" />
     <ClCompile Include="Cloud.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CollisionHandling.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Bush.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Castle.h" />
+    <ClInclude Include="CheckPoint.h" />
     <ClInclude Include="Cloud.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CollisionHandling.h" />

@@ -153,10 +153,13 @@ void Screen::drawStartScreenElements(int lives)
 {
 	SDL_Surface* worldImg = worldImages[3 + level];
 	drawSurface(display, worldImg, 303, 162);
+
 	SDL_Surface* marioImg = screenImages[7];
 	drawSurface(display, marioImg, 261, 215);
+
 	SDL_Surface* xImg = screenImages[2];
 	drawSurface(display, xImg, 310, 217);
+
 	SDL_Surface* livesImg = digitImages[lives];
 	drawSurface(display, livesImg, 360, 215);
 }
@@ -324,9 +327,11 @@ void Screen::changeCoinImage()
 	Screen::coinImage = !Screen::coinImage;
 }
 
-void Screen::resetScreen()
+void Screen::resetScreen(bool resetTimeFlag)
 {
-	timeBegin = std::chrono::steady_clock::now();
+	if (resetTimeFlag) {
+		timeBegin = std::chrono::steady_clock::now();
+	}
 	camera->setBeginningOfCamera(0);
 	camera->setEndOfCamera(SCREEN_WIDTH);
 }
@@ -343,6 +348,14 @@ void Screen::drawStartScreen()
 	updateView();
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+}
+
+void Screen::drawChangeSubLevelScreen()
+{
+	setBlackBackground();
+	updateView();
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(725));
 }
 
 void Screen::drawGameOverScreen()
@@ -404,7 +417,7 @@ void Screen::drawWorldFinishedScreen(World &world)
 
 	for (int i = 2 * time; i >= 0; --i) {
 		world.performActions();
-		bool drawPlayer = (player->getX() < 6540);
+		bool drawPlayer = (player->getStepsRight() != 0);
 		world.draw(display, drawPlayer);
 		updateView();
 

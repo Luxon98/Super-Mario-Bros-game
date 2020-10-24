@@ -5,6 +5,7 @@
 #include <array>
 
 class Player;
+class World;
 
 
 class SoundController
@@ -27,9 +28,10 @@ public:
 	void setLevel(int level);
 	static void playStarMusic();
 	static void playWorldFinishedMusic();
-	static void playGameoverMusic();
+	static void playGameOverMusic();
 	static void playTimePassedMusic();
 	static void playBackgroundMusic();
+	static void playBackgroundMusic(const World &world);
 	static void playNewLiveAddedEffect();
 	static void playBlockDestroyedEffect();
 	static void playBlockHittedEffect();
@@ -42,6 +44,7 @@ public:
 	static void playJumpEffect(Player &player);
 	static void playBonusLostEffect();
 	static void playMarioDeadEffect();
+	static void playPipeTravelEffect();
 	static void stopMusic();
 	~SoundController();
 };

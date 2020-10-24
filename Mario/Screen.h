@@ -68,8 +68,9 @@ public:
 	void setLevel(int level);
 	static void resetCoinImage();
 	static void changeCoinImage();
-	void resetScreen();
+	void resetScreen(bool resetTimeFlag = true);
 	void drawStartScreen();
+	void drawChangeSubLevelScreen();
 	void drawGameOverScreen();
 	void drawTimeUpScreen();
 	void drawDeadMario(World &world);

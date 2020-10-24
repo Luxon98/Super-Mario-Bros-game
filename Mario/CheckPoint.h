@@ -12,13 +12,13 @@ private:
 	Position position;
 	bool automatic;
 	int range;
-	int mark;
+	unsigned int mark;
 
 public:
 	CheckPoint(Position position, bool automatic, int range, int mark);
 	bool isAutomatic() const;
-	int getMark() const;
-	bool isPlayerInRangeOfCheckPoint(const Player &player);
+	unsigned int getMark() const;
+	bool isPlayerInRangeOfCheckPoint(const Player &player) const;
 };
 
 #endif //CheckPoint_H

@@ -96,21 +96,44 @@ void reset(KeyboardController &controller, Screen &screen, bool * playerState)
 	*playerState = true;
 }
 
-void setWorld(int level, Player &player, World &world, bool playerState)
+void changeLevel(int level, World &world, bool playerState)
 {
-	if (playerState) {
-		player.setStartingXY(level);
-	}
-	else {
-		player.reborn(level);
-	}
-
 	if (level == 1) {
 		Level::setFirstLevel(world, playerState);
 	}
 	else if (level == 2) {
 		Level::setSecondLevel(world, playerState);
 	}
+}
+
+void setWorld(int level, Player &player, World &world, bool playerState)
+{
+	if (playerState) {
+		player.setPositionXY(level);
+	}
+	else {
+		player.reborn(level);
+	}
+
+	changeLevel(level, world, playerState);
+}
+
+void setSubWorld(int level, int checkPointMark, Player &player, World &world)
+{
+	player.resetSteps();
+	player.setPositionXY(level, checkPointMark);
+
+	if (level == 2 && checkPointMark == 1) {
+		Level::setSecondStageOnSecondLevel(world);
+	}
+}
+
+void changeSubWorld(Screen &screen)
+{
+	SoundController::playPipeTravelEffect();
+	screen.drawChangeSubLevelScreen();
+	SoundController::stopMusic();
+	screen.resetScreen(false);
 }
 
 void runGame()
@@ -153,14 +176,20 @@ void runGame()
 		world.setPlayer(player);
 		screen.setPlayer(player);
 
-		int level = 2;
+		int level = 1, checkPointMark = -1;
 
 		while (player->getLives() && !winStatus) {
-			setWorld(level, *player, world, playerState);
-			reset(controller, screen, &playerState);
+			if (checkPointMark == -1) {
+				setWorld(level, *player, world, playerState);
+				reset(controller, screen, &playerState);
 
-			screen.drawStartScreen();
-			soundMixer.playBackgroundMusic();
+				screen.drawStartScreen();
+			}
+			else {
+				setSubWorld(level, checkPointMark, *player, world);
+			}
+
+			soundMixer.playBackgroundMusic(world);
 
 			while (playerState && timeState && !winStatus) {
 				screen.updateScreen(world);
@@ -177,6 +206,12 @@ void runGame()
 
 				if (playerState) {
 					controller.handleKeys(*player, world);
+				}
+
+				checkPointMark = world.getLastReachedCheckPointMark();
+				if (checkPointMark != -1) {
+					changeSubWorld(screen);
+					break;
 				}
 
 				if (world.isPlayerFinishingWorld() && !winStatus) {
@@ -218,7 +253,7 @@ void runGame()
 			}
 		}
 
-		SoundController::playGameoverMusic();
+		SoundController::playGameOverMusic();
 		screen.drawGameOverScreen();
 	}
 }

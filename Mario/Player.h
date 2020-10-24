@@ -119,6 +119,8 @@ public:
 	int getPoints() const;
 	int getCoins() const;
 	int getLives() const;
+	int getDeadMarioImageIndex() const;
+	int getStepsRight() const;
 	bool isSmall() const;
 	bool isArmed() const;
 	bool isInsensitive() const;
@@ -126,7 +128,6 @@ public:
 	bool isDead() const;
 	bool isTurnedRight() const;
 	bool isPerformingJumpAsSmall() const;
-	int getDeadMarioImageIndex() const;
 	void incrementCoins();
 	void incrementLives();
 	void increaseSpeed();
@@ -139,7 +140,8 @@ public:
 	void loseBonusOrLife();
 	void performAdditionalJump();
 	void move(World &world) override;
-	void setStartingXY(int level);
+	void setPositionXY(int level);
+	void setPositionXY(int level, int checkPointMark);
 	void reborn(int level);
 	void resetSteps();
 	void setSlidingParameters();

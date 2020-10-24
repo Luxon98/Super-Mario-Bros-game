@@ -457,6 +457,30 @@ int Player::getLives() const
 	return statistics.lives;
 }
 
+int Player::getDeadMarioImageIndex() const
+{
+	if (currentState == PlayerState::ArmedFirst || currentState == PlayerState::ImmortalFourth
+		|| currentState == PlayerState::ImmortalSmallFourth) {
+		return 1;
+	}
+	else if (currentState == PlayerState::ImmortalFirst || currentState == PlayerState::ImmortalSmallFirst) {
+		return 2;
+	}
+	else if (currentState == PlayerState::ImmortalSecond || currentState == PlayerState::ImmortalSmallSecond) {
+		return 3;
+	}
+	else if (currentState == PlayerState::ImmortalThird || currentState == PlayerState::ImmortalSmallThird) {
+		return 4;
+	}
+
+	return 0;
+}
+
+int Player::getStepsRight() const
+{
+	return playerMovement.stepsRight;
+}
+
 bool Player::isSmall() const
 {
 	return (currentState == PlayerState::Small);
@@ -498,25 +522,6 @@ bool Player::isPerformingJumpAsSmall() const
 	}
 
 	return false;
-}
-
-int Player::getDeadMarioImageIndex() const
-{
-	if (currentState == PlayerState::ArmedFirst || currentState == PlayerState::ImmortalFourth 
-		|| currentState == PlayerState::ImmortalSmallFourth) {
-		return 1;
-	}
-	else if (currentState == PlayerState::ImmortalFirst || currentState == PlayerState::ImmortalSmallFirst) {
-		return 2;
-	}
-	else if (currentState == PlayerState::ImmortalSecond || currentState == PlayerState::ImmortalSmallSecond) {
-		return 3;
-	}
-	else if (currentState == PlayerState::ImmortalThird || currentState == PlayerState::ImmortalSmallThird) {
-		return 4;
-	}
-
-	return 0;
 }
 
 void Player::incrementCoins()
@@ -648,7 +653,7 @@ void Player::move(World &world)
 	}
 }
 
-void Player::setStartingXY(int level)
+void Player::setPositionXY(int level)
 {
 	if (level == 1) {
 		position.setXY(35, 400);
@@ -658,10 +663,18 @@ void Player::setStartingXY(int level)
 	}
 }
 
+void Player::setPositionXY(int level, int checkPointMark)
+{
+	if (level == 2 && checkPointMark == 1) {
+		int posY = (this->isSmall() ? 320 : 336);
+		position.setXY(128, posY);
+	}
+}
+
 void Player::reborn(int level)
 {
 	size.setSize(32, 32);
-	setStartingXY(level);
+	setPositionXY(level);
 	model = 0;
 	changeModelCounter = 0;
 	flags.setDefaultFlags(false);
@@ -689,7 +702,7 @@ void Player::setSlidingParameters()
 void Player::setFinishingRunParameters()
 {
 	resetMovement();
-	playerMovement.stepsRight = 190;
+	playerMovement.stepsRight = 185;
 	changeModelCounter = 0;
 	model = 0;
 	flags.setDefaultFlags(flags.armedFlag);

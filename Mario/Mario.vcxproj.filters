@@ -207,6 +207,9 @@
     <ClCompile Include="Flag.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
+    <ClCompile Include="CheckPoint.cpp">
+      <Filter>Source Files\OtherObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -349,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="Flag.h">
       <Filter>Header Files\InanimateObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckPoint.h">
+      <Filter>Header Files\OtherObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

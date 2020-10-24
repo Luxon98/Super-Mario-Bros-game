@@ -1,6 +1,8 @@
 #include "SoundController.h"
 
 #include "Player.h"
+#include "World.h"
+#include "LayoutStyle.h"
 
 
 std::array<Mix_Music*, 7> SoundController::backgroundTracks;
@@ -96,7 +98,7 @@ void SoundController::playWorldFinishedMusic()
 	Mix_PlayMusic(backgroundTracks[2], -1);
 }
 
-void SoundController::playGameoverMusic()
+void SoundController::playGameOverMusic()
 {
 	stopMusic();
 	Mix_PlayMusic(backgroundTracks[3], -1);
@@ -110,14 +112,24 @@ void SoundController::playTimePassedMusic()
 
 void SoundController::playBackgroundMusic()
 {
-	if (level == 2) {
+	if (level == 1 || level == 3) {
+		playOpenWorldMusic();
+	}
+	else if (level == 2) {
 		playUndergroundMusic();
 	}
-	else if (level == 4) {
-		playCastleMusic();
-	}
-	else {
+}
+
+void SoundController::playBackgroundMusic(const World &world)
+{
+	if (world.LAYOUT_STYLE == LayoutStyle::OpenWorld) {
 		playOpenWorldMusic();
+	}
+	else if (world.LAYOUT_STYLE == LayoutStyle::Underground) {
+		playUndergroundMusic();
+	}
+	else if (world.LAYOUT_STYLE == LayoutStyle::Castle) {
+		playCastleMusic();
 	}
 }
 
@@ -179,6 +191,11 @@ void SoundController::playBonusLostEffect()
 void SoundController::playMarioDeadEffect()
 {
 	Mix_PlayChannel(-1, soundsEffects[11], 0);
+}
+
+void SoundController::playPipeTravelEffect()
+{
+	Mix_PlayChannel(-1, soundsEffects[12], 0);
 }
 
 void SoundController::stopMusic()

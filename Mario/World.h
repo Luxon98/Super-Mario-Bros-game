@@ -7,6 +7,7 @@
 #include "FireBall.h"
 #include "MovingPlatform.h"
 #include "Flag.h"
+#include "CheckPoint.h"
 
 class Player;
 class BonusObject;
@@ -34,6 +35,7 @@ private:
 	std::vector<Block> blocks;
 	std::vector<MovingPlatform> platforms;
 	std::vector<FireBall> fireballs;
+	std::vector<CheckPoint> checkPoints;
 	std::vector<std::shared_ptr<InanimateObject>> inanimateElements;
 	std::vector<std::shared_ptr<BonusObject>> bonusElements;
 	std::vector<std::shared_ptr<LivingObject>> monsters;
@@ -82,6 +84,7 @@ public:
 	BlockType getLastTouchedBlockType() const;
 	bool isFlagDown() const;
 	bool isPlayerFinishingWorld() const;
+	int getLastReachedCheckPointMark() const;
 	void setPlayer(std::shared_ptr<Player> player);
 	void setCamera(std::shared_ptr<Camera> camera);
 	void setLastTouchedBlock(int index);
