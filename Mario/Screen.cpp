@@ -38,8 +38,10 @@ int Screen::computeDifference() const
 int Screen::computeTime() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
-	int time = static_cast<int>(INITIAL_TIME - std::chrono::duration_cast<std::chrono::seconds>
-		(timePoint - timeBegin).count());
+
+	int initialTime = (level < 3 ? 403 : 303);
+	int time = static_cast<int>(initialTime - 
+		std::chrono::duration_cast<std::chrono::seconds>(timePoint - timeBegin).count());
 
 	return time;
 }
@@ -277,7 +279,7 @@ Screen::Screen()
 	renderer = nullptr;
 	initStatus = initGUI();
 	time = 403;
-	level = 1;
+	level = 3;
 	loadScreenImages();
 	timeBegin = std::chrono::steady_clock::now();
 }
@@ -360,8 +362,6 @@ void Screen::drawChangeSubLevelScreen()
 
 void Screen::drawGameOverScreen()
 {
-	SoundController::stopMusic();
-
 	setBlackBackground();
 	drawScreenElements();
 	drawGameOver();

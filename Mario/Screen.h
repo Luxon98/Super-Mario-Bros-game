@@ -14,7 +14,6 @@ class Camera;
 class Screen
 {
 private:
-	static constexpr int INITIAL_TIME = 403;
 	static bool coinImage;
 	int initStatus;
 	int time;

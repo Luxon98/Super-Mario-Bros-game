@@ -477,6 +477,34 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 	world.flag = Flag(Position(6635, 116));
 }
 
+void Level::setThirdLevel(World &world)
+{
+	world.blocks.clear();
+	world.platforms.clear();
+	world.inanimateElements.clear();
+	world.bonusElements.clear();
+	world.monsters.clear();
+	world.temporaryElements.clear();
+	world.fireballs.clear();
+	world.checkPoints.clear();
+
+	world.slidingCounter = 0;
+	world.resetImages();
+
+	world.LAYOUT_STYLE = LayoutStyle::OpenWorld;
+
+	for (int i = 16; i < 528; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	world.blocks.push_back(Block(Position(640, 400), 7));
+	world.blocks.push_back(Block(Position(896, 304), 15));
+
+	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(80, 336))));
+	world.flag = Flag(Position(5155, 116)); //
+}
+
 void Level::setSecondStageOnSecondLevel(World &world)
 {
 	world.blocks.clear();

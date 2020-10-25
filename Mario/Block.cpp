@@ -9,6 +9,7 @@
 
 
 std::array<SDL_Surface*, 22> Block::blockImages;
+std::array<SDL_Surface*, 6> Block::landImages;
 
 bool Block::blockImage = true;
 
@@ -40,6 +41,24 @@ int Block::computeImageIndex() const
 	}
 }
 
+int Block::computeLandImageIndex() const
+{
+	switch (lengthOfLand) {
+	case 5:
+		return 0;
+	case 7:
+		return 1;
+	case 9:
+		return 2;
+	case 11:
+		return 3;
+	case 13:
+		return 4;
+	default:
+		return 5;
+	}
+}
+
 Size Block::getSizeFromBlockType()
 {
 	switch (type) {
@@ -54,17 +73,25 @@ Size Block::getSizeFromBlockType()
 	}
 }
 
-Block::Block(BlockType type, Position position)
+Size Block::getSizeFromLength()
 {
-	this->type = type;
-	this->position = position;
-	size = getSizeFromBlockType();
-	availableCoins = (type == BlockType::Monetary ? 10 : 0);
-	initialPositionY = position.getY();
-	collisionsFlag = (type != BlockType::BonusWithOneUpMushroom);
+	switch (lengthOfLand) {
+	case 5:
+		return Size(96, 32);
+	case 7:
+		return Size(128, 32);
+	case 9:
+		return Size(160, 32);
+	case 11:
+		return Size(192, 32);
+	case 13:
+		return Size(224, 32);
+	default:
+		return Size(256, 32);
+	}
 }
 
-void Block::loadBlockImages(SDL_Surface* display)
+void Block::loadPlainBlockImages(SDL_Surface* display)
 {
 	for (int i = 0; i < 5; ++i) {
 		std::string filename = "./img/block";
@@ -90,6 +117,44 @@ void Block::loadBlockImages(SDL_Surface* display)
 		filename += ".png";
 		blockImages[j] = loadPNG(filename, display);
 	}
+}
+
+void Block::loadLandImages(SDL_Surface* display)
+{
+	for (std::size_t i = 0; i < landImages.size(); ++i) {
+		std::string filename = "./img/land";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		landImages[i] = loadPNG(filename, display);
+	}
+}
+
+Block::Block(BlockType type, Position position)
+{
+	this->type = type;
+	this->position = position;
+	size = getSizeFromBlockType();
+	availableCoins = (type == BlockType::Monetary ? 10 : 0);
+	initialPositionY = position.getY();
+	lengthOfLand = 0;
+	collisionsFlag = (type != BlockType::BonusWithOneUpMushroom);
+}
+
+Block::Block(Position position, int lengthOfLand)
+{
+	this->position = position;
+	type = BlockType::Land;
+	availableCoins = 0;
+	initialPositionY = position.getY();
+	this->lengthOfLand = lengthOfLand;
+	size = getSizeFromLength();
+	collisionsFlag = true;
+}
+
+void Block::loadBlockImages(SDL_Surface* display)
+{
+	loadPlainBlockImages(display);
+	loadLandImages(display);
 }
 
 bool Block::hasCoins() const
@@ -152,8 +217,15 @@ void Block::addToPositionY(int y)
 
 void Block::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
-		SDL_Surface* blockImg = blockImages[computeImageIndex()];
-		drawSurface(display, blockImg, position.getX() - beginningOfCamera, position.getY());
+	if (position.getX() > beginningOfCamera - 150 && position.getX() < endOfCamera + 150) {
+		SDL_Surface* img;
+		if (lengthOfLand > 0) {
+			img = landImages[computeLandImageIndex()];
+		}
+		else {
+			img = blockImages[computeImageIndex()];
+		}
+
+		drawSurface(display, img, position.getX() - beginningOfCamera, position.getY());
 	}
 }

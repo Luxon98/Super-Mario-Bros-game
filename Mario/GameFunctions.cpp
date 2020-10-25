@@ -104,6 +104,9 @@ void changeLevel(int level, World &world, bool playerState)
 	else if (level == 2) {
 		Level::setSecondLevel(world, playerState);
 	}
+	else if (level == 3) {
+		Level::setThirdLevel(world);
+	}
 }
 
 void setWorld(int level, Player &player, World &world, bool playerState)
@@ -176,7 +179,7 @@ void runGame()
 		world.setPlayer(player);
 		screen.setPlayer(player);
 
-		int level = 1, checkPointMark = -1;
+		int level = 3, checkPointMark = -1;
 
 		while (player->getLives() && !winStatus) {
 			if (checkPointMark == -1) {
@@ -230,7 +233,7 @@ void runGame()
 					++level;
 					screen.setLevel(level);
 					soundMixer.setLevel(level);
-					if (level == 3) {
+					if (level == 4) {
 						winStatus = true;
 					}
 					break;

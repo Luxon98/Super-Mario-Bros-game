@@ -24,7 +24,7 @@ void SoundController::loadBackgroundTracks()
 	backgroundTracks[0] = Mix_LoadMUS("./sounds/background_open.wav");
 	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_star.wav");
 	backgroundTracks[2] = Mix_LoadMUS("./sounds/world_finished.wav");
-	backgroundTracks[3] = Mix_LoadMUS("./sounds/gameover.wav");
+	backgroundTracks[3] = Mix_LoadMUS("./sounds/game_over.wav");
 	backgroundTracks[4] = Mix_LoadMUS("./sounds/time_passed.wav");
 	backgroundTracks[5] = Mix_LoadMUS("./sounds/background_underground.wav");
 	backgroundTracks[6] = Mix_LoadMUS("./sounds/background_castle.wav");
@@ -73,7 +73,7 @@ void SoundController::playCastleMusic()
 
 SoundController::SoundController()
 {
-	level = 1;
+	level = 3;
 	initSoundMixer();
 
 	// all audio can be loaded in the constructor 
