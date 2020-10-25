@@ -5,24 +5,27 @@
 #include "SDL_Utility.h"
 
 
-SDL_Surface* Castle::castleImage = nullptr;
+std::array<SDL_Surface*, 2> Castle::castleImages;
 
-Castle::Castle(Position position)
+Castle::Castle(Position position, bool bigCastleFlag)
 {
 	this->position = position;
+	this->bigCastleFlag = bigCastleFlag;
 
 	size = Size(0, 0);
 }
 
 void Castle::loadCastleImages(SDL_Surface* display)
 {
-	castleImage = loadPNG("./img/castle.png", display);
+	castleImages[0] = loadPNG("./img/castle.png", display);
+	castleImages[1] = loadPNG("./img/big_castle.png", display);
 }
 
 void Castle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 200 && position.getX() < endOfCamera + 200) {
-		drawSurface(display, castleImage, position.getX() - beginningOfCamera, position.getY());
+		SDL_Surface* castleImg = castleImages[bigCastleFlag];
+		drawSurface(display, castleImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

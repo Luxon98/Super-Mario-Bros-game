@@ -25,22 +25,36 @@ void MovingPlatform::slideUp()
 	}
 }
 
+void MovingPlatform::slideUpDown()
+{
+	++slideCounter;
+	if (slideCounter < 125) {
+		int distance = (direction == Direction::Down ? 1 : -1);
+		position.setY(position.getY() + distance);
+	}
+	else if (slideCounter == 125) {
+		direction = (direction == Direction::Up ? Direction::Down : Direction::Up);
+		slideCounter = 0;
+	}
+}
+
 void MovingPlatform::slideHorizontally()
 {
 	++slideCounter;
 	int distance = (direction == Direction::Left ? -1 : 1);
 	position.setX(position.getX() + distance);
 
-	if (slideCounter == 500) {
+	if (slideCounter == 125) {
 		direction = (direction == Direction::Left ? Direction::Right : Direction::Left);
 		slideCounter = 0;
 	}
 }
 
-MovingPlatform::MovingPlatform(Position position, Direction direction)
+MovingPlatform::MovingPlatform(Position position, Direction direction, bool upDownChanger)
 {
 	this->position = position;
 	this->direction = direction;
+	this->upDownChanger = upDownChanger;
 	size = Size(96, 16);
 	slideCounter = 0;
 }
@@ -68,13 +82,18 @@ void MovingPlatform::slide(Player &player)
 		player.forceMovement(direction);
 	}
 
-	if (direction == Direction::Right || direction == Direction::Left) {
-		slideHorizontally();
-	}	
-	else if (direction == Direction::Up) {
-		slideUp();
+	if (upDownChanger) {
+		slideUpDown();
 	}
-	else if (direction == Direction::Down) {
-		slideDown();
+	else {
+		if (direction == Direction::Right || direction == Direction::Left) {
+			slideHorizontally();
+		}
+		else if (direction == Direction::Up) {
+			slideUp();
+		}
+		else if (direction == Direction::Down) {
+			slideDown();
+		}
 	}
 }

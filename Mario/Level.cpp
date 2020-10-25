@@ -211,7 +211,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5200, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5270, 400))));
 
-	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6542, 336))));
+	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6542, 336), false)));
 	world.flag = Flag(Position(6335, 116));
 }
 
@@ -473,7 +473,7 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 
 	world.checkPoints.push_back(CheckPoint(Position(5355, 285), true, 25, 1));
 
-	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6684, 336))));
+	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6684, 336), false)));
 	world.flag = Flag(Position(6635, 116));
 }
 
@@ -493,6 +493,8 @@ void Level::setThirdLevel(World &world)
 
 	world.LAYOUT_STYLE = LayoutStyle::OpenWorld;
 
+	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(80, 336), false)));
+
 	for (int i = 16; i < 528; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
@@ -500,9 +502,53 @@ void Level::setThirdLevel(World &world)
 
 	world.blocks.push_back(Block(Position(640, 400), 7));
 	world.blocks.push_back(Block(Position(896, 304), 15));
+	world.blocks.push_back(Block(Position(912, 176), 9));
+	world.blocks.push_back(Block(Position(1072, 400), 5));
+	world.blocks.push_back(Block(Position(1200, 272), 9));
+	world.blocks.push_back(Block(Position(1392, 144), 13));
+	world.blocks.push_back(Block(Position(1664, 432), 7));
+	world.blocks.push_back(Block(Position(1968, 432), 9));
+	world.blocks.push_back(Block(Position(2160, 432), 9));
+	world.blocks.push_back(Block(Position(2288, 304), 5));
+	world.blocks.push_back(Block(Position(1982, 176), 7));
+	world.blocks.push_back(Block(Position(2526, 208), 11));
+	world.blocks.push_back(Block(Position(3198, 368), 7));
+	world.blocks.push_back(Block(Position(3456, 240), 15));
+	world.blocks.push_back(Block(Position(3662, 432), 5));
+	world.blocks.push_back(Block(Position(3774, 304), 7));
+	world.blocks.push_back(Block(Position(3966, 304), 7));
 
-	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(80, 336))));
-	world.flag = Flag(Position(5155, 116)); //
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(1906, 336)));
+
+	for (int i = 4144; i < 5584; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	world.platforms.push_back(MovingPlatform(Position(1810, 327), Direction::Up, true));
+	world.platforms.push_back(MovingPlatform(Position(2822, 265), Direction::Left));
+	world.platforms.push_back(MovingPlatform(Position(2922, 294), Direction::Right));
+	world.platforms.push_back(MovingPlatform(Position(4260, 196), Direction::Left));
+
+	for (int i = 4432; i < 4624; i += 32) {
+		for (int j = 400; j > 272; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Indestructible, Position(i, j)));
+		}
+	}
+
+	for (int i = 4496; i < 4624; i += 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(i, 272)));
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(i, 240)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(4592, 208)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(4560, 208)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(4592, 176)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(4560, 176)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(4880, 400)));
+
+	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(5104, 240), true)));
+	world.flag = Flag(Position(4863, 116)); 
 }
 
 void Level::setSecondStageOnSecondLevel(World &world)
@@ -544,7 +590,7 @@ void Level::setSecondStageOnSecondLevel(World &world)
 
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(720, 400)));
 
-	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(915, 336))));
+	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(915, 336), false)));
 	world.flag = Flag(Position(703, 116));
 }
 
