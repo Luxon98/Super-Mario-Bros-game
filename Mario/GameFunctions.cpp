@@ -25,6 +25,7 @@
 #include "DestroyedTurtle.h"
 #include "Bush.h"
 #include "Cloud.h"
+#include "Rock.h"
 #include "Castle.h"
 #include "Level.h"
 #include "World.h"
@@ -48,8 +49,9 @@ void loadInanimateObjectImages(SDL_Surface* display)
 	Coin::loadCoinImages(display);
 	Bush::loadBushImages(display);
 	Cloud::loadCloudImages(display);
-	Castle::loadCastleImages(display);
+	Rock::loadRockImage(display);
 	Flag::loadFlagImages(display);
+	Castle::loadCastleImages(display);
 }
 
 void loadLivingObjectImages(SDL_Surface* display)

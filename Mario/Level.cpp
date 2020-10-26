@@ -16,6 +16,7 @@
 #include "LayoutStyle.h"
 #include "Flower.h"
 #include "CheckPoint.h"
+#include "Rock.h"
 
 
 void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
@@ -546,6 +547,34 @@ void Level::setThirdLevel(World &world)
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(4592, 176)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(4560, 176)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(4880, 400)));
+
+	for (int i = 624; i < 688; i += 32) {
+		for (int j = 464; j > 400; j -= 32) {
+			world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(i, j))));
+		}
+	}
+
+	for (int i = 816; i < 1008; i += 32) {
+		for (int j = 464; j > 304; j -= 32) {
+			world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(i, j))));
+		}
+	}
+
+	for (int i = 880; i < 976; i += 32) {
+		for (int j = 272; j > 176; j -= 32) {
+			world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(i, j))));
+		}
+	}
+
+	world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(1072, 432))));
+	world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(1072, 464))));
+
+	for (int i = 1168; i < 1264; i += 32) {
+		for (int j = 464; j > 272; j -= 32) {
+			world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(i, j))));
+		}
+	}
+
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(5104, 240), true)));
 	world.flag = Flag(Position(4863, 116)); 
