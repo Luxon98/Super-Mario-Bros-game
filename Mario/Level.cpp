@@ -548,6 +548,29 @@ void Level::setThirdLevel(World &world)
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(4560, 176)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(4880, 400)));
 
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(158, 122))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(336, 248))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(640, 88))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1169, 248))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1264, 215))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1520, 376))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(1696, 120))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1872, 252))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(2176, 88))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(2496, 380))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(2688, 250))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(2800, 218))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(3056, 378))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(3232, 122))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(3712, 88))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(4014, 380))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(4240, 250))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(4336, 218))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(4590, 374))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(4768, 122))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(4942, 248))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(5232, 88))));
+
 	for (int i = 624; i < 688; i += 32) {
 		for (int j = 464; j > 400; j -= 32) {
 			world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(i, j))));
@@ -575,6 +598,64 @@ void Level::setThirdLevel(World &world)
 		}
 	}
 
+	for (int i = 1328; i < 1488; i += 32) {
+		for (int j = 464; j > 144; j -= 32) {
+			world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(i, j))));
+		}
+	}
+
+	world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(1648, 464))));
+	world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(1680, 464))));
+
+	for (int i = 1936; i < 2224; i += 32) {
+		if (i != 2032 && i != 2064 && i != 2096) {
+			world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(i, 464))));
+		}
+	}
+
+	for (int i = 464; i > 304; i -= 32) {
+		world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(2288, i))));
+	}
+
+	for (int i = 400; i > 176; i -= 32) {
+		world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(1966, i))));
+		world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(1998, i))));
+	}
+
+	for (int i = 2478; i < 2606; i += 32) {
+		for (int j = 464; j > 208; j -= 32) {
+			world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(i, j))));
+		}
+	}
+
+	for (int i = 464; i > 304; i -= 32) {
+		world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3758, i))));
+		world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3790, i))));
+		world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3950, i))));
+		world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3982, i))));
+	}
+
+	for (int i = 464; i > 368; i -= 32) {
+		world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3182, i))));
+		world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3214, i))));
+	}
+
+	for (int i = 3376; i < 3568; i += 32) {
+		for (int j = 464; j > 240; j -= 32) {
+			world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(i, j))));
+		}
+	}
+
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1423, 112))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1488, 112))));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(976, 141), false)));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2384, 138), true)));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2575, 176))));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3540, 205), false)));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3665, 172), true)));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4300, 397), false)));
+
+	world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3662, 464))));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(5104, 240), true)));
 	world.flag = Flag(Position(4863, 116)); 
