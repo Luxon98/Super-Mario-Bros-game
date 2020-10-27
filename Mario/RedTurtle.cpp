@@ -52,18 +52,7 @@ void RedTurtle::patrol(World &world)
 			moveDiagonally(world);
 		}
 		else {
-			int alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
-			int distance = movement.getSpeed() - alignment;
-			if (movement.getDirection() == Direction::Left) {
-				distance *= -1;
-			}
-			position.setX(position.getX() + distance);
-
-			if (alignment > 0) {
-				movement.setDirection(
-					movement.getDirection() == Direction::Right ? Direction::Left : Direction::Right);
-			}
-
+			moveHorizontally(world);
 			changeModel();
 		}
 	}
@@ -77,7 +66,10 @@ void RedTurtle::patrol(World &world)
 void RedTurtle::changeModel()
 {
 	++changeModelCounter;
-	if (changeModelCounter % 90 == 0) {
+	if (flying && changeModelCounter % 90 == 0) {
+		model += (model & 1 ? 1 : -1);
+	}
+	else if (!flying && changeModelCounter % 30 == 0) {
 		model += (model & 1 ? 1 : -1);
 	}
 }

@@ -646,6 +646,26 @@ void Level::setThirdLevel(World &world)
 		}
 	}
 
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(878, 146))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(910, 146))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(942, 146))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1198, 82))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1230, 82))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1614, 208))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1646, 208))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1934, 146))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1966, 146))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1998, 146))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(2030, 146))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(2988, 148))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(3020, 148))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(3118, 148))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(3150, 148))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(2734, 174))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(2766, 174))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(3854, 174))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(3886, 174))));
+
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1423, 112))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1488, 112))));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(976, 141), false)));
@@ -653,7 +673,7 @@ void Level::setThirdLevel(World &world)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2575, 176))));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3540, 205), false)));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3665, 172), true)));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4300, 397), false)));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4350, 397), false)));
 
 	world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3662, 464))));
 

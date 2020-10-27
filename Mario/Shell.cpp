@@ -86,6 +86,10 @@ void Shell::move(World &world)
 			moveDiagonally(world);
 		}
 	}
+	else if (!isCharacterStandingOnSomething(*this, world) && stepsCounter & 1) {
+		moveDiagonally(world);
+	}
+
 	++stepsCounter;
 }
 
