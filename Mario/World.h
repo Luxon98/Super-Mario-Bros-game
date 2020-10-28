@@ -61,11 +61,12 @@ private:
 	void performWorldActions();
 	void slideTemporaryElements();
 	void slideBlock();
+	void collectCoin();
 	void addShards(Position position);
 	void performBlockSliding();
 	void subtractCoinFromBlock();
 	void createNewBonus();
-	void createGreenMushroom();
+	void createOneUpMushroom();
 	void playBlockSoundEffects();
 	friend class Level;
 
@@ -104,6 +105,7 @@ public:
 	void addDestroyedTurtle(Position position, Direction slideDirection, bool red = false);
 	void addExplosion(Position position);
 	void addAnimatedText(TextType type, Position position);
+	void addAnimatedCoin();
 	void performActions();
 	void draw(SDL_Surface* display, bool drawPlayer = true);
 };

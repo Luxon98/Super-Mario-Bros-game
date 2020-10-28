@@ -14,23 +14,24 @@ enum class BlockType
 	Indestructible = 2,
 	Empty = 3,
 	Destructible = 4,
-	Monetary = 5,
-	BonusWithCoin = 6,
-	BonusWithOneUpMushroom = 7,
-	BonusWithRedMushroom = 8,
-	BonusWithFlower = 9,
-	BonusWithStar = 10,
-	Tube = 11,
-	TubeTopEntry = 12,
-	TubeLeftEntry = 13,
-	Land = 14
+	Tube = 5,
+	TubeTopEntry = 6,
+	TubeLeftEntry = 7,
+	BonusWithOneUpMushroom = 8,
+	BonusWithRedMushroom = 9,
+	BonusWithFlower = 10,
+	BonusWithCoin = 11,
+	BonusWithStar = 12,
+	Monetary = 13,
+	EmptyMonetary = 14,
+	Land = 15
 };
 
 
 class Block : public WorldObject 
 {
 private:
-	static std::array<SDL_Surface*, 22> blockImages;
+	static std::array<SDL_Surface*, 24> blockImages;
 	static std::array<SDL_Surface*, 6> landImages;
 	static bool blockImage;
 	bool collisionsFlag;
@@ -39,8 +40,10 @@ private:
 	int lengthOfLand;
 	BlockType type;
 	int computeBaseIndex() const;
-	int computeImageIndex() const;
 	int computeLandImageIndex() const;
+	int computeBlockImageIndex() const;
+	int computeImageIndex() const;
+	SDL_Surface* getImage() const;
 	Size getSizeFromBlockType();
 	Size getSizeFromLength();
 	static void loadPlainBlockImages(SDL_Surface* display);

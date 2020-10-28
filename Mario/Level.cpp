@@ -464,12 +464,12 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 176))));
 	}
 
-	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1294, 272))));
-	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1454, 272))));
-	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(2190, 272))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1294, 274))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1454, 274))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(2190, 274))));
 
 	for (int i = 1870; i < 1998; i += 32) {
-		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 272))));
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 274))));
 	}
 
 	world.checkPoints.push_back(CheckPoint(Position(5355, 285), true, 25, 1));
@@ -519,7 +519,7 @@ void Level::setThirdLevel(World &world)
 	world.blocks.push_back(Block(Position(3774, 304), 7));
 	world.blocks.push_back(Block(Position(3966, 304), 7));
 
-	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(1906, 336)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(1906, 320)));
 
 	for (int i = 4144; i < 5584; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
@@ -649,6 +649,7 @@ void Level::setThirdLevel(World &world)
 	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(878, 146))));
 	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(910, 146))));
 	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(942, 146))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1072, 370))));
 	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1198, 82))));
 	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1230, 82))));
 	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(1614, 208))));
@@ -668,7 +669,7 @@ void Level::setThirdLevel(World &world)
 
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1423, 112))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1488, 112))));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(976, 141), false)));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(994, 141), false)));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2384, 138), true)));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2575, 176))));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3540, 205), false)));
@@ -723,4 +724,3 @@ void Level::setSecondStageOnSecondLevel(World &world)
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(915, 336), false)));
 	world.flag = Flag(Position(703, 116));
 }
-

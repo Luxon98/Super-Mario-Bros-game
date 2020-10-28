@@ -363,6 +363,17 @@ void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &
 	}
 }
 
+void handleBlockAndCoinsCollisions(World &world, const Block &block, Player &player)
+{
+	std::vector<std::shared_ptr<InanimateObject>> elements = world.getInanimateElements();
+	for (auto it = elements.begin(); it != elements.end(); ++it) {
+		if (isElementDirectlyAboveObject(**it, block) && areAtTheSameWidth(**it, block)) {
+			collectCoinByCollision(player, world, it - elements.begin());
+			return;
+		}
+	}
+}
+
 void handleBlockAndMushroomsCollisions(World &world, const Block &block)
 {
 	std::vector<std::shared_ptr<BonusObject>> bonusElements = world.getBonusElements();
@@ -379,6 +390,7 @@ void handleBlockAndMushroomsCollisions(World &world, const Block &block)
 void handleBlockCollisions(World &world, const Block &block, Player &player)
 {
 	handleBlockAndMonstersCollisions(world, block, player);
+	handleBlockAndCoinsCollisions(world, block, player);
 	handleBlockAndMushroomsCollisions(world, block);
 }
 

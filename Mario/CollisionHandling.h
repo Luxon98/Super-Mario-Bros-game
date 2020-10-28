@@ -64,6 +64,8 @@ void handleMonsterDestruction(const Block &block, std::shared_ptr<LivingObject> 
 
 void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &player);
 
+void handleBlockAndCoinsCollisions(World &world, const Block &block, Player &player);
+
 void handleBlockAndMushroomsCollisions(World &world, const Block &block);
 
 void handleBlockCollisions(World &world, const Block &block, Player &player);

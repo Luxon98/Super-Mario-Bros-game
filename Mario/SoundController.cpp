@@ -53,27 +53,33 @@ void SoundController::loadSounds()
 	loadSoundEffects();
 }
 
+void SoundController::stopMusicAndEffects()
+{
+	Mix_HaltMusic();
+	Mix_HaltChannel(-1);
+}
+
 void SoundController::playOpenWorldMusic()
 {
-	stopMusic();
+	stopMusicAndEffects();
 	Mix_PlayMusic(backgroundTracks[0], -1);
 }
 
 void SoundController::playUndergroundMusic()
 {
-	stopMusic();
+	stopMusicAndEffects();
 	Mix_PlayMusic(backgroundTracks[5], -1);
 }
 
 void SoundController::playCastleMusic()
 {
-	stopMusic();
+	stopMusicAndEffects();
 	Mix_PlayMusic(backgroundTracks[6], -1);
 }
 
 SoundController::SoundController()
 {
-	level = 3;
+	level = 1;
 	initSoundMixer();
 
 	// all audio can be loaded in the constructor 
@@ -88,25 +94,25 @@ void SoundController::setLevel(int level)
 
 void SoundController::playStarMusic()
 {
-	stopMusic();
+	stopMusicAndEffects();
 	Mix_PlayMusic(backgroundTracks[1], -1);
 }
 
 void SoundController::playWorldFinishedMusic()
 {
-	stopMusic();
+	stopMusicAndEffects();
 	Mix_PlayMusic(backgroundTracks[2], -1);
 }
 
 void SoundController::playGameOverMusic()
 {
-	stopMusic();
+	stopMusicAndEffects();
 	Mix_PlayMusic(backgroundTracks[3], -1);
 }
 
 void SoundController::playTimePassedMusic()
 {
-	stopMusic();
+	stopMusicAndEffects();
 	Mix_PlayMusic(backgroundTracks[4], -1);
 }
 
@@ -201,6 +207,11 @@ void SoundController::playPipeTravelEffect()
 void SoundController::stopMusic()
 {
 	Mix_HaltMusic();
+}
+
+void SoundController::stopEffects()
+{
+	Mix_HaltChannel(-1);
 }
 
 SoundController::~SoundController()

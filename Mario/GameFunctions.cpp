@@ -181,7 +181,7 @@ void runGame()
 		world.setPlayer(player);
 		screen.setPlayer(player);
 
-		int level = 3, checkPointMark = -1;
+		int level = 1, checkPointMark = -1;
 
 		while (player->getLives() && !winStatus) {
 			if (checkPointMark == -1) {

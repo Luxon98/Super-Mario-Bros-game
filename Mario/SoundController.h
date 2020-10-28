@@ -19,6 +19,7 @@ private:
 	void loadBackgroundTracks();
 	void loadSoundEffects();
 	void loadSounds();
+	static void stopMusicAndEffects();
 	static void playOpenWorldMusic();
 	static void playUndergroundMusic();
 	static void playCastleMusic();
@@ -46,6 +47,7 @@ public:
 	static void playMarioDeadEffect();
 	static void playPipeTravelEffect();
 	static void stopMusic();
+	static void stopEffects();
 	~SoundController();
 };
 

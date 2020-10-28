@@ -94,3 +94,12 @@ void collectCoin(Player &player, World &world, int index)
 	world.deleteCoin(index);
 	SoundController::playCoinCollectedEffect();
 }
+
+void collectCoinByCollision(Player &player, World &world, int index)
+{
+	player.incrementCoins();
+	player.addPoints(200);
+	world.deleteCoin(index);
+	world.addAnimatedCoin();
+	SoundController::playCoinCollectedEffect();
+}

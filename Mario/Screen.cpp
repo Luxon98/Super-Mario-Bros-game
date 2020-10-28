@@ -22,12 +22,7 @@ bool Screen::isPlayerExceedingCameraReferencePoint() const
 
 int Screen::computeCoinBaseIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		return 0;
-	}
-	else {
-		return 2;
-	}
+	return (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
 }
 
 int Screen::computeDifference() const
@@ -279,7 +274,7 @@ Screen::Screen()
 	renderer = nullptr;
 	initStatus = initGUI();
 	time = 403;
-	level = 3;
+	level = 1;
 	loadScreenImages();
 	timeBegin = std::chrono::steady_clock::now();
 }

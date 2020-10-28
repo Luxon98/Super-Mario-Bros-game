@@ -51,9 +51,8 @@ bool World::isPlayerCloseEnough(LivingObject &monster) const
 
 bool World::hasLastTouchedBlockCoin() const
 {
-	if (blocks[lastTouchedBlockIndex].getType() == BlockType::Monetary ||
-		blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithCoin) {
-
+	BlockType blockType = blocks[lastTouchedBlockIndex].getType();
+	if (blockType == BlockType::Monetary || blockType == BlockType::BonusWithCoin) {
 		return true;
 	}
 
@@ -62,8 +61,9 @@ bool World::hasLastTouchedBlockCoin() const
 
 bool World::isLastTouchedBlockBonus() const
 {
-	if (blocks[lastTouchedBlockIndex].getType() >= BlockType::BonusWithRedMushroom
-		&& blocks[lastTouchedBlockIndex].getType() <= BlockType::BonusWithStar) {
+	BlockType blockType = blocks[lastTouchedBlockIndex].getType();
+	if (blockType == BlockType::BonusWithRedMushroom || blockType == BlockType::BonusWithFlower
+		|| blockType == BlockType::BonusWithStar) {
 
 		return true;
 	}
@@ -95,8 +95,7 @@ void World::deleteTemporaryElements()
 	for (std::size_t i = 0; i < temporaryElements.size(); ++i) {
 		if (temporaryElements[i]->shouldBeRemoved()) {
 			if (std::dynamic_pointer_cast<AnimatedCoin>(temporaryElements[i])) {
-				addAnimatedText(TextType::TWO_HUNDRED, Position(temporaryElements[i]->getX(),
-					temporaryElements[i]->getY()));
+				addAnimatedText(TextType::TWO_HUNDRED, Position(temporaryElements[i]->getPosition()));
 			}
 
 			temporaryElements.erase(temporaryElements.begin() + i);
@@ -135,8 +134,7 @@ void World::performMonstersActions()
 			if (!(std::dynamic_pointer_cast<Shell>(monsters[i])->isActive())
 				&& std::dynamic_pointer_cast<Shell>(monsters[i])->shouldTurnIntoTurtle()) {
 
-				monsters.push_back(std::make_shared<Turtle>(Turtle(Position(monsters[i]->getX(), 
-					monsters[i]->getY()))));
+				monsters.push_back(std::make_shared<Turtle>(Turtle(Position(monsters[i]->getPosition()))));
 				monsters.erase(monsters.begin() + i);
 			}
 
@@ -227,6 +225,13 @@ void World::slideBlock()
 	}
 }
 
+void World::collectCoin()
+{
+	player->incrementCoins();
+	player->addPoints(200);
+	addAnimatedCoin();
+}
+
 void World::addShards(Position position)
 {
 	temporaryElements.push_back(std::make_shared<Shards>(Shards(position)));
@@ -240,7 +245,7 @@ void World::performBlockSliding()
 		blocks[lastTouchedBlockIndex].addToPositionY(height);
 
 		if (slidingCounter > 40 && blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithOneUpMushroom) {
-			createGreenMushroom();
+			createOneUpMushroom();
 		}
 	}
 
@@ -251,21 +256,14 @@ void World::subtractCoinFromBlock()
 {
 	if (blocks[lastTouchedBlockIndex].getType() == BlockType::Monetary) {
 		blocks[lastTouchedBlockIndex].decrementCoins();
-		player->incrementCoins();
-		player->addPoints(200);
-		temporaryElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(
-			Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 50))));
+		collectCoin();
 
 		if (!blocks[lastTouchedBlockIndex].hasCoins()) {
-			blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
+			blocks[lastTouchedBlockIndex].setType(BlockType::EmptyMonetary);
 		}
 	}
 	else if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithCoin) {
-		player->incrementCoins();
-		player->addPoints(200);
-		temporaryElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(
-			Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 56))));
-
+		collectCoin();
 		blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 	}
 }
@@ -273,28 +271,27 @@ void World::subtractCoinFromBlock()
 void World::createNewBonus()
 {
 	if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithRedMushroom) {
-		bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
-			blocks[lastTouchedBlockIndex].getY()), false)));
+		bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(
+			blocks[lastTouchedBlockIndex].getPosition()), false)));
 	}
 	else if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithFlower) {
 		if (player->isSmall()) {
-			bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
-				blocks[lastTouchedBlockIndex].getY()), false)));
+			bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(
+				blocks[lastTouchedBlockIndex].getPosition()), false)));
 		}
 		else {
-			bonusElements.push_back(std::make_shared<Flower>(Flower(Position(blocks[lastTouchedBlockIndex].getX(),
-				blocks[lastTouchedBlockIndex].getY()))));
+			bonusElements.push_back(std::make_shared<Flower>(Flower(Position(
+				blocks[lastTouchedBlockIndex].getPosition()))));
 		}
 	}
 	else if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithStar) {
-		bonusElements.push_back(std::make_shared<Star>(Star(Position(blocks[lastTouchedBlockIndex].getX(),
-			blocks[lastTouchedBlockIndex].getY()))));
+		bonusElements.push_back(std::make_shared<Star>(Star(Position(blocks[lastTouchedBlockIndex].getPosition()))));
 	}
 
 	blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 }
 
-void World::createGreenMushroom()
+void World::createOneUpMushroom()
 {
 	bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
 		blocks[lastTouchedBlockIndex].getY() - 8), true)));
@@ -304,12 +301,13 @@ void World::createGreenMushroom()
 
 void World::playBlockSoundEffects()
 {
-	if (blocks[lastTouchedBlockIndex].getType() >= BlockType::BonusWithOneUpMushroom &&
-		blocks[lastTouchedBlockIndex].getType() <= BlockType::BonusWithStar) {
+	BlockType blockType = blocks[lastTouchedBlockIndex].getType();
+	if ((blockType >= BlockType::BonusWithOneUpMushroom && blockType <= BlockType::BonusWithStar) 
+		&& blockType != BlockType::BonusWithCoin) {
+
 		SoundController::playBonusAppeardEffect();
 	}
-	else if (blocks[lastTouchedBlockIndex].getType() >= BlockType::Monetary &&
-		blocks[lastTouchedBlockIndex].getType() <= BlockType::BonusWithCoin) {
+	else if (blockType == BlockType::Monetary || blockType == BlockType::BonusWithCoin) {
 		SoundController::playCoinCollectedEffect();
 	}
 	else {
@@ -418,8 +416,9 @@ void World::setLastTouchedBlock(int index)
 void World::hitBlock()
 {
 	if (lastTouchedBlockIndex != -1) {
-		if ((blocks[lastTouchedBlockIndex].getType() >= BlockType::Destructible && blocks[lastTouchedBlockIndex].getType()
-			<= BlockType::BonusWithStar) && blocks[lastTouchedBlockIndex].canBeHitted()) {
+		BlockType blockType = blocks[lastTouchedBlockIndex].getType();
+		if (((blockType >= BlockType::BonusWithOneUpMushroom && blockType <= BlockType::Monetary) 
+			|| blockType == BlockType::Destructible) && blocks[lastTouchedBlockIndex].canBeHitted()) {
 
 			slidingCounter = SLIDING_BLOCK_VALUE;
 		}
@@ -453,7 +452,7 @@ void World::resetImages()
 
 void World::destroyLastTouchedBlock()
 {
-	addShards(Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY()));
+	addShards(Position(blocks[lastTouchedBlockIndex].getPosition()));
 	handleBlockCollisions(*this, blocks[lastTouchedBlockIndex], *player);
 	blocks.erase(blocks.begin() + lastTouchedBlockIndex);
 	player->addPoints(50);
@@ -509,6 +508,12 @@ void World::addExplosion(Position position)
 void World::addAnimatedText(TextType type, Position position)
 {
 	temporaryElements.push_back(std::make_shared<AnimatedText>(AnimatedText(type, position)));
+}
+
+void World::addAnimatedCoin()
+{
+	Position position = Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 50);
+	temporaryElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(position)));
 }
 
 void World::performActions()

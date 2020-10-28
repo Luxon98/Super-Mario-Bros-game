@@ -8,55 +8,59 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 22> Block::blockImages;
+std::array<SDL_Surface*, 24> Block::blockImages;
 std::array<SDL_Surface*, 6> Block::landImages;
 
 bool Block::blockImage = true;
 
 int Block::computeBaseIndex() const
 {
-	return (World::LAYOUT_STYLE == LayoutStyle::Underground ? 11 : 0);
-}
-
-int Block::computeImageIndex() const
-{
-	int baseIndex = computeBaseIndex();
-	if (type <= BlockType::Destructible) {
-		return (baseIndex + (static_cast<int>(type) - 1));
-	}
-	else if (type == BlockType::Monetary || type == BlockType::BonusWithStar) {
-		return (baseIndex + 3);
-	}
-	else if (type == BlockType::Tube || type == BlockType::TubeTopEntry) {
-		return (baseIndex + (static_cast<int>(type) - 4));
-	}
-	else if (type == BlockType::BonusWithOneUpMushroom) {
-		return (baseIndex + (static_cast<int>(type) + 2));
-	}
-	else if (type == BlockType::TubeLeftEntry) {
-		return (baseIndex + (static_cast<int>(type) - 3));
-	}
-	else {
-		return (baseIndex + 4);
-	}
+	return (World::LAYOUT_STYLE == LayoutStyle::Underground ? 12 : 0);
 }
 
 int Block::computeLandImageIndex() const
 {
-	switch (lengthOfLand) {
-	case 5:
-		return 0;
-	case 7:
-		return 1;
-	case 9:
-		return 2;
-	case 11:
-		return 3;
-	case 13:
-		return 4;
-	default:
-		return 5;
+	for (int length = 5, index = 0; length <= 15; length += 2, ++index) {
+		if (length == lengthOfLand) {
+			return index;
+		}
 	}
+
+	return 0;
+}
+
+int Block::computeBlockImageIndex() const
+{
+	int baseIndex = computeBaseIndex();
+
+	if (type <= BlockType::BonusWithOneUpMushroom) {
+		return (baseIndex + (static_cast<int>(type) - 1));
+	}
+	else if (type >= BlockType::BonusWithRedMushroom && type <= BlockType::BonusWithCoin) {
+		return (baseIndex + 8 + blockImage);
+	}
+	else if (type == BlockType::BonusWithStar || type == BlockType::Monetary) {
+		return (baseIndex + 3);
+	}
+	else {
+		return (baseIndex + (static_cast<int>(type) - 3));
+	}
+}
+
+int Block::computeImageIndex() const
+{
+	if (type == BlockType::Monetary) {
+		int baseIndex = computeBaseIndex();
+		return (position.getY() == initialPositionY ? baseIndex + 3 : baseIndex + 10);
+	}
+	else {
+		return computeBlockImageIndex();
+	}
+}
+
+SDL_Surface* Block::getImage() const
+{
+	return (type == BlockType::Land ? landImages[computeLandImageIndex()] : blockImages[computeImageIndex()]);
 }
 
 Size Block::getSizeFromBlockType()
@@ -93,29 +97,11 @@ Size Block::getSizeFromLength()
 
 void Block::loadPlainBlockImages(SDL_Surface* display)
 {
-	for (int i = 0; i < 5; ++i) {
+	for (std::size_t i = 0; i < blockImages.size(); ++i) {
 		std::string filename = "./img/block";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		blockImages[i] = loadPNG(filename, display);
-	}
-	blockImages[5] = loadPNG("./img/block5.png", display);
-	blockImages[6] = loadPNG("./img/block6.png", display);
-
-	for (int j = 7; j < 16; ++j) {
-		std::string filename = "./img/block";
-		filename += std::to_string(j);
-		filename += ".png";
-		blockImages[j] = loadPNG(filename, display);
-	}
-	blockImages[16] = loadPNG("./img/block15.png", display);
-	blockImages[17] = loadPNG("./img/block16.png", display);
-
-	for (int j = 18; j < 22; ++j) {
-		std::string filename = "./img/block";
-		filename += std::to_string(j - 1);
-		filename += ".png";
-		blockImages[j] = loadPNG(filename, display);
 	}
 }
 
@@ -193,8 +179,6 @@ void Block::resetBlockImage()
 
 void Block::changeBlockImage()
 {
-	Block::blockImages[4] = Block::blockImages[5 + Block::blockImage];
-	Block::blockImages[15] = Block::blockImages[16 + Block::blockImage];
 	Block::blockImage = !Block::blockImage;
 }
 
@@ -218,14 +202,6 @@ void Block::addToPositionY(int y)
 void Block::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 150 && position.getX() < endOfCamera + 150) {
-		SDL_Surface* img;
-		if (lengthOfLand > 0) {
-			img = landImages[computeLandImageIndex()];
-		}
-		else {
-			img = blockImages[computeImageIndex()];
-		}
-
-		drawSurface(display, img, position.getX() - beginningOfCamera, position.getY());
+		drawSurface(display, getImage(), position.getX() - beginningOfCamera, position.getY());
 	}
 }

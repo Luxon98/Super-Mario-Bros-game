@@ -22,6 +22,7 @@ void collectStar(Player &player, World &world, int index);
 
 void collectCoin(Player &player, World &world, int index);
 
+void collectCoinByCollision(Player &player, World &world, int index);
 
 #endif //WorldInteractionFunctions_H
 
