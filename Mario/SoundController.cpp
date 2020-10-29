@@ -7,7 +7,6 @@
 
 std::array<Mix_Music*, 7> SoundController::backgroundTracks;
 std::array<Mix_Chunk*, 13> SoundController::soundsEffects;
-int SoundController::level = 1;
 
 bool SoundController::initSoundMixer()
 {
@@ -53,33 +52,26 @@ void SoundController::loadSounds()
 	loadSoundEffects();
 }
 
-void SoundController::stopMusicAndEffects()
-{
-	Mix_HaltMusic();
-	Mix_HaltChannel(-1);
-}
-
 void SoundController::playOpenWorldMusic()
 {
-	stopMusicAndEffects();
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[0], -1);
 }
 
 void SoundController::playUndergroundMusic()
 {
-	stopMusicAndEffects();
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[5], -1);
 }
 
 void SoundController::playCastleMusic()
 {
-	stopMusicAndEffects();
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[6], -1);
 }
 
 SoundController::SoundController()
 {
-	level = 1;
 	initSoundMixer();
 
 	// all audio can be loaded in the constructor 
@@ -87,54 +79,39 @@ SoundController::SoundController()
 	loadSounds();
 }
 
-void SoundController::setLevel(int level)
-{
-	this->level = level;
-}
-
 void SoundController::playStarMusic()
 {
-	stopMusicAndEffects();
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[1], -1);
 }
 
 void SoundController::playWorldFinishedMusic()
 {
-	stopMusicAndEffects();
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[2], -1);
 }
 
 void SoundController::playGameOverMusic()
 {
-	stopMusicAndEffects();
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[3], -1);
 }
 
 void SoundController::playTimePassedMusic()
 {
-	stopMusicAndEffects();
+	stopMusic();
 	Mix_PlayMusic(backgroundTracks[4], -1);
 }
 
 void SoundController::playBackgroundMusic()
 {
-	if (level == 1 || level == 3) {
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
 		playOpenWorldMusic();
 	}
-	else if (level == 2) {
+	else if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
 		playUndergroundMusic();
 	}
-}
-
-void SoundController::playBackgroundMusic(const World &world)
-{
-	if (world.LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		playOpenWorldMusic();
-	}
-	else if (world.LAYOUT_STYLE == LayoutStyle::Underground) {
-		playUndergroundMusic();
-	}
-	else if (world.LAYOUT_STYLE == LayoutStyle::Castle) {
+	else if (World::LAYOUT_STYLE == LayoutStyle::Castle) {
 		playCastleMusic();
 	}
 }
@@ -207,11 +184,6 @@ void SoundController::playPipeTravelEffect()
 void SoundController::stopMusic()
 {
 	Mix_HaltMusic();
-}
-
-void SoundController::stopEffects()
-{
-	Mix_HaltChannel(-1);
 }
 
 SoundController::~SoundController()

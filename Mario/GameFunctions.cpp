@@ -136,7 +136,7 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world)
 void changeSubWorld(Screen &screen)
 {
 	SoundController::playPipeTravelEffect();
-	screen.drawChangeSubLevelScreen();
+	screen.drawChangeStageOfLevelScreen();
 	SoundController::stopMusic();
 	screen.resetScreen(false);
 }
@@ -194,7 +194,7 @@ void runGame()
 				setSubWorld(level, checkPointMark, *player, world);
 			}
 
-			soundMixer.playBackgroundMusic(world);
+			soundMixer.playBackgroundMusic();
 
 			while (playerState && timeState && !winStatus) {
 				screen.updateScreen(world);
@@ -234,7 +234,6 @@ void runGame()
 					
 					++level;
 					screen.setLevel(level);
-					soundMixer.setLevel(level);
 					if (level == 4) {
 						winStatus = true;
 					}

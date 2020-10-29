@@ -39,19 +39,19 @@ int Block::computeBlockImageIndex() const
 	else if (type >= BlockType::BonusWithRedMushroom && type <= BlockType::BonusWithCoin) {
 		return (baseIndex + 8 + blockImage);
 	}
-	else if (type == BlockType::BonusWithStar || type == BlockType::Monetary) {
-		return (baseIndex + 3);
-	}
 	else {
-		return (baseIndex + (static_cast<int>(type) - 3));
+		return (baseIndex + 3);
 	}
 }
 
 int Block::computeImageIndex() const
 {
+	int baseIndex = computeBaseIndex();
 	if (type == BlockType::Monetary) {
-		int baseIndex = computeBaseIndex();
 		return (position.getY() == initialPositionY ? baseIndex + 3 : baseIndex + 10);
+	}
+	else if (type == BlockType::EmptyMonetary) {
+		return (position.getY() != initialPositionY ? baseIndex + 2 : baseIndex + 11);
 	}
 	else {
 		return computeBlockImageIndex();

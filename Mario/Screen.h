@@ -50,7 +50,8 @@ private:
 	void drawTime(long long int time);
 	void drawPoints(int points);
 	void drawCoins(int coins);
-	void updateView();
+	void updateView();	
+	void drawAddingPointsAnimation(World &world);
 	int initGUI();
 	void closeGUI();
 
@@ -69,7 +70,7 @@ public:
 	static void changeCoinImage();
 	void resetScreen(bool resetTimeFlag = true);
 	void drawStartScreen();
-	void drawChangeSubLevelScreen();
+	void drawChangeStageOfLevelScreen();
 	void drawGameOverScreen();
 	void drawTimeUpScreen();
 	void drawDeadMario(World &world);

@@ -228,6 +228,23 @@ void Screen::updateView()
 	SDL_RenderPresent(renderer);
 }
 
+void Screen::drawAddingPointsAnimation(World& world)
+{
+	for (int i = time; i >= 0; --i) {
+		fillBackground();
+		world.performActions();
+		world.draw(display, false);
+		player->addPoints(100);
+		drawScreenElements();
+		drawTime(time);
+		drawPoints(player->getPoints());
+		drawCoins(player->getCoins());
+		--time;
+		updateView();
+		std::this_thread::sleep_for(std::chrono::milliseconds(20));
+	}
+}
+
 int Screen::initGUI()
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -347,7 +364,7 @@ void Screen::drawStartScreen()
 	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 }
 
-void Screen::drawChangeSubLevelScreen()
+void Screen::drawChangeStageOfLevelScreen()
 {
 	setBlackBackground();
 	updateView();
@@ -387,7 +404,7 @@ void Screen::drawDeadMario(World &world)
 	int index = player->getDeadMarioImageIndex() + 10;
 	SDL_Surface* img = screenImages[index];
 	int shift = 0;
-	for (int i = 0; i < 3000; ++i) {
+	for (int i = 0; i < 2400; ++i) {
 		if (i % 3 == 0) {
 			time = computeTime();
 			fillBackground();
@@ -404,29 +421,19 @@ void Screen::drawDeadMario(World &world)
 			shift += (i <= 450 ? -1 : 1);
 		}
 	}
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(1250));
 }
 
 void Screen::drawWorldFinishedScreen(World &world)
 {
 	SoundController::playWorldFinishedMusic();
 
-	for (int i = 2 * time; i >= 0; --i) {
-		world.performActions();
-		bool drawPlayer = (player->getStepsRight() != 0);
-		world.draw(display, drawPlayer);
-		updateView();
-
-		if (i & 1) {
-			player->addPoints(100);
-			fillBackground();
-			drawScreenElements();
-			drawTime(time);
-			drawPoints(player->getPoints());
-			drawCoins(player->getCoins());
-			--time;
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		}
+	while (player->getStepsRight() != 0) {
+		updateScreen(world);
 	}
+
+	drawAddingPointsAnimation(world);
 }
 
 void Screen::updateScreen(World &world)

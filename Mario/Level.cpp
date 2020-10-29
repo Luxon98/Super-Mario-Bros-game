@@ -66,7 +66,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.blocks.push_back(Block(BlockType::BonusWithStar, Position(3246, 288)));
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(3406, 288)));
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(3502, 288)));
-	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(3502, 160)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(3502, 160)));
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(3598, 288)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(3790, 288)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(3886, 160)));
@@ -269,12 +269,10 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 464)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(16 + i, 432)));
 
-		if (i < 4800) {
+		if (i < 4832) {
 			world.blocks.push_back(Block(BlockType::Destructible, Position(16 + i, 272)));
 		}
 	}
-
-	world.blocks.push_back(Block(BlockType::Monetary, Position(4816, 272)));
 
 	for (int i = 5136; i < 5712; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
