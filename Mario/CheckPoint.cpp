@@ -3,8 +3,12 @@
 #include "Player.h"
 
 
-CheckPoint::CheckPoint(Position position, bool automatic, int range, int mark)
-	: position(position), automatic(automatic), range(range), mark(mark) {}
+CheckPoint::CheckPoint(Position position, bool automatic, int mark) 
+	: position(position), automatic(automatic), mark(mark) 
+{
+	horizontalRange = (automatic ? 15 : 5);
+	verticalRange = 40;
+}
 
 bool CheckPoint::isAutomatic() const
 {
@@ -18,8 +22,8 @@ unsigned int CheckPoint::getMark() const
 
 bool CheckPoint::isPlayerInRangeOfCheckPoint(const Player &player) const
 {
-	if ((player.getX() >= position.getX() - range && player.getX() <= position.getX() + range) 
-		&& (player.getY() >= position.getY() - range && player.getY() <= position.getY() + range)) {
+	if ((player.getX() >= position.getX() - horizontalRange && player.getX() <= position.getX() + horizontalRange)
+		&& (player.getY() >= position.getY() - verticalRange && player.getY() <= position.getY() + verticalRange)) {
 
 		return true;
 	}

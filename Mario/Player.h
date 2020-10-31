@@ -65,6 +65,7 @@ private:
 		bool armedFlag;
 		bool slideFlag;
 		bool changeDirectionFlag;
+		bool downPipeFlag;
 		Flags();
 		void setDefaultFlags(bool armedFlag);
 	};
@@ -128,6 +129,7 @@ public:
 	bool isDead() const;
 	bool isTurnedRight() const;
 	bool isPerformingJumpAsSmall() const;
+	bool isGoingToPipe() const;
 	void incrementCoins();
 	void incrementLives();
 	void increaseSpeed();

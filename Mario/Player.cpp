@@ -30,6 +30,7 @@ Player::Flags::Flags()
 	armedFlag = false;
 	slideFlag = false;
 	changeDirectionFlag = false;
+	downPipeFlag = false;
 }
 
 void Player::Flags::setDefaultFlags(bool armedFlag)
@@ -40,6 +41,7 @@ void Player::Flags::setDefaultFlags(bool armedFlag)
 	this->armedFlag = armedFlag;
 	slideFlag = false;
 	changeDirectionFlag = false;
+	downPipeFlag = false;
 }
 
 Player::PlayerMovement::PlayerMovement()
@@ -339,6 +341,7 @@ void Player::moveLeft(World &world)
 	}
 
 	flags.orientationFlag = false;
+	//flags.downPipeFlag = false;
 }
 
 void Player::moveRight(World &world)
@@ -356,6 +359,7 @@ void Player::moveRight(World &world)
 	}
 
 	flags.orientationFlag = true;
+	//flags.downPipeFlag = false;
 }
 
 void Player::moveUp(World &world)
@@ -381,6 +385,8 @@ void Player::moveUp(World &world)
 	if (isCharacterStandingOnSomething(*this, world)) {
 		model = 0;
 	}
+
+	//flags.downPipeFlag = false;
 }
 
 void Player::moveDown(World &world)
@@ -398,6 +404,8 @@ void Player::moveDown(World &world)
 			flags.aliveFlag = false;
 		}
 	}
+
+	//flags.downPipeFlag = false;
 }
 
 void Player::slide(World &world)
@@ -518,6 +526,15 @@ bool Player::isPerformingJumpAsSmall() const
 		return true;
 	}
 	else if (currentState >= PlayerState::ImmortalSmallFirst && currentState <= PlayerState::ImmortalSmallFourth) {
+		return true;
+	}
+
+	return false;
+}
+
+bool Player::isGoingToPipe() const
+{
+	if (flags.downPipeFlag && playerMovement.stepsUp == 0) {
 		return true;
 	}
 
@@ -668,7 +685,15 @@ void Player::setPositionXY(int level)
 
 void Player::setPositionXY(int level, int checkPointMark)
 {
-	if (level == 2 && checkPointMark == 1) {
+	if (level == 1) {
+		if (checkPointMark == 1) {
+			position.setXY(65, 65);
+		}
+		else if (checkPointMark == 2) {
+			position.setXY(1865, 245);
+		}
+	}
+	else if (level == 2 && checkPointMark == 2) {
 		int posY = (this->isSmall() ? 320 : 336);
 		position.setXY(128, posY);
 	}

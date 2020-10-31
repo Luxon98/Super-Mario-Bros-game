@@ -212,6 +212,8 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5200, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5270, 400))));
 
+	world.checkPoints.push_back(CheckPoint(Position(926, 350), true, 1));
+
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6542, 336), false)));
 	world.flag = Flag(Position(6335, 116));
 }
@@ -470,7 +472,7 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 274))));
 	}
 
-	world.checkPoints.push_back(CheckPoint(Position(5355, 285), true, 25, 1));
+	world.checkPoints.push_back(CheckPoint(Position(5355, 285), true, 2));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6684, 336), false)));
 	world.flag = Flag(Position(6635, 116));
@@ -678,6 +680,117 @@ void Level::setThirdLevel(World &world)
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(5104, 240), true)));
 	world.flag = Flag(Position(4863, 116)); 
+}
+
+void Level::setFirstBonusStage(World &world)
+{
+	world.blocks.clear();
+	world.platforms.clear();
+	world.inanimateElements.clear();
+	world.bonusElements.clear();
+	world.monsters.clear();
+	world.temporaryElements.clear();
+	world.fireballs.clear();
+	world.checkPoints.clear();
+
+	world.slidingCounter = 0;
+	world.resetImages();
+
+	world.LAYOUT_STYLE = LayoutStyle::Underground;
+
+	for (int i = 16; i < 688; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	for (int i = 172; i < 428; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 80)));
+		for (int j = 400; j > 304; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Destructible, Position(i, j)));
+		}
+	}
+
+	for (int i = 80; i < 432; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(16, i)));
+	}
+
+	for (int i = 172; i < 428; i += 32) {
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 306))));
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 242))));
+		if (i != 172 && i != 396) {
+			world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 178))));
+		}
+	}
+
+	world.blocks.push_back(Block(BlockType::TubeLeftEntry, Position(583, 384)));
+	for (int i = 399; i > 47; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Tube, Position(645, i)));
+	}
+
+	world.checkPoints.push_back(CheckPoint(Position(590, 385), true, 2));
+
+	world.flag = Flag(Position(5000, 116));
+}
+
+void Level::setSecondBonusStage(World &world)
+{
+	world.blocks.clear();
+	world.platforms.clear();
+	world.inanimateElements.clear();
+	world.bonusElements.clear();
+	world.monsters.clear();
+	world.temporaryElements.clear();
+	world.fireballs.clear();
+	world.checkPoints.clear();
+
+	world.slidingCounter = 0;
+	world.resetImages();
+
+	world.LAYOUT_STYLE = LayoutStyle::Underground;
+
+	for (int i = 16; i < 688; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Monetary, Position(528, 304)));
+
+	for (int i = 80; i < 432; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(16, i)));
+	}
+
+	world.blocks.push_back(Block(BlockType::TubeLeftEntry, Position(583, 384)));
+
+	for (int i = 399; i > 47; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Tube, Position(645, i)));
+	}
+
+	for (int i = 144; i < 624; i += 32) {
+		if (i != 528) {
+			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 304)));
+		}
+		
+		for (int j = 80; j < 208; j += 32) {
+			world.blocks.push_back(Block(BlockType::Destructible, Position(i, j)));
+		}
+	}
+
+	for (int i = 208; i < 304; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(560, i)));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(592, i)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Destructible, Position(560, 336)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(592, 336)));
+
+	for (int i = 172; i < 496; i += 32) {
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 274))));
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 402))));
+	}
+
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(140, 402))));
+
+	world.flag = Flag(Position(5000, 116));
 }
 
 void Level::setSecondStageOnSecondLevel(World &world)

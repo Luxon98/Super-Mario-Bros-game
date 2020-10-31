@@ -91,11 +91,30 @@ void loadImages(SDL_Surface* display)
 	loadBlockImages(display);
 }
 
-void reset(KeyboardController &controller, Screen &screen, bool * playerState)
+void resetScreen(Screen &screen, int level, int checkPointMark)
 {
-	controller.clearKeysState();
-	screen.resetScreen();
-	*playerState = true;
+	if (level == 1) {
+		if (checkPointMark == -1) {
+			screen.resetScreen(0, 640);
+		}
+		else if (checkPointMark == 1) {
+			screen.resetScreen(0, 640, false);
+		}
+		else if (checkPointMark == 2) {
+			screen.resetScreen(1600, 2240, false);
+		}
+	}
+	else if (level == 2) {
+		if (checkPointMark == -1) {
+			screen.resetScreen(0, 640);
+		}
+		else if (checkPointMark == 2) {
+			screen.resetScreen(0, 640, false);
+		}
+	}
+	else if (level == 3) {
+		screen.resetScreen(0, 640);
+	}
 }
 
 void changeLevel(int level, World &world, bool playerState)
@@ -123,22 +142,39 @@ void setWorld(int level, Player &player, World &world, bool playerState)
 	changeLevel(level, world, playerState);
 }
 
+void drawChangeStageScreen(Screen& screen)
+{
+	SoundController::playPipeTravelEffect();
+	screen.drawChangeStageOfLevelScreen();
+	SoundController::stopMusic();
+}
+
 void setSubWorld(int level, int checkPointMark, Player &player, World &world)
 {
 	player.resetSteps();
 	player.setPositionXY(level, checkPointMark);
 
-	if (level == 2 && checkPointMark == 1) {
+	if (level == 1) {
+		if (checkPointMark == 1) {
+			Level::setFirstBonusStage(world);
+		}
+		else {
+			Level::setFirstLevel(world);
+		}
+	}
+	else if (level == 2 && checkPointMark == 2) {
 		Level::setSecondStageOnSecondLevel(world);
 	}
 }
 
-void changeSubWorld(Screen &screen)
+void adjustCamera(int level, int checkPointMark)
 {
-	SoundController::playPipeTravelEffect();
-	screen.drawChangeStageOfLevelScreen();
-	SoundController::stopMusic();
-	screen.resetScreen(false);
+	if ((level == 1 || level == 2) && checkPointMark == 1) {
+		Camera::disableCameraMoving();
+	}
+	else {
+		Camera::enableCameraMoving();
+	}
 }
 
 void runGame()
@@ -186,13 +222,15 @@ void runGame()
 		while (player->getLives() && !winStatus) {
 			if (checkPointMark == -1) {
 				setWorld(level, *player, world, playerState);
-				reset(controller, screen, &playerState);
-
+				playerState = true;
 				screen.drawStartScreen();
 			}
 			else {
+				drawChangeStageScreen(screen);
 				setSubWorld(level, checkPointMark, *player, world);
 			}
+			adjustCamera(level, checkPointMark);
+			resetScreen(screen, level, checkPointMark);
 
 			soundMixer.playBackgroundMusic();
 
@@ -201,7 +239,7 @@ void runGame()
 
 				while (SDL_PollEvent(&event) && playerState) {
 					controller.handleKeysState(state);
-					controller.handleKeys(*player, world);
+					controller.forceActions(*player, world);
 
 					if (player->isDead()) {
 						playerState = false;
@@ -210,12 +248,11 @@ void runGame()
 				}
 
 				if (playerState) {
-					controller.handleKeys(*player, world);
+					controller.forceActions(*player, world);
 				}
 
 				checkPointMark = world.getLastReachedCheckPointMark();
 				if (checkPointMark != -1) {
-					changeSubWorld(screen);
 					break;
 				}
 

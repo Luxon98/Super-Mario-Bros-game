@@ -13,7 +13,7 @@ bool Screen::coinImage = true;
 
 bool Screen::isPlayerExceedingCameraReferencePoint() const
 {
-	if (player->getX() - camera->getBeginningOfCamera() > Screen::SCREEN_WIDTH - Camera::CAMERA_REFERENCE_POINT) {
+	if (player->getX() - camera->getBeginningOfCamera() > Screen::SCREEN_WIDTH - camera->getReferencePoint()) {
 		return true;
 	}
 
@@ -27,14 +27,14 @@ int Screen::computeCoinBaseIndex() const
 
 int Screen::computeDifference() const
 {
-	return (player->getX() - camera->getBeginningOfCamera() - (SCREEN_WIDTH - Camera::CAMERA_REFERENCE_POINT));
+	return (player->getX() - camera->getBeginningOfCamera() - (SCREEN_WIDTH - camera->getReferencePoint()));
 }
 
 int Screen::computeTime() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
 
-	int initialTime = (level < 3 ? 403 : 303);
+	int initialTime = (level < 3 ? 400 : 300);
 	int time = static_cast<int>(initialTime - 
 		std::chrono::duration_cast<std::chrono::seconds>(timePoint - timeBegin).count());
 
@@ -228,7 +228,7 @@ void Screen::updateView()
 	SDL_RenderPresent(renderer);
 }
 
-void Screen::drawAddingPointsAnimation(World& world)
+void Screen::drawAddingPointsAnimation(World &world)
 {
 	for (int i = time; i >= 0; --i) {
 		fillBackground();
@@ -290,7 +290,7 @@ Screen::Screen()
 	window = nullptr;
 	renderer = nullptr;
 	initStatus = initGUI();
-	time = 403;
+	time = 400;
 	level = 1;
 	loadScreenImages();
 	timeBegin = std::chrono::steady_clock::now();
@@ -341,13 +341,14 @@ void Screen::changeCoinImage()
 	Screen::coinImage = !Screen::coinImage;
 }
 
-void Screen::resetScreen(bool resetTimeFlag)
+void Screen::resetScreen(int begX, int endX, bool resetTimeFlag)
 {
 	if (resetTimeFlag) {
 		timeBegin = std::chrono::steady_clock::now();
 	}
-	camera->setBeginningOfCamera(0);
-	camera->setEndOfCamera(SCREEN_WIDTH);
+
+	camera->setBeginningOfCamera(begX);
+	camera->setEndOfCamera(endX);
 }
 
 void Screen::drawStartScreen()

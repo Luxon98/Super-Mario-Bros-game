@@ -42,7 +42,7 @@ bool World::isTimeToChangeColors() const
 
 bool World::isPlayerCloseEnough(LivingObject &monster) const
 {
-	if (monster.getX() < player->getX() + Camera::CAMERA_REFERENCE_POINT * 1.5) {
+	if (monster.getX() < player->getX() + camera->getReferencePoint() * 1.5) {
 		return true;
 	}
 
@@ -388,8 +388,12 @@ bool World::isPlayerFinishingWorld() const
 int World::getLastReachedCheckPointMark() const
 {
 	for (const auto &checkPoint : checkPoints) {
-		if (checkPoint.isPlayerInRangeOfCheckPoint(*player) && checkPoint.isAutomatic()) {
-			return checkPoint.getMark();
+		if (checkPoint.isPlayerInRangeOfCheckPoint(*player)) {
+			if (checkPoint.isAutomatic() || (!checkPoint.isAutomatic() && player->isGoingToPipe()
+				&& isCharacterStandingOnSomething(*player, *this))) {
+
+				return checkPoint.getMark();
+			}
 		}
 	}
 

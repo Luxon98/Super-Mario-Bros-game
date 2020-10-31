@@ -18,13 +18,14 @@ private:
 	std::chrono::steady_clock::time_point lastShotTime;
 	std::map<Direction, bool> keysState;
 	void handleSpacebar(World &world);
-	void handleArrowKeys(Player &player, World &world);
+	void handleDownArrow(Player &player);
+	void handleArrows(Player &player, World &world);
 
 public:
 	KeyboardController();
 	void handleKeysState(const Uint8* state);
 	void clearKeysState();
-	void handleKeys(Player &player, World &world);
+	void forceActions(Player &player, World &world);
 };
 
 #endif //KeyboardController_H

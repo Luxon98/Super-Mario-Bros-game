@@ -13,7 +13,12 @@ void KeyboardController::handleSpacebar(World &world)
 	}
 }
 
-void KeyboardController::handleArrowKeys(Player &player, World &world)
+void KeyboardController::handleDownArrow(Player &player)
+{
+	player.flags.downPipeFlag = true;
+}
+
+void KeyboardController::handleArrows(Player &player, World &world)
 {
 	if (!player.movementBlock) {
 		if (isCharacterStandingOnSomething(player, world)) {
@@ -150,7 +155,8 @@ KeyboardController::KeyboardController()
 {
 	doubleJumpFlag = false;
 	shotStatusFlag = false;
-	keysState = { {Direction::Left, false}, {Direction::Right, false}, {Direction::Up, false} };
+	keysState = { {Direction::Left, false}, {Direction::Right, false}, 
+		{Direction::Up, false}, {Direction::Down, false} };
 	lastShotTime = std::chrono::steady_clock::now();
 }
 
@@ -163,6 +169,10 @@ void KeyboardController::handleKeysState(const Uint8* state)
 			shotStatusFlag = true;
 			lastShotTime = timePoint;
 		}
+	}
+
+	if (state[SDL_SCANCODE_DOWN]) {
+		keysState[Direction::Down] = true;
 	}
 
 	if (state[SDL_SCANCODE_LEFT]) {
@@ -181,12 +191,14 @@ void KeyboardController::clearKeysState()
 	keysState[Direction::Up] = false;
 	keysState[Direction::Left] = false;
 	keysState[Direction::Right] = false;
+	keysState[Direction::Down] = false;
 	shotStatusFlag = false;
 }
 
-void KeyboardController::handleKeys(Player &player, World &world)
+void KeyboardController::forceActions(Player &player, World &world)
 {
 	handleSpacebar(world);
-	handleArrowKeys(player, world);
+	handleDownArrow(player);
+	handleArrows(player, world);
 }
 

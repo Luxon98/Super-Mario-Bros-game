@@ -68,7 +68,7 @@ public:
 	void setLevel(int level);
 	static void resetCoinImage();
 	static void changeCoinImage();
-	void resetScreen(bool resetTimeFlag = true);
+	void resetScreen(int begX, int endX, bool resetTimeFlag = true);
 	void drawStartScreen();
 	void drawChangeStageOfLevelScreen();
 	void drawGameOverScreen();
