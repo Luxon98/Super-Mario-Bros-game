@@ -341,7 +341,6 @@ void Player::moveLeft(World &world)
 	}
 
 	flags.orientationFlag = false;
-	//flags.downPipeFlag = false;
 }
 
 void Player::moveRight(World &world)
@@ -359,7 +358,6 @@ void Player::moveRight(World &world)
 	}
 
 	flags.orientationFlag = true;
-	//flags.downPipeFlag = false;
 }
 
 void Player::moveUp(World &world)
@@ -385,8 +383,6 @@ void Player::moveUp(World &world)
 	if (isCharacterStandingOnSomething(*this, world)) {
 		model = 0;
 	}
-
-	//flags.downPipeFlag = false;
 }
 
 void Player::moveDown(World &world)
@@ -404,8 +400,6 @@ void Player::moveDown(World &world)
 			flags.aliveFlag = false;
 		}
 	}
-
-	//flags.downPipeFlag = false;
 }
 
 void Player::slide(World &world)
@@ -667,6 +661,8 @@ void Player::move(World &world)
 
 			changeModelAndAirFlagStatus(world);
 		}
+
+		flags.downPipeFlag = false;
 	}
 }
 
@@ -685,17 +681,25 @@ void Player::setPositionXY(int level)
 
 void Player::setPositionXY(int level, int checkPointMark)
 {
+	int posY = (this->isSmall() ? 337 : 321);
 	if (level == 1) {
 		if (checkPointMark == 1) {
-			position.setXY(65, 65);
+			position.setXY(70, 60);
 		}
 		else if (checkPointMark == 2) {
-			position.setXY(1865, 245);
+			position.setXY(5246, posY);
 		}
 	}
-	else if (level == 2 && checkPointMark == 2) {
-		int posY = (this->isSmall() ? 320 : 336);
-		position.setXY(128, posY);
+	else if (level == 2) {
+		if (checkPointMark == 1) {
+			position.setXY(70, 60);
+		}
+		else if (checkPointMark == 2) {
+			position.setXY(3712, posY);
+		}
+		else if (checkPointMark == 3) {
+			position.setXY(128, posY);
+		}
 	}
 }
 

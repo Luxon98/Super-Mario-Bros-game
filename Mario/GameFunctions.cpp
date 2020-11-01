@@ -101,15 +101,18 @@ void resetScreen(Screen &screen, int level, int checkPointMark)
 			screen.resetScreen(0, 640, false);
 		}
 		else if (checkPointMark == 2) {
-			screen.resetScreen(1600, 2240, false);
+			screen.resetScreen(5060, 5700, false);
 		}
 	}
 	else if (level == 2) {
 		if (checkPointMark == -1) {
 			screen.resetScreen(0, 640);
 		}
-		else if (checkPointMark == 2) {
+		else if (checkPointMark == 1 || checkPointMark == 3) {
 			screen.resetScreen(0, 640, false);
+		}
+		else if (checkPointMark == 2) {
+			screen.resetScreen(3560, 4200, false);
 		}
 	}
 	else if (level == 3) {
@@ -159,11 +162,19 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world)
 			Level::setFirstBonusStage(world);
 		}
 		else {
-			Level::setFirstLevel(world);
+			Level::setFirstLevel(world, false);
 		}
 	}
-	else if (level == 2 && checkPointMark == 2) {
-		Level::setSecondStageOnSecondLevel(world);
+	else if (level == 2) {
+		if (checkPointMark == 1) {
+			Level::setSecondBonusStage(world);
+		}
+		else if (checkPointMark == 2) {
+			Level::setSecondLevel(world, false);
+		}
+		else if (checkPointMark == 3) {
+			Level::setSecondStageOnSecondLevel(world);
+		}
 	}
 }
 

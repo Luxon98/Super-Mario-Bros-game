@@ -15,7 +15,9 @@ void KeyboardController::handleSpacebar(World &world)
 
 void KeyboardController::handleDownArrow(Player &player)
 {
-	player.flags.downPipeFlag = true;
+	if (keysState[Direction::Down]) {
+		player.flags.downPipeFlag = true;
+	}
 }
 
 void KeyboardController::handleArrows(Player &player, World &world)

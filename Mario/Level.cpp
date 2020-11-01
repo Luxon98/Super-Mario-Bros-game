@@ -212,7 +212,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5200, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5270, 400))));
 
-	world.checkPoints.push_back(CheckPoint(Position(926, 350), true, 1));
+	world.checkPoints.push_back(CheckPoint(Position(1854, 265), false, 1));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6542, 336), false)));
 	world.flag = Flag(Position(6335, 116));
@@ -472,7 +472,8 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 274))));
 	}
 
-	world.checkPoints.push_back(CheckPoint(Position(5355, 285), true, 2));
+	world.checkPoints.push_back(CheckPoint(Position(3328, 297), false, 1));
+	world.checkPoints.push_back(CheckPoint(Position(5354, 294), true, 3));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6684, 336), false)));
 	world.flag = Flag(Position(6635, 116));
@@ -727,7 +728,7 @@ void Level::setFirstBonusStage(World &world)
 		world.blocks.push_back(Block(BlockType::Tube, Position(645, i)));
 	}
 
-	world.checkPoints.push_back(CheckPoint(Position(590, 385), true, 2));
+	world.checkPoints.push_back(CheckPoint(Position(590, 390), true, 2));
 
 	world.flag = Flag(Position(5000, 116));
 }
@@ -789,6 +790,8 @@ void Level::setSecondBonusStage(World &world)
 	}
 
 	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(140, 402))));
+
+	world.checkPoints.push_back(CheckPoint(Position(590, 390), true, 2));
 
 	world.flag = Flag(Position(5000, 116));
 }
