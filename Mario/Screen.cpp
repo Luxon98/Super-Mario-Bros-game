@@ -426,6 +426,30 @@ void Screen::drawDeadMario(World &world)
 	std::this_thread::sleep_for(std::chrono::milliseconds(1250));
 }
 
+void Screen::drawMarioPipeTravellingScreen(World &world, Direction direction)
+{
+	SDL_Surface* img = player->getImage();
+	int x = player->getX() - camera->getBeginningOfCamera();
+	int y = player->getY() + (direction == Direction::Up ? 70 : 0);
+
+	for (int i = 0; i < 70; ++i) {
+		fillBackground();
+
+		drawSurface(display, img, x, y);
+		world.performActions();
+		world.draw(display, false);
+
+		drawScreenElements();
+		drawTime(time);
+		drawPoints(player->getPoints());
+		drawCoins(player->getCoins());
+		updateView();
+
+		y += (direction == Direction::Down ? 1 : -1);
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	}
+}
+
 void Screen::drawWorldFinishedScreen(World &world)
 {
 	SoundController::playWorldFinishedMusic();

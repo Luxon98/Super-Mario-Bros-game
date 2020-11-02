@@ -43,13 +43,13 @@ void Plant::changeModel()
 	}
 }
 
-Plant::Plant(Position position)
+Plant::Plant(Position position, bool delay)
 {
 	size = Size(24, 44);
 	movement = Movement(0, 1, Direction::None, Direction::Up);
 	this->position = position;
 	model = 1;
-	stepsCounter = -1;
+	stepsCounter = (delay ? 629 : -1);
 	changeModelCounter = 0;
 }
 
@@ -71,7 +71,7 @@ void Plant::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) c
 	}
 }
 
-void Plant::move(World& world)
+void Plant::move(World &world)
 {
 	++stepsCounter;
 	if (stepsCounter < 90 || (stepsCounter >= 540 && stepsCounter < 720)) {

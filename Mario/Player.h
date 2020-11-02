@@ -130,6 +130,7 @@ public:
 	bool isTurnedRight() const;
 	bool isPerformingJumpAsSmall() const;
 	bool isGoingToPipe() const;
+	SDL_Surface* getImage() const;
 	void incrementCoins();
 	void incrementLives();
 	void increaseSpeed();

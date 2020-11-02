@@ -9,6 +9,7 @@
 class Player;
 class World;
 class Camera;
+enum class Direction;
 
 
 class Screen
@@ -74,6 +75,7 @@ public:
 	void drawGameOverScreen();
 	void drawTimeUpScreen();
 	void drawDeadMario(World &world);
+	void drawMarioPipeTravellingScreen(World &world, Direction direction);
 	void drawWorldFinishedScreen(World &world);
 	void updateScreen(World &world);
 	~Screen();

@@ -455,7 +455,7 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4235, 240))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4385, 272))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3328, 388))));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3520, 356))));
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3520, 356), true)));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3712, 420))));
 
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4850, 397), false)));
@@ -570,7 +570,7 @@ void Level::setThirdLevel(World &world)
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(4590, 374))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(4768, 122))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(4942, 248))));
-	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(5232, 88))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(5267, 88))));
 
 	for (int i = 624; i < 688; i += 32) {
 		for (int j = 464; j > 400; j -= 32) {
@@ -679,7 +679,7 @@ void Level::setThirdLevel(World &world)
 
 	world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3662, 464))));
 
-	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(5104, 240), true)));
+	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(5135, 240), true)));
 	world.flag = Flag(Position(4863, 116)); 
 }
 
@@ -781,6 +781,7 @@ void Level::setSecondBonusStage(World &world)
 		world.blocks.push_back(Block(BlockType::Destructible, Position(592, i)));
 	}
 
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(560, 336)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(560, 336)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(592, 336)));
 
@@ -834,6 +835,8 @@ void Level::setSecondStageOnSecondLevel(World &world)
 	world.inanimateElements.push_back(std::make_shared<Bush>(Bush(1, Position(972, 400))));
 
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(720, 400)));
+
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(128, 420))));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(915, 336), false)));
 	world.flag = Flag(Position(703, 116));

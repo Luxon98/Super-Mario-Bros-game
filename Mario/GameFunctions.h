@@ -23,6 +23,10 @@ void loadBlockImages(SDL_Surface* display);
 
 void loadImages(SDL_Surface* display);
 
+bool isPlayerEnteringPipe(int level, int checkPointMark);
+
+bool isPlayerExitingPipe(int level, int checkPointMark);
+
 void resetScreen(Screen &screen, int level, int checkPointMark);
 
 void changeLevel(int level, World &world, bool playerState);

@@ -23,7 +23,7 @@ enum class BlockType
 	BonusWithCoin = 11,
 	BonusWithStar = 12,
 	Monetary = 13,
-	EmptyMonetary = 14,
+	AlternativeEmpty = 14,
 	Land = 15
 };
 
@@ -68,4 +68,3 @@ public:
 };
 
 #endif //Block_H
-

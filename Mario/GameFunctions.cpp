@@ -91,6 +91,24 @@ void loadImages(SDL_Surface* display)
 	loadBlockImages(display);
 }
 
+bool isPlayerEnteringPipe(int level, int checkPointMark)
+{
+	if ((level == 1 || level == 2) && checkPointMark == 1) {
+		return true;
+	}
+
+	return false;
+}
+
+bool isPlayerExitingPipe(int level, int checkPointMark)
+{
+	if ((level == 1 && checkPointMark == 2) || (level == 2 && (checkPointMark == 2 || checkPointMark == 3))) {
+		return true;
+	}
+
+	return false;
+}
+
 void resetScreen(Screen &screen, int level, int checkPointMark)
 {
 	if (level == 1) {
@@ -145,7 +163,7 @@ void setWorld(int level, Player &player, World &world, bool playerState)
 	changeLevel(level, world, playerState);
 }
 
-void drawChangeStageScreen(Screen& screen)
+void drawChangeStageScreen(Screen &screen)
 {
 	SoundController::playPipeTravelEffect();
 	screen.drawChangeStageOfLevelScreen();
@@ -243,6 +261,10 @@ void runGame()
 			adjustCamera(level, checkPointMark);
 			resetScreen(screen, level, checkPointMark);
 
+			if (isPlayerExitingPipe(level, checkPointMark)) {
+				screen.drawMarioPipeTravellingScreen(world, Direction::Up);
+			}
+
 			soundMixer.playBackgroundMusic();
 
 			while (playerState && timeState && !winStatus) {
@@ -264,6 +286,9 @@ void runGame()
 
 				checkPointMark = world.getLastReachedCheckPointMark();
 				if (checkPointMark != -1) {
+					if (isPlayerEnteringPipe(level, checkPointMark)) {
+						screen.drawMarioPipeTravellingScreen(world, Direction::Down);
+					}
 					break;
 				}
 

@@ -535,6 +535,11 @@ bool Player::isGoingToPipe() const
 	return false;
 }
 
+SDL_Surface* Player::getImage() const
+{
+	return playerImages[computeImageIndex()];
+}
+
 void Player::incrementCoins()
 {
 	if (statistics.coins == 99) {

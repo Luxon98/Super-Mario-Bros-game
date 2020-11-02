@@ -50,7 +50,7 @@ int Block::computeImageIndex() const
 	if (type == BlockType::Monetary) {
 		return (position.getY() == initialPositionY ? baseIndex + 3 : baseIndex + 10);
 	}
-	else if (type == BlockType::EmptyMonetary) {
+	else if (type == BlockType::AlternativeEmpty) {
 		return (position.getY() != initialPositionY ? baseIndex + 2 : baseIndex + 11);
 	}
 	else {

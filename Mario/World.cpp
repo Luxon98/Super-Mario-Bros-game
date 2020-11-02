@@ -259,7 +259,7 @@ void World::subtractCoinFromBlock()
 		collectCoin();
 
 		if (!blocks[lastTouchedBlockIndex].hasCoins()) {
-			blocks[lastTouchedBlockIndex].setType(BlockType::EmptyMonetary);
+			blocks[lastTouchedBlockIndex].setType(BlockType::AlternativeEmpty);
 		}
 	}
 	else if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithCoin) {
@@ -273,6 +273,7 @@ void World::createNewBonus()
 	if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithRedMushroom) {
 		bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(
 			blocks[lastTouchedBlockIndex].getPosition()), false)));
+		blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 	}
 	else if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithFlower) {
 		if (player->isSmall()) {
@@ -283,12 +284,12 @@ void World::createNewBonus()
 			bonusElements.push_back(std::make_shared<Flower>(Flower(Position(
 				blocks[lastTouchedBlockIndex].getPosition()))));
 		}
+		blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 	}
 	else if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithStar) {
 		bonusElements.push_back(std::make_shared<Star>(Star(Position(blocks[lastTouchedBlockIndex].getPosition()))));
+		blocks[lastTouchedBlockIndex].setType(BlockType::AlternativeEmpty);
 	}
-
-	blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 }
 
 void World::createOneUpMushroom()
