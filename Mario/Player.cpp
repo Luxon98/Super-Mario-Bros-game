@@ -478,11 +478,6 @@ int Player::getDeadMarioImageIndex() const
 	return 0;
 }
 
-int Player::getStepsRight() const
-{
-	return playerMovement.stepsRight;
-}
-
 bool Player::isSmall() const
 {
 	return (currentState == PlayerState::Small);
@@ -533,6 +528,20 @@ bool Player::isGoingToPipe() const
 	}
 
 	return false;
+}
+
+bool Player::isNotJumpingUp() const
+{
+	if (playerMovement.stepsUp < 50) {
+		return true;
+	}
+
+	return false;
+}
+
+bool Player::isStillRunningToCastle()
+{
+	return (playerMovement.stepsRight != 0);
 }
 
 SDL_Surface* Player::getImage() const

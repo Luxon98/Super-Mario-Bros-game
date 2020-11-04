@@ -9,6 +9,18 @@
 
 SDL_Surface* MovingPlatform::platformImage = nullptr;
 
+bool MovingPlatform::shouldForcePlayerMovement() const
+{
+	if (playerForceMovementChecker && (upDownFlag || direction == Direction::Left || direction == Direction::Right)) {
+		return true;
+	}
+	else if (!upDownFlag && (direction == Direction::Up || direction == Direction::Down)) {
+		return true;
+	}
+
+	return false;
+}
+
 void MovingPlatform::slideDown()
 {
 	position.setY(position.getY() + 1);
@@ -28,33 +40,46 @@ void MovingPlatform::slideUp()
 void MovingPlatform::slideUpDown()
 {
 	++slideCounter;
-	if (slideCounter < 125) {
+	if ((slideCounter > 20 && slideCounter <= 135) || slideCounter & 1) {
 		int distance = (direction == Direction::Down ? 1 : -1);
 		position.setY(position.getY() + distance);
+		playerForceMovementChecker = true;
 	}
-	else if (slideCounter == 125) {
+	else {
+		playerForceMovementChecker = false;
+	}
+
+	if (slideCounter == 155) {
 		direction = (direction == Direction::Up ? Direction::Down : Direction::Up);
 		slideCounter = 0;
 	}
+	
 }
 
 void MovingPlatform::slideHorizontally()
 {
 	++slideCounter;
-	int distance = (direction == Direction::Left ? -1 : 1);
-	position.setX(position.getX() + distance);
+	if ((slideCounter > 20 && slideCounter <= 125) || slideCounter & 1) {
+		int distance = (direction == Direction::Left ? -1 : 1);
+		position.setX(position.getX() + distance);
+		playerForceMovementChecker = true;
+	}
+	else {
+		playerForceMovementChecker = false;
+	}
 
-	if (slideCounter == 125) {
+	if (slideCounter == 145) {
 		direction = (direction == Direction::Left ? Direction::Right : Direction::Left);
 		slideCounter = 0;
 	}
 }
 
-MovingPlatform::MovingPlatform(Position position, Direction direction, bool upDownChanger)
+MovingPlatform::MovingPlatform(Position position, Direction direction, bool upDownFlag)
 {
 	this->position = position;
 	this->direction = direction;
-	this->upDownChanger = upDownChanger;
+	this->upDownFlag = upDownFlag;
+	playerForceMovementChecker = false;
 	size = Size(96, 16);
 	slideCounter = 0;
 }
@@ -78,11 +103,11 @@ void MovingPlatform::draw(SDL_Surface* display, int beginningOfCamera, int endOf
 
 void MovingPlatform::slide(Player &player)
 {
-	if (isPlayerStandingOnThisPlatform(player, *this)) {
+	if (isPlayerStandingOnThisPlatform(player, *this) && shouldForcePlayerMovement()) {
 		player.forceMovement(direction);
 	}
 
-	if (upDownChanger) {
+	if (upDownFlag) {
 		slideUpDown();
 	}
 	else {

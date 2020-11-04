@@ -26,7 +26,7 @@ public:
 	static void loadShellImage(SDL_Surface* display);
 	bool isActive() const;
 	bool shouldTurnIntoTurtle() const;
-	void setMovementDirectionAndActiveState(Direction direction);
+	void setActiveStateParameters(Direction direction);
 	void resetCreationTime();
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;

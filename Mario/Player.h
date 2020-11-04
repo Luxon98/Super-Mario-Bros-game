@@ -121,7 +121,6 @@ public:
 	int getCoins() const;
 	int getLives() const;
 	int getDeadMarioImageIndex() const;
-	int getStepsRight() const;
 	bool isSmall() const;
 	bool isArmed() const;
 	bool isInsensitive() const;
@@ -130,6 +129,8 @@ public:
 	bool isTurnedRight() const;
 	bool isPerformingJumpAsSmall() const;
 	bool isGoingToPipe() const;
+	bool isNotJumpingUp() const;
+	bool isStillRunningToCastle();
 	SDL_Surface* getImage() const;
 	void incrementCoins();
 	void incrementLives();

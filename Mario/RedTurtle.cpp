@@ -57,7 +57,7 @@ void RedTurtle::patrol(World &world)
 		}
 	}
 
-	if (stepsCounter == 510) {
+	if (stepsCounter == 480) {
 		if (isCharacterStandingOnSomething(*this, world)) {
 			movement.setDirection(movement.getDirection() == Direction::Right ? Direction::Left : Direction::Right);
 		}

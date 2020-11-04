@@ -130,7 +130,7 @@ bool isBlockBlockedByAnother(const Block& block, const World& world)
 
 bool isPlayerJumpingOnMonster(const Player &player, const LivingObject &monster)
 {
-	return (monster.getY() - player.getY() > 25);
+	return ((monster.getY() - player.getY() > 25) && player.isNotJumpingUp());
 }
 
 bool isMushroomStandingOnBlock(const BonusObject &mushroom, const Block &block)

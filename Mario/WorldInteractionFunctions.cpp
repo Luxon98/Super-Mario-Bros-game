@@ -103,3 +103,23 @@ void collectCoinByCollision(Player &player, World &world, int index)
 	world.addAnimatedCoin();
 	SoundController::playCoinCollectedEffect();
 }
+
+void getPointsFromFlag(Player &player, World &world)
+{
+	int points;
+	if (player.getY() > 330) {
+		points = 100;
+	}
+	else if (player.getY() <= 330 && player.getY() >= 250) {
+		points = 200;
+	}
+	else if (player.getY() < 250 && player.getY() >= 190) {
+		points = 400;
+	}
+	else {
+		points = 1000;
+	}
+
+	Position position = Position(player.getX() + 75, player.getY());
+	addTextAndPoints(player, world, points, position);
+}

@@ -34,6 +34,7 @@
 #include "Block.h"
 #include "MovingPlatform.h"
 #include "Position.h"
+#include "WorldInteractionFunctions.h"
 #include "FileNotLoadedException.h"
 
 
@@ -163,13 +164,6 @@ void setWorld(int level, Player &player, World &world, bool playerState)
 	changeLevel(level, world, playerState);
 }
 
-void drawChangeStageScreen(Screen &screen)
-{
-	SoundController::playPipeTravelEffect();
-	screen.drawChangeStageOfLevelScreen();
-	SoundController::stopMusic();
-}
-
 void setSubWorld(int level, int checkPointMark, Player &player, World &world)
 {
 	player.resetSteps();
@@ -255,7 +249,7 @@ void runGame()
 				screen.drawStartScreen();
 			}
 			else {
-				drawChangeStageScreen(screen);
+				screen.drawChangeStageOfLevelScreen();
 				setSubWorld(level, checkPointMark, *player, world);
 			}
 			adjustCamera(level, checkPointMark);
@@ -296,6 +290,7 @@ void runGame()
 					SoundController::playFlagDownEffect();
 					world.switchOnFlag();
 					player->setSlidingParameters();
+					getPointsFromFlag(*player, world);
 
 					while (!world.isFlagDown()) {
 						world.performActions();

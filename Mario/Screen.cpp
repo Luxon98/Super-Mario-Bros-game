@@ -367,6 +367,8 @@ void Screen::drawStartScreen()
 
 void Screen::drawChangeStageOfLevelScreen()
 {
+	SoundController::stopMusic();
+
 	setBlackBackground();
 	updateView();
 
@@ -428,9 +430,13 @@ void Screen::drawDeadMario(World &world)
 
 void Screen::drawMarioPipeTravellingScreen(World &world, Direction direction)
 {
+	if (direction == Direction::Down) {
+		SoundController::playPipeTravelEffect();
+	}
+
 	SDL_Surface* img = player->getImage();
 	int x = player->getX() - camera->getBeginningOfCamera();
-	int y = player->getY() + (direction == Direction::Up ? 70 : 0);
+	int y = player->getY() + (direction == Direction::Down ? 0 : 70);
 
 	for (int i = 0; i < 70; ++i) {
 		fillBackground();
@@ -454,7 +460,7 @@ void Screen::drawWorldFinishedScreen(World &world)
 {
 	SoundController::playWorldFinishedMusic();
 
-	while (player->getStepsRight() != 0) {
+	while (player->isStillRunningToCastle()) {
 		updateScreen(world);
 	}
 

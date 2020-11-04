@@ -24,5 +24,7 @@ void collectCoin(Player &player, World &world, int index);
 
 void collectCoinByCollision(Player &player, World &world, int index);
 
+void getPointsFromFlag(Player &player, World &world);
+
 #endif //WorldInteractionFunctions_H
 

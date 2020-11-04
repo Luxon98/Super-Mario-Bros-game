@@ -33,8 +33,6 @@ void changeLevel(int level, World &world, bool playerState);
 
 void setWorld(int level, Player &player, World &world, bool playerState);
 
-void drawChangeStageScreen(Screen &screen);
-
 void setSubWorld(int level, int checkPointMark, Player &player, World &world);
 
 void adjustCamera(int level, int checkPointMark);

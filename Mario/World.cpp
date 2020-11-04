@@ -444,7 +444,7 @@ void World::switchOnFlag()
 
 void World::changeShellMovementParameters(int index, Direction direction)
 {
-	std::dynamic_pointer_cast<Shell>(monsters[index])->setMovementDirectionAndActiveState(direction);
+	std::dynamic_pointer_cast<Shell>(monsters[index])->setActiveStateParameters(direction);
 	std::dynamic_pointer_cast<Shell>(monsters[index])->resetCreationTime();
 }
 
