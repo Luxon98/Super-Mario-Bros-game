@@ -213,6 +213,9 @@
     <ClCompile Include="Rock.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
+    <ClCompile Include="MenuManager.cpp">
+      <Filter>Source Files\HandlingAndControlling</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -361,6 +364,9 @@
     </ClInclude>
     <ClInclude Include="Rock.h">
       <Filter>Header Files\InanimateObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuManager.h">
+      <Filter>Header Files\HandlingAndControlling</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

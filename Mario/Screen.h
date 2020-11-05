@@ -51,7 +51,6 @@ private:
 	void drawTime(long long int time);
 	void drawPoints(int points);
 	void drawCoins(int coins);
-	void updateView();	
 	void drawAddingPointsAnimation(World &world);
 	int initGUI();
 	void closeGUI();
@@ -64,6 +63,7 @@ public:
 	int getTime() const;
 	bool isTimePassed() const;
 	SDL_Surface* getDisplay() const;
+	void updateView();
 	void setPlayer(std::shared_ptr<Player> player);
 	void setCamera(std::shared_ptr<Camera> camera);
 	void setLevel(int level);

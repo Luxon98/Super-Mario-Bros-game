@@ -60,7 +60,7 @@ void collectMushroom(Player &player, World &world, Mushroom &mushroom, int index
 
 void collectFlower(Player &player, World &world, int index)
 {
-	if (player.isSmall()) {
+	if (player.isSmall() || player.isInsensitive()) {
 		player.setCurrentAnimation(PlayerAnimation::Growing);
 	}
 	else if (!player.isImmortal() && !player.isArmed()) {

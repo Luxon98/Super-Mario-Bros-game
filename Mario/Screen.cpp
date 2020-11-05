@@ -221,13 +221,6 @@ void Screen::drawCoins(int coins)
 	drawSurface(display, img2, 286, 40);
 }
 
-void Screen::updateView()
-{
-	SDL_UpdateTexture(scrtex, nullptr, display->pixels, display->pitch);
-	SDL_RenderCopy(renderer, scrtex, nullptr, nullptr);
-	SDL_RenderPresent(renderer);
-}
-
 void Screen::drawAddingPointsAnimation(World &world)
 {
 	for (int i = time; i >= 0; --i) {
@@ -314,6 +307,13 @@ bool Screen::isTimePassed() const
 SDL_Surface* Screen::getDisplay() const
 {
 	return display;
+}
+
+void Screen::updateView()
+{
+	SDL_UpdateTexture(scrtex, nullptr, display->pixels, display->pitch);
+	SDL_RenderCopy(renderer, scrtex, nullptr, nullptr);
+	SDL_RenderPresent(renderer);
 }
 
 void Screen::setPlayer(std::shared_ptr<Player> player)

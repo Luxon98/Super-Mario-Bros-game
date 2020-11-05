@@ -164,6 +164,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LivingObject.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuManager.cpp" />
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="Plant.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="LayoutStyle.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LivingObject.h" />
+    <ClInclude Include="MenuManager.h" />
     <ClInclude Include="Movement.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Plant.h" />

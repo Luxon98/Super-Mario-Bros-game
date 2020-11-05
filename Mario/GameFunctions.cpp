@@ -35,6 +35,7 @@
 #include "MovingPlatform.h"
 #include "Position.h"
 #include "WorldInteractionFunctions.h"
+#include "MenuManager.h"
 #include "FileNotLoadedException.h"
 
 
@@ -90,6 +91,8 @@ void loadImages(SDL_Surface* display)
 	loadLivingObjectImages(display);
 	loadTemporaryObjectImages(display);
 	loadBlockImages(display);
+
+	MenuManager::loadMenuImages(display);
 }
 
 bool isPlayerEnteringPipe(int level, int checkPointMark)
@@ -220,8 +223,22 @@ void runGame()
 		showFileErrorWindow(e.what());
 	}
 
-	KeyboardController controller = KeyboardController();
 	const Uint8* state = SDL_GetKeyboardState(nullptr);
+
+	MenuManager menu = MenuManager();
+	
+	SDL_Event menuEvent;
+	while (menu.isStillOpen()) {
+		menu.drawMenu(screen);
+
+		if (SDL_PollEvent(&menuEvent)) {
+			menu.handleKeys(state);
+		}
+	}
+
+	if (menu.getExitStatus()) {
+		return;
+	}
 
 	if (loadResourcesStatus) {
 		bool playerState = true, winStatus = false, timeState = true;
@@ -229,6 +246,7 @@ void runGame()
 
 		World world = World();
 	
+		KeyboardController controller = KeyboardController();
 		SoundController soundMixer = SoundController();
 
 		std::shared_ptr<Player> player = std::make_shared<Player>(Player(Position(35, 400)));
