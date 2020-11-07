@@ -203,6 +203,26 @@ void adjustCamera(int level, int checkPointMark)
 	}
 }
 
+void handleMenu(bool * exitStatus, Screen &screen)
+{
+	MenuManager menu = MenuManager();
+
+	const Uint8* state = SDL_GetKeyboardState(nullptr);
+	SDL_Event menuEvent;
+
+	while (menu.isStillOpen()) {
+		menu.drawMenu(screen);
+
+		if (SDL_PollEvent(&menuEvent)) {
+			menu.handleKeys(state);
+		}
+	}
+
+	if (menu.getExitStatus()) {
+		*exitStatus = true;
+	}
+}
+
 void runGame()
 {
 	bool loadResourcesStatus = true;
@@ -223,22 +243,14 @@ void runGame()
 		showFileErrorWindow(e.what());
 	}
 
-	const Uint8* state = SDL_GetKeyboardState(nullptr);
+	bool exitStatus = false;
+	handleMenu(&exitStatus, screen);
 
-	MenuManager menu = MenuManager();
-	
-	SDL_Event menuEvent;
-	while (menu.isStillOpen()) {
-		menu.drawMenu(screen);
-
-		if (SDL_PollEvent(&menuEvent)) {
-			menu.handleKeys(state);
-		}
-	}
-
-	if (menu.getExitStatus()) {
+	if (exitStatus) {
 		return;
 	}
+
+	const Uint8* state = SDL_GetKeyboardState(nullptr);
 
 	if (loadResourcesStatus) {
 		bool playerState = true, winStatus = false, timeState = true;

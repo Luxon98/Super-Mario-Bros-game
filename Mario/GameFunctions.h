@@ -37,6 +37,8 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world);
 
 void adjustCamera(int level, int checkPointMark);
 
+void handleMenu(bool * exitStatus, Screen &screen);
+
 void runGame();
 
 #endif //GameFunctions_H

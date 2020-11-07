@@ -8,20 +8,60 @@ class Screen;
 struct SDL_Surface;
 
 
+enum class CustomWorld
+{
+	WinterWorld,
+	HalloweenWorld
+};
+
+
 class MenuManager
 {
 private:
+	class SubmenuManager
+	{
+	private:
+		static std::array<SDL_Surface*, 9> submenuImages;
+		static std::array<SDL_Surface*, 9> digitImages;
+		int submenuOptionNumber;
+		static void loadSubmenuSprites(SDL_Surface* display);
+		static void loadSubmenuDigits(SDL_Surface* display);
+		int getCustomWorldIndex() const;
+		void handleArrowUpKey();
+		void handleArrowDownKey();
+		void handleArrowRightKey();
+		void handleArrowLeftKey();
+
+	public:
+		int gameSpeed;
+		bool customGame;
+		bool returnStatus;
+		CustomWorld customWorld;
+		SubmenuManager();
+		static void loadSubmenuImages(SDL_Surface* display);
+		void resetOptionAndReturnStatus();
+		void drawSubmenu(Screen &screen) const;
+		void handleSubmenuKeys(const Uint8* state);
+	};
+
 	static std::array<SDL_Surface*, 2> menuImages;
-	int optionNumber;
 	bool startGameStatus;
 	bool exitStatus;
+	int optionNumber;
+	bool submenu;
+	SubmenuManager submenuManager;
+	void drawMainMenu(Screen &screen) const;
+	void handleEnterKey();
+	void handleArrowUpKey();
+	void handleArrowDownKey();
+	void handleMenuKeys(const Uint8* state);
 
 public:
 	MenuManager();
 	static void loadMenuImages(SDL_Surface* display);
 	bool isStillOpen() const;
 	bool getExitStatus() const;
-	void drawMenu(Screen &screen) const;
+	void drawMenu(Screen &screen);
 	void handleKeys(const Uint8* state);
 };
 
