@@ -319,6 +319,7 @@ void World::playBlockSoundEffects()
 World::World()
 {
 	gameCounter = 0;
+	gameSpeed = 7;
 	lastColoursUpdateTime = std::chrono::steady_clock::now();
 	lastTouchedBlockIndex = -1;
 	flag = Flag();
@@ -399,6 +400,11 @@ int World::getLastReachedCheckPointMark() const
 	}
 
 	return -1;
+}
+
+void World::setGameSpeed(int gameSpeed)
+{
+	this->gameSpeed = gameSpeed;
 }
 
 void World::setPlayer(std::shared_ptr<Player> player)
@@ -524,7 +530,7 @@ void World::addAnimatedCoin()
 void World::performActions()
 {
 	++gameCounter;
-	if (gameCounter % 3 == 0) {
+	if (gameCounter % (10 - gameSpeed) == 0) {
 		performWorldActions();
 		deleteTemporaryElements();
 		slideTemporaryElements();

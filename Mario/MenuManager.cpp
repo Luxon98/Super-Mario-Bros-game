@@ -1,6 +1,7 @@
 #include "MenuManager.h"
 
 #include "Screen.h"
+#include "SoundController.h"
 
 
 std::array<SDL_Surface*, 9> MenuManager::SubmenuManager::submenuImages;
@@ -32,13 +33,16 @@ void MenuManager::SubmenuManager::loadSubmenuDigits(SDL_Surface* display)
 
 int MenuManager::SubmenuManager::getCustomWorldIndex() const
 {
-	switch (customWorld) {
-	case CustomWorld::WinterWorld:
-		return 7;
-	case CustomWorld::HalloweenWorld:
-		return 8;
-	default:
-		return 7;
+	return (customWorld == CustomWorld::WinterWorld ? 7 : 8);
+}
+
+void MenuManager::SubmenuManager::changeCustomWorld()
+{
+	if (customWorld == CustomWorld::WinterWorld) {
+		customWorld = CustomWorld::HalloweenWorld;
+	}
+	else {
+		customWorld = CustomWorld::WinterWorld;
 	}
 }
 
@@ -78,9 +82,10 @@ void MenuManager::SubmenuManager::handleArrowRightKey()
 		customGame = !customGame;
 	}
 	else if (submenuOptionNumber == 3) {
-		customWorld = (customWorld == CustomWorld::WinterWorld ?
-			CustomWorld::HalloweenWorld : CustomWorld::WinterWorld);
+		changeCustomWorld();
 	}
+
+	SoundController::playSubmenuEffect();
 }
 
 void MenuManager::SubmenuManager::handleArrowLeftKey()
@@ -95,15 +100,16 @@ void MenuManager::SubmenuManager::handleArrowLeftKey()
 		customGame = !customGame;
 	}
 	else if (submenuOptionNumber == 3) {
-		customWorld = (customWorld == CustomWorld::WinterWorld ?
-			CustomWorld::HalloweenWorld : CustomWorld::WinterWorld);
+		changeCustomWorld();
 	}
+
+	SoundController::playSubmenuEffect();
 }
 
 MenuManager::SubmenuManager::SubmenuManager()
 {
 	submenuOptionNumber = 1;
-	gameSpeed = 3;
+	gameSpeed = 7;
 	customGame = false;
 	returnStatus = false;
 	customWorld = CustomWorld::WinterWorld;
@@ -125,15 +131,15 @@ void MenuManager::SubmenuManager::drawSubmenu(Screen &screen) const
 {
 	drawSurface(screen.getDisplay(), submenuImages[0], 320, 240);
 	drawSurface(screen.getDisplay(), submenuImages[3 + customGame], 475, 187);
-	drawSurface(screen.getDisplay(), digitImages[gameSpeed - 1], 465, 133);
+	drawSurface(screen.getDisplay(), digitImages[gameSpeed - 1], 470, 133);
 	if (customGame) {
 		drawSurface(screen.getDisplay(), submenuImages[6], 250, 240);
-		drawSurface(screen.getDisplay(), submenuImages[getCustomWorldIndex()], 475, 240);
+		drawSurface(screen.getDisplay(), submenuImages[getCustomWorldIndex()], 474, 240);
 	}
 
 	if (submenuOptionNumber != 4) {
 		drawSurface(screen.getDisplay(), submenuImages[1], 315, 345);
-		drawSurface(screen.getDisplay(), submenuImages[5], 320, 81 + submenuOptionNumber * 53);
+		drawSurface(screen.getDisplay(), submenuImages[5], 335, 81 + submenuOptionNumber * 53);
 	}
 	else {
 		drawSurface(screen.getDisplay(), submenuImages[2], 315, 345);
@@ -145,6 +151,7 @@ void MenuManager::SubmenuManager::drawSubmenu(Screen &screen) const
 void MenuManager::SubmenuManager::handleSubmenuKeys(const Uint8* state)
 {
 	if (state[SDL_SCANCODE_RETURN] && submenuOptionNumber == 4) {
+		SoundController::playReturnedToMenuEffect();
 		returnStatus = true;
 		return;
 	}
@@ -243,6 +250,11 @@ bool MenuManager::isStillOpen() const
 bool MenuManager::getExitStatus() const
 {
 	return exitStatus;
+}
+
+int MenuManager::getGameSpeed() const
+{
+	return submenuManager.gameSpeed;
 }
 
 void MenuManager::drawMenu(Screen &screen)

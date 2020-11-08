@@ -95,6 +95,19 @@ void loadImages(SDL_Surface* display)
 	MenuManager::loadMenuImages(display);
 }
 
+void setCameraPointer(std::shared_ptr<Player> player, World &world, Screen &screen, std::shared_ptr<Camera> camera)
+{
+	player->setCamera(camera);
+	world.setCamera(camera);
+	screen.setCamera(camera);
+}
+
+void setPlayerPointer(World &world, Screen &screen, std::shared_ptr<Player> player)
+{
+	world.setPlayer(player);
+	screen.setPlayer(player);
+}
+
 bool isPlayerEnteringPipe(int level, int checkPointMark)
 {
 	if ((level == 1 || level == 2) && checkPointMark == 1) {
@@ -203,7 +216,7 @@ void adjustCamera(int level, int checkPointMark)
 	}
 }
 
-void handleMenu(bool * exitStatus, Screen &screen)
+void handleMenu(bool * exitStatus, int * gameSpeed, Screen &screen)
 {
 	MenuManager menu = MenuManager();
 
@@ -217,6 +230,8 @@ void handleMenu(bool * exitStatus, Screen &screen)
 			menu.handleKeys(state);
 		}
 	}
+
+	*gameSpeed = menu.getGameSpeed();
 
 	if (menu.getExitStatus()) {
 		*exitStatus = true;
@@ -243,8 +258,12 @@ void runGame()
 		showFileErrorWindow(e.what());
 	}
 
+	SoundController soundMixer = SoundController();
+
 	bool exitStatus = false;
-	handleMenu(&exitStatus, screen);
+	int gameSpeed = 7;
+
+	handleMenu(&exitStatus, &gameSpeed, screen);
 
 	if (exitStatus) {
 		return;
@@ -257,19 +276,15 @@ void runGame()
 		SDL_Event event;
 
 		World world = World();
+		world.setGameSpeed(gameSpeed);
 	
 		KeyboardController controller = KeyboardController();
-		SoundController soundMixer = SoundController();
 
 		std::shared_ptr<Player> player = std::make_shared<Player>(Player(Position(35, 400)));
 
-		player->setCamera(camera);
-		world.setCamera(camera);
-		screen.setCamera(camera);
-
-		world.setPlayer(player);
-		screen.setPlayer(player);
-
+		setCameraPointer(player, world, screen, camera);
+		setPlayerPointer(world, screen, player);
+		
 		int level = 1, checkPointMark = -1;
 
 		while (player->getLives() && !winStatus) {
@@ -355,7 +370,9 @@ void runGame()
 			}
 		}
 
-		SoundController::playGameOverMusic();
-		screen.drawGameOverScreen();
+		if (!winStatus) {
+			SoundController::playGameOverMusic();
+			screen.drawGameOverScreen();
+		}
 	}
 }

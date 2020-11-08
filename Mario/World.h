@@ -44,6 +44,7 @@ private:
 	std::shared_ptr<Camera> camera; 
 	Flag flag;
 	int gameCounter;
+	int gameSpeed;
 	int lastTouchedBlockIndex;
 	int slidingCounter;
 	bool slideBlockStatus;
@@ -86,6 +87,7 @@ public:
 	bool isFlagDown() const;
 	bool isPlayerFinishingWorld() const;
 	int getLastReachedCheckPointMark() const;
+	void setGameSpeed(int gameSpeed);
 	void setPlayer(std::shared_ptr<Player> player);
 	void setCamera(std::shared_ptr<Camera> camera);
 	void setLastTouchedBlock(int index);

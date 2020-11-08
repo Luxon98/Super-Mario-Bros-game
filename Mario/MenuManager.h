@@ -27,6 +27,7 @@ private:
 		static void loadSubmenuSprites(SDL_Surface* display);
 		static void loadSubmenuDigits(SDL_Surface* display);
 		int getCustomWorldIndex() const;
+		void changeCustomWorld();
 		void handleArrowUpKey();
 		void handleArrowDownKey();
 		void handleArrowRightKey();
@@ -61,6 +62,7 @@ public:
 	static void loadMenuImages(SDL_Surface* display);
 	bool isStillOpen() const;
 	bool getExitStatus() const;
+	int getGameSpeed() const;
 	void drawMenu(Screen &screen);
 	void handleKeys(const Uint8* state);
 };

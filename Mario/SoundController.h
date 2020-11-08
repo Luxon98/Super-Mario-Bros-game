@@ -13,7 +13,7 @@ class SoundController
 private:
 	// tracks and sound effects are declared as static here, because functions from SDL_mixer library require it
 	static std::array<Mix_Music*, 7> backgroundTracks;
-	static std::array<Mix_Chunk*, 13> soundsEffects;
+	static std::array<Mix_Chunk*, 14> soundsEffects;
 	bool initSoundMixer();
 	void loadBackgroundTracks();
 	void loadSoundEffects();
@@ -42,6 +42,8 @@ public:
 	static void playBonusLostEffect();
 	static void playMarioDeadEffect();
 	static void playPipeTravelEffect();
+	static void playSubmenuEffect();
+	static void playReturnedToMenuEffect();
 	static void stopMusic();
 	~SoundController();
 };

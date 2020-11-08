@@ -6,7 +6,7 @@
 
 
 std::array<Mix_Music*, 7> SoundController::backgroundTracks;
-std::array<Mix_Chunk*, 13> SoundController::soundsEffects;
+std::array<Mix_Chunk*, 14> SoundController::soundsEffects;
 
 bool SoundController::initSoundMixer()
 {
@@ -20,30 +20,31 @@ bool SoundController::initSoundMixer()
 
 void SoundController::loadBackgroundTracks()
 {
-	/*backgroundTracks[0] = Mix_LoadMUS("./sounds/background_open.wav");
+	backgroundTracks[0] = Mix_LoadMUS("./sounds/background_open.wav");
 	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_star.wav");
 	backgroundTracks[2] = Mix_LoadMUS("./sounds/world_finished.wav");
 	backgroundTracks[3] = Mix_LoadMUS("./sounds/game_over.wav");
 	backgroundTracks[4] = Mix_LoadMUS("./sounds/time_passed.wav");
 	backgroundTracks[5] = Mix_LoadMUS("./sounds/background_underground.wav");
-	backgroundTracks[6] = Mix_LoadMUS("./sounds/background_castle.wav");*/
+	backgroundTracks[6] = Mix_LoadMUS("./sounds/background_castle.wav");
 }
 
 void SoundController::loadSoundEffects()
 {
-	/*soundsEffects[0] = Mix_LoadWAV("./sounds/1up_collected.wav");
+	soundsEffects[0] = Mix_LoadWAV("./sounds/1up_collected.wav");
 	soundsEffects[1] = Mix_LoadWAV("./sounds/block_destroyed.wav");
 	soundsEffects[2] = Mix_LoadWAV("./sounds/block_hitted.wav");
 	soundsEffects[3] = Mix_LoadWAV("./sounds/bonus_appeard.wav");
 	soundsEffects[4] = Mix_LoadWAV("./sounds/bonus_collected.wav");
-	soundsEffects[5] = Mix_LoadWAV("./sounds/coin_collected.wav");
+	soundsEffects[5] = Mix_LoadWAV("./sounds/coin_sound.wav");
 	soundsEffects[6] = Mix_LoadWAV("./sounds/enemy_destroyed.wav");
 	soundsEffects[7] = Mix_LoadWAV("./sounds/fireball_popped.wav");
 	soundsEffects[8] = Mix_LoadWAV("./sounds/flag_down.wav");
 	soundsEffects[9] = Mix_LoadWAV("./sounds/jump_small.wav");
 	soundsEffects[10] = Mix_LoadWAV("./sounds/jump_tall.wav");
 	soundsEffects[11] = Mix_LoadWAV("./sounds/mario_dead.wav");
-	soundsEffects[12] = Mix_LoadWAV("./sounds/back_to_small.wav");*/
+	soundsEffects[12] = Mix_LoadWAV("./sounds/back_to_small.wav");
+	soundsEffects[13] = Mix_LoadWAV("./sounds/menu_return.wav");
 }
 
 void SoundController::loadSounds()
@@ -179,6 +180,16 @@ void SoundController::playMarioDeadEffect()
 void SoundController::playPipeTravelEffect()
 {
 	Mix_PlayChannel(-1, soundsEffects[12], 0);
+}
+
+void SoundController::playSubmenuEffect()
+{
+	Mix_PlayChannel(-1, soundsEffects[5], 0);
+}
+
+void SoundController::playReturnedToMenuEffect()
+{
+	Mix_PlayChannel(-1, soundsEffects[13], 0);
 }
 
 void SoundController::stopMusic()

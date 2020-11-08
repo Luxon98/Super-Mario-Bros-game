@@ -23,6 +23,10 @@ void loadBlockImages(SDL_Surface* display);
 
 void loadImages(SDL_Surface* display);
 
+void setCameraPointer(std::shared_ptr<Player> player, World &world, Screen &screen, std::shared_ptr<Camera> camera);
+
+void setPlayerPointer(World &world, Screen &screen, std::shared_ptr<Player> player);
+
 bool isPlayerEnteringPipe(int level, int checkPointMark);
 
 bool isPlayerExitingPipe(int level, int checkPointMark);
@@ -37,7 +41,7 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world);
 
 void adjustCamera(int level, int checkPointMark);
 
-void handleMenu(bool * exitStatus, Screen &screen);
+void handleMenu(bool * exitStatus, int * gameSpeed, Screen &screen);
 
 void runGame();
 
