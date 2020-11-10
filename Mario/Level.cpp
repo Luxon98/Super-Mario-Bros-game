@@ -19,7 +19,7 @@
 #include "Rock.h"
 
 
-void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
+void Level::setFirstLevel(World &world, bool checker)
 {
 	world.blocks.clear();
 	world.platforms.clear();
@@ -152,7 +152,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.blocks.push_back(Block(BlockType::Tube, Position(5754, 399)));
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(5754, 368)));
 
-	if (bonusLifeBlockFlag) {
+	if (checker) {
 		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2064, 288)));
 	}
 
@@ -218,7 +218,7 @@ void Level::setFirstLevel(World &world, bool bonusLifeBlockFlag)
 	world.flag = Flag(Position(6335, 116));
 }
 
-void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
+void Level::setSecondLevel(World &world, bool checker)
 {
 	world.blocks.clear();
 	world.platforms.clear();
@@ -234,8 +234,9 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
 
-	if (bonusLifeBlockFlag) {
+	if (checker) {
 		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2864, 80)));
+
 	}
 	else {
 		world.blocks.push_back(Block(BlockType::Destructible, Position(2864, 80)));
@@ -456,7 +457,9 @@ void Level::setSecondLevel(World &world, bool bonusLifeBlockFlag)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4385, 272))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3328, 388))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3520, 356), true)));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3712, 420))));
+	if (checker) {
+		world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3712, 420))));
+	}
 
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4847, 397), false)));
 

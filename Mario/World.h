@@ -59,6 +59,7 @@ private:
 	void performBonusElementsActions();
 	void performMonstersActions();
 	void performFireBallsActions();
+	void performPlatformsActions();
 	void performWorldActions();
 	void slideTemporaryElements();
 	void slideBlock();
@@ -69,6 +70,10 @@ private:
 	void createNewBonus();
 	void createOneUpMushroom();
 	void playBlockSoundEffects();
+	void drawInanimateAndTemporaryElements(SDL_Surface* display);
+	void drawBonusesAndMonsters(SDL_Surface* display);
+	void drawPlatformsAndFireballs(SDL_Surface* display);
+	void drawOtherObjects(SDL_Surface* display, bool drawPlayer);
 	friend class Level;
 
 public:

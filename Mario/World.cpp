@@ -176,6 +176,13 @@ void World::performFireBallsActions()
 	}
 }
 
+void World::performPlatformsActions()
+{
+	for (auto &platform : platforms) {
+		platform.slide(*player);
+	}
+}
+
 void World::performWorldActions()
 {
 	player->move(*this);
@@ -313,6 +320,52 @@ void World::playBlockSoundEffects()
 	}
 	else {
 		SoundController::playBlockHittedEffect();
+	}
+}
+
+void World::drawInanimateAndTemporaryElements(SDL_Surface* display)
+{
+	for (const auto &inanimateElement : inanimateElements) {
+		inanimateElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+
+	for (const auto &temporaryElement : temporaryElements) {
+		temporaryElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+}
+
+void World::drawBonusesAndMonsters(SDL_Surface* display)
+{
+	for (const auto &bonusElement : bonusElements) {
+		bonusElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+
+	for (const auto &monster : monsters) {
+		monster->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+}
+
+void World::drawPlatformsAndFireballs(SDL_Surface* display)
+{
+	for (const auto &fireball : fireballs) {
+		fireball.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+
+	for (const auto &platform : platforms) {
+		platform.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+}
+
+void World::drawOtherObjects(SDL_Surface* display, bool drawPlayer)
+{
+	flag.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+
+	if (drawPlayer) {
+		player->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+
+	for (const auto &block : blocks) {
+		block.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 }
 
@@ -544,9 +597,7 @@ void World::performActions()
 		}
 
 		if (gameCounter & 1) {
-			for (auto &platform : platforms) {
-				platform.slide(*player);
-			}
+			performPlatformsActions();
 		}
 	}
 
@@ -555,37 +606,8 @@ void World::performActions()
 
 void World::draw(SDL_Surface* display, bool drawPlayer)
 {
-	for (const auto &inanimateElement : inanimateElements) {
-		inanimateElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
-	}
-
-	for (const auto &bonusElement : bonusElements) {
-		bonusElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
-	}
-
-	for (const auto &monster : monsters) {
-		monster->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
-	}
-
-	for (const auto &fireball : fireballs) {
-		fireball.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
-	}
-
-	for (const auto &platform : platforms) {
-		platform.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
-	}
-
-	for (const auto &temporaryElement : temporaryElements) {
-		temporaryElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
-	}
-
-	flag.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
-
-	if (drawPlayer) {
-		player->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
-	}
-
-	for (const auto &block : blocks) {
-		block.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
-	}
+	drawInanimateAndTemporaryElements(display);
+	drawBonusesAndMonsters(display);
+	drawPlatformsAndFireballs(display);
+	drawOtherObjects(display, drawPlayer);
 }

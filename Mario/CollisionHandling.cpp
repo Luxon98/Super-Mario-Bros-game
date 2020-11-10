@@ -432,6 +432,22 @@ void handleBonusCollecting(Player &player, World &world)
 	collectBonusIfPossible(player, world);
 }
 
+int getAlignmentForCollisionFromRight(int distance, const WorldObject &object, const Block &block, const World &world)
+{
+	int alignment = 0;
+
+	if (block.getType() == BlockType::TubeLeftEntry) {
+		if (!isCharacterStandingOnSomething(object, world)) {
+			alignment = (object.getX() + distance + object.getWidth() / 2) - (block.getX() - block.getWidth() / 2);
+		}
+	}
+	else {
+		alignment = (object.getX() + distance + object.getWidth() / 2) - (block.getX() - block.getWidth() / 2);
+	}
+	
+	return (alignment > 0 ? alignment : 0);
+}
+
 int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject &object, const World &world)
 {
 	int alignment = 0;
@@ -441,8 +457,8 @@ int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distan
 		if (areAtTheSameHeight(object, block) && isCharacterHittingObject(object, block, direction, distance)
 			&& !block.isInvisible()) {
 
-			if (direction == Direction::Right && block.getType() != BlockType::TubeLeftEntry) {
-				alignment = (object.getX() + distance + object.getWidth() / 2) - (block.getX() - block.getWidth() / 2);
+			if (direction == Direction::Right) {
+				alignment = getAlignmentForCollisionFromRight(distance, object, block, world);
 			}
 			else if (direction == Direction::Left) {
 				alignment = (block.getX() + block.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2);

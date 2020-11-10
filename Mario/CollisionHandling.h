@@ -76,6 +76,8 @@ void collectCoinIfPossible(Player &player, World &world);
 
 void handleBonusCollecting(Player &player, World &world);
 
+int getAlignmentForCollisionFromRight(int distance, const WorldObject &object, const Block &block, const World &world);
+
 int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject &object, const World &world);
 
 int getHorizontalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject &object, const World &world);
