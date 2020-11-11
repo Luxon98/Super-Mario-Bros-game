@@ -686,6 +686,149 @@ void Level::setThirdLevel(World &world)
 	world.flag = Flag(Position(4863, 116)); 
 }
 
+void Level::setFourthLevel(World &world)
+{
+	world.blocks.clear();
+	world.platforms.clear();
+	world.inanimateElements.clear();
+	world.bonusElements.clear();
+	world.monsters.clear();
+	world.temporaryElements.clear();
+	world.fireballs.clear();
+	world.checkPoints.clear();
+
+	world.slidingCounter = 0;
+	world.resetImages();
+
+	world.LAYOUT_STYLE = LayoutStyle::Castle;
+
+	for (int i = 16; i < 432; i += 32) {
+		for (int j = 464; j > 304; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, j)));
+		}
+	}
+
+	for (int i = 480; i < 832; i += 32) {
+		for (int j = 464; j > 304; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, j)));
+		}
+	}
+
+	for (int i = 928; i < 1024; i += 32) {
+		for (int j = 464; j > 304; j -= 32) {
+			if (i == 960 && j == 336) {
+				world.blocks.push_back(Block(BlockType::Empty, Position(960, 336)));
+			}
+			else {
+				world.blocks.push_back(Block(BlockType::Ground, Position(i, j)));
+			}
+		}
+	}
+
+	for (int i = 1120; i < 2304; i += 32) {
+		for (int j = 464; j > 272; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, j)));
+		}
+	}
+
+	for (int i = 16; i < 176; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 304)));
+	}
+
+	for (int i = 16; i < 144; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 272)));
+	}
+
+	for (int i = 16; i < 112; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 240)));
+	}
+
+	for (int i = 16; i < 6096; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 80)));
+	}
+
+	for (int i = 2304; i < 3424; i += 32) {
+		for (int j = 464; j > 304; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, j)));
+		}
+	}
+
+	for (int i = 3136; i < 4288; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+	}
+
+	for (int i = 16; i < 752; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 112)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 144)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Ground, Position(720, 176)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(720, 208)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(960, 208)));
+
+	for (int i = 1200; i < 2312; i += 32) {
+		for (int j = 176; j > 80; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, j)));
+		}
+	}
+
+	world.blocks.push_back(Block(BlockType::Empty, Position(1200, 208)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(1584, 208)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(1936, 208)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(2160, 208)));
+
+	for (int i = 3200; i < 3424; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 112)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 144)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Ground, Position(2592, 112)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(2880, 112)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(2592, 144)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(2880, 144)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(2448, 304)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(2736, 304)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(3024, 304)));
+
+	for (int i = 3904; i < 4032; i += 32) {
+		for (int j = 400; j > 304; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, j)));
+		}
+	}
+
+	for (int i = 4128; i < 4288; i += 32) {
+		for (int j = 400; j > 304; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, j)));
+		}
+
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 112)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 144)));
+	}
+
+	for (int i = 4640; i < 5600; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+	}
+
+	for (int i = 4640; i < 4736; i += 32) {
+		for (int j = 400; j > 272; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, j)));
+		}
+	}
+
+	for (int i = 4672; i < 4736; i += 32) {
+		for (int j = 176; j > 80; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, j)));
+		}
+	}
+
+	world.blocks.push_back(Block(BlockType::Ground, Position(4462, 320))); //
+
+
+	world.flag = Flag(Position(7863, 116));
+}
+
 void Level::setFirstBonusStage(World &world)
 {
 	world.blocks.clear();

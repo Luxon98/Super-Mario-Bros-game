@@ -233,7 +233,7 @@ MenuManager::MenuManager()
 void MenuManager::loadMenuImages(SDL_Surface* display)
 {
 	menuImages[0] = loadPNG("./img/menu.png", display);
-	menuImages[1] = loadPNG("./img/menuMushroom.png", display);
+	menuImages[1] = loadPNG("./img/menu_mushroom.png", display);
 
 	SubmenuManager::loadSubmenuImages(display);
 }

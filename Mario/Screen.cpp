@@ -7,6 +7,7 @@
 #include "SoundController.h"
 #include "LayoutStyle.h"
 #include "Camera.h"
+#include "FileNotLoadedException.h"
 
 
 bool Screen::coinImage = true;
@@ -22,7 +23,15 @@ bool Screen::isPlayerExceedingCameraReferencePoint() const
 
 int Screen::computeCoinBaseIndex() const
 {
-	return (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		return 0;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
+		return 2;
+	}
+	else {
+		return 4;
+	}
 }
 
 int Screen::computeDifference() const
@@ -63,9 +72,9 @@ void Screen::loadOtherImages()
 	screenImages[1] = loadPNG("./img/time.png", display);
 	screenImages[2] = loadPNG("./img/x.png", display);
 
-	screenImages[7] = loadPNG("./img/mario_right1.png", display);
-	screenImages[8] = loadPNG("./img/timeup.png", display);
-	screenImages[9] = loadPNG("./img/gameover.png", display);
+	screenImages[9] = loadPNG("./img/mario_right1.png", display);
+	screenImages[10] = loadPNG("./img/timeup.png", display);
+	screenImages[11] = loadPNG("./img/gameover.png", display);
 }
 
 void Screen::loadWorldImages()
@@ -87,7 +96,7 @@ void Screen::loadWorldImages()
 
 void Screen::loadCoinImages()
 {
-	for (int j = 3; j < 7; ++j) {
+	for (int j = 3; j < 9; ++j) {
 		std::string filename = "./img/s_coin";
 		filename += std::to_string(j - 2);
 		filename += ".png";
@@ -97,9 +106,9 @@ void Screen::loadCoinImages()
 
 void Screen::loadDeadMarioImages()
 {
-	for (std::size_t k = 10; k < screenImages.size(); ++k) {
+	for (std::size_t k = 12; k < screenImages.size(); ++k) {
 		std::string filename = "./img/mario_dead";
-		filename += std::to_string(k - 9);
+		filename += std::to_string(k - 11);
 		filename += ".png";
 		screenImages[k] = loadPNG(filename, display);
 	}
@@ -107,11 +116,17 @@ void Screen::loadDeadMarioImages()
 
 void Screen::loadScreenImages()
 {
-	loadDigitImages();
-	loadOtherImages();
-	loadCoinImages();
-	loadDeadMarioImages();
-	loadWorldImages();
+	try {
+		loadDigitImages();
+		loadOtherImages();
+		loadCoinImages();
+		loadDeadMarioImages();
+		loadWorldImages();
+	}
+	catch (const FileNotLoadedException & e) {
+		initStatus = 2;
+		showFileErrorWindow(e.what());
+	}
 }
 
 void Screen::setBlueBackground()
@@ -151,7 +166,7 @@ void Screen::drawStartScreenElements(int lives)
 	SDL_Surface* worldImg = worldImages[3 + level];
 	drawSurface(display, worldImg, 303, 162);
 
-	SDL_Surface* marioImg = screenImages[7];
+	SDL_Surface* marioImg = screenImages[9];
 	drawSurface(display, marioImg, 261, 215);
 
 	SDL_Surface* xImg = screenImages[2];
@@ -163,13 +178,13 @@ void Screen::drawStartScreenElements(int lives)
 
 void Screen::drawGameOver()
 {
-	SDL_Surface* img = screenImages[9];
+	SDL_Surface* img = screenImages[11];
 	drawSurface(display, img, 310, 200);
 }
 
 void Screen::drawTimeUp()
 {
-	SDL_Surface* img = screenImages[8];
+	SDL_Surface* img = screenImages[10];
 	drawSurface(display, img, 310, 200);
 }
 
@@ -285,7 +300,9 @@ Screen::Screen()
 	initStatus = initGUI();
 	time = 400;
 	level = 1;
+
 	loadScreenImages();
+
 	timeBegin = std::chrono::steady_clock::now();
 }
 
@@ -404,7 +421,7 @@ void Screen::drawDeadMario(World &world)
 	SoundController::stopMusic();
 	SoundController::playMarioDeadEffect();
 
-	int index = player->getDeadMarioImageIndex() + 10;
+	int index = player->getDeadMarioImageIndex() + 12;
 	SDL_Surface* img = screenImages[index];
 	int shift = 0;
 	for (int i = 0; i < 2400; ++i) {

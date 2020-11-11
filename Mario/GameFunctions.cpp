@@ -150,7 +150,7 @@ void resetScreen(Screen &screen, int level, int checkPointMark)
 			screen.resetScreen(3560, 4200, false);
 		}
 	}
-	else if (level == 3) {
+	else if (level == 3 || level == 4) {
 		screen.resetScreen(0, 640);
 	}
 }
@@ -165,6 +165,9 @@ void changeLevel(int level, World &world, bool playerState)
 	}
 	else if (level == 3) {
 		Level::setThirdLevel(world);
+	}
+	else if (level == 4) {
+		Level::setFourthLevel(world);
 	}
 }
 
@@ -245,8 +248,11 @@ void runGame()
 	Screen screen = Screen();
 	std::shared_ptr<Camera> camera = std::make_shared<Camera>(Camera(0, Screen::SCREEN_WIDTH));
 
-	if (screen.getInitStatus()) {
-		showScreenErrorWindow();
+	int initStatus = screen.getInitStatus();
+	if (initStatus) {
+		if (initStatus != 2) {
+			showScreenErrorWindow();
+		}
 		return;
 	}
 	
@@ -285,7 +291,7 @@ void runGame()
 		setCameraPointer(player, world, screen, camera);
 		setPlayerPointer(world, screen, player);
 		
-		int level = 1, checkPointMark = -1;
+		int level = 4, checkPointMark = -1;
 
 		while (player->getLives() && !winStatus) {
 			if (checkPointMark == -1) {

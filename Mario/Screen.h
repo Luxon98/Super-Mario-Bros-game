@@ -21,7 +21,7 @@ private:
 	int level;
 	std::chrono::steady_clock::time_point timeBegin;
 	std::array<SDL_Surface*, 10> digitImages;
-	std::array<SDL_Surface*, 15> screenImages;
+	std::array<SDL_Surface*, 17> screenImages;
 	std::array<SDL_Surface*, 8> worldImages;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Camera> camera;

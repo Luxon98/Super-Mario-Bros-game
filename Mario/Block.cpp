@@ -8,14 +8,22 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 24> Block::blockImages;
+std::array<SDL_Surface*, 36> Block::blockImages;
 std::array<SDL_Surface*, 6> Block::landImages;
 
 bool Block::blockImage = true;
 
 int Block::computeBaseIndex() const
 {
-	return (World::LAYOUT_STYLE == LayoutStyle::Underground ? 12 : 0);
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		return 0;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
+		return 12;
+	}
+	else {
+		return 24;
+	}
 }
 
 int Block::computeLandImageIndex() const
