@@ -26,6 +26,7 @@
 #include "Bush.h"
 #include "Cloud.h"
 #include "Rock.h"
+#include "Lava.h"
 #include "Castle.h"
 #include "Level.h"
 #include "World.h"
@@ -52,6 +53,7 @@ void loadInanimateObjectImages(SDL_Surface* display)
 	Bush::loadBushImages(display);
 	Cloud::loadCloudImages(display);
 	Rock::loadRockImage(display);
+	Lava::loadLavaImage(display);
 	Flag::loadFlagImages(display);
 	Castle::loadCastleImages(display);
 }

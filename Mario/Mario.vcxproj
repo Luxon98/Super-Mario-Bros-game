@@ -161,6 +161,7 @@
     <ClCompile Include="InanimateObject.cpp" />
     <ClCompile Include="IndependentLivingObject.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
+    <ClCompile Include="Lava.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LivingObject.cpp" />
     <ClCompile Include="main.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="InanimateObject.h" />
     <ClInclude Include="IndependentLivingObject.h" />
     <ClInclude Include="KeyboardController.h" />
+    <ClInclude Include="Lava.h" />
     <ClInclude Include="LayoutStyle.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LivingObject.h" />

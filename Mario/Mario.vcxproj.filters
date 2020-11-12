@@ -216,6 +216,9 @@
     <ClCompile Include="MenuManager.cpp">
       <Filter>Source Files\HandlingAndControlling</Filter>
     </ClCompile>
+    <ClCompile Include="Lava.cpp">
+      <Filter>Source Files\InanimateObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -367,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="MenuManager.h">
       <Filter>Header Files\HandlingAndControlling</Filter>
+    </ClInclude>
+    <ClInclude Include="Lava.h">
+      <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

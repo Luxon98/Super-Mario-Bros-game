@@ -7,18 +7,35 @@
 #include "CollisionHandling.h"
 
 
-SDL_Surface* MovingPlatform::platformImage = nullptr;
+std::array<SDL_Surface*, 2> MovingPlatform::platformImages;
 
 bool MovingPlatform::shouldForcePlayerMovement() const
 {
-	if (playerForceMovementChecker && (upDownFlag || direction == Direction::Left || direction == Direction::Right)) {
+	if (playerForceMovementChecker && (platformType == PlatformType::MovingHorizontallyPlatform 
+		|| platformType == PlatformType::MovingVerticallyPlatform || platformType == PlatformType::SmallPlatform)) {
 		return true;
 	}
-	else if (!upDownFlag && (direction == Direction::Up || direction == Direction::Down)) {
+	else if (platformType == PlatformType::MovingDownPlatform || platformType == PlatformType::MovingUpPlatform) {
 		return true;
 	}
 
 	return false;
+}
+
+Direction MovingPlatform::getDirectionFromType() const
+{
+	if (platformType == PlatformType::MovingUpPlatform || platformType == PlatformType::MovingVerticallyPlatform) {
+		return Direction::Up;
+	}
+	else if (platformType == PlatformType::MovingDownPlatform) {
+		return Direction::Down;
+	}
+	else if (platformType == PlatformType::MovingHorizontallyPlatform || platformType == PlatformType::SmallPlatform) {
+		return Direction::Left;
+	}
+	else {
+		return Direction::None;
+	}
 }
 
 void MovingPlatform::slideDown()
@@ -74,19 +91,26 @@ void MovingPlatform::slideHorizontally()
 	}
 }
 
-MovingPlatform::MovingPlatform(Position position, Direction direction, bool upDownFlag)
+MovingPlatform::MovingPlatform(Position position, PlatformType platformType)
 {
 	this->position = position;
-	this->direction = direction;
-	this->upDownFlag = upDownFlag;
+	this->platformType = platformType;
+	direction = getDirectionFromType();
 	playerForceMovementChecker = false;
-	size = Size(96, 16);
 	slideCounter = 0;
+
+	if (platformType != PlatformType::SmallPlatform) {
+		size = Size(96, 16);
+	}
+	else {
+		size = Size(48, 16);
+	}
 }
 
 void MovingPlatform::loadPlatformImage(SDL_Surface* display)
 {
-	platformImage = loadPNG("./img/platform.png", display);
+	platformImages[0] = loadPNG("./img/platform.png", display);
+	platformImages[1] = loadPNG("./img/small_platform.png", display);
 }
 
 Direction MovingPlatform::getDirection() const
@@ -94,10 +118,16 @@ Direction MovingPlatform::getDirection() const
 	return direction;
 }
 
+void MovingPlatform::setDirection(Direction direction)
+{
+	this->direction = direction;
+}
+
 void MovingPlatform::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
-		drawSurface(display, platformImage, position.getX() - beginningOfCamera, position.getY());
+		int index = (platformType != PlatformType::SmallPlatform ? 0 : 1);
+		drawSurface(display, platformImages[index], position.getX() - beginningOfCamera, position.getY());
 	}
 }
 
@@ -107,17 +137,17 @@ void MovingPlatform::slide(Player &player)
 		player.forceMovement(direction);
 	}
 
-	if (upDownFlag) {
+	if (platformType == PlatformType::MovingVerticallyPlatform) {
 		slideUpDown();
 	}
 	else {
-		if (direction == Direction::Right || direction == Direction::Left) {
+		if (platformType == PlatformType::MovingHorizontallyPlatform || platformType == PlatformType::SmallPlatform) {
 			slideHorizontally();
 		}
-		else if (direction == Direction::Up) {
+		else if (platformType == PlatformType::MovingUpPlatform) {
 			slideUp();
 		}
-		else if (direction == Direction::Down) {
+		else if (platformType == PlatformType::MovingDownPlatform) {
 			slideDown();
 		}
 	}

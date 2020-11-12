@@ -17,6 +17,7 @@
 #include "Flower.h"
 #include "CheckPoint.h"
 #include "Rock.h"
+#include "Lava.h"
 
 
 void Level::setFirstLevel(World &world, bool checker)
@@ -433,10 +434,10 @@ void Level::setSecondLevel(World &world, bool checker)
 		world.blocks.push_back(Block(BlockType::Destructible, Position(5168 + (i * 32), 48)));
 	}
 
-	world.platforms.push_back(MovingPlatform(Position(4526, 120), Direction::Down));
-	world.platforms.push_back(MovingPlatform(Position(4526, 380), Direction::Down));
-	world.platforms.push_back(MovingPlatform(Position(5010, 120), Direction::Up));
-	world.platforms.push_back(MovingPlatform(Position(5010, 380), Direction::Up));
+	world.platforms.push_back(MovingPlatform(Position(4526, 120), PlatformType::MovingDownPlatform));
+	world.platforms.push_back(MovingPlatform(Position(4526, 380), PlatformType::MovingDownPlatform));
+	world.platforms.push_back(MovingPlatform(Position(5010, 120), PlatformType::MovingUpPlatform));
+	world.platforms.push_back(MovingPlatform(Position(5010, 380), PlatformType::MovingUpPlatform));
 
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(518, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(558, 368))));
@@ -530,10 +531,11 @@ void Level::setThirdLevel(World &world)
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
 	}
 
-	world.platforms.push_back(MovingPlatform(Position(1810, 340), Direction::Up, true));
-	world.platforms.push_back(MovingPlatform(Position(2822, 265), Direction::Left));
-	world.platforms.push_back(MovingPlatform(Position(2922, 294), Direction::Right));
-	world.platforms.push_back(MovingPlatform(Position(4260, 196), Direction::Left));
+	world.platforms.push_back(MovingPlatform(Position(1810, 340), PlatformType::MovingVerticallyPlatform));
+	world.platforms.push_back(MovingPlatform(Position(2822, 265), PlatformType::MovingHorizontallyPlatform));
+	world.platforms.push_back(MovingPlatform(Position(2922, 294), PlatformType::MovingHorizontallyPlatform));
+	world.platforms[world.platforms.size() - 1].setDirection(Direction::Right);
+	world.platforms.push_back(MovingPlatform(Position(4260, 196), PlatformType::MovingHorizontallyPlatform));
 
 	for (int i = 4432; i < 4624; i += 32) {
 		for (int j = 400; j > 272; j -= 32) {
@@ -823,7 +825,23 @@ void Level::setFourthLevel(World &world)
 		}
 	}
 
-	world.blocks.push_back(Block(BlockType::Ground, Position(4462, 320))); //
+	for (int i = 424; i < 472; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 454))));
+	}
+
+	for (int i = 824; i < 920; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 454))));
+	}
+
+	for (int i = 1016; i < 1112; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 454))));
+	}
+
+	for (int i = 4272; i < 4704; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 454))));
+	}
+
+	world.platforms.push_back(MovingPlatform(Position(4582, 220), PlatformType::SmallPlatform));
 
 
 	world.flag = Flag(Position(7863, 116));
