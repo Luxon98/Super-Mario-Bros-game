@@ -14,6 +14,7 @@
 #include "Shell.h"
 #include "Turtle.h"
 #include "RedTurtle.h"
+#include "FireRocket.h"
 #include "Creature.h"
 #include "Plant.h"
 #include "FireBall.h"
@@ -94,6 +95,17 @@ bool isMushroomStandingOnBlock(const World &world, const Block &block)
 	return false;
 }
 
+bool isPlayerCloseToFireRocket(const FireRocket &fireRocket, const World &world)
+{
+	const Player& player = world.getPlayer();
+
+	if (abs(player.getX() - fireRocket.getX()) < 350) {
+		return true;
+	}
+
+	return false;
+}
+
 bool isPlayerCloseToPlant(const Plant &plant, const World &world)
 {
 	const Player& player = world.getPlayer();
@@ -102,9 +114,8 @@ bool isPlayerCloseToPlant(const Plant &plant, const World &world)
 	if (abs(player.getX() - plant.getX()) < 40 && (yDifference > 30 && yDifference < 60)) {
 		return true;
 	}
-	else {
-		return false;
-	}
+
+	return false;
 }
 
 bool isPlayerStandingOnThisPlatform(const Player &player, const MovingPlatform &platform)
@@ -227,7 +238,9 @@ void handlePlayerAndMonstersCollisions(std::shared_ptr<LivingObject> monster, Wo
 	}
 
 	if (player.isImmortal()) {
-		handleImmortalPlayerCollisions(monster, world, player, index);
+		if (!std::dynamic_pointer_cast<FireRocket>(monster)) {
+			handleImmortalPlayerCollisions(monster, world, player, index);
+		}
 	}
 	else if (!player.isInsensitive()) {
 		player.loseBonusOrLife();
@@ -239,7 +252,7 @@ void handlePlayerCollisions(Player &player, World &world)
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it)) {
-			if (isPlayerJumpingOnMonster(player, **it) && !std::dynamic_pointer_cast<Plant>(*it)) {
+			if (isPlayerJumpingOnMonster(player, **it) && !isMonsterCrushproof(*it)) {
 				handleJumpingOnMonster(*it, world, player, it - monsters.begin());
 			}
 			else {

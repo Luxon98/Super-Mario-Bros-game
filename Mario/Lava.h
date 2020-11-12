@@ -19,4 +19,4 @@ public:
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
-#endif
+#endif //Lava_H

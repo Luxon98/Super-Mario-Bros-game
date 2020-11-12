@@ -155,6 +155,7 @@
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="FileNotLoadedException.cpp" />
     <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="FireRocket.cpp" />
     <ClCompile Include="Flag.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="GameFunctions.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="FileNotLoadedException.h" />
     <ClInclude Include="FireBall.h" />
+    <ClInclude Include="FireRocket.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameFunctions.h" />

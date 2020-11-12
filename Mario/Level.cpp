@@ -8,6 +8,7 @@
 #include "Turtle.h"
 #include "RedTurtle.h"
 #include "Plant.h"
+#include "FireRocket.h"
 #include "Bush.h"
 #include "Cloud.h"
 #include "Coin.h"
@@ -843,6 +844,9 @@ void Level::setFourthLevel(World &world)
 
 	world.platforms.push_back(MovingPlatform(Position(4582, 220), PlatformType::SmallPlatform));
 
+	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(3200, 235))));
+	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(4000, 280))));
+	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(4450, 200))));
 
 	world.flag = Flag(Position(7863, 116));
 }

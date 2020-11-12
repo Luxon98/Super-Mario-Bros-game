@@ -219,6 +219,9 @@
     <ClCompile Include="Lava.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
+    <ClCompile Include="FireRocket.cpp">
+      <Filter>Source Files\LivingObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -373,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="Lava.h">
       <Filter>Header Files\InanimateObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="FireRocket.h">
+      <Filter>Header Files\LivingObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

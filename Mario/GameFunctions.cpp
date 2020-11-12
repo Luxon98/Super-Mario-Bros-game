@@ -15,6 +15,7 @@
 #include "Creature.h"
 #include "Plant.h"
 #include "Shell.h"
+#include "FireRocket.h"
 #include "Flag.h"
 #include "AnimatedText.h"
 #include "AnimatedCoin.h"
@@ -64,6 +65,7 @@ void loadLivingObjectImages(SDL_Surface* display)
 	Turtle::loadTurtleImages(display);
 	RedTurtle::loadTurtleImages(display);
 	Plant::loadPlantImages(display);
+	FireRocket::loadFireRocketImages(display);
 	Shell::loadShellImage(display);
 	FireBall::loadFireBallImages(display);
 	Player::loadPlayerImages(display);

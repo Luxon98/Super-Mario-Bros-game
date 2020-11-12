@@ -1,6 +1,8 @@
 #ifndef UtilityFunctions_H
 #define UtilityFunctions_H
 
+#include <memory>
+
 class WorldObject;
 class LivingObject;
 class Block;
@@ -16,6 +18,8 @@ bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secon
 bool isElementDirectlyAboveObject(const WorldObject &element, const WorldObject &object);
 
 bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block);
+
+bool isMonsterCrushproof(std::shared_ptr<LivingObject> monster);
 
 Direction determineDirection(const WorldObject &firstObject, const WorldObject &secondObject);
 

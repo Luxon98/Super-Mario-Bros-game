@@ -10,6 +10,7 @@ class LivingObject;
 class BonusObject;
 class Block;
 class Plant;
+class FireRocket;
 class Mushroom;
 class MovingPlatform;
 class FireBall;
@@ -23,6 +24,8 @@ bool isCharacterStandingOnSomething(const WorldObject &figure, const World &worl
 bool isMonsterStandingOnBlock(const LivingObject &monster, const Block &block);
 
 bool isMushroomStandingOnBlock(const World &world, const Block &block);
+
+bool isPlayerCloseToFireRocket(const FireRocket &fireRocket, const World &world);
 
 bool isPlayerCloseToPlant(const Plant &plant, const World &world);
 
