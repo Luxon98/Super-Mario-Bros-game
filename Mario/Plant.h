@@ -15,6 +15,7 @@ private:
 	static std::array<SDL_Surface*, 4> plantImages;
 	int model;
 	int computeImageIndex() const override;
+	bool isOutsidePipe() const;
 	void slide(World &world);
 	void changeModel();
 

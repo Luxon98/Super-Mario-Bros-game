@@ -5,7 +5,7 @@
 #include "Player.h"
 #include "SoundController.h"
 #include "Block.h"
-#include "MovingPlatform.h"
+#include "Platform.h"
 #include "World.h"
 #include "Coin.h"
 #include "Flower.h"
@@ -62,7 +62,7 @@ bool isCharacterStandingOnSomething(const WorldObject &figure, const World &worl
 		}
 	}
 
-	std::vector<MovingPlatform> platforms = world.getPlatforms();
+	std::vector<Platform> platforms = world.getPlatforms();
 	for (auto &platform : platforms) {
 		if (isElementDirectlyAboveObject(figure, platform) && areAtTheSameWidth(figure, platform)) {
 			return true;
@@ -118,7 +118,7 @@ bool isPlayerCloseToPlant(const Plant &plant, const World &world)
 	return false;
 }
 
-bool isPlayerStandingOnThisPlatform(const Player &player, const MovingPlatform &platform)
+bool isPlayerStandingOnThisPlatform(const Player &player, const Platform &platform)
 {
 	if (isElementDirectlyAboveObject(player, platform) && areAtTheSameWidth(player, platform)) {
 		return true;
@@ -486,7 +486,7 @@ int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distan
 int getHorizontalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject &object, const World &world)
 {
 	int alignment = 0;
-	std::vector<MovingPlatform> platforms = world.getPlatforms();
+	std::vector<Platform> platforms = world.getPlatforms();
 
 	for (auto &platform : platforms) {
 		if (areAtTheSameHeight(object, platform) && isCharacterHittingObject(object, platform, direction, distance)) {
@@ -540,7 +540,7 @@ int getVerticalAlignmentForCollisionWithBlocks(Direction direction, int distance
 int getVerticalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject &object, World &world)
 {
 	int alignment = 0;
-	std::vector<MovingPlatform> platforms = world.getPlatforms();
+	std::vector<Platform> platforms = world.getPlatforms();
 
 	for (auto it = platforms.begin(); it != platforms.end(); ++it) {
 		if (areAtTheSameWidth(object, *it) && isCharacterHittingObject(object, *it, direction, distance)) {

@@ -170,7 +170,7 @@
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="Plant.cpp" />
-    <ClCompile Include="MovingPlatform.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="RedTurtle.cpp" />
@@ -224,7 +224,7 @@
     <ClInclude Include="Movement.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Plant.h" />
-    <ClInclude Include="MovingPlatform.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="RedTurtle.h" />

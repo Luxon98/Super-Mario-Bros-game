@@ -12,7 +12,7 @@ class Block;
 class Plant;
 class FireRocket;
 class Mushroom;
-class MovingPlatform;
+class Platform;
 class FireBall;
 enum class Direction;
 
@@ -29,7 +29,7 @@ bool isPlayerCloseToFireRocket(const FireRocket &fireRocket, const World &world)
 
 bool isPlayerCloseToPlant(const Plant &plant, const World &world);
 
-bool isPlayerStandingOnThisPlatform(const Player &player, const MovingPlatform &platform);
+bool isPlayerStandingOnThisPlatform(const Player &player, const Platform &platform);
 
 bool isBlockBlockedByAnother(const Block &block, const World &world);
 

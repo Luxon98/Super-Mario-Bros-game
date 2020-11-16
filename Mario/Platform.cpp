@@ -1,4 +1,4 @@
-#include "MovingPlatform.h"
+#include "Platform.h"
 
 #include "Position.h"
 #include "Size.h"
@@ -7,9 +7,9 @@
 #include "CollisionHandling.h"
 
 
-std::array<SDL_Surface*, 2> MovingPlatform::platformImages;
+std::array<SDL_Surface*, 4> Platform::platformImages;
 
-bool MovingPlatform::shouldForcePlayerMovement() const
+bool Platform::shouldForcePlayerMovement() const
 {
 	if (playerForceMovementChecker && (platformType == PlatformType::MovingHorizontallyPlatform 
 		|| platformType == PlatformType::MovingVerticallyPlatform || platformType == PlatformType::SmallPlatform)) {
@@ -22,7 +22,7 @@ bool MovingPlatform::shouldForcePlayerMovement() const
 	return false;
 }
 
-Direction MovingPlatform::getDirectionFromType() const
+Direction Platform::getDirectionFromType() const
 {
 	if (platformType == PlatformType::MovingUpPlatform || platformType == PlatformType::MovingVerticallyPlatform) {
 		return Direction::Up;
@@ -38,7 +38,43 @@ Direction MovingPlatform::getDirectionFromType() const
 	}
 }
 
-void MovingPlatform::slideDown()
+Size Platform::getSizeFromPlatformType()
+{
+	if (platformType == PlatformType::SmallPlatform) {
+		return Size(48, 16);
+	}
+	else if (platformType == PlatformType::Bridge) {
+		return Size(352, 32);
+	}
+	else {
+		return Size(96, 16);
+	}
+}
+
+void Platform::drawPlatform(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
+		int index = (platformType != PlatformType::SmallPlatform ? 0 : 1);
+		drawSurface(display, platformImages[index], position.getX() - beginningOfCamera, position.getY());
+	}
+}
+
+void Platform::drawBridge(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (position.getX() > beginningOfCamera - 200 && position.getX() < endOfCamera + 200) {
+		for (int i = 0; i < bridgeLength; ++i) {
+			int posX = (position.getX() - size.getWidth() / 2) - beginningOfCamera + (i * 8);
+			drawSurface(display, platformImages[2], posX, position.getY());
+		}
+
+		if (bridgeLength == DEFAULT_BRIDGE_LENGTH) {
+			int posX = position.getX() - beginningOfCamera + 156;
+			drawSurface(display, platformImages[3], posX, position.getY() - 32);
+		}
+	}
+}
+
+void Platform::slideDown()
 {
 	position.setY(position.getY() + 1);
 	if (position.getY() == 500) {
@@ -46,7 +82,7 @@ void MovingPlatform::slideDown()
 	}
 }
 
-void MovingPlatform::slideUp()
+void Platform::slideUp()
 {
 	position.setY(position.getY() - 1);
 	if (position.getY() == -20) {
@@ -54,7 +90,7 @@ void MovingPlatform::slideUp()
 	}
 }
 
-void MovingPlatform::slideUpDown()
+void Platform::slideUpDown()
 {
 	++slideCounter;
 	if ((slideCounter > 20 && slideCounter <= 135) || slideCounter & 1) {
@@ -73,7 +109,7 @@ void MovingPlatform::slideUpDown()
 	
 }
 
-void MovingPlatform::slideHorizontally()
+void Platform::slideHorizontally()
 {
 	++slideCounter;
 	if ((slideCounter > 20 && slideCounter <= 125) || slideCounter & 1) {
@@ -91,47 +127,46 @@ void MovingPlatform::slideHorizontally()
 	}
 }
 
-MovingPlatform::MovingPlatform(Position position, PlatformType platformType)
+Platform::Platform(Position position, PlatformType platformType)
 {
 	this->position = position;
 	this->platformType = platformType;
 	direction = getDirectionFromType();
 	playerForceMovementChecker = false;
 	slideCounter = 0;
-
-	if (platformType != PlatformType::SmallPlatform) {
-		size = Size(96, 16);
-	}
-	else {
-		size = Size(48, 16);
-	}
+	bridgeLength = (platformType == PlatformType::Bridge ? DEFAULT_BRIDGE_LENGTH : 0);
+	size = getSizeFromPlatformType();
 }
 
-void MovingPlatform::loadPlatformImage(SDL_Surface* display)
+void Platform::loadPlatformImage(SDL_Surface* display)
 {
 	platformImages[0] = loadPNG("./img/platform.png", display);
 	platformImages[1] = loadPNG("./img/small_platform.png", display);
+	platformImages[2] = loadPNG("./img/bridge_element.png", display);
+	platformImages[3] = loadPNG("./img/span.png", display);
 }
 
-Direction MovingPlatform::getDirection() const
+Direction Platform::getDirection() const
 {
 	return direction;
 }
 
-void MovingPlatform::setDirection(Direction direction)
+void Platform::setDirection(Direction direction)
 {
 	this->direction = direction;
 }
 
-void MovingPlatform::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+void Platform::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
-		int index = (platformType != PlatformType::SmallPlatform ? 0 : 1);
-		drawSurface(display, platformImages[index], position.getX() - beginningOfCamera, position.getY());
+	if (platformType != PlatformType::Bridge) {
+		drawPlatform(display, beginningOfCamera, endOfCamera);
+	}
+	else {
+		drawBridge(display, beginningOfCamera, endOfCamera);
 	}
 }
 
-void MovingPlatform::slide(Player &player)
+void Platform::slide(Player &player)
 {
 	if (isPlayerStandingOnThisPlatform(player, *this) && shouldForcePlayerMovement()) {
 		player.forceMovement(direction);
@@ -150,5 +185,13 @@ void MovingPlatform::slide(Player &player)
 		else if (platformType == PlatformType::MovingDownPlatform) {
 			slideDown();
 		}
+	}
+}
+
+void Platform::reduceBridge()
+{
+	if (platformType == PlatformType::Bridge) {
+		--bridgeLength;
+		size.setWidth(size.getWidth() - 8);
 	}
 }

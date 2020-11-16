@@ -192,9 +192,6 @@
     <ClCompile Include="Block.cpp">
       <Filter>Source Files\OtherObjects</Filter>
     </ClCompile>
-    <ClCompile Include="MovingPlatform.cpp">
-      <Filter>Source Files\OtherObjects</Filter>
-    </ClCompile>
     <ClCompile Include="World.cpp">
       <Filter>Source Files\OtherObjects</Filter>
     </ClCompile>
@@ -221,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="FireRocket.cpp">
       <Filter>Source Files\LivingObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Source Files\OtherObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -353,9 +353,6 @@
     <ClInclude Include="Block.h">
       <Filter>Header Files\OtherObjects</Filter>
     </ClInclude>
-    <ClInclude Include="MovingPlatform.h">
-      <Filter>Header Files\OtherObjects</Filter>
-    </ClInclude>
     <ClInclude Include="UtilityFunctions.h">
       <Filter>Header Files\OtherFiles</Filter>
     </ClInclude>
@@ -379,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="FireRocket.h">
       <Filter>Header Files\LivingObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Header Files\OtherObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -34,7 +34,7 @@
 #include "Screen.h"
 #include "Camera.h"
 #include "Block.h"
-#include "MovingPlatform.h"
+#include "Platform.h"
 #include "Position.h"
 #include "WorldInteractionFunctions.h"
 #include "MenuManager.h"
@@ -85,7 +85,7 @@ void loadTemporaryObjectImages(SDL_Surface* display)
 void loadBlockImages(SDL_Surface* display)
 {
 	Block::loadBlockImages(display);
-	MovingPlatform::loadPlatformImage(display);
+	Platform::loadPlatformImage(display);
 }
 
 void loadImages(SDL_Surface* display)

@@ -390,7 +390,7 @@ std::vector<Block> const& World::getBlocks() const
 	return blocks;
 }
 
-std::vector<MovingPlatform> const& World::getPlatforms() const
+std::vector<Platform> const& World::getPlatforms() const
 {
 	return platforms;
 }

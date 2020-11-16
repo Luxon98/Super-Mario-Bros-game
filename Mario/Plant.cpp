@@ -17,10 +17,19 @@ int Plant::computeImageIndex() const
 	return baseIndex + (model - 1);
 }
 
+bool Plant::isOutsidePipe() const
+{
+	if (stepsCounter >= 45 && stepsCounter <= 585) {
+		return true;
+	}
+
+	return false;
+}
+
 void Plant::slide(World &world)
 {
 	if (stepsCounter < 630) {
-		if (!isPlayerCloseToPlant(*this, world)) {
+		if (!isPlayerCloseToPlant(*this, world) || isOutsidePipe()) {
 			if (movement.getVerticalDirection() == Direction::Up) {
 				position.setY(position.getY() - movement.getVerticalSpeed());
 			}

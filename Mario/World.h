@@ -5,7 +5,7 @@
 #include <vector>
 #include <memory>
 #include "FireBall.h"
-#include "MovingPlatform.h"
+#include "Platform.h"
 #include "Flag.h"
 #include "CheckPoint.h"
 
@@ -33,7 +33,7 @@ private:
 	static constexpr int SLIDING_BLOCK_VALUE = 81;
 	std::chrono::steady_clock::time_point lastColoursUpdateTime;
 	std::vector<Block> blocks;
-	std::vector<MovingPlatform> platforms;
+	std::vector<Platform> platforms;
 	std::vector<FireBall> fireballs;
 	std::vector<CheckPoint> checkPoints;
 	std::vector<std::shared_ptr<InanimateObject>> inanimateElements;
@@ -81,7 +81,7 @@ public:
 	static LayoutStyle LAYOUT_STYLE;
 	World();
 	std::vector<Block> const& getBlocks() const;
-	std::vector<MovingPlatform> const& getPlatforms() const;
+	std::vector<Platform> const& getPlatforms() const;
 	std::vector<FireBall> const& getFireBalls() const;
 	std::vector<std::shared_ptr<InanimateObject>> const& getInanimateElements() const;
 	std::vector<std::shared_ptr<BonusObject>> const& getBonusElements() const;

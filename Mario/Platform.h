@@ -1,5 +1,5 @@
-#ifndef MovingPlatform_H
-#define MovingPlatform_H
+#ifndef Platform_H
+#define Platform_H
 
 #include <array>
 #include "WorldObject.h"
@@ -16,34 +16,41 @@ enum class PlatformType
 	MovingVerticallyPlatform,
 	MovingDownPlatform,
 	MovingUpPlatform,
-	SmallPlatform
+	SmallPlatform,
+	Bridge
 };
 
 
-class MovingPlatform : public WorldObject
+class Platform : public WorldObject
 {
 private:
-	static std::array<SDL_Surface*, 2> platformImages;
+	static std::array<SDL_Surface*, 4> platformImages;
+	static constexpr int DEFAULT_BRIDGE_LENGTH = 44;
 	PlatformType platformType;
 	Direction direction;
 	bool playerForceMovementChecker;
 	int slideCounter;
+	int bridgeLength;
 	bool shouldForcePlayerMovement() const;
 	Direction getDirectionFromType() const;
+	Size getSizeFromPlatformType();
+	void drawPlatform(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const;
+	void drawBridge(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const;
 	void slideDown();
 	void slideUp();
 	void slideUpDown();
 	void slideHorizontally();
 
 public:
-	MovingPlatform() = default;
-	MovingPlatform(Position position, PlatformType platformType);
+	Platform() = default;
+	Platform(Position position, PlatformType platformType);
 	static void loadPlatformImage(SDL_Surface* display);
 	Direction getDirection() const;
 	void setDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void slide(Player &player);
+	void reduceBridge();
 };
 
-#endif //MovingPlatform_H
+#endif //Platform_H
 
