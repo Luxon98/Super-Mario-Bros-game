@@ -222,6 +222,9 @@
     <ClCompile Include="Platform.cpp">
       <Filter>Source Files\OtherObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\InanimateObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -379,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>Header Files\OtherObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -40,13 +40,12 @@ Direction Platform::getDirectionFromType() const
 
 Size Platform::getSizeFromPlatformType()
 {
-	if (platformType == PlatformType::SmallPlatform) {
-		return Size(48, 16);
-	}
-	else if (platformType == PlatformType::Bridge) {
+	switch (platformType) {
+	case PlatformType::SmallPlatform:
+		return Size(64, 16);
+	case PlatformType::Bridge:
 		return Size(352, 32);
-	}
-	else {
+	default:
 		return Size(96, 16);
 	}
 }

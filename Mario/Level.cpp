@@ -13,6 +13,7 @@
 #include "Cloud.h"
 #include "Coin.h"
 #include "Flag.h"
+#include "Button.h"
 #include "Castle.h"
 #include "LayoutStyle.h"
 #include "Flower.h"
@@ -217,7 +218,8 @@ void Level::setFirstLevel(World &world, bool checker)
 	world.checkPoints.push_back(CheckPoint(Position(1854, 265), false, 1));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6542, 336), false)));
-	world.flag = Flag(Position(6335, 116));
+	world.flag = std::make_unique<Flag>(Flag(Position(6335, 116)));
+	world.button = nullptr;
 }
 
 void Level::setSecondLevel(World &world, bool checker)
@@ -481,7 +483,8 @@ void Level::setSecondLevel(World &world, bool checker)
 	world.checkPoints.push_back(CheckPoint(Position(5354, 294), true, 3));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6684, 336), false)));
-	world.flag = Flag(Position(6635, 116));
+	world.flag = nullptr;
+	world.button = nullptr;
 }
 
 void Level::setThirdLevel(World &world)
@@ -686,7 +689,8 @@ void Level::setThirdLevel(World &world)
 	world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3662, 464))));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(5135, 240), true)));
-	world.flag = Flag(Position(4863, 116)); 
+	world.flag = std::make_unique<Flag>(Flag(Position(4863, 116))); 
+	world.button = nullptr;
 }
 
 void Level::setFourthLevel(World &world)
@@ -842,15 +846,15 @@ void Level::setFourthLevel(World &world)
 		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 454))));
 	}
 
-	world.platforms.push_back(Platform(Position(4582, 220), PlatformType::SmallPlatform));
+	world.platforms.push_back(Platform(Position(4576, 210), PlatformType::SmallPlatform));
 	world.platforms.push_back(Platform(Position(4452, 336), PlatformType::Bridge));
-
 
 	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(3200, 235))));
 	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(4000, 280))));
 	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(4450, 200))));
 
-	world.flag = Flag(Position(7863, 116));
+	world.flag = nullptr;
+	world.button = std::make_unique<Button>(Button(Position(4640, 272)));
 }
 
 void Level::setFirstBonusStage(World &world)
@@ -900,7 +904,8 @@ void Level::setFirstBonusStage(World &world)
 
 	world.checkPoints.push_back(CheckPoint(Position(590, 390), true, 2));
 
-	world.flag = Flag(Position(5000, 116));
+	world.flag = nullptr;
+	world.button = nullptr;
 }
 
 void Level::setSecondBonusStage(World &world)
@@ -964,7 +969,8 @@ void Level::setSecondBonusStage(World &world)
 
 	world.checkPoints.push_back(CheckPoint(Position(590, 390), true, 2));
 
-	world.flag = Flag(Position(5000, 116));
+	world.flag = nullptr;
+	world.button = nullptr;
 }
 
 void Level::setSecondStageOnSecondLevel(World &world)
@@ -1009,5 +1015,6 @@ void Level::setSecondStageOnSecondLevel(World &world)
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(128, 420))));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(915, 336), false)));
-	world.flag = Flag(Position(703, 116));
+	world.flag = std::make_unique<Flag>(Flag(Position(703, 116)));
+	world.button = nullptr;
 }

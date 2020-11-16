@@ -16,6 +16,7 @@
 #include "FireRocket.h"
 #include "Shell.h"
 #include "Flag.h"
+#include "Button.h"
 #include "AnimatedText.h"
 #include "AnimatedCoin.h"
 #include "Shards.h"
@@ -79,6 +80,7 @@ void World::changeColors()
 	Coin::changeCoinImage();
 	Block::changeBlockImage();
 	Screen::changeCoinImage();
+	Button::changeButtonImage();
 }
 
 void World::setMovementDirection(LivingObject &monster)
@@ -198,8 +200,8 @@ void World::performWorldActions()
 		slideBlock();
 	}
 
-	if (flag.isActive()) {
-		flag.changePosition();
+	if (flag != nullptr && flag->isActive()) {
+		flag->changePosition();
 	}
 }
 
@@ -362,7 +364,12 @@ void World::drawPlatformsAndFireballs(SDL_Surface* display)
 
 void World::drawOtherObjects(SDL_Surface* display, bool drawPlayer)
 {
-	flag.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	if (flag != nullptr) {
+		flag->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+	if (button != nullptr) {
+		button->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
 
 	if (drawPlayer) {
 		player->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
@@ -379,7 +386,6 @@ World::World()
 	gameSpeed = 7;
 	lastColoursUpdateTime = std::chrono::steady_clock::now();
 	lastTouchedBlockIndex = -1;
-	flag = Flag();
 	slidingCounter = 0;
 	slideBlockStatus = true;
 	fireballStatus = false;
@@ -432,12 +438,15 @@ BlockType World::getLastTouchedBlockType() const
 
 bool World::isFlagDown() const
 {
-	return flag.isDown();
+	return flag->isDown();
 }
 
 bool World::isPlayerFinishingWorld() const
 {
-	if (player->getX() >= flag.getX() + 15 && player->getX() <= flag.getX() + 65) {
+	if (flag != nullptr && flag->isPlayerHittingThisFlag(*player)) {
+		return true;
+	}
+	else if (button != nullptr && button->isPlayerHittingThisButton(*player)) {
 		return true;
 	}
 
@@ -502,7 +511,7 @@ void World::setFireballStatus()
 
 void World::switchOnFlag()
 {
-	flag.setActiveState();
+	flag->setActiveState();
 }
 
 void World::changeShellMovementParameters(int index, Direction direction)
@@ -516,6 +525,7 @@ void World::resetImages()
 	Screen::resetCoinImage();
 	Block::resetBlockImage();
 	Coin::resetCoinImage();
+	Button::resetButtonImage();
 }
 
 void World::destroyLastTouchedBlock()

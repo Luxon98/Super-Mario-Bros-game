@@ -182,6 +182,7 @@
     <ClCompile Include="Size.cpp" />
     <ClCompile Include="SoundController.cpp" />
     <ClCompile Include="Star.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="TemporaryObject.cpp" />
     <ClCompile Include="Turtle.cpp" />
     <ClCompile Include="UtilityFunctions.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="Size.h" />
     <ClInclude Include="SoundController.h" />
     <ClInclude Include="Star.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="TemporaryObject.h" />
     <ClInclude Include="Turtle.h" />
     <ClInclude Include="UtilityFunctions.h" />

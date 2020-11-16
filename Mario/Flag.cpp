@@ -2,6 +2,7 @@
 
 #include "Position.h"
 #include "SDL_Utility.h"
+#include "Player.h"
 
 
 std::array<SDL_Surface*, 2> Flag::flagImages;
@@ -28,6 +29,15 @@ bool Flag::isActive() const
 bool Flag::isDown() const
 {
 	return (stepsCounter >= 506);
+}
+
+bool Flag::isPlayerHittingThisFlag(const Player &player)
+{
+	if (player.getX() >= this->getX() + 15 && player.getX() <= this->getX() + 65) {
+		return true;
+	}
+
+	return false;
 }
 
 void Flag::setActiveState()

@@ -6,7 +6,6 @@
 #include <memory>
 #include "FireBall.h"
 #include "Platform.h"
-#include "Flag.h"
 #include "CheckPoint.h"
 
 class Player;
@@ -18,6 +17,8 @@ class InanimateObject;
 class TemporaryObject;
 class LivingObject;
 class Camera;
+class Button;
+class Flag;
 enum class TextType;
 enum class Direction;
 enum class BlockType;
@@ -42,7 +43,9 @@ private:
 	std::vector<std::shared_ptr<TemporaryObject>> temporaryElements;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Camera> camera; 
-	Flag flag;
+	std::unique_ptr<Flag> flag;
+	std::unique_ptr<Button> button;
+
 	int gameCounter;
 	int gameSpeed;
 	int lastTouchedBlockIndex;

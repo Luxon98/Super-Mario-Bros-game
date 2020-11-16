@@ -17,6 +17,7 @@
 #include "Shell.h"
 #include "FireRocket.h"
 #include "Flag.h"
+#include "Button.h"
 #include "AnimatedText.h"
 #include "AnimatedCoin.h"
 #include "Shards.h"
@@ -56,6 +57,7 @@ void loadInanimateObjectImages(SDL_Surface* display)
 	Rock::loadRockImage(display);
 	Lava::loadLavaImage(display);
 	Flag::loadFlagImages(display);
+	Button::loadButtonImages(display);
 	Castle::loadCastleImages(display);
 }
 
@@ -273,7 +275,9 @@ void runGame()
 	bool exitStatus = false;
 	int gameSpeed = 7;
 
-	handleMenu(&exitStatus, &gameSpeed, screen);
+	if (loadResourcesStatus) {
+		handleMenu(&exitStatus, &gameSpeed, screen);
+	}
 
 	if (exitStatus) {
 		return;
@@ -342,25 +346,32 @@ void runGame()
 				}
 
 				if (world.isPlayerFinishingWorld() && !winStatus) {
-					SoundController::playFlagDownEffect();
-					world.switchOnFlag();
-					player->setSlidingParameters();
-					getPointsFromFlag(*player, world);
+					if (level != 4) {
+						SoundController::playFlagDownEffect();
+						world.switchOnFlag();
+						player->setSlidingParameters();
+						getPointsFromFlag(*player, world);
 
-					while (!world.isFlagDown()) {
-						world.performActions();
-						screen.updateScreen(world);
+						while (!world.isFlagDown()) {
+							world.performActions();
+							screen.updateScreen(world);
+						}
+						player->setFinishingRunParameters();
+
+						screen.drawWorldFinishedScreen(world);
+
+						++level;
+						screen.setLevel(level);
+						if (level == 4) {
+							winStatus = true;
+						}
+						break;
 					}
-					player->setFinishingRunParameters();
-
-					screen.drawWorldFinishedScreen(world);
-					
-					++level;
-					screen.setLevel(level);
-					if (level == 4) {
+					else {
+						// TODO: animation
 						winStatus = true;
+						break;
 					}
-					break;
 				}
 
 				if (player->isDead()) {
