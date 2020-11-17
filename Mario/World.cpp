@@ -329,14 +329,10 @@ void World::playBlockSoundEffects()
 	}
 }
 
-void World::drawInanimateAndTemporaryElements(SDL_Surface* display)
+void World::drawInanimateElements(SDL_Surface* display)
 {
 	for (const auto &inanimateElement : inanimateElements) {
 		inanimateElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
-	}
-
-	for (const auto &temporaryElement : temporaryElements) {
-		temporaryElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 }
 
@@ -377,6 +373,13 @@ void World::drawOtherObjects(SDL_Surface* display, bool drawPlayer)
 
 	for (const auto &block : blocks) {
 		block.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+}
+
+void World::drawTemporaryElements(SDL_Surface* display)
+{
+	for (const auto &temporaryElement : temporaryElements) {
+		temporaryElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 }
 
@@ -620,8 +623,9 @@ void World::performActions()
 
 void World::draw(SDL_Surface* display, bool drawPlayer)
 {
-	drawInanimateAndTemporaryElements(display);
+	drawInanimateElements(display);
 	drawBonusesAndMonsters(display);
 	drawPlatformsAndFireballs(display);
 	drawOtherObjects(display, drawPlayer);
+	drawTemporaryElements(display);
 }

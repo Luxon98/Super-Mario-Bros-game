@@ -73,10 +73,11 @@ private:
 	void createNewBonus();
 	void createOneUpMushroom();
 	void playBlockSoundEffects();
-	void drawInanimateAndTemporaryElements(SDL_Surface* display);
+	void drawInanimateElements(SDL_Surface* display);
 	void drawBonusesAndMonsters(SDL_Surface* display);
 	void drawPlatformsAndFireballs(SDL_Surface* display);
 	void drawOtherObjects(SDL_Surface* display, bool drawPlayer);
+	void drawTemporaryElements(SDL_Surface* display);
 	friend class Level;
 
 public:

@@ -299,7 +299,7 @@ void runGame()
 		setCameraPointer(player, world, screen, camera);
 		setPlayerPointer(world, screen, player);
 		
-		int level = 4, checkPointMark = -1;
+		int level = 1, checkPointMark = -1;
 
 		while (player->getLives() && !winStatus) {
 			if (checkPointMark == -1) {
@@ -362,13 +362,11 @@ void runGame()
 
 						++level;
 						screen.setLevel(level);
-						if (level == 4) {
-							winStatus = true;
-						}
 						break;
 					}
 					else {
 						// TODO: animation
+						++level;
 						winStatus = true;
 						break;
 					}

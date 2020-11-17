@@ -771,8 +771,8 @@ void Level::setFourthLevel(World &world)
 	}
 
 	world.blocks.push_back(Block(BlockType::Ground, Position(720, 176)));
-	world.blocks.push_back(Block(BlockType::Empty, Position(720, 208)));
-	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(960, 208)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(720, 207)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(960, 207)));
 
 	for (int i = 1200; i < 2312; i += 32) {
 		for (int j = 176; j > 80; j -= 32) {
@@ -780,10 +780,10 @@ void Level::setFourthLevel(World &world)
 		}
 	}
 
-	world.blocks.push_back(Block(BlockType::Empty, Position(1200, 208)));
-	world.blocks.push_back(Block(BlockType::Empty, Position(1584, 208)));
-	world.blocks.push_back(Block(BlockType::Empty, Position(1936, 208)));
-	world.blocks.push_back(Block(BlockType::Empty, Position(2160, 208)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(1200, 207)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(1584, 207)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(1936, 207)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(2160, 207)));
 
 	for (int i = 3200; i < 3424; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 112)));
@@ -792,8 +792,8 @@ void Level::setFourthLevel(World &world)
 
 	world.blocks.push_back(Block(BlockType::Ground, Position(2592, 112)));
 	world.blocks.push_back(Block(BlockType::Ground, Position(2880, 112)));
-	world.blocks.push_back(Block(BlockType::Empty, Position(2592, 144)));
-	world.blocks.push_back(Block(BlockType::Empty, Position(2880, 144)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(2592, 143)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(2880, 143)));
 	world.blocks.push_back(Block(BlockType::Empty, Position(2448, 304)));
 	world.blocks.push_back(Block(BlockType::Empty, Position(2736, 304)));
 	world.blocks.push_back(Block(BlockType::Empty, Position(3024, 304)));

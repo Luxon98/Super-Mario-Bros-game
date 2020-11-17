@@ -13,6 +13,8 @@ int Button::buttonImage = 1;
 Button::Button(Position position)
 {
 	this->position = position;
+
+	size = Size(16, 24);
 }
 
 void Button::loadButtonImages(SDL_Surface* display)
@@ -40,10 +42,8 @@ void Button::changeButtonImage()
 
 bool Button::isPlayerHittingThisButton(const Player &player)
 {
-	if (areAtTheSameWidth(player, *this)) {
-		if (abs(player.getY() - this->getY()) <= 25) {
-			return true;
-		}
+	if (areAtTheSameWidth(player, *this) && areAtTheSameHeight(player, *this)) {
+		return true;
 	}
 
 	return false;

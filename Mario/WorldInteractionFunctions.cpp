@@ -24,11 +24,11 @@ TextType getTextTypeFromPoints(int points)
 void addTextAndPoints(Player &player, World &world, int points)
 {
 	if (points == 1000) {
-		world.addAnimatedText(TextType::ONE_THOUSAND, Position(player.getX(), player.getY() - 30));
+		world.addAnimatedText(TextType::ONE_THOUSAND, Position(player.getX(), player.getY() - 35));
 		player.addPoints(points);
 	}
 	else {
-		world.addAnimatedText(TextType::ONE_UP, Position(player.getX(), player.getY() - 30));
+		world.addAnimatedText(TextType::ONE_UP, Position(player.getX(), player.getY() - 35));
 	}
 }
 
