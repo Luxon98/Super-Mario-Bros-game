@@ -90,6 +90,7 @@ public:
 	std::vector<Block> const& getBlocks() const;
 	std::vector<Platform> const& getPlatforms() const;
 	std::vector<FireBall> const& getFireBalls() const;
+	std::vector<FireSerpent> const& getFireSerpents() const;
 	std::vector<std::shared_ptr<InanimateObject>> const& getInanimateElements() const;
 	std::vector<std::shared_ptr<BonusObject>> const& getBonusElements() const;
 	std::vector<std::shared_ptr<LivingObject>> const& getMonsters() const;

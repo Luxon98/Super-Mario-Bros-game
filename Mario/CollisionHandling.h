@@ -51,6 +51,10 @@ void handleImmortalPlayerCollisions(std::shared_ptr<LivingObject> monster, World
 
 void handlePlayerAndMonstersCollisions(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
 
+void handleCollisionsWithMonsters(Player &player, World &world);
+
+void handleCollisionsWithFireSerpents(Player &player, World &world);
+
 void handlePlayerCollisions(Player &player, World &world);
 
 void handleShellCollisions(const LivingObject &shell, std::shared_ptr<LivingObject> monster, World &world, int * pts);

@@ -421,6 +421,11 @@ std::vector<FireBall> const& World::getFireBalls() const
 	return fireballs;
 }
 
+std::vector<FireSerpent> const& World::getFireSerpents() const
+{
+	return fireSerpents;
+}
+
 std::vector<std::shared_ptr<InanimateObject>> const& World::getInanimateElements() const
 {
 	return inanimateElements;

@@ -247,7 +247,7 @@ void handlePlayerAndMonstersCollisions(std::shared_ptr<LivingObject> monster, Wo
 	}
 }
 
-void handlePlayerCollisions(Player &player, World &world)
+void handleCollisionsWithMonsters(Player &player, World &world)
 {
 	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
@@ -261,6 +261,25 @@ void handlePlayerCollisions(Player &player, World &world)
 			break;
 		}
 	}
+}
+
+void handleCollisionsWithFireSerpents(Player &player, World &world)
+{
+	std::vector<FireSerpent> fireSerpents = world.getFireSerpents();
+	for (const auto &fireSerpent : fireSerpents) {
+		if (areAtTheSameWidth(player, fireSerpent) && areAtTheSameHeight(player, fireSerpent)) {
+			if (!player.isImmortal() && !player.isInsensitive()) {
+				player.loseBonusOrLife();
+				break;
+			}
+		}
+	}
+}
+
+void handlePlayerCollisions(Player &player, World &world)
+{
+	handleCollisionsWithMonsters(player, world);
+	handleCollisionsWithFireSerpents(player, world);
 }
 
 void handleShellCollisions(const LivingObject &shell, std::shared_ptr<LivingObject> monster, World &world, int * pts)
