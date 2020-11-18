@@ -225,6 +225,9 @@
     <ClCompile Include="Button.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
+    <ClCompile Include="FireSerpent.cpp">
+      <Filter>Source Files\OtherObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -385,6 +388,9 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>Header Files\InanimateObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="FireSerpent.h">
+      <Filter>Header Files\OtherObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

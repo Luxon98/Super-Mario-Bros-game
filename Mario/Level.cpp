@@ -20,6 +20,7 @@
 #include "CheckPoint.h"
 #include "Rock.h"
 #include "Lava.h"
+#include "FireSerpent.h"
 
 
 void Level::setFirstLevel(World &world, bool checker)
@@ -32,6 +33,7 @@ void Level::setFirstLevel(World &world, bool checker)
 	world.temporaryElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
+	world.fireSerpents.clear();
 
 	world.slidingCounter = 0;
 	world.resetImages();
@@ -232,6 +234,7 @@ void Level::setSecondLevel(World &world, bool checker)
 	world.temporaryElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
+	world.fireSerpents.clear();
 	
 	world.slidingCounter = 0;
 	world.resetImages();
@@ -497,6 +500,7 @@ void Level::setThirdLevel(World &world)
 	world.temporaryElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
+	world.fireSerpents.clear();
 
 	world.slidingCounter = 0;
 	world.resetImages();
@@ -703,6 +707,7 @@ void Level::setFourthLevel(World &world)
 	world.temporaryElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
+	world.fireSerpents.clear();
 
 	world.slidingCounter = 0;
 	world.resetImages();
@@ -853,6 +858,8 @@ void Level::setFourthLevel(World &world)
 	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(4000, 280))));
 	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(4450, 200))));
 
+	world.fireSerpents.push_back(FireSerpent(true, Position(2592, 143)));
+
 	world.flag = nullptr;
 	world.button = std::make_unique<Button>(Button(Position(4640, 272)));
 }
@@ -867,6 +874,7 @@ void Level::setFirstBonusStage(World &world)
 	world.temporaryElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
+	world.fireSerpents.clear();
 
 	world.slidingCounter = 0;
 	world.resetImages();
@@ -918,6 +926,7 @@ void Level::setSecondBonusStage(World &world)
 	world.temporaryElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
+	world.fireSerpents.clear();
 
 	world.slidingCounter = 0;
 	world.resetImages();
@@ -983,6 +992,7 @@ void Level::setSecondStageOnSecondLevel(World &world)
 	world.temporaryElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
+	world.fireSerpents.clear();
 
 	world.slidingCounter = 0;
 	world.resetImages();

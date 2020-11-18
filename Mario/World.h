@@ -7,6 +7,7 @@
 #include "FireBall.h"
 #include "Platform.h"
 #include "CheckPoint.h"
+#include "FireSerpent.h"
 
 class Player;
 class BonusObject;
@@ -37,6 +38,7 @@ private:
 	std::vector<Platform> platforms;
 	std::vector<FireBall> fireballs;
 	std::vector<CheckPoint> checkPoints;
+	std::vector<FireSerpent> fireSerpents;
 	std::vector<std::shared_ptr<InanimateObject>> inanimateElements;
 	std::vector<std::shared_ptr<BonusObject>> bonusElements;
 	std::vector<std::shared_ptr<LivingObject>> monsters;
@@ -63,6 +65,7 @@ private:
 	void performMonstersActions();
 	void performFireBallsActions();
 	void performPlatformsActions();
+	void performFireSerpentsActions();
 	void performWorldActions();
 	void slideTemporaryElements();
 	void slideBlock();

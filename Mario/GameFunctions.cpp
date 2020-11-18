@@ -37,6 +37,7 @@
 #include "Block.h"
 #include "Platform.h"
 #include "Position.h"
+#include "FireSerpent.h"
 #include "WorldInteractionFunctions.h"
 #include "MenuManager.h"
 #include "FileNotLoadedException.h"
@@ -84,10 +85,12 @@ void loadTemporaryObjectImages(SDL_Surface* display)
 	AnimatedText::loadAnimatedTextImages(display);
 }
 
-void loadBlockImages(SDL_Surface* display)
+void loadOtherImages(SDL_Surface* display)
 {
 	Block::loadBlockImages(display);
 	Platform::loadPlatformImage(display);
+	FireSerpent::loadFireSerpentImages(display);
+	MenuManager::loadMenuImages(display);
 }
 
 void loadImages(SDL_Surface* display)
@@ -96,9 +99,7 @@ void loadImages(SDL_Surface* display)
 	loadInanimateObjectImages(display);
 	loadLivingObjectImages(display);
 	loadTemporaryObjectImages(display);
-	loadBlockImages(display);
-
-	MenuManager::loadMenuImages(display);
+	loadOtherImages(display);
 }
 
 void setCameraPointer(std::shared_ptr<Player> player, World &world, Screen &screen, std::shared_ptr<Camera> camera)
@@ -299,7 +300,7 @@ void runGame()
 		setCameraPointer(player, world, screen, camera);
 		setPlayerPointer(world, screen, player);
 		
-		int level = 1, checkPointMark = -1;
+		int level = 4, checkPointMark = -1;
 
 		while (player->getLives() && !winStatus) {
 			if (checkPointMark == -1) {

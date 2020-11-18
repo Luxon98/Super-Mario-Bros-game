@@ -189,12 +189,20 @@ void World::performPlatformsActions()
 	}
 }
 
+void World::performFireSerpentsActions()
+{
+	for (auto &fireSerpent : fireSerpents) {
+		fireSerpent.move();
+	}
+}
+
 void World::performWorldActions()
 {
 	player->move(*this);
 	performBonusElementsActions();
 	performMonstersActions();
 	performFireBallsActions();
+	performFireSerpentsActions();
 
 	if (slidingCounter) {
 		slideBlock();
@@ -373,6 +381,10 @@ void World::drawOtherObjects(SDL_Surface* display, bool drawPlayer)
 
 	for (const auto &block : blocks) {
 		block.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+
+	for (const auto &fireSerpent : fireSerpents) {
+		fireSerpent.draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 }
 

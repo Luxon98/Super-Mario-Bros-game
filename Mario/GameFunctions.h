@@ -19,7 +19,7 @@ void loadLivingObjectImages(SDL_Surface* display);
 
 void loadTemporaryObjectImages(SDL_Surface* display);
 
-void loadBlockImages(SDL_Surface* display);
+void loadOtherImages(SDL_Surface* display);
 
 void loadImages(SDL_Surface* display);
 
