@@ -141,6 +141,7 @@
     <ClCompile Include="AnimatedText.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BonusObject.cpp" />
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Bush.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Castle.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="AnimatedText.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BonusObject.h" />
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Bush.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Castle.h" />

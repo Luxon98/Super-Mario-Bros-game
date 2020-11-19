@@ -18,6 +18,7 @@
 #include "Creature.h"
 #include "Plant.h"
 #include "FireBall.h"
+#include "Boss.h"
 #include "Position.h"
 #include "AnimatedText.h"
 #include "Screen.h"
@@ -238,7 +239,7 @@ void handlePlayerAndMonstersCollisions(std::shared_ptr<LivingObject> monster, Wo
 	}
 
 	if (player.isImmortal()) {
-		if (!std::dynamic_pointer_cast<FireRocket>(monster)) {
+		if (!isMonsterResistantToKnocks(monster)) {
 			handleImmortalPlayerCollisions(monster, world, player, index);
 		}
 	}
@@ -319,6 +320,19 @@ void handleShellsAndMonstersCollisions(World &world, Player &player)
 	}
 }
 
+void handleFireBallAndBossCollision(std::shared_ptr<LivingObject> monster, World &world, int * pts)
+{
+	std::dynamic_pointer_cast<Boss>(monster)->decrementHealthPoints();
+
+	if (std::dynamic_pointer_cast<Boss>(monster)->getHealthPoints() != 0) {
+		*pts = -1;
+	}
+	else {
+		*pts = 1000;
+		// TODO: addDestroyedCreature -> 5000
+	}
+}
+
 void handleFireBallCollision(const FireBall &fireball, std::shared_ptr<LivingObject> monster, World &world, int * pts)
 {
 	Direction direction = fireball.getMovement().getDirection();
@@ -334,14 +348,16 @@ void handleFireBallCollision(const FireBall &fireball, std::shared_ptr<LivingObj
 	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
 		world.addDestroyedTurtle(Position(monster->getX() + alignment, monster->getY()), direction, true);
 	}
+	else if (std::dynamic_pointer_cast<Boss>(monster)) {
+		handleFireBallAndBossCollision(monster, world, pts);
+	}
 }
 
-void handleMonsterDestruction(const FireBall &fireball, World &world, int fireballIndex, int monsterIndex)
+void handleFireBallDestruction(const FireBall &fireball, World &world, int fireballIndex)
 {
 	int alignment = (fireball.getMovement().getDirection() == Direction::Left ? -5 : 5);
 
 	world.deleteFireBall(fireballIndex);
-	world.deleteMonster(monsterIndex);
 	world.addExplosion(Position(fireball.getX() + alignment, fireball.getY()));
 }
 
@@ -355,10 +371,13 @@ void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 			if (areAtTheSameWidth(*it, **it2) && areAtTheSameHeight(*it, **it2)) {
 				int points = 200;
 				handleFireBallCollision(fireballs[index], *it2, world, &points);
-				handleMonsterDestruction(fireballs[index], world, index, it2 - monsters.begin());
-				
-				addTextAndPoints(player, world, points, Position((*it2)->getX(), (*it2)->getY() - 15));
-				SoundController::playEnemyDestroyedEffect();
+				handleFireBallDestruction(fireballs[index], world, index);
+
+				if (points != -1) {
+					world.deleteMonster(it2 - monsters.begin());
+					addTextAndPoints(player, world, points, Position((*it2)->getX(), (*it2)->getY() - 15));
+					SoundController::playEnemyDestroyedEffect();
+				}
 			}
 		}
 	}

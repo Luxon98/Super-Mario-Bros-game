@@ -21,6 +21,8 @@ bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block);
 
 bool isMonsterCrushproof(std::shared_ptr<LivingObject> monster);
 
+bool isMonsterResistantToKnocks(std::shared_ptr<LivingObject> monster);
+
 Direction determineDirection(const WorldObject &firstObject, const WorldObject &secondObject);
 
 #endif //UtilityFunctions_H

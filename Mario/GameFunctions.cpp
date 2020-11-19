@@ -16,6 +16,7 @@
 #include "Plant.h"
 #include "Shell.h"
 #include "FireRocket.h"
+#include "Boss.h"
 #include "Flag.h"
 #include "Button.h"
 #include "AnimatedText.h"
@@ -69,6 +70,7 @@ void loadLivingObjectImages(SDL_Surface* display)
 	RedTurtle::loadTurtleImages(display);
 	Plant::loadPlantImages(display);
 	FireRocket::loadFireRocketImages(display);
+	Boss::loadBossImages(display);
 	Shell::loadShellImage(display);
 	FireBall::loadFireBallImages(display);
 	Player::loadPlayerImages(display);

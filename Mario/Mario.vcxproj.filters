@@ -228,6 +228,9 @@
     <ClCompile Include="FireSerpent.cpp">
       <Filter>Source Files\OtherObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Source Files\LivingObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -391,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="FireSerpent.h">
       <Filter>Header Files\OtherObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Header Files\LivingObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -71,4 +71,3 @@ void Creature::move(World &world)
 	}
 	++stepsCounter;
 }
-

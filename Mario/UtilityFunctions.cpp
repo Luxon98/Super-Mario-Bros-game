@@ -5,6 +5,7 @@
 #include "Block.h"
 #include "Plant.h"
 #include "FireRocket.h"
+#include "Boss.h"
 
 
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions)
@@ -70,7 +71,18 @@ bool isMonsterCloseAboveBlock(const LivingObject& monster, const Block& block)
 
 bool isMonsterCrushproof(std::shared_ptr<LivingObject> monster)
 {
-	if (std::dynamic_pointer_cast<Plant>(monster) || std::dynamic_pointer_cast<FireRocket>(monster)) {
+	if (std::dynamic_pointer_cast<Plant>(monster) || std::dynamic_pointer_cast<FireRocket>(monster)
+		|| std::dynamic_pointer_cast<Boss>(monster)) {
+
+		return true;
+	}
+
+	return false;
+}
+
+bool isMonsterResistantToKnocks(std::shared_ptr<LivingObject> monster)
+{
+	if (std::dynamic_pointer_cast<FireRocket>(monster) || std::dynamic_pointer_cast<Boss>(monster)) {
 		return true;
 	}
 

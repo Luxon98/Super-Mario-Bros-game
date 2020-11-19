@@ -14,6 +14,7 @@
 #include "Turtle.h"
 #include "Creature.h"
 #include "FireRocket.h"
+#include "Boss.h"
 #include "Shell.h"
 #include "Flag.h"
 #include "Button.h"
@@ -93,6 +94,9 @@ void World::setMovementDirection(LivingObject &monster)
 	}
 	else if (dynamic_cast<FireRocket*>(&monster)) {
 		dynamic_cast<FireRocket*>(&monster)->setMoveDirection(Direction::Left);
+	}
+	else if (dynamic_cast<Boss*>(&monster)) {
+		dynamic_cast<Boss*>(&monster)->setMoveDirection(Direction::Left);
 	}
 }
 

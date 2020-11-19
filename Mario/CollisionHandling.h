@@ -61,9 +61,11 @@ void handleShellCollisions(const LivingObject &shell, std::shared_ptr<LivingObje
 
 void handleShellsAndMonstersCollisions(World &world, Player &player);
 
+void handleFireBallAndBossCollision(std::shared_ptr<LivingObject> monster, World &world, int * pts);
+
 void handleFireBallCollision(const FireBall &fireball, std::shared_ptr<LivingObject> monster, World &world, int * pts);
 
-void handleMonsterDestruction(const FireBall &fireball, World &world, int fireballIndex, int monsterIndex);
+void handleFireBallDestruction(const FireBall &fireball, World &world, int fireballIndex);
 
 void handleFireBallsAndMonstersCollisions(World &world, Player &player);
 
