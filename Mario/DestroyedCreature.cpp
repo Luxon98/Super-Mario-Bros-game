@@ -22,7 +22,7 @@ DestroyedCreature::DestroyedCreature(Position position, Direction slideDirection
 	auxiliaryCounter = 0;
 }
 
-void DestroyedCreature::loadDestroyedCreatureImage(SDL_Surface* display)
+void DestroyedCreature::loadDestroyedCreatureImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < destroyedCreatureImages.size(); ++i) {
 		std::string filename = "./img/destroyed_creature";

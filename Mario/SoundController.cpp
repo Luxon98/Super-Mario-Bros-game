@@ -6,7 +6,7 @@
 
 
 std::array<Mix_Music*, 7> SoundController::backgroundTracks;
-std::array<Mix_Chunk*, 15> SoundController::soundsEffects;
+std::array<Mix_Chunk*, 16> SoundController::soundsEffects;
 
 bool SoundController::initSoundMixer()
 {
@@ -46,6 +46,7 @@ void SoundController::loadSoundEffects()
 	soundsEffects[12] = Mix_LoadWAV("./sounds/back_to_small.wav");
 	soundsEffects[13] = Mix_LoadWAV("./sounds/menu_return.wav");
 	soundsEffects[14] = Mix_LoadWAV("./sounds/fire_rocket.wav");
+	soundsEffects[15] = Mix_LoadWAV("./sounds/boss_destroyed.wav");
 }
 
 void SoundController::loadSounds()
@@ -148,9 +149,9 @@ void SoundController::playCoinCollectedEffect()
 	Mix_PlayChannel(-1, soundsEffects[5], 0);
 }
 
-void SoundController::playEnemyDestroyedEffect()
+void SoundController::playEnemyDestroyedEffect(bool bossFlag)
 {
-	Mix_PlayChannel(-1, soundsEffects[6], 0);
+	Mix_PlayChannel(-1, soundsEffects[bossFlag ? 15 : 6], 0);
 }
 
 void SoundController::playFireballPoppedEffect()

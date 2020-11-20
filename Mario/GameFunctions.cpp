@@ -26,6 +26,7 @@
 #include "CrushedCreature.h"
 #include "DestroyedCreature.h"
 #include "DestroyedTurtle.h"
+#include "DestroyedBoss.h"
 #include "Bush.h"
 #include "Cloud.h"
 #include "Rock.h"
@@ -78,10 +79,11 @@ void loadLivingObjectImages(SDL_Surface* display)
 
 void loadTemporaryObjectImages(SDL_Surface* display)
 {
-	CrushedCreature::loadCrushedCreatureImage(display);
-	DestroyedCreature::loadDestroyedCreatureImage(display);
-	DestroyedTurtle::loadDestroyedTurtleImage(display);
-	Explosion::loadExplosionImage(display);
+	CrushedCreature::loadCrushedCreatureImages(display);
+	DestroyedCreature::loadDestroyedCreatureImages(display);
+	DestroyedTurtle::loadDestroyedTurtleImages(display);
+	DestroyedBoss::loadDestroyedBossImages(display);
+	Explosion::loadExplosionImages(display);
 	Shards::loadShardsImages(display);
 	AnimatedCoin::loadAnimatedCoinImages(display);
 	AnimatedText::loadAnimatedTextImages(display);
@@ -302,7 +304,7 @@ void runGame()
 		setCameraPointer(player, world, screen, camera);
 		setPlayerPointer(world, screen, player);
 		
-		int level = 4, checkPointMark = -1;
+		int level = 1, checkPointMark = -1;
 
 		while (player->getLives() && !winStatus) {
 			if (checkPointMark == -1) {

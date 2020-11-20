@@ -27,7 +27,7 @@ DestroyedTurtle::DestroyedTurtle(Position position, Direction slideDirection, bo
 	auxiliaryCounter = 0;
 }
 
-void DestroyedTurtle::loadDestroyedTurtleImage(SDL_Surface* display)
+void DestroyedTurtle::loadDestroyedTurtleImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < destroyedTurtleImages.size(); ++i) {
 		std::string filename = "./img/destroyed_turtle";

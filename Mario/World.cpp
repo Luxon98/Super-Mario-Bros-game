@@ -25,12 +25,14 @@
 #include "CrushedCreature.h"
 #include "DestroyedCreature.h"
 #include "DestroyedTurtle.h"
+#include "DestroyedBoss.h"
 #include "Position.h"
 #include "SoundController.h"
 #include "LayoutStyle.h"
 #include "Screen.h"
 
 
+int World::WORLD_HEIGHT = 480;
 LayoutStyle World::LAYOUT_STYLE = LayoutStyle::OpenWorld;
 
 bool World::isTimeToChangeColors() const
@@ -600,6 +602,11 @@ void World::addDestroyedCreature(Position position, Direction slideDirection)
 void World::addDestroyedTurtle(Position position, Direction slideDirection, bool red)
 {
 	temporaryElements.push_back(std::make_shared<DestroyedTurtle>(DestroyedTurtle(position, slideDirection, red)));
+}
+
+void World::addDestroyedBoss(Position position)
+{
+	temporaryElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position)));
 }
 
 void World::addExplosion(Position position)

@@ -4,7 +4,7 @@
 #include "SDL_Utility.h"
 
 
-std::array<SDL_Surface*, 5> AnimatedText::animatedTextImages;
+std::array<SDL_Surface*, 6> AnimatedText::animatedTextImages;
 
 int AnimatedText::computeImageIndex() const
 {
@@ -24,7 +24,8 @@ void AnimatedText::loadAnimatedTextImages(SDL_Surface* display)
 	animatedTextImages[1] = loadPNG("./img/200.png", display);
 	animatedTextImages[2] = loadPNG("./img/400.png", display);
 	animatedTextImages[3] = loadPNG("./img/1000.png", display);
-	animatedTextImages[4] = loadPNG("./img/1UP.png", display);
+	animatedTextImages[4] = loadPNG("./img/5000.png", display);
+	animatedTextImages[5] = loadPNG("./img/1UP.png", display);
 }
 
 void AnimatedText::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

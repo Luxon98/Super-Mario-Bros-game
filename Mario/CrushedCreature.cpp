@@ -19,7 +19,7 @@ CrushedCreature::CrushedCreature(Position position)
 	creationTime = std::chrono::steady_clock::now();
 }
 
-void CrushedCreature::loadCrushedCreatureImage(SDL_Surface* display)
+void CrushedCreature::loadCrushedCreatureImages(SDL_Surface* display)
 {
 	crushedCreatureImages[0] = loadPNG("./img/crushed_creature1.png", display);
 	crushedCreatureImages[1] = loadPNG("./img/crushed_creature2.png", display);

@@ -231,6 +231,9 @@
     <ClCompile Include="Boss.cpp">
       <Filter>Source Files\LivingObjects</Filter>
     </ClCompile>
+    <ClCompile Include="DestroyedBoss.cpp">
+      <Filter>Source Files\TemporaryObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -397,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="Boss.h">
       <Filter>Header Files\LivingObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyedBoss.h">
+      <Filter>Header Files\TemporaryObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

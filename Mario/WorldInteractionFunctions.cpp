@@ -16,8 +16,10 @@ TextType getTextTypeFromPoints(int points)
 		return TextType::TWO_HUNDRED;
 	case 400:
 		return TextType::FOUR_HUNDRED;
-	default:
+	case 1000:
 		return TextType::ONE_THOUSAND;
+	default:
+		return TextType::FIVE_THOUSAND;
 	}
 }
 
@@ -110,14 +112,17 @@ void getPointsFromFlag(Player &player, World &world)
 	if (player.getY() > 330) {
 		points = 100;
 	}
-	else if (player.getY() <= 330 && player.getY() >= 250) {
+	else if (player.getY() <= 330 && player.getY() >= 280) {
 		points = 200;
 	}
-	else if (player.getY() < 250 && player.getY() >= 190) {
+	else if (player.getY() < 280 && player.getY() >= 230) {
 		points = 400;
 	}
-	else {
+	else if (player.getY() < 230 && player.getY() >= 180) {
 		points = 1000;
+	}
+	else {
+		points = 5000;
 	}
 
 	Position position = Position(player.getX() + 75, player.getY());

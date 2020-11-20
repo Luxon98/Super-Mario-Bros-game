@@ -39,6 +39,7 @@ void Level::setFirstLevel(World &world, bool checker)
 	world.slidingCounter = 0;
 	world.resetImages();
 
+	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::OpenWorld;
 
 	for (int i = 0; i < 7120; i += 32) {
@@ -240,6 +241,7 @@ void Level::setSecondLevel(World &world, bool checker)
 	world.slidingCounter = 0;
 	world.resetImages();
 
+	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
 
 	if (checker) {
@@ -506,6 +508,7 @@ void Level::setThirdLevel(World &world)
 	world.slidingCounter = 0;
 	world.resetImages();
 
+	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::OpenWorld;
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(80, 336), false)));
@@ -540,7 +543,7 @@ void Level::setThirdLevel(World &world)
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
 	}
 
-	world.platforms.push_back(Platform(Position(1810, 340), PlatformType::MovingVerticallyPlatform));
+	world.platforms.push_back(Platform(Position(1810, 390), PlatformType::MovingVerticallyPlatform));
 	world.platforms.push_back(Platform(Position(2822, 265), PlatformType::MovingHorizontallyPlatform));
 	world.platforms.push_back(Platform(Position(2922, 294), PlatformType::MovingHorizontallyPlatform));
 	world.platforms[world.platforms.size() - 1].setDirection(Direction::Right);
@@ -685,10 +688,10 @@ void Level::setThirdLevel(World &world)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1423, 112))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1488, 112))));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(989, 141), false)));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2384, 138), true)));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2384, 148), true)));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2575, 176))));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3538, 205), false)));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3665, 172), true)));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3665, 182), true)));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4348, 397), false)));
 
 	world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3662, 464))));
@@ -713,6 +716,7 @@ void Level::setFourthLevel(World &world)
 	world.slidingCounter = 0;
 	world.resetImages();
 
+	world.WORLD_HEIGHT = 450;
 	world.LAYOUT_STYLE = LayoutStyle::Castle;
 
 	for (int i = 16; i < 432; i += 32) {
@@ -861,13 +865,13 @@ void Level::setFourthLevel(World &world)
 
 	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(910, 207)));
 
-	//world.fireSerpents.push_back(FireSerpent(1, Position(960, 336)));
-	//world.fireSerpents.push_back(FireSerpent(8, Position(1584, 207)));
-	//world.fireSerpents.push_back(FireSerpent(13, Position(1936, 207)));
-	//world.fireSerpents.push_back(FireSerpent(21, Position(2160, 207)));
-	//world.fireSerpents.push_back(FireSerpent(1, Position(2880, 143)));
-	//world.fireSerpents.push_back(FireSerpent(10, Position(2448, 304)));
-	//world.fireSerpents.push_back(FireSerpent(18, Position(2736, 304)));
+	world.fireSerpents.push_back(FireSerpent(1, Position(960, 336)));
+	world.fireSerpents.push_back(FireSerpent(8, Position(1584, 207)));
+	world.fireSerpents.push_back(FireSerpent(13, Position(1936, 207)));
+	world.fireSerpents.push_back(FireSerpent(21, Position(2160, 207)));
+	world.fireSerpents.push_back(FireSerpent(1, Position(2880, 143)));
+	world.fireSerpents.push_back(FireSerpent(10, Position(2448, 304)));
+	world.fireSerpents.push_back(FireSerpent(18, Position(2736, 304)));
 
 	world.monsters.push_back(std::make_shared<Boss>(Boss(Position(4575, 285))));
 
@@ -890,6 +894,7 @@ void Level::setFirstBonusStage(World &world)
 	world.slidingCounter = 0;
 	world.resetImages();
 
+	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
 
 	for (int i = 16; i < 688; i += 32) {
@@ -942,6 +947,7 @@ void Level::setSecondBonusStage(World &world)
 	world.slidingCounter = 0;
 	world.resetImages();
 
+	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
 
 	for (int i = 16; i < 688; i += 32) {
@@ -1008,6 +1014,7 @@ void Level::setSecondStageOnSecondLevel(World &world)
 	world.slidingCounter = 0;
 	world.resetImages();
 
+	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::OpenWorld;
 
 	for (int i = 0; i < 50; ++i) {

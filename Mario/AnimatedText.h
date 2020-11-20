@@ -14,14 +14,15 @@ enum class TextType
 	TWO_HUNDRED = 2,
 	FOUR_HUNDRED = 3,
 	ONE_THOUSAND = 4,
-	ONE_UP = 5
+	FIVE_THOUSAND = 5,
+	ONE_UP = 6
 };
 
 
 class AnimatedText : public TemporaryObject 
 {
 private:
-	static std::array<SDL_Surface*, 5> animatedTextImages;
+	static std::array<SDL_Surface*, 6> animatedTextImages;
 	TextType type;
 	int computeImageIndex() const override;
 

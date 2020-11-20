@@ -84,7 +84,7 @@ private:
 	friend class Level;
 
 public:
-	static constexpr int WORLD_HEIGHT = 480;
+	static int WORLD_HEIGHT;
 	static LayoutStyle LAYOUT_STYLE;
 	World();
 	std::vector<Block> const& getBlocks() const;
@@ -118,6 +118,7 @@ public:
 	void addCrushedCreature(Position position);
 	void addDestroyedCreature(Position position, Direction slideDirection);
 	void addDestroyedTurtle(Position position, Direction slideDirection, bool red = false);
+	void addDestroyedBoss(Position position);
 	void addExplosion(Position position);
 	void addAnimatedText(TextType type, Position position);
 	void addAnimatedCoin();

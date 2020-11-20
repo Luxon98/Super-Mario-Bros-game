@@ -26,7 +26,7 @@ Explosion::Explosion(Position position)
 	creationTime = std::chrono::steady_clock::now();
 }
 
-void Explosion::loadExplosionImage(SDL_Surface* display)
+void Explosion::loadExplosionImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < explosionImages.size(); ++i) {
 		std::string filename = "./img/explosion";

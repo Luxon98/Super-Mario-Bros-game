@@ -328,8 +328,8 @@ void handleFireBallAndBossCollision(std::shared_ptr<LivingObject> monster, World
 		*pts = -1;
 	}
 	else {
-		*pts = 1000;
-		// TODO: addDestroyedCreature -> 5000
+		*pts = 5000;
+		world.addDestroyedBoss(monster->getPosition());
 	}
 }
 
@@ -376,7 +376,8 @@ void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 				if (points != -1) {
 					world.deleteMonster(it2 - monsters.begin());
 					addTextAndPoints(player, world, points, Position((*it2)->getX(), (*it2)->getY() - 15));
-					SoundController::playEnemyDestroyedEffect();
+					bool bossFlag = (points == 5000);
+					SoundController::playEnemyDestroyedEffect(bossFlag);
 				}
 			}
 		}
