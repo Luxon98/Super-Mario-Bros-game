@@ -130,7 +130,7 @@ public:
 	bool isPerformingJumpAsSmall() const;
 	bool isGoingToPipe() const;
 	bool isNotJumpingUp() const;
-	bool isStillRunningToCastle();
+	bool isStillRunning();
 	SDL_Surface* getImage() const;
 	void incrementCoins();
 	void incrementLives();
@@ -149,8 +149,7 @@ public:
 	void reborn(int level);
 	void resetSteps();
 	void setSlidingParameters();
-	void setFinishingRunParameters(); 
+	void setFinishingRunParameters(int level); 
 };
 
 #endif //Player_H
-

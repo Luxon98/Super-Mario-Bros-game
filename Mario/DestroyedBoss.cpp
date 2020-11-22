@@ -48,7 +48,7 @@ void DestroyedBoss::draw(SDL_Surface* display, int beginningOfCamera, int endOfC
 bool DestroyedBoss::shouldBeRemoved() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
-	return (creationTime + std::chrono::milliseconds(4000) < timePoint);
+	return (creationTime + std::chrono::milliseconds(2750) < timePoint);
 }
 
 void DestroyedBoss::slide()

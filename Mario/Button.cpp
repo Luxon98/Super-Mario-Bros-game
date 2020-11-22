@@ -14,7 +14,7 @@ Button::Button(Position position)
 {
 	this->position = position;
 
-	size = Size(16, 24);
+	size = Size(13, 21);
 }
 
 void Button::loadButtonImages(SDL_Surface* display)

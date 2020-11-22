@@ -45,7 +45,9 @@ public:
 	Platform() = default;
 	Platform(Position position, PlatformType platformType);
 	static void loadPlatformImage(SDL_Surface* display);
+	int getBridgeLength() const;
 	Direction getDirection() const;
+	PlatformType getPlatformType() const;
 	void setDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void slide(Player &player);

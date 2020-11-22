@@ -202,9 +202,12 @@ void World::performFireSerpentsActions()
 	}
 }
 
-void World::performWorldActions()
+void World::performWorldActions(bool playerActionFlag)
 {
-	player->move(*this);
+	if (playerActionFlag) {
+		player->move(*this);
+	}
+	
 	performBonusElementsActions();
 	performMonstersActions();
 	performFireBallsActions();
@@ -479,6 +482,22 @@ bool World::isPlayerFinishingWorld() const
 	return false;
 }
 
+bool World::isBridgeDestroyedAlready() const
+{
+	for (const auto &platform : platforms) {
+		if (platform.getPlatformType() == PlatformType::Bridge) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool World::areTemporaryElementsEmpty() const
+{
+	return (temporaryElements.size() == 0);
+}
+
 int World::getLastReachedCheckPointMark() const
 {
 	for (const auto &checkPoint : checkPoints) {
@@ -538,6 +557,22 @@ void World::setFireballStatus()
 void World::switchOnFlag()
 {
 	flag->setActiveState();
+}
+
+void World::spoilBridgeAndBoss()
+{
+	if (platforms[platforms.size() - 1].getPlatformType() == PlatformType::Bridge) {
+		platforms[platforms.size() - 1].reduceBridge();
+		if (platforms[platforms.size() - 1].getBridgeLength() == 0) {
+			platforms.pop_back();
+		}
+	}
+
+	if (std::dynamic_pointer_cast<Boss>(monsters[monsters.size() - 1])) {
+		addDestroyedBoss(monsters[monsters.size() - 1]->getPosition(), false);
+		monsters.pop_back();
+		SoundController::playEnemyDestroyedEffect(true);
+	}
 }
 
 void World::changeShellMovementParameters(int index, Direction direction)
@@ -604,9 +639,9 @@ void World::addDestroyedTurtle(Position position, Direction slideDirection, bool
 	temporaryElements.push_back(std::make_shared<DestroyedTurtle>(DestroyedTurtle(position, slideDirection, red)));
 }
 
-void World::addDestroyedBoss(Position position)
+void World::addDestroyedBoss(Position position, bool normal)
 {
-	temporaryElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position)));
+	temporaryElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, normal)));
 }
 
 void World::addExplosion(Position position)
@@ -625,11 +660,11 @@ void World::addAnimatedCoin()
 	temporaryElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(position)));
 }
 
-void World::performActions()
+void World::performActions(bool playerActionFlag)
 {
 	++gameCounter;
 	if (gameCounter % (10 - gameSpeed) == 0) {
-		performWorldActions();
+		performWorldActions(playerActionFlag);
 		deleteTemporaryElements();
 		slideTemporaryElements();
 

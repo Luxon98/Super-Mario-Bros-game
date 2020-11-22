@@ -21,6 +21,7 @@
 #include "CheckPoint.h"
 #include "Rock.h"
 #include "Lava.h"
+#include "Princess.h"
 #include "FireSerpent.h"
 
 
@@ -857,7 +858,6 @@ void Level::setFourthLevel(World &world)
 	}
 
 	world.platforms.push_back(Platform(Position(4576, 210), PlatformType::SmallPlatform));
-	world.platforms.push_back(Platform(Position(4452, 336), PlatformType::Bridge));
 
 	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(3200, 235))));
 	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(4000, 280))));
@@ -865,15 +865,19 @@ void Level::setFourthLevel(World &world)
 
 	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(910, 207)));
 
-	world.fireSerpents.push_back(FireSerpent(1, Position(960, 336)));
+	/*world.fireSerpents.push_back(FireSerpent(1, Position(960, 336)));
 	world.fireSerpents.push_back(FireSerpent(8, Position(1584, 207)));
 	world.fireSerpents.push_back(FireSerpent(13, Position(1936, 207)));
 	world.fireSerpents.push_back(FireSerpent(21, Position(2160, 207)));
 	world.fireSerpents.push_back(FireSerpent(1, Position(2880, 143)));
 	world.fireSerpents.push_back(FireSerpent(10, Position(2448, 304)));
-	world.fireSerpents.push_back(FireSerpent(18, Position(2736, 304)));
+	world.fireSerpents.push_back(FireSerpent(18, Position(2736, 304)));*/
 
+	// bridge and boss should always be added last
+	world.platforms.push_back(Platform(Position(4452, 336), PlatformType::Bridge));
 	world.monsters.push_back(std::make_shared<Boss>(Boss(Position(4575, 285))));
+
+	world.inanimateElements.push_back(std::make_shared<Princess>(Princess(Position(5000, 392), true)));
 
 	world.flag = nullptr;
 	world.button = std::make_unique<Button>(Button(Position(4640, 272)));

@@ -32,6 +32,7 @@
 #include "Rock.h"
 #include "Lava.h"
 #include "Castle.h"
+#include "Princess.h"
 #include "Level.h"
 #include "World.h"
 #include "Screen.h"
@@ -62,6 +63,7 @@ void loadInanimateObjectImages(SDL_Surface* display)
 	Flag::loadFlagImages(display);
 	Button::loadButtonImages(display);
 	Castle::loadCastleImages(display);
+	Princess::loadPrincessImages(display);
 }
 
 void loadLivingObjectImages(SDL_Surface* display)
@@ -304,7 +306,7 @@ void runGame()
 		setCameraPointer(player, world, screen, camera);
 		setPlayerPointer(world, screen, player);
 		
-		int level = 1, checkPointMark = -1;
+		int level = 4, checkPointMark = -1;
 
 		while (player->getLives() && !winStatus) {
 			if (checkPointMark == -1) {
@@ -361,16 +363,21 @@ void runGame()
 							world.performActions();
 							screen.updateScreen(world);
 						}
-						player->setFinishingRunParameters();
+						player->setFinishingRunParameters(level);
 
-						screen.drawWorldFinishedScreen(world);
+						screen.drawLevelFinishedScreen(world);
 
 						++level;
 						screen.setLevel(level);
 						break;
 					}
 					else {
-						// TODO: animation
+						screen.drawBridgeSpolilingScreen(world);
+
+						player->setFinishingRunParameters(level);
+
+						screen.drawWorldFinishedScreen(world);
+
 						++level;
 						winStatus = true;
 						break;

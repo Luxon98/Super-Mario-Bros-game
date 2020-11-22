@@ -66,7 +66,7 @@ private:
 	void performFireBallsActions();
 	void performPlatformsActions();
 	void performFireSerpentsActions();
-	void performWorldActions();
+	void performWorldActions(bool playerActionFlag = true);
 	void slideTemporaryElements();
 	void slideBlock();
 	void collectCoin();
@@ -99,6 +99,8 @@ public:
 	BlockType getLastTouchedBlockType() const;
 	bool isFlagDown() const;
 	bool isPlayerFinishingWorld() const;
+	bool isBridgeDestroyedAlready() const;
+	bool areTemporaryElementsEmpty() const;
 	int getLastReachedCheckPointMark() const;
 	void setGameSpeed(int gameSpeed);
 	void setPlayer(std::shared_ptr<Player> player);
@@ -107,6 +109,7 @@ public:
 	void hitBlock();
 	void setFireballStatus();
 	void switchOnFlag();
+	void spoilBridgeAndBoss();
 	void changeShellMovementParameters(int index, Direction direction);
 	void resetImages();
 	void destroyLastTouchedBlock();
@@ -118,11 +121,11 @@ public:
 	void addCrushedCreature(Position position);
 	void addDestroyedCreature(Position position, Direction slideDirection);
 	void addDestroyedTurtle(Position position, Direction slideDirection, bool red = false);
-	void addDestroyedBoss(Position position);
+	void addDestroyedBoss(Position position, bool normal = true);
 	void addExplosion(Position position);
 	void addAnimatedText(TextType type, Position position);
 	void addAnimatedCoin();
-	void performActions();
+	void performActions(bool playerActionFlag = true);
 	void draw(SDL_Surface* display, bool drawPlayer = true);
 };
 

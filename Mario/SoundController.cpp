@@ -5,7 +5,7 @@
 #include "LayoutStyle.h"
 
 
-std::array<Mix_Music*, 7> SoundController::backgroundTracks;
+std::array<Mix_Music*, 8> SoundController::backgroundTracks;
 std::array<Mix_Chunk*, 16> SoundController::soundsEffects;
 
 bool SoundController::initSoundMixer()
@@ -22,11 +22,12 @@ void SoundController::loadBackgroundTracks()
 {
 	backgroundTracks[0] = Mix_LoadMUS("./sounds/background_open.wav");
 	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_star.wav");
-	backgroundTracks[2] = Mix_LoadMUS("./sounds/world_finished.wav");
+	backgroundTracks[2] = Mix_LoadMUS("./sounds/level_finished.wav");
 	backgroundTracks[3] = Mix_LoadMUS("./sounds/game_over.wav");
 	backgroundTracks[4] = Mix_LoadMUS("./sounds/time_passed.wav");
 	backgroundTracks[5] = Mix_LoadMUS("./sounds/background_underground.wav");
 	backgroundTracks[6] = Mix_LoadMUS("./sounds/background_castle.wav");
+	backgroundTracks[7] = Mix_LoadMUS("./sounds/world_finished.wav");
 }
 
 void SoundController::loadSoundEffects()
@@ -88,10 +89,16 @@ void SoundController::playStarMusic()
 	Mix_PlayMusic(backgroundTracks[1], -1);
 }
 
-void SoundController::playWorldFinishedMusic()
+void SoundController::playLevelFinishedMusic()
 {
 	stopMusic();
 	Mix_PlayMusic(backgroundTracks[2], -1);
+}
+
+void SoundController::playWorldFinishedMusic()
+{
+	stopMusic();
+	Mix_PlayMusic(backgroundTracks[7], -1);
 }
 
 void SoundController::playGameOverMusic()

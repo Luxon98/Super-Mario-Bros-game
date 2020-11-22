@@ -75,6 +75,9 @@ void Screen::loadOtherImages()
 	screenImages[9] = loadPNG("./img/mario_right1.png", display);
 	screenImages[10] = loadPNG("./img/timeup.png", display);
 	screenImages[11] = loadPNG("./img/gameover.png", display);
+
+	screenImages[17] = loadPNG("./img/thanks.png", display);
+	screenImages[18] = loadPNG("./img/info_castle.png", display);
 }
 
 void Screen::loadWorldImages()
@@ -106,7 +109,7 @@ void Screen::loadCoinImages()
 
 void Screen::loadDeadMarioImages()
 {
-	for (std::size_t k = 12; k < screenImages.size(); ++k) {
+	for (std::size_t k = 12; k < screenImages.size() - 2; ++k) {
 		std::string filename = "./img/mario_dead";
 		filename += std::to_string(k - 11);
 		filename += ".png";
@@ -473,15 +476,61 @@ void Screen::drawMarioPipeTravellingScreen(World &world, Direction direction)
 	}
 }
 
-void Screen::drawWorldFinishedScreen(World &world)
+void Screen::drawBridgeSpolilingScreen(World &world)
 {
-	SoundController::playWorldFinishedMusic();
+	do {
+		fillBackground();
 
-	while (player->isStillRunningToCastle()) {
+		world.spoilBridgeAndBoss();
+		world.performActions(false);
+		world.draw(display);
+
+		drawScreenElements();
+		time = computeTime();
+		drawTime(time);
+		drawPoints(player->getPoints());
+		drawCoins(player->getCoins());
+		updateView();
+	} 
+	while (!world.areTemporaryElementsEmpty() || !world.isBridgeDestroyedAlready());
+}
+
+void Screen::drawLevelFinishedScreen(World &world)
+{
+	SoundController::playLevelFinishedMusic();
+
+	while (player->isStillRunning()) {
 		updateScreen(world);
 	}
 
 	drawAddingPointsAnimation(world);
+}
+
+void Screen::drawWorldFinishedScreen(World &world)
+{
+	SoundController::playWorldFinishedMusic();
+
+	while (player->isStillRunning()) {
+		updateScreen(world);
+	}
+
+	for (int i = 0; i < 1500; ++i) {
+		fillBackground();
+		world.draw(display);
+
+		if (i > 200) {
+			drawSurface(display, screenImages[17], 330, 160);
+		}
+		if (i > 500) {
+			drawSurface(display, screenImages[18], 330, 250);
+		}
+		
+		drawScreenElements();
+		drawTime(time);
+		drawPoints(player->getPoints());
+		drawCoins(player->getCoins());
+		updateView();
+	}
 }
 
 void Screen::updateScreen(World &world)
@@ -493,6 +542,7 @@ void Screen::updateScreen(World &world)
 	}
 	time = computeTime();
 	fillBackground();
+
 	world.performActions();
 	world.draw(display);
 

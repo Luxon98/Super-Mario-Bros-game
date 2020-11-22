@@ -145,9 +145,19 @@ void Platform::loadPlatformImage(SDL_Surface* display)
 	platformImages[3] = loadPNG("./img/span.png", display);
 }
 
+int Platform::getBridgeLength() const
+{
+	return bridgeLength;
+}
+
 Direction Platform::getDirection() const
 {
 	return direction;
+}
+
+PlatformType Platform::getPlatformType() const
+{
+	return platformType;
 }
 
 void Platform::setDirection(Direction direction)

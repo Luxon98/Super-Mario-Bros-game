@@ -539,7 +539,7 @@ bool Player::isNotJumpingUp() const
 	return false;
 }
 
-bool Player::isStillRunningToCastle()
+bool Player::isStillRunning()
 {
 	return (playerMovement.stepsRight != 0);
 }
@@ -749,10 +749,10 @@ void Player::setSlidingParameters()
 	position.setX(position.getX() - 8);
 }
 
-void Player::setFinishingRunParameters()
+void Player::setFinishingRunParameters(int level)
 {
 	resetMovement();
-	playerMovement.stepsRight = 185;
+	playerMovement.stepsRight = (level != 4 ? 185 : 275);
 	changeModelCounter = 0;
 	model = 0;
 	flags.setDefaultFlags(flags.armedFlag);
