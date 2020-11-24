@@ -43,6 +43,7 @@ private:
 	std::vector<std::shared_ptr<BonusObject>> bonusElements;
 	std::vector<std::shared_ptr<LivingObject>> monsters;
 	std::vector<std::shared_ptr<TemporaryObject>> temporaryElements;
+	std::vector<std::shared_ptr<TemporaryObject>> destroyedElements;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Camera> camera; 
 	std::unique_ptr<Flag> flag;
@@ -61,6 +62,7 @@ private:
 	void changeColors();
 	void setMovementDirection(LivingObject &monster);
 	void deleteTemporaryElements();
+	void handleFireballStatus();
 	void performBonusElementsActions();
 	void performMonstersActions();
 	void performFireBallsActions();
@@ -81,6 +83,7 @@ private:
 	void drawPlatformsAndFireballs(SDL_Surface* display);
 	void drawOtherObjects(SDL_Surface* display, bool drawPlayer);
 	void drawTemporaryElements(SDL_Surface* display);
+	void drawDestroyedElements(SDL_Surface* display);
 	friend class Level;
 
 public:

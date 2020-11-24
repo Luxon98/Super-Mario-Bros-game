@@ -62,7 +62,7 @@ void Shell::setActiveStateParameters(Direction direction)
 	movement.setDirection(direction);
 	active = (movement.getDirection() != Direction::None);
 
-	int shift = (direction == Direction::Left ? -5 : 5);
+	int shift = (direction == Direction::Left ? -3 : 3);
 	position.setX(position.getX() + shift);
 }
 

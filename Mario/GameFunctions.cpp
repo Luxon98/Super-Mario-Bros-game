@@ -111,7 +111,7 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world)
 
 	if (level == 1) {
 		if (checkPointMark == 1) {
-			Level::setFirstBonusStage(world);
+			Level::setFirstHiddenStage(world);
 		}
 		else {
 			Level::setFirstLevel(world, false);
@@ -119,7 +119,7 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world)
 	}
 	else if (level == 2) {
 		if (checkPointMark == 1) {
-			Level::setSecondBonusStage(world);
+			Level::setSecondHiddenStage(world);
 		}
 		else if (checkPointMark == 2) {
 			Level::setSecondLevel(world, false);

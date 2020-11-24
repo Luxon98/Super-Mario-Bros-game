@@ -159,13 +159,6 @@ void Player::performShrinkingAnimation(int difference)
 {
 	if (difference <= 100 && lastDifference < 10) {
 		size.setHeight(32);
-
-		position.setY(position.getY() + 16);
-		// in a rare case player can get stuck below ground block, the following instruction fixes it
-		if (position.getY() > 400) {
-			position.setY(400);
-		}
-
 		lastDifference = difference;
 		currentState = PlayerState::Insensitive;
 		resetSteps();
@@ -364,6 +357,11 @@ void Player::moveUp(World &world)
 {
 	int alignment = computeVerticalAlignment(Direction::Up, playerMovement.getVerticalSpeed(), *this, world);
 	int distance = playerMovement.getVerticalSpeed() - alignment;
+	
+	if (distance < 0) {
+		playerMovement.stepsUp = 0;
+		return;
+	}
 
 	if (!isHittingCeiling(distance)) {
 		position.setY(position.getY() - distance);
@@ -379,7 +377,7 @@ void Player::moveUp(World &world)
 	else {
 		--playerMovement.stepsUp;
 	}
-
+	
 	if (isCharacterStandingOnSomething(*this, world)) {
 		model = 0;
 	}

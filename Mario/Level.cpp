@@ -33,6 +33,7 @@ void Level::setFirstLevel(World &world, bool checker)
 	world.bonusElements.clear();
 	world.monsters.clear();
 	world.temporaryElements.clear();
+	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -74,7 +75,7 @@ void Level::setFirstLevel(World &world, bool checker)
 	world.blocks.push_back(Block(BlockType::BonusWithStar, Position(3246, 288)));
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(3406, 288)));
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(3502, 288)));
-	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(3502, 160)));
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(3502, 160)));
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(3598, 288)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(3790, 288)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(3886, 160)));
@@ -235,6 +236,7 @@ void Level::setSecondLevel(World &world, bool checker)
 	world.bonusElements.clear();
 	world.monsters.clear();
 	world.temporaryElements.clear();
+	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -502,6 +504,7 @@ void Level::setThirdLevel(World &world)
 	world.bonusElements.clear();
 	world.monsters.clear();
 	world.temporaryElements.clear();
+	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -710,6 +713,7 @@ void Level::setFourthLevel(World &world)
 	world.bonusElements.clear();
 	world.monsters.clear();
 	world.temporaryElements.clear();
+	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -881,7 +885,7 @@ void Level::setFourthLevel(World &world)
 	world.button = std::make_unique<Button>(Button(Position(4640, 272)));
 }
 
-void Level::setFirstBonusStage(World &world)
+void Level::setFirstHiddenStage(World &world)
 {
 	world.blocks.clear();
 	world.platforms.clear();
@@ -889,6 +893,7 @@ void Level::setFirstBonusStage(World &world)
 	world.bonusElements.clear();
 	world.monsters.clear();
 	world.temporaryElements.clear();
+	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -934,7 +939,7 @@ void Level::setFirstBonusStage(World &world)
 	world.button = nullptr;
 }
 
-void Level::setSecondBonusStage(World &world)
+void Level::setSecondHiddenStage(World &world)
 {
 	world.blocks.clear();
 	world.platforms.clear();
@@ -942,6 +947,7 @@ void Level::setSecondBonusStage(World &world)
 	world.bonusElements.clear();
 	world.monsters.clear();
 	world.temporaryElements.clear();
+	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -1009,6 +1015,7 @@ void Level::setSecondStageOnSecondLevel(World &world)
 	world.bonusElements.clear();
 	world.monsters.clear();
 	world.temporaryElements.clear();
+	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();

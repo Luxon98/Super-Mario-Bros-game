@@ -113,6 +113,25 @@ void World::deleteTemporaryElements()
 			temporaryElements.erase(temporaryElements.begin() + i);
 		}
 	}
+
+	for (std::size_t j = 0; j < destroyedElements.size(); ++j) {
+		if (destroyedElements[j]->shouldBeRemoved()) {
+			destroyedElements.erase(destroyedElements.begin() + j);
+		}
+	}
+}
+
+void World::handleFireballStatus()
+{
+	if (fireballStatus) {
+		if (player->isArmed()) {
+			SoundController::playFireballPoppedEffect();
+			Direction direction = determineDirection(*player);
+			fireballs.push_back(FireBall(Position(player->getX() + 5, player->getY() - 15), direction));
+		}
+
+		fireballStatus = false;
+	}
 }
 
 void World::performBonusElementsActions()
@@ -179,13 +198,7 @@ void World::performFireBallsActions()
 		}
 	}
 
-	if (fireballStatus && player->isArmed()) {
-		SoundController::playFireballPoppedEffect();
-		Direction direction = (player->isTurnedRight() ? Direction::Right : Direction::Left);
-		fireballs.push_back(FireBall(Position(player->getX() + 5, player->getY() - 15), direction));
-
-		fireballStatus = false;
-	}
+	handleFireballStatus();
 }
 
 void World::performPlatformsActions()
@@ -227,6 +240,10 @@ void World::slideTemporaryElements()
 	for (auto &temporaryElement : temporaryElements) {
 		temporaryElement->slide();
 	}
+
+	for (auto &destroyedElement : destroyedElements) {
+		destroyedElement->slide();
+	}
 }
 
 void World::slideBlock()
@@ -264,7 +281,7 @@ void World::collectCoin()
 
 void World::addShards(Position position)
 {
-	temporaryElements.push_back(std::make_shared<Shards>(Shards(position)));
+	destroyedElements.push_back(std::make_shared<Shards>(Shards(position)));
 }
 
 void World::performBlockSliding()
@@ -353,6 +370,13 @@ void World::drawInanimateElements(SDL_Surface* display)
 	}
 }
 
+void World::drawTemporaryElements(SDL_Surface* display)
+{
+	for (const auto &temporaryElement : temporaryElements) {
+		temporaryElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+}
+
 void World::drawBonusesAndMonsters(SDL_Surface* display)
 {
 	for (const auto &bonusElement : bonusElements) {
@@ -397,10 +421,10 @@ void World::drawOtherObjects(SDL_Surface* display, bool drawPlayer)
 	}
 }
 
-void World::drawTemporaryElements(SDL_Surface* display)
+void World::drawDestroyedElements(SDL_Surface* display)
 {
-	for (const auto &temporaryElement : temporaryElements) {
-		temporaryElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	for (const auto &destroyedElement : destroyedElements) {
+		destroyedElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 }
 
@@ -631,17 +655,17 @@ void World::addCrushedCreature(Position position)
 
 void World::addDestroyedCreature(Position position, Direction slideDirection)
 {
-	temporaryElements.push_back(std::make_shared<DestroyedCreature>(DestroyedCreature(position, slideDirection)));
+	destroyedElements.push_back(std::make_shared<DestroyedCreature>(DestroyedCreature(position, slideDirection)));
 }
 
 void World::addDestroyedTurtle(Position position, Direction slideDirection, bool red)
 {
-	temporaryElements.push_back(std::make_shared<DestroyedTurtle>(DestroyedTurtle(position, slideDirection, red)));
+	destroyedElements.push_back(std::make_shared<DestroyedTurtle>(DestroyedTurtle(position, slideDirection, red)));
 }
 
 void World::addDestroyedBoss(Position position, bool normal)
 {
-	temporaryElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, normal)));
+	destroyedElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, normal)));
 }
 
 void World::addExplosion(Position position)
@@ -687,8 +711,9 @@ void World::performActions(bool playerActionFlag)
 void World::draw(SDL_Surface* display, bool drawPlayer)
 {
 	drawInanimateElements(display);
+	drawTemporaryElements(display);
 	drawBonusesAndMonsters(display);
 	drawPlatformsAndFireballs(display);
 	drawOtherObjects(display, drawPlayer);
-	drawTemporaryElements(display);
+	drawDestroyedElements(display);
 }

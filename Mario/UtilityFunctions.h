@@ -6,6 +6,7 @@
 class WorldObject;
 class LivingObject;
 class Block;
+class Player;
 enum class Direction;
 
 
@@ -24,5 +25,7 @@ bool isMonsterCrushproof(std::shared_ptr<LivingObject> monster);
 bool isMonsterResistantToKnocks(std::shared_ptr<LivingObject> monster);
 
 Direction determineDirection(const WorldObject &firstObject, const WorldObject &secondObject);
+
+Direction determineDirection(const Player &player);
 
 #endif //UtilityFunctions_H

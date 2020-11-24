@@ -6,6 +6,7 @@
 #include "Plant.h"
 #include "FireRocket.h"
 #include "Boss.h"
+#include "Player.h"
 
 
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions)
@@ -92,4 +93,9 @@ bool isMonsterResistantToKnocks(std::shared_ptr<LivingObject> monster)
 Direction determineDirection(const WorldObject &firstObject, const WorldObject &secondObject)
 {
 	return (firstObject.getX() <= secondObject.getX() ? Direction::Right : Direction::Left);
+}
+
+Direction determineDirection(const Player &player)
+{
+	return (player.isTurnedRight() ? Direction::Right : Direction::Left);
 }
