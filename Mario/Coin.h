@@ -16,7 +16,6 @@ private:
 
 public:
 	static bool coinImage;
-	Coin() = default;
 	Coin(Position position);
 	static void loadCoinImages(SDL_Surface* display);
 	static void resetCoinImage();

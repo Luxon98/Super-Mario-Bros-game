@@ -176,6 +176,7 @@
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Position.cpp" />
+    <ClCompile Include="PreloadingImages.cpp" />
     <ClCompile Include="Princess.cpp" />
     <ClCompile Include="RedTurtle.cpp" />
     <ClCompile Include="Rock.cpp" />
@@ -235,6 +236,7 @@
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="PreloadingImages.h" />
     <ClInclude Include="Princess.h" />
     <ClInclude Include="RedTurtle.h" />
     <ClInclude Include="Rock.h" />

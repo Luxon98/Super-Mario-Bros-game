@@ -22,7 +22,6 @@ private:
 	void changeModel();
 
 public:
-	FireRocket() = default;
 	FireRocket(Position position);
 	static void loadFireRocketImages(SDL_Surface* display);
 	void setMoveDirection(Direction direction);

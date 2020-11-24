@@ -11,18 +11,6 @@ class Screen;
 class Camera;
 
 
-void loadBonusObjectsImages(SDL_Surface* display);
-
-void loadInanimateObjectImages(SDL_Surface* display);
-
-void loadLivingObjectImages(SDL_Surface* display);
-
-void loadTemporaryObjectImages(SDL_Surface* display);
-
-void loadOtherImages(SDL_Surface* display);
-
-void loadImages(SDL_Surface* display);
-
 void setCameraPointer(std::shared_ptr<Player> player, World &world, Screen &screen, std::shared_ptr<Camera> camera);
 
 void setPlayerPointer(World &world, Screen &screen, std::shared_ptr<Player> player);
@@ -46,4 +34,3 @@ void handleMenu(bool * exitStatus, int * gameSpeed, Screen &screen);
 void runGame();
 
 #endif //GameFunctions_H
-

@@ -22,7 +22,6 @@ private:
 	void changeModel();
 
 public:
-	RedTurtle() = default;
 	RedTurtle(Position position, bool flying);
 	static void loadTurtleImages(SDL_Surface* display);
 	bool isFlying() const;

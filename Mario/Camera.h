@@ -10,7 +10,6 @@ private:
 	static int CAMERA_REFERENCE_POINT;
 
 public:
-	Camera() = default;
 	Camera(int begX, int endX);
 	int getReferencePoint() const;
 	int getBeginningOfCamera() const;

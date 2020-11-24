@@ -4,109 +4,17 @@
 #include <chrono>
 #include "KeyboardController.h"
 #include "SoundController.h"
-#include "Player.h"
-#include "Coin.h"
-#include "Flower.h"
-#include "Mushroom.h"
-#include "Star.h"
-#include "FireBall.h"
-#include "Turtle.h"
-#include "RedTurtle.h"
-#include "Creature.h"
-#include "Plant.h"
-#include "Shell.h"
-#include "FireRocket.h"
-#include "Boss.h"
-#include "Flag.h"
-#include "Button.h"
-#include "AnimatedText.h"
-#include "AnimatedCoin.h"
-#include "Shards.h"
-#include "Explosion.h"
-#include "CrushedCreature.h"
-#include "DestroyedCreature.h"
-#include "DestroyedTurtle.h"
-#include "DestroyedBoss.h"
-#include "Bush.h"
-#include "Cloud.h"
-#include "Rock.h"
-#include "Lava.h"
-#include "Castle.h"
-#include "Princess.h"
+#include "PreloadingImages.h"
 #include "Level.h"
 #include "World.h"
 #include "Screen.h"
 #include "Camera.h"
-#include "Block.h"
-#include "Platform.h"
 #include "Position.h"
-#include "FireSerpent.h"
+#include "Player.h"
 #include "WorldInteractionFunctions.h"
 #include "MenuManager.h"
 #include "FileNotLoadedException.h"
 
-
-void loadBonusObjectsImages(SDL_Surface* display)
-{
-	Flower::loadFlowerImages(display);
-	Mushroom::loadMushroomImages(display);
-	Star::loadStarImages(display);
-}
-
-void loadInanimateObjectImages(SDL_Surface* display)
-{
-	Coin::loadCoinImages(display);
-	Bush::loadBushImages(display);
-	Cloud::loadCloudImages(display);
-	Rock::loadRockImage(display);
-	Lava::loadLavaImage(display);
-	Flag::loadFlagImages(display);
-	Button::loadButtonImages(display);
-	Castle::loadCastleImages(display);
-	Princess::loadPrincessImages(display);
-}
-
-void loadLivingObjectImages(SDL_Surface* display)
-{
-	Creature::loadCreatureImages(display);
-	Turtle::loadTurtleImages(display);
-	RedTurtle::loadTurtleImages(display);
-	Plant::loadPlantImages(display);
-	FireRocket::loadFireRocketImages(display);
-	Boss::loadBossImages(display);
-	Shell::loadShellImage(display);
-	FireBall::loadFireBallImages(display);
-	Player::loadPlayerImages(display);
-}
-
-void loadTemporaryObjectImages(SDL_Surface* display)
-{
-	CrushedCreature::loadCrushedCreatureImages(display);
-	DestroyedCreature::loadDestroyedCreatureImages(display);
-	DestroyedTurtle::loadDestroyedTurtleImages(display);
-	DestroyedBoss::loadDestroyedBossImages(display);
-	Explosion::loadExplosionImages(display);
-	Shards::loadShardsImages(display);
-	AnimatedCoin::loadAnimatedCoinImages(display);
-	AnimatedText::loadAnimatedTextImages(display);
-}
-
-void loadOtherImages(SDL_Surface* display)
-{
-	Block::loadBlockImages(display);
-	Platform::loadPlatformImage(display);
-	FireSerpent::loadFireSerpentImages(display);
-	MenuManager::loadMenuImages(display);
-}
-
-void loadImages(SDL_Surface* display)
-{
-	loadBonusObjectsImages(display);
-	loadInanimateObjectImages(display);
-	loadLivingObjectImages(display);
-	loadTemporaryObjectImages(display);
-	loadOtherImages(display);
-}
 
 void setCameraPointer(std::shared_ptr<Player> player, World &world, Screen &screen, std::shared_ptr<Camera> camera)
 {
@@ -270,7 +178,7 @@ void runGame()
 	}
 	
 	try {
-		loadImages(screen.getDisplay());
+		preloadImages(screen.getDisplay());
 	}
 	catch (const FileNotLoadedException & e) {
 		loadResourcesStatus = false;
@@ -306,7 +214,7 @@ void runGame()
 		setCameraPointer(player, world, screen, camera);
 		setPlayerPointer(world, screen, player);
 		
-		int level = 4, checkPointMark = -1;
+		int level = 1, checkPointMark = -1;
 
 		while (player->getLives() && !winStatus) {
 			if (checkPointMark == -1) {

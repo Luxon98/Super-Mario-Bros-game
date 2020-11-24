@@ -19,9 +19,8 @@ int Coin::computeImageIndex() const
 
 Coin::Coin(Position position)
 {
-	this->position = position;
-
 	size = Size(20, 28);
+	this->position = position;
 }
 
 void Coin::loadCoinImages(SDL_Surface* display)

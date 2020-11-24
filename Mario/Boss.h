@@ -22,7 +22,6 @@ private:
 	void moveAndJump();
 
 public:
-	Boss() = default;
 	Boss(Position position);
 	static void loadBossImages(SDL_Surface* display);
 	int getHealthPoints() const;

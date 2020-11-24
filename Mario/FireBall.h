@@ -23,7 +23,6 @@ private:
 	void moveHorizontally(World &world);
 
 public:
-	FireBall() = default;
 	FireBall(Position position, Direction direction);
 	static void loadFireBallImages(SDL_Surface* display);
 	bool shouldBeRemoved() const;

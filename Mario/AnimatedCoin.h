@@ -17,7 +17,6 @@ private:
 	int computeImageIndex() const override;
 
 public:
-	AnimatedCoin() = default;
 	AnimatedCoin(Position position);
 	static void loadAnimatedCoinImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

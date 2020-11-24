@@ -27,7 +27,6 @@ private:
 	int computeImageIndex() const override;
 
 public:
-	AnimatedText() = default;
 	AnimatedText(TextType type, Position position);
 	static void loadAnimatedTextImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

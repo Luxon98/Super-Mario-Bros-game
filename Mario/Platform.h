@@ -42,7 +42,6 @@ private:
 	void slideHorizontally();
 
 public:
-	Platform() = default;
 	Platform(Position position, PlatformType platformType);
 	static void loadPlatformImage(SDL_Surface* display);
 	int getBridgeLength() const;

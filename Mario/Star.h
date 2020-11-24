@@ -19,7 +19,6 @@ private:
 	void makeHorizontalMove(World &world);
 
 public:
-	Star() = default;
 	Star(Position position);
 	static void loadStarImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

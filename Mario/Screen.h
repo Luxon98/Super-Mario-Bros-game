@@ -21,7 +21,7 @@ private:
 	int level;
 	std::chrono::steady_clock::time_point timeBegin;
 	std::array<SDL_Surface*, 10> digitImages;
-	std::array<SDL_Surface*, 19> screenImages;
+	std::array<SDL_Surface*, 20> screenImages;
 	std::array<SDL_Surface*, 8> worldImages;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Camera> camera;
@@ -52,6 +52,8 @@ private:
 	void drawPoints(int points);
 	void drawCoins(int coins);
 	void drawAddingPointsAnimation(World &world);
+	void drawThankYouInscriptions(int i);
+	void drawThankYouScreen(World &world);
 	int initGUI();
 	void closeGUI();
 

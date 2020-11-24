@@ -114,7 +114,6 @@ private:
 	friend class KeyboardController;
 
 public:
-	Player() = default;
 	Player(Position position);
 	static void loadPlayerImages(SDL_Surface* display);
 	int getPoints() const;

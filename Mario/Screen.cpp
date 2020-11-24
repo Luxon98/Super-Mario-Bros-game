@@ -75,9 +75,9 @@ void Screen::loadOtherImages()
 	screenImages[9] = loadPNG("./img/mario_right1.png", display);
 	screenImages[10] = loadPNG("./img/timeup.png", display);
 	screenImages[11] = loadPNG("./img/gameover.png", display);
-
-	screenImages[17] = loadPNG("./img/thanks.png", display);
-	screenImages[18] = loadPNG("./img/info_castle.png", display);
+	screenImages[12] = loadPNG("./img/thanks.png", display);
+	screenImages[13] = loadPNG("./img/info_castle.png", display);
+	screenImages[14] = loadPNG("./img/info_custom_worlds.png", display);
 }
 
 void Screen::loadWorldImages()
@@ -109,9 +109,9 @@ void Screen::loadCoinImages()
 
 void Screen::loadDeadMarioImages()
 {
-	for (std::size_t k = 12; k < screenImages.size() - 2; ++k) {
+	for (std::size_t k = 15; k < screenImages.size(); ++k) {
 		std::string filename = "./img/mario_dead";
-		filename += std::to_string(k - 11);
+		filename += std::to_string(k - 14);
 		filename += ".png";
 		screenImages[k] = loadPNG(filename, display);
 	}
@@ -253,6 +253,34 @@ void Screen::drawAddingPointsAnimation(World &world)
 		--time;
 		updateView();
 		std::this_thread::sleep_for(std::chrono::milliseconds(20));
+	}
+}
+
+void Screen::drawThankYouInscriptions(int i)
+{
+	if (i > 200 && i <= 1300) {
+		drawSurface(display, screenImages[12], 330, 160);
+	}
+	if (i > 500 && i <= 1300) {
+		drawSurface(display, screenImages[13], 330, 250);
+	}
+
+	if (i > 1300) {
+		drawSurface(display, screenImages[14], 320, 225);
+	}
+}
+
+void Screen::drawThankYouScreen(World &world)
+{
+	for (int i = 0; i < 1600; ++i) {
+		fillBackground();
+		world.draw(display);
+		drawScreenElements();
+		drawTime(time);
+		drawPoints(player->getPoints());
+		drawCoins(player->getCoins());
+		drawThankYouInscriptions(i);
+		updateView();
 	}
 }
 
@@ -424,7 +452,7 @@ void Screen::drawDeadMario(World &world)
 	SoundController::stopMusic();
 	SoundController::playMarioDeadEffect();
 
-	int index = player->getDeadMarioImageIndex() + 12;
+	int index = player->getDeadMarioImageIndex() + 15;
 	SDL_Surface* img = screenImages[index];
 	int shift = 0;
 	for (int i = 0; i < 2400; ++i) {
@@ -514,23 +542,7 @@ void Screen::drawWorldFinishedScreen(World &world)
 		updateScreen(world);
 	}
 
-	for (int i = 0; i < 1500; ++i) {
-		fillBackground();
-		world.draw(display);
-
-		if (i > 200) {
-			drawSurface(display, screenImages[17], 330, 160);
-		}
-		if (i > 500) {
-			drawSurface(display, screenImages[18], 330, 250);
-		}
-		
-		drawScreenElements();
-		drawTime(time);
-		drawPoints(player->getPoints());
-		drawCoins(player->getCoins());
-		updateView();
-	}
+	drawThankYouScreen(world);
 }
 
 void Screen::updateScreen(World &world)

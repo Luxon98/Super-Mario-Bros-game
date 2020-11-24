@@ -16,7 +16,6 @@ private:
 	static int buttonImage;
 
 public:
-	Button() = default;
 	Button(Position position);
 	static void loadButtonImages(SDL_Surface* display);
 	static void resetButtonImage();

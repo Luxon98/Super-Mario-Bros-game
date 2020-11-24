@@ -19,7 +19,6 @@ private:
 	void changeModel();
 
 public:
-	Turtle() = default;
 	Turtle(Position position);
 	static void loadTurtleImages(SDL_Surface* display);
 	void setMoveDirection(Direction direction);

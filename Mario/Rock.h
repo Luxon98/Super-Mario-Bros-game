@@ -13,7 +13,6 @@ private:
 	static SDL_Surface* rockImage;
 
 public:
-	Rock() = default;
 	Rock(Position position);
 	static void loadRockImage(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

@@ -12,7 +12,6 @@ private:
 	int computeImageIndex() const override;
 
 public:
-	DestroyedBoss() = default;
 	DestroyedBoss(Position position, bool normal = true);
 	static void loadDestroyedBossImages(SDL_Surface * display);
 	void draw(SDL_Surface * display, int beginningOfCamera, int endOfCamera) const override;

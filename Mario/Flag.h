@@ -18,7 +18,6 @@ private:
 	bool active;
 
 public:
-	Flag() = default;
 	Flag(Position position);
 	static void loadFlagImages(SDL_Surface* display);
 	bool isActive() const;

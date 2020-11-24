@@ -10,6 +10,8 @@ std::array<SDL_Surface*, 2> Princess::princessImages;
 Princess::Princess(Position position, bool fakePrincessFlag) : fakePrincessFlag(fakePrincessFlag)
 {
 	this->position = position;
+
+	size = Size(0, 0);
 }
 
 void Princess::loadPrincessImages(SDL_Surface* display)

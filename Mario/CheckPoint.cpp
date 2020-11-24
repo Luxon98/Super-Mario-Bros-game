@@ -4,8 +4,10 @@
 
 
 CheckPoint::CheckPoint(Position position, bool automatic, int mark) 
-	: position(position), automatic(automatic), mark(mark) 
 {
+	this->position = position;
+	this->automatic = automatic;
+	this->mark = mark;
 	horizontalRange = (automatic ? 15 : 10);
 	verticalRange = 12;
 }

@@ -17,7 +17,6 @@ private:
 	void changeModel();
 
 public:
-	Flower() = default;
 	Flower(Position position);
 	static void loadFlowerImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

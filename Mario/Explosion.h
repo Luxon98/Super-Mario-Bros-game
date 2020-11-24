@@ -15,7 +15,6 @@ private:
 	int computeImageIndex() const override;
 
 public:
-	Explosion() = default;
 	Explosion(Position position);
 	static void loadExplosionImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

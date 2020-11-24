@@ -15,11 +15,12 @@ void FireSerpent::changePosition()
 	position.setY(initialPosition.getY() + yDifferences[positionCounter - 1]);
 }
 
-FireSerpent::FireSerpent(int counter, Position position) : positionCounter(counter)
+FireSerpent::FireSerpent(int counter, Position position)
 {
+	size = Size(20, 20);
 	this->position = position;
 	auxiliaryCounter = 0;
-	size = Size(20, 20);
+	positionCounter = counter;
 	initialPosition = position;
 }
 

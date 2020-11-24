@@ -14,7 +14,6 @@ private:
 	static std::array<SDL_Surface*, 3> cloudImages;
 
 public:
-	Cloud() = default;
 	Cloud(int type, Position position);
 	static void loadCloudImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

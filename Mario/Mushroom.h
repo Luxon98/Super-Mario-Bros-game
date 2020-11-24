@@ -18,7 +18,6 @@ private:
 	void makeMoveUp(World &world);
 
 public:
-	Mushroom() = default;
 	Mushroom(Position position, bool oneUp);
 	static void loadMushroomImages(SDL_Surface* display);
 	bool isOneUp() const;

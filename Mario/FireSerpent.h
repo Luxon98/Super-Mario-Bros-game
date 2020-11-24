@@ -19,11 +19,10 @@ private:
 	void changePosition();
 
 public:
-	FireSerpent() = default;
 	FireSerpent(int counter, Position position);
 	static void loadFireSerpentImages(SDL_Surface* display);
 	void move();
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
-#endif
+#endif //FireSerpent_H

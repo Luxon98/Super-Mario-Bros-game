@@ -20,7 +20,6 @@ private:
 	void changeModel();
 
 public:
-	Plant() = default;
 	Plant(Position position, bool delay = false);
 	static void loadPlantImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

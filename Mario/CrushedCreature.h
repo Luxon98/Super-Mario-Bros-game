@@ -15,7 +15,6 @@ private:
 	int computeImageIndex() const override;
 
 public:
-	CrushedCreature() = default;
 	CrushedCreature(Position position);
 	static void loadCrushedCreatureImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

@@ -19,7 +19,6 @@ private:
 	void changeModel();
 
 public:
-	Creature() = default;
 	Creature(Position position);
 	static void loadCreatureImages(SDL_Surface* display);
 	void setMoveDirection(Direction direction);

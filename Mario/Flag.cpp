@@ -13,6 +13,8 @@ Flag::Flag(Position position)
 	active = false;
 	stickPositionY = position.getY() + 117;
 	stepsCounter = 0;
+
+	size = Size(0, 0);
 }
 
 void Flag::loadFlagImages(SDL_Surface* display)

@@ -50,7 +50,6 @@ private:
 	static void loadLandImages(SDL_Surface* display);
 
 public:
-	Block() = default;
 	Block(BlockType type, Position position);
 	Block(Position position, int lengthOfLand);
 	static void loadBlockImages(SDL_Surface* display);

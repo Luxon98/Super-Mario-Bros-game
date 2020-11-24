@@ -9,8 +9,8 @@ std::array<SDL_Surface*, 3> Cloud::cloudImages;
 
 Cloud::Cloud(int type, Position position)
 {
-	model = type;
 	this->position = position;
+	model = type;
 
 	size = Size(0, 0);
 }

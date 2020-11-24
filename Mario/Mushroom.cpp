@@ -32,8 +32,8 @@ Mushroom::Mushroom(Position position, bool oneUp)
 	size = Size(32, 32);
 	movement = Movement(1, 2, Direction::Right);
 	this->position = position;
-	stepsCounter = 0;
 	this->oneUp = oneUp;
+	stepsCounter = 0;
 	stepsUp = 0;
 	growCounter = 96;
 }

@@ -8,18 +8,18 @@
 #include "Platform.h"
 #include "CheckPoint.h"
 #include "FireSerpent.h"
+#include "Button.h"
+#include "Flag.h"
+#include "Block.h"
 
 class Player;
 class BonusObject;
 class Position;
 class Level;
-class Block;
 class InanimateObject;
 class TemporaryObject;
 class LivingObject;
 class Camera;
-class Button;
-class Flag;
 enum class TextType;
 enum class Direction;
 enum class BlockType;

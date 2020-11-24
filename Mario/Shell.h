@@ -21,7 +21,6 @@ private:
 	int computeImageIndex() const override;
 	
 public:
-	Shell() = default;
 	Shell(Position position, bool red = false);
 	static void loadShellImage(SDL_Surface* display);
 	bool isActive() const;

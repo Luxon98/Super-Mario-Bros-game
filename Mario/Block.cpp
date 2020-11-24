@@ -125,13 +125,13 @@ void Block::loadLandImages(SDL_Surface* display)
 
 Block::Block(BlockType type, Position position)
 {
-	this->type = type;
 	this->position = position;
-	size = getSizeFromBlockType();
+	this->type = type;
 	availableCoins = (type == BlockType::Monetary ? 10 : 0);
 	initialPositionY = position.getY();
 	lengthOfLand = 0;
 	collisionsFlag = (type != BlockType::BonusWithOneUpMushroom);
+	size = getSizeFromBlockType();
 }
 
 Block::Block(Position position, int lengthOfLand)
@@ -141,8 +141,8 @@ Block::Block(Position position, int lengthOfLand)
 	availableCoins = 0;
 	initialPositionY = position.getY();
 	this->lengthOfLand = lengthOfLand;
-	size = getSizeFromLength();
 	collisionsFlag = true;
+	size = getSizeFromLength();
 }
 
 void Block::loadBlockImages(SDL_Surface* display)

@@ -58,8 +58,8 @@ void Star::makeHorizontalMove(World &world)
 Star::Star(Position position)
 {
 	size = Size(28, 32);
-	this->position = position;
 	movement = Movement(1, 1, Direction::Right, Direction::Up);
+	this->position = position;
 	stepsUp = 0;
 	stepsCounter = 0;
 	growCounter = 90;

@@ -15,7 +15,6 @@ private:
 	bool bigCastleFlag;
 
 public:
-	Castle() = default;
 	Castle(Position position, bool bigCastleFlag);
 	static void loadCastleImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
