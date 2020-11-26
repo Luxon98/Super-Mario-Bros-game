@@ -54,6 +54,24 @@ bool World::isPlayerCloseEnough(LivingObject &monster) const
 	return false;
 }
 
+bool World::isObjectOutsideCamera(LivingObject &object) const
+{
+	if (object.getX() < camera->getBeginningOfCamera() || object.getX() > camera->getEndOfCamera()) {
+		return true;
+	}
+
+	return false;
+}
+
+bool World::isObjectOutsideWorld(LivingObject &object) const
+{
+	if (object.getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
+		return true;
+	}
+
+	return false;
+}
+
 bool World::hasLastTouchedBlockCoin() const
 {
 	BlockType blockType = blocks[lastTouchedBlockIndex].getType();
@@ -138,7 +156,7 @@ void World::performBonusElementsActions()
 {
 	for (std::size_t i = 0; i < bonusElements.size(); ++i) {
 		bonusElements[i]->move(*this);
-		if (bonusElements[i]->getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
+		if (isObjectOutsideWorld(*bonusElements[i])) {
 			deleteLivingElement(i);
 		}
 	}
@@ -151,13 +169,15 @@ void World::performMonstersActions()
 			setMovementDirection(*monsters[i]);
 		}
 
+		if (isObjectOutsideWorld(*monsters[i])) {
+			deleteMonster(i);
+			break;
+		}
+
 		monsters[i]->move(*this);
 
 		if (std::dynamic_pointer_cast<Shell>(monsters[i])) {
-
-			if (monsters[i]->getX() < camera->getBeginningOfCamera() 
-				|| monsters[i]->getX() > camera->getEndOfCamera()) {
-
+			if (isObjectOutsideCamera(*monsters[i])) {
 				deleteMonster(i);
 				break;
 			}
@@ -167,10 +187,6 @@ void World::performMonstersActions()
 
 				monsters.push_back(std::make_shared<Turtle>(Turtle(Position(monsters[i]->getPosition()))));
 				monsters.erase(monsters.begin() + i);
-			}
-
-			if (monsters[i]->getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
-				deleteMonster(i);
 			}
 		}
 	}
@@ -182,18 +198,13 @@ void World::performFireBallsActions()
 		fireballs[i].move(*this);
 
 		if (fireballs[i].shouldBeRemoved()) {
-			int shift = (fireballs[i].getMovement().getDirection() == Direction::Left ? -7 : 7);
+			int shift = determineShift(fireballs[i], 7);
 			temporaryElements.push_back(std::make_shared<Explosion>(Explosion(
 				Position(fireballs[i].getX() + shift, fireballs[i].getY()))));
 
 			fireballs.erase(fireballs.begin() + i);
 		}
-		else if (fireballs[i].getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
-			fireballs.erase(fireballs.begin() + i);
-		}
-		else if (fireballs[i].getX() < camera->getBeginningOfCamera()
-			|| fireballs[i].getX() > camera->getEndOfCamera()) {
-
+		else if (isObjectOutsideWorld(fireballs[i]) || isObjectOutsideCamera(fireballs[i])) {
 			fireballs.erase(fireballs.begin() + i);
 		}
 	}
@@ -665,7 +676,7 @@ void World::addDestroyedTurtle(Position position, Direction slideDirection, bool
 
 void World::addDestroyedBoss(Position position, bool normal)
 {
-	destroyedElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, normal)));
+	temporaryElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, normal)));
 }
 
 void World::addExplosion(Position position)

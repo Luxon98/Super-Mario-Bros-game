@@ -4,6 +4,7 @@
 #include "SDL_Utility.h"
 #include "World.h"
 #include "LayoutStyle.h"
+#include "UtilityFunctions.h"
 
 
 std::array<SDL_Surface*, 4> DestroyedCreature::destroyedCreatureImages;
@@ -49,8 +50,7 @@ bool DestroyedCreature::shouldBeRemoved() const
 void DestroyedCreature::slide()
 {
 	++auxiliaryCounter;
-
-	int shift = (slideDirection == Direction::Left ? -2 : 2);
+	int shift = determineShift(slideDirection, 2);
 
 	if (auxiliaryCounter & 1) {
 		if (auxiliaryCounter <= 12) {

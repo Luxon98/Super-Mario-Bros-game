@@ -10,8 +10,8 @@ private:
     std::string exceptionMessage;
 
 public:
-    FileNotLoadedException(const std::string& message);
+    FileNotLoadedException(const std::string &message);
     const char* what() const noexcept override;
 };
 
-#endif
+#endif //FileNotLoadedException_H

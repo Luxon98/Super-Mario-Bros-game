@@ -57,6 +57,8 @@ private:
 	bool fireballStatus;
 	bool isTimeToChangeColors() const;
 	bool isPlayerCloseEnough(LivingObject &monster) const;
+	bool isObjectOutsideCamera(LivingObject &object) const;
+	bool isObjectOutsideWorld(LivingObject &object) const;
 	bool hasLastTouchedBlockCoin() const;
 	bool isLastTouchedBlockBonus() const;
 	void changeColors();

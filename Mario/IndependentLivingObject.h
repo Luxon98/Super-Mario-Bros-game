@@ -14,4 +14,3 @@ protected:
 };
 
 #endif //IndependentLivingObject_H
-

@@ -24,6 +24,10 @@ bool isMonsterCrushproof(std::shared_ptr<LivingObject> monster);
 
 bool isMonsterResistantToKnocks(std::shared_ptr<LivingObject> monster);
 
+int determineShift(const LivingObject &object, int base);
+
+int determineShift(Direction direction, int base);
+
 Direction determineDirection(const WorldObject &firstObject, const WorldObject &secondObject);
 
 Direction determineDirection(const Player &player);

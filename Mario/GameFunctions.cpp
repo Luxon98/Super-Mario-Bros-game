@@ -16,9 +16,9 @@
 #include "FileNotLoadedException.h"
 
 
-void setCameraPointer(std::shared_ptr<Player> player, World &world, Screen &screen, std::shared_ptr<Camera> camera)
+void setCameraPointer(Player &player, World &world, Screen &screen, std::shared_ptr<Camera> camera)
 {
-	player->setCamera(camera);
+	player.setCamera(camera);
 	world.setCamera(camera);
 	screen.setCamera(camera);
 }
@@ -140,7 +140,7 @@ void adjustCamera(int level, int checkPointMark)
 	}
 }
 
-void handleMenu(bool * exitStatus, int * gameSpeed, Screen &screen)
+void handleMenu(bool* exitStatus, int* gameSpeed, Screen& screen)
 {
 	MenuManager menu = MenuManager();
 
@@ -162,6 +162,29 @@ void handleMenu(bool * exitStatus, int * gameSpeed, Screen &screen)
 	}
 }
 
+void showLevelFinishingAnimation(Player& player, World& world, Screen& screen, int level)
+{
+	SoundController::playFlagDownEffect();
+	world.switchOnFlag();
+	player.setSlidingParameters();
+	getPointsFromFlag(player, world);
+
+	while (!world.isFlagDown()) {
+		world.performActions();
+		screen.updateScreen(world);
+	}
+	player.setFinishingRunParameters(level);
+
+	screen.drawLevelFinishedScreen(world);
+}
+
+void showWorldFinishingAnimation(Player& player, World& world, Screen& screen, int level)
+{
+	screen.drawBridgeSpolilingScreen(world);
+	player.setFinishingRunParameters(level);
+	screen.drawWorldFinishedScreen(world);
+}
+
 void runGame()
 {
 	bool loadResourcesStatus = true;
@@ -176,7 +199,7 @@ void runGame()
 		}
 		return;
 	}
-	
+
 	try {
 		preloadImages(screen.getDisplay());
 	}
@@ -190,31 +213,34 @@ void runGame()
 	bool exitStatus = false;
 	int gameSpeed = 7;
 
-	if (loadResourcesStatus) {
-		handleMenu(&exitStatus, &gameSpeed, screen);
-	}
+	while (true) {
+		SoundController::stopMusic();
+		int level = 1, checkPointMark = -1;
 
-	if (exitStatus) {
-		return;
-	}
+		if (loadResourcesStatus) {
+			handleMenu(&exitStatus, &gameSpeed, screen);
+		}
 
-	const Uint8* state = SDL_GetKeyboardState(nullptr);
+		if (!loadResourcesStatus || exitStatus) {
+			break;
+		}
 
-	if (loadResourcesStatus) {
+		const Uint8* state = SDL_GetKeyboardState(nullptr);
+
 		bool playerState = true, winStatus = false, timeState = true;
 		SDL_Event event;
 
 		World world = World();
 		world.setGameSpeed(gameSpeed);
-	
+
 		KeyboardController controller = KeyboardController();
 
 		std::shared_ptr<Player> player = std::make_shared<Player>(Player(Position(35, 400)));
 
-		setCameraPointer(player, world, screen, camera);
+		setCameraPointer(*player, world, screen, camera);
 		setPlayerPointer(world, screen, player);
-		
-		int level = 1, checkPointMark = -1;
+
+		screen.setLevel(level);
 
 		while (player->getLives() && !winStatus) {
 			if (checkPointMark == -1) {
@@ -262,31 +288,13 @@ void runGame()
 
 				if (world.isPlayerFinishingWorld() && !winStatus) {
 					if (level != 4) {
-						SoundController::playFlagDownEffect();
-						world.switchOnFlag();
-						player->setSlidingParameters();
-						getPointsFromFlag(*player, world);
-
-						while (!world.isFlagDown()) {
-							world.performActions();
-							screen.updateScreen(world);
-						}
-						player->setFinishingRunParameters(level);
-
-						screen.drawLevelFinishedScreen(world);
-
+						showLevelFinishingAnimation(*player, world, screen, level);
 						++level;
 						screen.setLevel(level);
 						break;
 					}
 					else {
-						screen.drawBridgeSpolilingScreen(world);
-
-						player->setFinishingRunParameters(level);
-
-						screen.drawWorldFinishedScreen(world);
-
-						++level;
+						showWorldFinishingAnimation(*player, world, screen, level);
 						winStatus = true;
 						break;
 					}

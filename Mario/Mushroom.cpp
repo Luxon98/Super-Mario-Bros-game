@@ -92,4 +92,3 @@ void Mushroom::move(World &world)
 	}
 	++stepsCounter;
 }
-

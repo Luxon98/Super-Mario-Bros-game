@@ -11,7 +11,7 @@ class Screen;
 class Camera;
 
 
-void setCameraPointer(std::shared_ptr<Player> player, World &world, Screen &screen, std::shared_ptr<Camera> camera);
+void setCameraPointer(Player &player, World &world, Screen &screen, std::shared_ptr<Camera> camera);
 
 void setPlayerPointer(World &world, Screen &screen, std::shared_ptr<Player> player);
 
@@ -30,6 +30,10 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world);
 void adjustCamera(int level, int checkPointMark);
 
 void handleMenu(bool * exitStatus, int * gameSpeed, Screen &screen);
+
+void showLevelFinishingAnimation(Player &player, World &world, Screen &screen, int level);
+
+void showWorldFinishingAnimation(Player &player, World &world, Screen &screen, int level);
 
 void runGame();
 

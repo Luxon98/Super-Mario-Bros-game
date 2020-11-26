@@ -7,6 +7,7 @@
 #include "SDL_Utility.h"
 #include "World.h"
 #include "LayoutStyle.h"
+#include "UtilityFunctions.h"
 
 
 std::array<SDL_Surface*, 3> Shell::shellImages;
@@ -62,7 +63,7 @@ void Shell::setActiveStateParameters(Direction direction)
 	movement.setDirection(direction);
 	active = (movement.getDirection() != Direction::None);
 
-	int shift = (direction == Direction::Left ? -3 : 3);
+	int shift = determineShift(*this, 3);
 	position.setX(position.getX() + shift);
 }
 

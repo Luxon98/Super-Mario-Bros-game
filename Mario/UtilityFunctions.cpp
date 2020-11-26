@@ -90,6 +90,16 @@ bool isMonsterResistantToKnocks(std::shared_ptr<LivingObject> monster)
 	return false;
 }
 
+int determineShift(const LivingObject &object, int base)
+{
+	return (object.getMovement().getDirection() == Direction::Left ? base * (-1) : base);
+}
+
+int determineShift(Direction direction, int base)
+{
+	return (direction == Direction::Left ? base * (-1) : base);
+}
+
 Direction determineDirection(const WorldObject &firstObject, const WorldObject &secondObject)
 {
 	return (firstObject.getX() <= secondObject.getX() ? Direction::Right : Direction::Left);

@@ -59,5 +59,3 @@ SDL_Surface* loadPNG(std::string filename, SDL_Surface* display)
 		throw FileNotLoadedException(exceptionReason);
 	}
 }
-
-

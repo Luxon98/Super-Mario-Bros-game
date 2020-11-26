@@ -94,4 +94,3 @@ void Star::move(World &world)
 	}
 	++stepsCounter;
 }
-
