@@ -680,7 +680,7 @@ void Player::move(World &world)
 
 void Player::setPositionXY(int level)
 {
-	if (level == 1) {
+	if (level == 1 || level == 77) {
 		position.setXY(35, 400);
 	}
 	else if (level == 2) {

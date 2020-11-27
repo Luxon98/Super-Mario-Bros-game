@@ -29,11 +29,11 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world);
 
 void adjustCamera(int level, int checkPointMark);
 
-void handleMenu(bool * exitStatus, int * gameSpeed, Screen &screen);
+void handleMenu(bool * exitStatus, int * gameSpeed, int * level, Screen &screen);
 
 void showLevelFinishingAnimation(Player &player, World &world, Screen &screen, int level);
 
-void showWorldFinishingAnimation(Player &player, World &world, Screen &screen, int level);
+void showWorldFinishingAnimation(Player &player, World &world, Screen &screen);
 
 void runGame();
 

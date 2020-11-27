@@ -90,6 +90,9 @@ void changeLevel(int level, World &world, bool playerState)
 	else if (level == 4) {
 		Level::setFourthLevel(world);
 	}
+	else if (level == 77) {
+		Level::setWinterWorld(world);
+	}
 }
 
 void setWorld(int level, Player &player, World &world, bool playerState)
@@ -140,7 +143,7 @@ void adjustCamera(int level, int checkPointMark)
 	}
 }
 
-void handleMenu(bool* exitStatus, int* gameSpeed, Screen& screen)
+void handleMenu(bool * exitStatus, int * gameSpeed, int * level, Screen &screen)
 {
 	MenuManager menu = MenuManager();
 
@@ -156,13 +159,14 @@ void handleMenu(bool* exitStatus, int* gameSpeed, Screen& screen)
 	}
 
 	*gameSpeed = menu.getGameSpeed();
+	*level = menu.getLevel();
 
 	if (menu.getExitStatus()) {
 		*exitStatus = true;
 	}
 }
 
-void showLevelFinishingAnimation(Player& player, World& world, Screen& screen, int level)
+void showLevelFinishingAnimation(Player &player, World &world, Screen &screen, int level)
 {
 	SoundController::playFlagDownEffect();
 	world.switchOnFlag();
@@ -178,10 +182,10 @@ void showLevelFinishingAnimation(Player& player, World& world, Screen& screen, i
 	screen.drawLevelFinishedScreen(world);
 }
 
-void showWorldFinishingAnimation(Player& player, World& world, Screen& screen, int level)
+void showWorldFinishingAnimation(Player &player, World &world, Screen &screen)
 {
 	screen.drawBridgeSpolilingScreen(world);
-	player.setFinishingRunParameters(level);
+	player.setFinishingRunParameters(4);
 	screen.drawWorldFinishedScreen(world);
 }
 
@@ -218,7 +222,7 @@ void runGame()
 		int level = 1, checkPointMark = -1;
 
 		if (loadResourcesStatus) {
-			handleMenu(&exitStatus, &gameSpeed, screen);
+			handleMenu(&exitStatus, &gameSpeed, &level, screen);
 		}
 
 		if (!loadResourcesStatus || exitStatus) {
@@ -294,7 +298,7 @@ void runGame()
 						break;
 					}
 					else {
-						showWorldFinishingAnimation(*player, world, screen, level);
+						showWorldFinishingAnimation(*player, world, screen);
 						winStatus = true;
 						break;
 					}

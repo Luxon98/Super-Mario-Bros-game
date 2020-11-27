@@ -8,7 +8,7 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 36> Block::blockImages;
+std::array<SDL_Surface*, 48> Block::blockImages;
 std::array<SDL_Surface*, 6> Block::landImages;
 
 bool Block::blockImage = true;
@@ -21,8 +21,11 @@ int Block::computeBaseIndex() const
 	else if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
 		return 12;
 	}
-	else {
+	else if (World::LAYOUT_STYLE == LayoutStyle::Castle) {
 		return 24;
+	}
+	else {
+		return 36;
 	}
 }
 

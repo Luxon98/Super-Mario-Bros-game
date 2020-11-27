@@ -1055,3 +1055,120 @@ void Level::setSecondStageOnSecondLevel(World &world)
 	world.flag = std::make_unique<Flag>(Flag(Position(703, 116)));
 	world.button = nullptr;
 }
+
+void Level::setWinterWorld(World &world)
+{
+	world.blocks.clear();
+	world.platforms.clear();
+	world.inanimateElements.clear();
+	world.bonusElements.clear();
+	world.monsters.clear();
+	world.temporaryElements.clear();
+	world.destroyedElements.clear();
+	world.fireballs.clear();
+	world.checkPoints.clear();
+	world.fireSerpents.clear();
+
+	world.slidingCounter = 0;
+	world.resetImages();
+
+	world.WORLD_HEIGHT = 480;
+	world.LAYOUT_STYLE = LayoutStyle::CustomWinter;
+
+	for (int i = 16; i < 1168; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	for (int i = 176; i < 304; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 280)));
+	}
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(224, 165)));
+
+	for (int i = 0; i < 5; ++i) {
+		for (int j = 0; j < 5 - i; ++j) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(1008 + i * 32 + j * 32, 400 - i * 32)));
+		}
+	}
+
+	for (int i = 463; i >= 367; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Tube, Position(1265, i)));
+	}
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(1265, 336)));
+
+	world.blocks.push_back(Block(BlockType::Empty, Position(1440, 288)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(1616, 288)));
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(1528, 144)));
+	
+	for (int i = 1776; i < 2416; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(2090, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(2090, 368)));
+
+	world.blocks.push_back(Block(BlockType::BonusWithRedMushroom, Position(2224, 256)));
+
+
+	for (int i = 2528; i < 3112; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	for (int i = 400; i > 304; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(2624, i)));
+	}
+
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(2816, 272)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(2816, 160)));
+	world.blocks.push_back(Block(BlockType::Monetary, Position(2848, 160)));
+
+	for (int i = 2784; i < 2912; i += 32) {
+		if (i != 2816) {
+			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 272)));
+		}
+	}
+
+	for (int i = 3456; i < 3680; i += 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(i, 464)));
+		if (i != 3456 && i != 3648) {
+			world.blocks.push_back(Block(BlockType::Indestructible, Position(i, 432)));
+		}
+	}
+
+	world.blocks.push_back(Block(BlockType::Empty, Position(3552, 192)));
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(3840, 208)));
+
+	world.platforms.push_back(Platform(Position(3352, 385), PlatformType::MovingHorizontallyPlatform));
+	world.platforms.push_back(Platform(Position(3892, 385), PlatformType::MovingHorizontallyPlatform));
+
+	for (int i = 4032; i < 4960; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(4143, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4143, 368)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(4912, 399)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(4912, 367)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4912, 336)));
+
+	/*
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(528, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(656, 288)));
+	world.blocks.push_back(Block(BlockType::BonusWithRedMushroom, Position(688, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(720, 288)));
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(720, 160)));
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(752, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(784, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(2478, 288)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(2510, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(2542, 288)));
+	*/
+
+
+
+	world.flag = nullptr;
+	world.button = nullptr;
+}

@@ -26,7 +26,7 @@ int Screen::computeCoinBaseIndex() const
 	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
 		return 0;
 	}
-	else if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
+	else if (World::LAYOUT_STYLE == LayoutStyle::Underground || World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
 		return 2;
 	}
 	else {
@@ -158,16 +158,34 @@ void Screen::drawScreenElements()
 {
 	SDL_Surface* marioImg = screenImages[0];
 	drawSurface(display, marioImg, 114, 30);
-	SDL_Surface* worldImg = worldImages[level - 1];
-	drawSurface(display, worldImg, SCREEN_WIDTH - 227, 30);
+
+	// do przerobki
+	if (level == 77 || level == 88) {
+		SDL_Surface* worldImg = worldImages[0];
+		drawSurface(display, worldImg, SCREEN_WIDTH - 227, 30);
+	}
+	else {
+		SDL_Surface* worldImg = worldImages[level - 1];
+		drawSurface(display, worldImg, SCREEN_WIDTH - 227, 30);
+	}
+	
+
 	SDL_Surface* timeImg = screenImages[1];
 	drawSurface(display, timeImg, SCREEN_WIDTH - 100, 19);
 }
 
 void Screen::drawStartScreenElements(int lives)
 {
-	SDL_Surface* worldImg = worldImages[3 + level];
-	drawSurface(display, worldImg, 303, 162);
+	// do przerobki
+	if (level == 77 || level == 88) {
+		SDL_Surface* worldImg = worldImages[4];
+		drawSurface(display, worldImg, 303, 162);
+	}
+	else {
+		SDL_Surface* worldImg = worldImages[3 + level];
+		drawSurface(display, worldImg, 303, 162);
+	}
+	
 
 	SDL_Surface* marioImg = screenImages[9];
 	drawSurface(display, marioImg, 261, 215);

@@ -6,7 +6,8 @@ enum class LayoutStyle
 {
 	OpenWorld,
 	Underground,
-	Castle
+	Castle,
+	CustomWinter
 };
 
 #endif //LayoutStyle_H

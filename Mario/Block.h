@@ -31,7 +31,7 @@ enum class BlockType
 class Block : public WorldObject 
 {
 private:
-	static std::array<SDL_Surface*, 36> blockImages;
+	static std::array<SDL_Surface*, 48> blockImages;
 	static std::array<SDL_Surface*, 6> landImages;
 	static bool blockImage;
 	bool collisionsFlag;

@@ -63,6 +63,7 @@ public:
 	bool isStillOpen() const;
 	bool getExitStatus() const;
 	int getGameSpeed() const;
+	int getLevel() const;
 	void drawMenu(Screen &screen);
 	void handleKeys(const Uint8* state);
 };

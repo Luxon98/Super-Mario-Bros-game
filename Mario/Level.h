@@ -14,6 +14,7 @@ public:
 	static void setFirstHiddenStage(World &world);
 	static void setSecondHiddenStage(World &world);
 	static void setSecondStageOnSecondLevel(World &world);
+	static void setWinterWorld(World &world);
 };
 
 #endif //Level_H
