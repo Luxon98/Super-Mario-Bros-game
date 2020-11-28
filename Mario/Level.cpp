@@ -1106,8 +1106,8 @@ void Level::setWinterWorld(World &world)
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
 	}
 
-	world.blocks.push_back(Block(BlockType::Tube, Position(2090, 399)));
-	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(2090, 368)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(2080, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(2080, 368)));
 
 	world.blocks.push_back(Block(BlockType::BonusWithRedMushroom, Position(2224, 256)));
 
@@ -1187,8 +1187,52 @@ void Level::setWinterWorld(World &world)
 		world.blocks.push_back(Block(BlockType::Empty, Position(i, j)));
 	}
 
-	//world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(6064, 80)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(6460, 144)));
 
+	for (int i = 463; i >= 399; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Tube, Position(6700, i)));
+	}
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(6700, 368)));
+
+	for (int i = 6944; i < 8324; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(6960, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(6960, 368)));
+
+	world.blocks.push_back(Block(BlockType::Destructible, Position(7120, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(7152, 288)));
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(7248, 288)));
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(7408, 399)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(7408, 367)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(7408, 336)));
+
+	for (int i = 7600; i < 7728; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 288)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Destructible, Position(7632, 160)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(7664, 160)));
+
+	for (int i = 8164; i < 8260; i += 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(i, 288)));
+	}
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(8196, 160)));
+
+	for (int i = 8452; i < 10340; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+		
+		if (i > 8932) {
+			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 400)));
+		}
+		if (i > 9412) {
+			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 368)));
+		}
+	}
 
 	/*
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(528, 288)));
@@ -1206,9 +1250,11 @@ void Level::setWinterWorld(World &world)
 	world.platforms.push_back(Platform(Position(3352, 385), PlatformType::MovingHorizontallyPlatform));
 	world.platforms.push_back(Platform(Position(3892, 385), PlatformType::MovingHorizontallyPlatform));
 	world.platforms.push_back(Platform(Position(5640, 375), PlatformType::SmallPlatform));
+	world.platforms.push_back(Platform(Position(6460, 385), PlatformType::MovingVerticallyPlatform));
+
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SIGNPOST, Position(51, 389))));
+		CustomWinterDecoration(DecorationType::SIGNPOST, Position(49, 389))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
 		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(715, 377))));
