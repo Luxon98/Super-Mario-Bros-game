@@ -680,7 +680,7 @@ void Player::move(World &world)
 
 void Player::setPositionXY(int level)
 {
-	if (level == 1 || level == 77) {
+	if (level == 1) {
 		position.setXY(35, 400);
 	}
 	else if (level == 2) {
@@ -692,6 +692,9 @@ void Player::setPositionXY(int level)
 	else if (level == 4) {
 		int posY = (this->isSmall() ? 208 : 192);
 		position.setXY(50, posY);
+	}
+	else if (level == 77) {
+		position.setXY(145, 400);
 	}
 }
 

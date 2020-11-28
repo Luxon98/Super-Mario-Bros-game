@@ -22,6 +22,7 @@
 #include "Rock.h"
 #include "Lava.h"
 #include "Princess.h"
+#include "CustomWinterDecoration.h"
 #include "FireSerpent.h"
 
 
@@ -1140,9 +1141,6 @@ void Level::setWinterWorld(World &world)
 	world.blocks.push_back(Block(BlockType::Empty, Position(3552, 192)));
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(3840, 208)));
 
-	world.platforms.push_back(Platform(Position(3352, 385), PlatformType::MovingHorizontallyPlatform));
-	world.platforms.push_back(Platform(Position(3892, 385), PlatformType::MovingHorizontallyPlatform));
-
 	for (int i = 4032; i < 4960; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
@@ -1153,6 +1151,44 @@ void Level::setWinterWorld(World &world)
 	world.blocks.push_back(Block(BlockType::Tube, Position(4912, 399)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(4912, 367)));
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4912, 336)));
+
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(5120, 464)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(5120, 432)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(5260, 464)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(5260, 432)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(5400, 464)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(5400, 432)));
+
+	for (int i = 5760; i < 6336; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	for (int i = 5776; i < 6320; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 400)));
+	}
+
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(5856, 256)));
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(5997, 367)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(5997, 336)));
+
+	for (int i = 368; i > 128; i -= 30) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(6048, i)));
+		world.blocks.push_back(Block(BlockType::Destructible, Position(6080, i)));
+	}
+	
+	for (int i = 5952; i < 6048; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 158)));
+	}
+	world.blocks.push_back(Block(BlockType::Destructible, Position(6064, 128)));
+
+	for (int i = 6128, j = 156; i < 6296 && j < 396; i += 24, j += 40) {
+		world.blocks.push_back(Block(BlockType::Empty, Position(i, j)));
+	}
+
+	//world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(6064, 80)));
+
 
 	/*
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(528, 288)));
@@ -1166,6 +1202,34 @@ void Level::setWinterWorld(World &world)
 	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(2510, 288)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(2542, 288)));
 	*/
+
+	world.platforms.push_back(Platform(Position(3352, 385), PlatformType::MovingHorizontallyPlatform));
+	world.platforms.push_back(Platform(Position(3892, 385), PlatformType::MovingHorizontallyPlatform));
+	world.platforms.push_back(Platform(Position(5640, 375), PlatformType::SmallPlatform));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::SIGNPOST, Position(51, 389))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(715, 377))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(612, 180))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(351, 88))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::GOLD_STAR, Position(1512, 70))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(1081, 104))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::MOON, Position(1884, 126))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(2576, 377))));
 
 
 

@@ -82,19 +82,21 @@ void Screen::loadOtherImages()
 
 void Screen::loadWorldImages()
 {
-	for (std::size_t i = 0; i < worldImages.size() / 2; ++i) {
+	for (std::size_t i = 0; i < 4; ++i) {
 		std::string filename = "./img/world1";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		worldImages[i] = loadPNG(filename, display);
 	}
+	worldImages[4] = loadPNG("./img/world_custom.png", display);
 
-	for (std::size_t j = worldImages.size() / 2; j < worldImages.size(); ++j) {
+	for (std::size_t j = 5; j < 9; ++j) {
 		std::string filename = "./img/world_start1";
-		filename += std::to_string(j - 3);
+		filename += std::to_string(j - 4);
 		filename += ".png";
 		worldImages[j] = loadPNG(filename, display);
 	}
+	worldImages[9] = loadPNG("./img/world_start_custom.png", display);
 }
 
 void Screen::loadCoinImages()
@@ -159,16 +161,8 @@ void Screen::drawScreenElements()
 	SDL_Surface* marioImg = screenImages[0];
 	drawSurface(display, marioImg, 114, 30);
 
-	// do przerobki
-	if (level == 77 || level == 88) {
-		SDL_Surface* worldImg = worldImages[0];
-		drawSurface(display, worldImg, SCREEN_WIDTH - 227, 30);
-	}
-	else {
-		SDL_Surface* worldImg = worldImages[level - 1];
-		drawSurface(display, worldImg, SCREEN_WIDTH - 227, 30);
-	}
-	
+	SDL_Surface* worldImg = (level == 77 || level == 88 ? worldImages[4] : worldImages[level - 1]);
+	drawSurface(display, worldImg, SCREEN_WIDTH - 227, 30);
 
 	SDL_Surface* timeImg = screenImages[1];
 	drawSurface(display, timeImg, SCREEN_WIDTH - 100, 19);
@@ -176,16 +170,8 @@ void Screen::drawScreenElements()
 
 void Screen::drawStartScreenElements(int lives)
 {
-	// do przerobki
-	if (level == 77 || level == 88) {
-		SDL_Surface* worldImg = worldImages[4];
-		drawSurface(display, worldImg, 303, 162);
-	}
-	else {
-		SDL_Surface* worldImg = worldImages[3 + level];
-		drawSurface(display, worldImg, 303, 162);
-	}
-	
+	SDL_Surface* worldImg = (level == 77 || level == 88 ? worldImages[9] : worldImages[4 + level]);
+	drawSurface(display, worldImg, 303, 162);
 
 	SDL_Surface* marioImg = screenImages[9];
 	drawSurface(display, marioImg, 261, 215);

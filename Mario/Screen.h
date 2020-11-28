@@ -22,7 +22,7 @@ private:
 	std::chrono::steady_clock::time_point timeBegin;
 	std::array<SDL_Surface*, 10> digitImages;
 	std::array<SDL_Surface*, 20> screenImages;
-	std::array<SDL_Surface*, 8> worldImages;
+	std::array<SDL_Surface*, 10> worldImages;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Camera> camera;
 	SDL_Surface* display;
