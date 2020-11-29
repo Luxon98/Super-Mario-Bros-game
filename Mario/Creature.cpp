@@ -9,11 +9,24 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 4> Creature::creatureImages;
+std::array<SDL_Surface*, 6> Creature::creatureImages;
+
+int Creature::computeBaseIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
+		return 2;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
+		return 4;
+	}
+	else {
+		return 0;
+	}
+}
 
 int Creature::computeImageIndex() const
 {
-	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
+	int baseIndex = computeBaseIndex();
 	return baseIndex + (model - 1);
 }
 

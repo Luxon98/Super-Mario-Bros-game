@@ -12,8 +12,9 @@ struct SDL_Surface;
 class DestroyedCreature : public TemporaryObject
 {
 private:
-	static std::array<SDL_Surface*, 4> destroyedCreatureImages;
+	static std::array<SDL_Surface*, 6> destroyedCreatureImages;
 	Direction slideDirection;
+	int computeBaseIndex() const;
 	int computeImageIndex() const override;
 
 public:

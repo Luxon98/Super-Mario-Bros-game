@@ -74,6 +74,9 @@ void resetScreen(Screen &screen, int level, int checkPointMark)
 	else if (level == 3 || level == 4) {
 		screen.resetScreen(0, 640);
 	}
+	else if (level == 77) {
+		screen.resetScreen(0, 640);
+	}
 }
 
 void changeLevel(int level, World &world, bool playerState)

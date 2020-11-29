@@ -33,6 +33,7 @@ private:
 	bool isPlayerExceedingCameraReferencePoint() const;
 	int computeCoinBaseIndex() const;
 	int computeDifference() const;
+	int getInitialTime() const;
 	int computeTime() const;
 	void setPositionOfTheScreen(int begX, int endX);
 	void loadDigitImages();

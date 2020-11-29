@@ -12,9 +12,10 @@ struct SDL_Surface;
 class Shards : public TemporaryObject
 {
 private:
-	static std::array<SDL_Surface*, 4> shardsImages;
+	static std::array<SDL_Surface*, 6> shardsImages;
 	std::vector<Position> shardsPositions;
 	int imageIndex;
+	int computeBaseIndex() const;
 	int computeImageIndex() const;
 	void initPositionsVector(Position position);
 

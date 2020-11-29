@@ -6,11 +6,19 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 2> CrushedCreature::crushedCreatureImages;
+std::array<SDL_Surface*, 3> CrushedCreature::crushedCreatureImages;
 
 int CrushedCreature::computeImageIndex() const
 {
-	return (World::LAYOUT_STYLE != LayoutStyle::OpenWorld);
+	if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
+		return 1;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
+		return 2;
+	}
+	else {
+		return 0;
+	}
 }
 
 CrushedCreature::CrushedCreature(Position position)
@@ -21,8 +29,12 @@ CrushedCreature::CrushedCreature(Position position)
 
 void CrushedCreature::loadCrushedCreatureImages(SDL_Surface* display)
 {
-	crushedCreatureImages[0] = loadPNG("./img/crushed_creature1.png", display);
-	crushedCreatureImages[1] = loadPNG("./img/crushed_creature2.png", display);
+	for (std::size_t i = 0; i < crushedCreatureImages.size(); ++i) {
+		std::string filename = "./img/crushed_creature";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		crushedCreatureImages[i] = loadPNG(filename, display);
+	}
 }
 
 void CrushedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

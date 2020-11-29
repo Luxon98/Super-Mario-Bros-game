@@ -6,10 +6,23 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 4> Shards::shardsImages;
+std::array<SDL_Surface*, 6> Shards::shardsImages;
+
+int Shards::computeBaseIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
+		return 2;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
+		return 4;
+	}
+	else {
+		return 0;
+	}
+}
 
 int Shards::computeImageIndex() const {
-	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
+	int baseIndex = computeBaseIndex();
 	return baseIndex + imageIndex;
 }
 

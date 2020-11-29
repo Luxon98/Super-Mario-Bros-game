@@ -1097,8 +1097,8 @@ void Level::setWinterWorld(World &world)
 	}
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(1265, 336)));
 
-	world.blocks.push_back(Block(BlockType::Empty, Position(1440, 288)));
-	world.blocks.push_back(Block(BlockType::Empty, Position(1616, 288)));
+	world.blocks.push_back(Block(BlockType::AlternativeEmpty, Position(1440, 288)));
+	world.blocks.push_back(Block(BlockType::AlternativeEmpty, Position(1616, 288)));
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(1528, 144)));
 	
 	for (int i = 1776; i < 2416; i += 32) {
@@ -1111,7 +1111,6 @@ void Level::setWinterWorld(World &world)
 
 	world.blocks.push_back(Block(BlockType::BonusWithRedMushroom, Position(2224, 256)));
 
-
 	for (int i = 2528; i < 3112; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
@@ -1122,10 +1121,10 @@ void Level::setWinterWorld(World &world)
 	}
 
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(2816, 272)));
-	world.blocks.push_back(Block(BlockType::Destructible, Position(2816, 160)));
-	world.blocks.push_back(Block(BlockType::Monetary, Position(2848, 160)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(2848, 160)));
+	world.blocks.push_back(Block(BlockType::Monetary, Position(2880, 160)));
 
-	for (int i = 2784; i < 2912; i += 32) {
+	for (int i = 2784; i < 2944; i += 32) {
 		if (i != 2816) {
 			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 272)));
 		}
@@ -1138,7 +1137,7 @@ void Level::setWinterWorld(World &world)
 		}
 	}
 
-	world.blocks.push_back(Block(BlockType::Empty, Position(3552, 192)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(3552, 208)));
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(3840, 208)));
 
 	for (int i = 4032; i < 4960; i += 32) {
@@ -1181,9 +1180,8 @@ void Level::setWinterWorld(World &world)
 	for (int i = 5952; i < 6048; i += 32) {
 		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 158)));
 	}
-	world.blocks.push_back(Block(BlockType::Destructible, Position(6064, 128)));
 
-	for (int i = 6128, j = 156; i < 6296 && j < 396; i += 24, j += 40) {
+	for (int i = 6128, j = 158; i < 6296 && j < 398; i += 24, j += 40) {
 		world.blocks.push_back(Block(BlockType::Empty, Position(i, j)));
 	}
 
@@ -1222,35 +1220,85 @@ void Level::setWinterWorld(World &world)
 	}
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(8196, 160)));
 
+	world.blocks.push_back(Block(BlockType::Tube, Position(8660, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(8660, 368)));
+
 	for (int i = 8452; i < 10340; i += 32) {
-		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
-		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
-		
-		if (i > 8932) {
-			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 400)));
-		}
-		if (i > 9412) {
-			world.blocks.push_back(Block(BlockType::Destructible, Position(i, 368)));
+		if (i != 10148 && i != 10180) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+
+			if (i > 8932) {
+				world.blocks.push_back(Block(BlockType::Ground, Position(i, 400)));
+			}
+			if (i > 9412) {
+				world.blocks.push_back(Block(BlockType::Ground, Position(i, 368)));
+			}
 		}
 	}
 
-	/*
-	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(528, 288)));
-	world.blocks.push_back(Block(BlockType::Destructible, Position(656, 288)));
-	world.blocks.push_back(Block(BlockType::BonusWithRedMushroom, Position(688, 288)));
-	world.blocks.push_back(Block(BlockType::Destructible, Position(720, 288)));
-	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(720, 160)));
-	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(752, 288)));
-	world.blocks.push_back(Block(BlockType::Destructible, Position(784, 288)));
-	world.blocks.push_back(Block(BlockType::Destructible, Position(2478, 288)));
-	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(2510, 288)));
-	world.blocks.push_back(Block(BlockType::Destructible, Position(2542, 288)));
-	*/
+	world.blocks.push_back(Block(BlockType::Destructible, Position(8772, 240)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(8996, 208)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(9732, 336)));
+
+	for (int i = 9764; i < 10340; i += 32) {
+		if (i != 10148 && i != 10180) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, 336)));
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, 304)));
+		}
+	}
+	
+	world.blocks.push_back(Block(BlockType::Tube, Position(9908, 271)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(9908, 240)));
+
+	for (int i = 272; i > 0; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(9970, i)));
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(10002, i)));
+	}
+
+	for (int i = 463; i >= 271; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Tube, Position(10164, i)));
+	}
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(10164, 240)));
 
 	world.platforms.push_back(Platform(Position(3352, 385), PlatformType::MovingHorizontallyPlatform));
 	world.platforms.push_back(Platform(Position(3892, 385), PlatformType::MovingHorizontallyPlatform));
 	world.platforms.push_back(Platform(Position(5640, 375), PlatformType::SmallPlatform));
 	world.platforms.push_back(Platform(Position(6460, 385), PlatformType::MovingVerticallyPlatform));
+
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1040, 336))));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2619, 225), true)));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2920, 400))));
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(2080, 420))));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2325, 397), false)));
+	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(3640, 300))));
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(4143, 420), true)));
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(4912, 388))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4320, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4420, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4520, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4620, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4720, 400))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(6208, 368))));
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(6700, 420))));
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(7408, 388))));
+	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(7800, 224))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(8160, 400))));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(8376, 245), true)));
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(8660, 420), true)));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(9088, 368))));
+
+
+	//world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1423, 112))));
+	//world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1488, 112))));
+	//world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(989, 141), false)));
+	//world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2384, 148), true)));
+	//world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2575, 176))));
+	//world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3538, 205), false)));
+	//world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3665, 182), true)));
+	//world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4348, 397), false)));
+
+	world.fireSerpents.push_back(FireSerpent(1, Position(3552, 208)));
 
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
@@ -1260,16 +1308,22 @@ void Level::setWinterWorld(World &world)
 		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(715, 377))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(612, 180))));
+		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(185, 75))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(351, 88))));
+		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(572, 160))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLD_STAR, Position(1512, 70))));
+		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(805, 76))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(1081, 104))));
+		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(1081, 94))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(1305, 73))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(1627, 88))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
 		CustomWinterDecoration(DecorationType::MOON, Position(1884, 126))));
@@ -1277,6 +1331,30 @@ void Level::setWinterWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
 		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(2576, 377))));
 
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(6120, 345))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(10060, 249))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(10235, 80))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::SECOND_SIGNPOST, Position(9924, 100))));
+
+	for (int i = 0; i < 65; ++i) {
+		world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+			CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(2104 + i*100, 75))));
+
+		world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+			CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(2147 + i*100, 68))));
+
+		world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+			CustomWinterDecoration(DecorationType::WHITE_STAR, Position(2179 + i*100, 87))));
+	}
+
+	
 
 
 	world.flag = nullptr;

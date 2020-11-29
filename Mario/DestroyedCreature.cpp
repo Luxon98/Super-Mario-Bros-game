@@ -7,11 +7,24 @@
 #include "UtilityFunctions.h"
 
 
-std::array<SDL_Surface*, 4> DestroyedCreature::destroyedCreatureImages;
+std::array<SDL_Surface*, 6> DestroyedCreature::destroyedCreatureImages;
+
+int DestroyedCreature::computeBaseIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
+		return 2;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
+		return 4;
+	}
+	else {
+		return 0;
+	}
+}
 
 int DestroyedCreature::computeImageIndex() const
 {
-	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
+	int baseIndex = computeBaseIndex();
 	return baseIndex + (slideDirection == Direction::Left);
 }
 

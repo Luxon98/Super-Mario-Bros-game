@@ -241,7 +241,7 @@
       <Filter>Source Files\OtherObjects</Filter>
     </ClCompile>
     <ClCompile Include="CustomWinterDecoration.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -420,7 +420,7 @@
       <Filter>Header Files\OtherObjects</Filter>
     </ClInclude>
     <ClInclude Include="CustomWinterDecoration.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

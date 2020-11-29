@@ -11,7 +11,7 @@ struct SDL_Surface;
 class CrushedCreature : public TemporaryObject
 {
 private:
-	static std::array<SDL_Surface*, 2> crushedCreatureImages;
+	static std::array<SDL_Surface*, 3> crushedCreatureImages;
 	int computeImageIndex() const override;
 
 public:

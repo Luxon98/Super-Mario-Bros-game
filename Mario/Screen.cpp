@@ -39,11 +39,24 @@ int Screen::computeDifference() const
 	return (player->getX() - camera->getBeginningOfCamera() - (SCREEN_WIDTH - camera->getReferencePoint()));
 }
 
+int Screen::getInitialTime() const
+{
+	if (level > 3 && level < 4) {
+		return 300;
+	}
+	else if (level == 77 || level == 88) {
+		return 600;
+	}
+	else {
+		return 400;
+	}
+}
+
 int Screen::computeTime() const
 {
 	auto timePoint = std::chrono::steady_clock::now();
 
-	int initialTime = (level < 3 ? 400 : 300);
+	int initialTime = getInitialTime();
 	int time = static_cast<int>(initialTime - 
 		std::chrono::duration_cast<std::chrono::seconds>(timePoint - timeBegin).count());
 

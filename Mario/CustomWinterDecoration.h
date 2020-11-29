@@ -11,18 +11,21 @@ struct SDL_Surface;
 enum class DecorationType
 {
 	YELLOW_STAR = 1,
-	GOLD_STAR = 2,
-	CHRISTMAS_TREE = 3,
-	WINTER_CLOUD = 4,
-	MOON = 5,
-	SIGNPOST = 6
+	GOLDEN_STAR = 2,
+	WHITE_STAR = 3,
+	CHRISTMAS_TREE = 4,
+	SMALL_WINTER_CLOUD = 5,
+	WINTER_CLOUD = 6,
+	MOON = 7,
+	SIGNPOST = 8,
+	SECOND_SIGNPOST = 9
 };
 
 
 class CustomWinterDecoration : public InanimateObject
 {
 private:
-	static std::array<SDL_Surface*, 6> decorationImages;
+	static std::array<SDL_Surface*, 9> decorationImages;
 	DecorationType decorationType;
 
 public:
