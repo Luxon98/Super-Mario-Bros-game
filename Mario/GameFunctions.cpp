@@ -34,6 +34,9 @@ bool isPlayerEnteringPipe(int level, int checkPointMark)
 	if ((level == 1 || level == 2) && checkPointMark == 1) {
 		return true;
 	}
+	else if (level == 77 && checkPointMark == 1) {
+		return true;
+	}
 
 	return false;
 }
@@ -41,6 +44,9 @@ bool isPlayerEnteringPipe(int level, int checkPointMark)
 bool isPlayerExitingPipe(int level, int checkPointMark)
 {
 	if ((level == 1 && checkPointMark == 2) || (level == 2 && (checkPointMark == 2 || checkPointMark == 3))) {
+		return true;
+	}
+	else if (level == 77 && checkPointMark == 2) {
 		return true;
 	}
 
@@ -75,7 +81,15 @@ void resetScreen(Screen &screen, int level, int checkPointMark)
 		screen.resetScreen(0, 640);
 	}
 	else if (level == 77) {
-		screen.resetScreen(0, 640);
+		if (checkPointMark == -1) {
+			screen.resetScreen(0, 640);
+		}
+		else if (checkPointMark == 1) {
+			screen.resetScreen(0, 640, false);
+		}
+		else if (checkPointMark == 2) {
+			screen.resetScreen(6860, 7500, false);
+		}
 	}
 }
 
@@ -134,11 +148,19 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world)
 			Level::setSecondStageOnSecondLevel(world);
 		}
 	}
+	else if (level == 77) {
+		if (checkPointMark == 1) {
+			Level::setWinterHiddenStage(world);
+		}
+		else if (checkPointMark == 2) {
+			Level::setWinterWorld(world);
+		}
+	}
 }
 
 void adjustCamera(int level, int checkPointMark)
 {
-	if ((level == 1 || level == 2) && checkPointMark == 1) {
+	if ((level == 1 || level == 2 || level == 77) && checkPointMark == 1) {
 		Camera::disableCameraMoving();
 	}
 	else {

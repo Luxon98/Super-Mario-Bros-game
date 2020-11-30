@@ -1506,6 +1506,77 @@ void Level::setWinterWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
 		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(9633, 125))));
 
+	world.checkPoints.push_back(CheckPoint(Position(5997, 297), false, 1));
+
+	world.flag = nullptr;
+	world.button = nullptr;
+}
+
+void Level::setWinterHiddenStage(World &world)
+{
+	world.blocks.clear();
+	world.platforms.clear();
+	world.inanimateElements.clear();
+	world.bonusElements.clear();
+	world.monsters.clear();
+	world.temporaryElements.clear();
+	world.destroyedElements.clear();
+	world.fireballs.clear();
+	world.checkPoints.clear();
+	world.fireSerpents.clear();
+
+	world.slidingCounter = 0;
+	world.resetImages();
+
+	world.WORLD_HEIGHT = 450;
+	world.LAYOUT_STYLE = LayoutStyle::Underground;
+
+	for (int i = 40; i <= 544; i += 72) {
+		world.blocks.push_back(Block(BlockType::AlternativeEmpty, Position(i, 408)));
+	}
+
+	for (int i = 528; i < 688; i += 32) {
+		for (int j = 464; j > 368; j -= 32) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(i, j)));
+		}
+	}
+
+	for (int i = 140; i < 524; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 80)));
+	}
+
+	world.blocks.push_back(Block(BlockType::AlternativeEmpty, Position(592, 295)));
+
+	world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(592, 170)));
+
+	world.blocks.push_back(Block(BlockType::TubeLeftEntry, Position(583, 352)));
+	for (int i = 367; i > 47; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Tube, Position(645, i)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Ground, Position(16, 304)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(16, 272)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(48, 272)));
+	world.blocks.push_back(Block(BlockType::Monetary, Position(32, 144)));
+
+	world.blocks.push_back(Block(BlockType::AlternativeEmpty, Position(304, 208)));
+
+	world.fireSerpents.push_back(FireSerpent(13, Position(304, 208)));
+
+	for (int i = 8; i < 512; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
+	}
+
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(32, 242))));
+
+	for (int i = 76; i <= 440; i += 72) {
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 360))));
+	}
+
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(520, 169))));
+
+	world.checkPoints.push_back(CheckPoint(Position(590, 358), true, 2));
+
 	world.flag = nullptr;
 	world.button = nullptr;
 }
