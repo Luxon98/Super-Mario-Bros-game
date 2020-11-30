@@ -7,13 +7,29 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 4> Coin::coinImages;
+std::array<SDL_Surface*, 8> Coin::coinImages;
 
 bool Coin::coinImage = true;
 
+int Coin::computeBaseIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
+		return 2;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::Castle) {
+		return 4;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
+		return 6;
+	}
+	else {
+		return 0;
+	}
+}
+
 int Coin::computeImageIndex() const
 {
-	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
+	int baseIndex = computeBaseIndex();
 	return baseIndex + coinImage;
 }
 
