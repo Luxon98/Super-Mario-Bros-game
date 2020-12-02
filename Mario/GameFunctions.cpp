@@ -34,7 +34,7 @@ bool isPlayerEnteringPipe(int level, int checkPointMark)
 	if ((level == 1 || level == 2) && checkPointMark == 1) {
 		return true;
 	}
-	else if (level == 77 && checkPointMark == 1) {
+	else if (level == 77 && (checkPointMark == 1 || checkPointMark == 3)) {
 		return true;
 	}
 
@@ -46,7 +46,7 @@ bool isPlayerExitingPipe(int level, int checkPointMark)
 	if ((level == 1 && checkPointMark == 2) || (level == 2 && (checkPointMark == 2 || checkPointMark == 3))) {
 		return true;
 	}
-	else if (level == 77 && checkPointMark == 2) {
+	else if (level == 77 && (checkPointMark == 2 || checkPointMark == 3)) {
 		return true;
 	}
 
@@ -89,6 +89,9 @@ void resetScreen(Screen &screen, int level, int checkPointMark)
 		}
 		else if (checkPointMark == 2) {
 			screen.resetScreen(6860, 7500, false);
+		}
+		else if (checkPointMark == 3) {
+			screen.resetScreen(3800, 4440, false); //0,640
 		}
 	}
 }
@@ -155,6 +158,9 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world)
 		}
 		else if (checkPointMark == 2) {
 			Level::setWinterWorld(world);
+		}
+		else if (checkPointMark == 3) {
+			Level::setSecondStageOnWinterWorld(world);
 		}
 	}
 }
@@ -317,14 +323,19 @@ void runGame()
 				}
 
 				if (world.isPlayerFinishingWorld() && !winStatus) {
-					if (level != 4) {
+					if (level < 4) {
 						showLevelFinishingAnimation(*player, world, screen, level);
 						++level;
 						screen.setLevel(level);
 						break;
 					}
-					else {
+					else if (level == 4) {
 						showWorldFinishingAnimation(*player, world, screen);
+						winStatus = true;
+						break;
+					}
+					else if (level == 77) {
+						showLevelFinishingAnimation(*player, world, screen, level);
 						winStatus = true;
 						break;
 					}

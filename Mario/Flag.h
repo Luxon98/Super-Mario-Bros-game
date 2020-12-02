@@ -12,7 +12,7 @@ struct SDL_Surface;
 class Flag : public InanimateObject
 {
 private:
-	static std::array<SDL_Surface*, 2> flagImages;
+	static std::array<SDL_Surface*, 4> flagImages;
 	int stepsCounter;
 	int stickPositionY;
 	bool active;
@@ -29,4 +29,3 @@ public:
 };
 
 #endif //Flag_H
-

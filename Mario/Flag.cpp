@@ -3,9 +3,11 @@
 #include "Position.h"
 #include "SDL_Utility.h"
 #include "Player.h"
+#include "LayoutStyle.h"
+#include "World.h"
 
 
-std::array<SDL_Surface*, 2> Flag::flagImages;
+std::array<SDL_Surface*, 4> Flag::flagImages;
 
 Flag::Flag(Position position)
 {
@@ -21,6 +23,8 @@ void Flag::loadFlagImages(SDL_Surface* display)
 {
 	flagImages[0] = loadPNG("./img/flag.png", display);
 	flagImages[1] = loadPNG("./img/stick.png", display);
+	flagImages[2] = loadPNG("./img/winter_flag.png", display);
+	flagImages[3] = loadPNG("./img/winter_stick.png", display);
 }
 
 bool Flag::isActive() const
@@ -50,8 +54,10 @@ void Flag::setActiveState()
 void Flag::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
-		drawSurface(display, flagImages[1], position.getX() + 17 - beginningOfCamera, stickPositionY);
-		drawSurface(display, flagImages[0], position.getX() - beginningOfCamera, position.getY());
+		
+		int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::CustomWinter ? 2 : 0);
+		drawSurface(display, flagImages[baseIndex + 1], position.getX() + 17 - beginningOfCamera, stickPositionY);
+		drawSurface(display, flagImages[baseIndex + 0], position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

@@ -1507,6 +1507,7 @@ void Level::setWinterWorld(World &world)
 		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(9633, 125))));
 
 	world.checkPoints.push_back(CheckPoint(Position(5997, 297), false, 1));
+	world.checkPoints.push_back(CheckPoint(Position(9908, 201), false, 3));
 
 	world.flag = nullptr;
 	world.button = nullptr;
@@ -1547,8 +1548,8 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(464, 304)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(496, 304)));
 
-	world.blocks.push_back(Block(BlockType::Destructible, Position(800, 192)));
-	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(832, 192)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(800, 176)));
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(832, 176)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(768, 288)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(800, 288)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(832, 288)));
@@ -1618,7 +1619,25 @@ void Level::setSecondStageOnWinterWorld(World &world)
 		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 208)));
 	}
 
-	/*world.monsters.push_back(std::make_shared<Creature>(Creature(Position(910, 400))));
+	for (int i = 3840; i < 5440; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 9 - i; ++j) {
+			world.blocks.push_back(Block(BlockType::Indestructible, Position(4160 + i * 32 + j * 32, 400 - i * 32)));
+		}
+	}
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(4112, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4112, 368)));
+
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(4704, 400)));
+	
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4040, 400))));
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(4112, 420))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(910, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1285, 368))));
 	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(1450, 315))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1536, 256))));
@@ -1645,23 +1664,18 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(1744, 163))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(1904, 131), true)));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(2524, 163))));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(2652, 420), true)));*/
+	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(2652, 420), true)));
 	
-	//world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2920, 400))));
-	//world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2325, 397), false)));
-	//world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(3640, 300))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2920, 400))));
+	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2325, 397), false)));
+	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(3640, 300))));
 
-	//world.fireSerpents.push_back(FireSerpent(1, Position(2246, 320)));
+	world.fireSerpents.push_back(FireSerpent(1, Position(2246, 320)));
 
 	world.platforms.push_back(Platform(Position(3325, 120), PlatformType::MovingDownPlatform));
 	world.platforms.push_back(Platform(Position(3325, 380), PlatformType::MovingDownPlatform));
 	world.platforms.push_back(Platform(Position(3599, 120), PlatformType::MovingUpPlatform));
 	world.platforms.push_back(Platform(Position(3599, 380), PlatformType::MovingUpPlatform));
-
-	for (int i = 3840; i < 5120; i += 32) {
-		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
-		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
-	}
 
 	for (int i = 1048; i < 1612; i += 16) {
 		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
@@ -1754,7 +1768,16 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
 		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(4124, 87))));
 
-	world.flag = nullptr;
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(5012, 115))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(5225, 89))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
+		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(5167, 377))));
+
+	world.flag = std::make_unique<Flag>(Flag(Position(4689, 116)));
 	world.button = nullptr;
 }
 
@@ -1796,9 +1819,14 @@ void Level::setWinterHiddenStage(World &world)
 	world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(592, 170)));
 
 	world.blocks.push_back(Block(BlockType::TubeLeftEntry, Position(583, 352)));
-	for (int i = 367; i > 47; i -= 32) {
+	for (int i = 367; i > 15; i -= 32) {
 		world.blocks.push_back(Block(BlockType::Tube, Position(645, i)));
 	}
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(85, -5)));
+
+	world.blocks.push_back(Block(BlockType::Ground, Position(633, 15)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(665, 15)));
 
 	world.blocks.push_back(Block(BlockType::Ground, Position(16, 304)));
 	world.blocks.push_back(Block(BlockType::Ground, Position(16, 272)));
