@@ -694,7 +694,7 @@ void Player::setPositionXY(int level)
 		position.setXY(50, posY);
 	}
 	else if (level == 77) {
-		position.setXY(3945, 400);  //145, 100
+		position.setXY(145, 400);
 	}
 }
 

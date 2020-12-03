@@ -10,6 +10,7 @@ enum class Direction;
 struct SDL_Surface;
 
 
+// this class is the counterpart of NPC, which in the original Mario series was called 'Koopa Paratroopa'
 class RedTurtle : public IndependentLivingObject
 {
 private:
@@ -32,4 +33,3 @@ public:
 };
 
 #endif //RedTurtle_H
-

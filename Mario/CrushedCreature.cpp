@@ -6,6 +6,8 @@
 #include "LayoutStyle.h"
 
 
+// the first two pictures are from the original Mario
+// the last one is a picture created for the needs of the Winter world
 std::array<SDL_Surface*, 3> CrushedCreature::crushedCreatureImages;
 
 int CrushedCreature::computeImageIndex() const

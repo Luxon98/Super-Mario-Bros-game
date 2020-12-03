@@ -8,6 +8,9 @@ class Position;
 struct SDL_Surface;
 
 
+// these enum and class are responsible for background elements that are not from the original game
+// graphics in this class were created to embellish a custom Winter World
+
 enum class DecorationType
 {
 	YELLOW_STAR = 1,

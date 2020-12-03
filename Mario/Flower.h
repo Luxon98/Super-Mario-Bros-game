@@ -8,6 +8,7 @@ class World;
 struct SDL_Surface;
 
 
+// this class is equivalent to a collectible bonus, which was called 'Fire Flower' in the original Mario series
 class Flower : public BonusObject
 {
 private:

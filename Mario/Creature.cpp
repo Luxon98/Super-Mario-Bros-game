@@ -9,6 +9,8 @@
 #include "LayoutStyle.h"
 
 
+// pictures with indexes 0-3 are pictures from the original Super Mario Bros
+// the last two are custom graphics, created by me for the needs of the Winter World
 std::array<SDL_Surface*, 6> Creature::creatureImages;
 
 int Creature::computeBaseIndex() const

@@ -8,6 +8,7 @@ class World;
 struct SDL_Surface;
 
 
+// this class is equivalent to a collectible bonus, which was called 'Super Mushroom' in the original Mario series
 class Mushroom : public BonusObject 
 {
 private:

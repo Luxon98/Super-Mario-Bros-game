@@ -5,7 +5,8 @@
 #include "World.h"
 #include "LayoutStyle.h"
 
-
+// the first four pictures are from the original Mario
+// the last two are custom pictures, created for the needs of the Winter world
 std::array<SDL_Surface*, 6> Shards::shardsImages;
 
 int Shards::computeBaseIndex() const

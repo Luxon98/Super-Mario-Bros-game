@@ -110,7 +110,7 @@ MenuManager::SubmenuManager::SubmenuManager()
 {
 	submenuOptionNumber = 1;
 	gameSpeed = 7;
-	customGame = true; //
+	customGame = false;
 	returnStatus = false;
 	customWorld = CustomWorld::WinterWorld;
 }
@@ -260,7 +260,7 @@ int MenuManager::getGameSpeed() const
 int MenuManager::getLevel() const
 {
 	if (submenuManager.customGame) {
-		return (submenuManager.customWorld == CustomWorld::WinterWorld ? 77 : 88);
+		return (submenuManager.customWorld == CustomWorld::WinterWorld ? 77 : 77);  // 77 : 88
 	}
 
 	return 1;

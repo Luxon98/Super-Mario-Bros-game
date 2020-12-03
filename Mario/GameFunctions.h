@@ -15,15 +15,31 @@ void setCameraPointer(Player &player, World &world, Screen &screen, std::shared_
 
 void setPlayerPointer(World &world, Screen &screen, std::shared_ptr<Player> player);
 
+bool isLevelClassic(int level);
+
+bool isLevelTheLast(int level);
+
+bool isLevelCustom(int level);
+
+bool isCheckPointLeadingToHiddenStage(int level, int checkPointMark);
+
 bool isPlayerEnteringPipe(int level, int checkPointMark);
 
 bool isPlayerExitingPipe(int level, int checkPointMark);
+
+void resetScreenForClassicLevels(Screen &screen, int level, int checkPointMark);
+
+void resetScreenForCustomLevels(Screen &screen, int level, int checkPointMark);
 
 void resetScreen(Screen &screen, int level, int checkPointMark);
 
 void changeLevel(int level, World &world, bool playerState);
 
 void setWorld(int level, Player &player, World &world, bool playerState);
+
+void setSubWorldForClassicLevels(int level, int checkPointMark, World &world);
+
+void setSubWorldForCustomLevels(int level, int checkPointMark, World &world);
 
 void setSubWorld(int level, int checkPointMark, Player &player, World &world);
 

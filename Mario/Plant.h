@@ -9,6 +9,7 @@ class Position;
 struct SDL_Surface;
 
 
+// this class is the counterpart of NPC, which in the original Mario series was called 'Piranha Plant'
 class Plant : public IndependentLivingObject
 {
 private:
@@ -27,4 +28,3 @@ public:
 };
 
 #endif //Plant_H
-

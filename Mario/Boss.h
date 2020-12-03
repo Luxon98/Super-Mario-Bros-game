@@ -10,6 +10,7 @@ enum class Direction;
 struct SDL_Surface;
 
 
+// this class is the counterpart of NPC, which in the original Mario series was called 'Fake Bowser'
 class Boss : public IndependentLivingObject
 {
 private:

@@ -16,17 +16,41 @@
 #include "FileNotLoadedException.h"
 
 
-void setCameraPointer(Player &player, World &world, Screen &screen, std::shared_ptr<Camera> camera)
+void setCameraPointer(Player& player, World& world, Screen& screen, std::shared_ptr<Camera> camera)
 {
 	player.setCamera(camera);
 	world.setCamera(camera);
 	screen.setCamera(camera);
 }
 
-void setPlayerPointer(World &world, Screen &screen, std::shared_ptr<Player> player)
+void setPlayerPointer(World& world, Screen& screen, std::shared_ptr<Player> player)
 {
 	world.setPlayer(player);
 	screen.setPlayer(player);
+}
+
+bool isLevelClassic(int level)
+{
+	return (level > 0 && level < 5);
+}
+
+bool isLevelTheLast(int level)
+{
+	return (level == 4);
+}
+
+bool isLevelCustom(int level)
+{
+	return (level == 77 || level == 88);
+}
+
+bool isCheckPointLeadingToHiddenStage(int level, int checkPointMark)
+{
+	if ((level == 1 || level == 2 || level == 77) && checkPointMark == 1) {
+		return true;
+	}
+
+	return false;
 }
 
 bool isPlayerEnteringPipe(int level, int checkPointMark)
@@ -53,7 +77,7 @@ bool isPlayerExitingPipe(int level, int checkPointMark)
 	return false;
 }
 
-void resetScreen(Screen &screen, int level, int checkPointMark)
+void resetScreenForClassicLevels(Screen &screen, int level, int checkPointMark)
 {
 	if (level == 1) {
 		if (checkPointMark == -1) {
@@ -80,19 +104,30 @@ void resetScreen(Screen &screen, int level, int checkPointMark)
 	else if (level == 3 || level == 4) {
 		screen.resetScreen(0, 640);
 	}
-	else if (level == 77) {
+}
+
+void resetScreenForCustomLevels(Screen &screen, int level, int checkPointMark)
+{
+	if (level == 77) {
 		if (checkPointMark == -1) {
 			screen.resetScreen(0, 640);
 		}
-		else if (checkPointMark == 1) {
+		else if (checkPointMark == 1 || checkPointMark == 3) {
 			screen.resetScreen(0, 640, false);
 		}
 		else if (checkPointMark == 2) {
 			screen.resetScreen(6860, 7500, false);
 		}
-		else if (checkPointMark == 3) {
-			screen.resetScreen(3800, 4440, false); //0,640
-		}
+	}
+}
+
+void resetScreen(Screen &screen, int level, int checkPointMark)
+{
+	if (isLevelClassic(level)) {
+		resetScreenForClassicLevels(screen, level, checkPointMark);
+	}
+	else if (isLevelCustom(level)) {
+		resetScreenForCustomLevels(screen, level, checkPointMark);
 	}
 }
 
@@ -111,8 +146,7 @@ void changeLevel(int level, World &world, bool playerState)
 		Level::setFourthLevel(world);
 	}
 	else if (level == 77) {
-		//Level::setWinterWorld(world);
-		Level::setSecondStageOnWinterWorld(world);
+		Level::setWinterWorld(world);
 	}
 }
 
@@ -128,11 +162,8 @@ void setWorld(int level, Player &player, World &world, bool playerState)
 	changeLevel(level, world, playerState);
 }
 
-void setSubWorld(int level, int checkPointMark, Player &player, World &world)
+void setSubWorldForClassicLevels(int level, int checkPointMark, World &world)
 {
-	player.resetSteps();
-	player.setPositionXY(level, checkPointMark);
-
 	if (level == 1) {
 		if (checkPointMark == 1) {
 			Level::setFirstHiddenStage(world);
@@ -152,7 +183,11 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world)
 			Level::setSecondStageOnSecondLevel(world);
 		}
 	}
-	else if (level == 77) {
+}
+
+void setSubWorldForCustomLevels(int level, int checkPointMark, World &world)
+{
+	if (level == 77) {
 		if (checkPointMark == 1) {
 			Level::setWinterHiddenStage(world);
 		}
@@ -165,9 +200,22 @@ void setSubWorld(int level, int checkPointMark, Player &player, World &world)
 	}
 }
 
+void setSubWorld(int level, int checkPointMark, Player &player, World &world)
+{
+	player.resetSteps();
+	player.setPositionXY(level, checkPointMark);
+
+	if (isLevelClassic(level)) {
+		setSubWorldForClassicLevels(level, checkPointMark, world);
+	}
+	else if (isLevelCustom(level)) {
+		setSubWorldForCustomLevels(level, checkPointMark, world);
+	}
+}
+
 void adjustCamera(int level, int checkPointMark)
 {
-	if ((level == 1 || level == 2 || level == 77) && checkPointMark == 1) {
+	if (isCheckPointLeadingToHiddenStage(level, checkPointMark)) {
 		Camera::disableCameraMoving();
 	}
 	else {
@@ -323,18 +371,19 @@ void runGame()
 				}
 
 				if (world.isPlayerFinishingWorld() && !winStatus) {
-					if (level < 4) {
-						showLevelFinishingAnimation(*player, world, screen, level);
-						++level;
-						screen.setLevel(level);
+					if (isLevelClassic(level)) {
+						if (isLevelTheLast(level)) {
+							showWorldFinishingAnimation(*player, world, screen);
+							winStatus = true;
+						}
+						else {
+							showLevelFinishingAnimation(*player, world, screen, level);
+							++level;
+							screen.setLevel(level);
+						}
 						break;
 					}
-					else if (level == 4) {
-						showWorldFinishingAnimation(*player, world, screen);
-						winStatus = true;
-						break;
-					}
-					else if (level == 77) {
+					else if (isLevelCustom(level)) {
 						showLevelFinishingAnimation(*player, world, screen, level);
 						winStatus = true;
 						break;

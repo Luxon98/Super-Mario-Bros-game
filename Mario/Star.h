@@ -8,6 +8,7 @@ class World;
 struct SDL_Surface;
 
 
+// this class is equivalent to a collectible bonus, which was called 'Super Star' in the original Mario series
 class Star : public BonusObject 
 {
 private:
