@@ -26,6 +26,13 @@ void showScreenErrorWindow()
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", errorText.c_str(), nullptr);
 }
 
+void showSoundErrorWindow()
+{
+	std::string errorText = "Sound controller has not been properly initialized. "
+		"You can still play the game, but no sounds will play.";
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Sound error", errorText.c_str(), nullptr);
+}
+
 SDL_Surface* loadBMP(std::string filename)
 {
 	const char* converted_path = filename.c_str();

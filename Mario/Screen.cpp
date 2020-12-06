@@ -272,6 +272,9 @@ void Screen::drawAddingPointsAnimation(World &world)
 		drawCoins(player->getCoins());
 		--time;
 		updateView();
+		if (i % 6 == 0) {
+			SoundController::playGettingPointsEffect();
+		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(20));
 	}
 }
@@ -498,10 +501,6 @@ void Screen::drawDeadMario(World &world)
 
 void Screen::drawMarioPipeTravellingScreen(World &world, Direction direction)
 {
-	if (direction == Direction::Down) {
-		SoundController::playPipeTravelEffect();
-	}
-
 	SDL_Surface* img = player->getImage();
 	int x = player->getX() - camera->getBeginningOfCamera();
 	int y = player->getY() + (direction == Direction::Down ? 0 : 70);

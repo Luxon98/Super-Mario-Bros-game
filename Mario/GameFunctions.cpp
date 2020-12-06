@@ -223,6 +223,17 @@ void adjustCamera(int level, int checkPointMark)
 	}
 }
 
+void initSound()
+{
+	bool soundInitStatus = SoundController::initSoundMixer();
+	if (soundInitStatus) {
+		SoundController::loadSounds();
+	}
+	else {
+		showSoundErrorWindow();
+	}
+}
+
 void handleMenu(bool * exitStatus, int * gameSpeed, int * level, Screen &screen)
 {
 	MenuManager menu = MenuManager();
@@ -292,8 +303,6 @@ void runGame()
 		showFileErrorWindow(e.what());
 	}
 
-	SoundController soundMixer = SoundController();
-
 	bool exitStatus = false;
 	int gameSpeed = 7;
 
@@ -343,7 +352,7 @@ void runGame()
 				screen.drawMarioPipeTravellingScreen(world, Direction::Up);
 			}
 
-			soundMixer.playBackgroundMusic();
+			SoundController::playBackgroundMusic();
 
 			while (playerState && timeState && !winStatus) {
 				screen.updateScreen(world);
@@ -364,6 +373,8 @@ void runGame()
 
 				checkPointMark = world.getLastReachedCheckPointMark();
 				if (checkPointMark != -1) {
+					SoundController::playPipeTravelEffect();
+
 					if (isPlayerEnteringPipe(level, checkPointMark)) {
 						screen.drawMarioPipeTravellingScreen(world, Direction::Down);
 					}
@@ -412,4 +423,6 @@ void runGame()
 			screen.drawGameOverScreen();
 		}
 	}
+
+	SoundController::closeSoundController();
 }

@@ -8,28 +8,26 @@ class Player;
 class World;
 
 
-class SoundController
+class SoundController final
 {
 private:
 	// tracks and sound effects are declared as static here, because functions from SDL_mixer library require it
-	static std::array<Mix_Music*, 8> backgroundTracks;
-	static std::array<Mix_Chunk*, 16> soundsEffects;
-	bool initSoundMixer();
-	void loadBackgroundTracks();
-	void loadSoundEffects();
-	void loadSounds();
-	static void playOpenWorldMusic();
-	static void playUndergroundMusic();
-	static void playCastleMusic();
+	static std::array<Mix_Music*, 10> backgroundTracks;
+	static std::array<Mix_Chunk*, 18> soundsEffects;
+	static void loadBackgroundTracks();
+	static void loadSoundEffects();
+	static int getIndexOfBackgroundMusic();
 
 public:
-	SoundController();
+	SoundController() = delete;
+	static bool initSoundMixer();
+	static void loadSounds();
+	static void playBackgroundMusic();
 	static void playStarMusic();
+	static void playTimePassedMusic();
+	static void playGameOverMusic();
 	static void playLevelFinishedMusic();
 	static void playWorldFinishedMusic();
-	static void playGameOverMusic();
-	static void playTimePassedMusic();
-	static void playBackgroundMusic();
 	static void playNewLiveAddedEffect();
 	static void playBlockDestroyedEffect();
 	static void playBlockHittedEffect();
@@ -40,14 +38,16 @@ public:
 	static void playFireballPoppedEffect();
 	static void playFlagDownEffect();
 	static void playJumpEffect(Player &player);
-	static void playBonusLostEffect();
 	static void playMarioDeadEffect();
+	static void playBonusLostEffect();
 	static void playPipeTravelEffect();
 	static void playSubmenuEffect();
 	static void playReturnedToMenuEffect();
 	static void playFireRocketEffect();
+	static void playFireworksEffect();
+	static void playGettingPointsEffect();
 	static void stopMusic();
-	~SoundController();
+	static void closeSoundController();
 };
 
 #endif //SoundController_H

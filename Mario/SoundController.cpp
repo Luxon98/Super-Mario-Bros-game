@@ -5,29 +5,21 @@
 #include "LayoutStyle.h"
 
 
-std::array<Mix_Music*, 8> SoundController::backgroundTracks;
-std::array<Mix_Chunk*, 16> SoundController::soundsEffects;
-
-bool SoundController::initSoundMixer()
-{
-	bool success = true;
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-		success = false;
-	}
-
-	return success;
-}
+std::array<Mix_Music*, 10> SoundController::backgroundTracks;
+std::array<Mix_Chunk*, 18> SoundController::soundsEffects;
 
 void SoundController::loadBackgroundTracks()
 {
 	backgroundTracks[0] = Mix_LoadMUS("./sounds/background_open.wav");
-	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_star.wav");
-	backgroundTracks[2] = Mix_LoadMUS("./sounds/level_finished.wav");
-	backgroundTracks[3] = Mix_LoadMUS("./sounds/game_over.wav");
-	backgroundTracks[4] = Mix_LoadMUS("./sounds/time_passed.wav");
-	backgroundTracks[5] = Mix_LoadMUS("./sounds/background_underground.wav");
-	backgroundTracks[6] = Mix_LoadMUS("./sounds/background_castle.wav");
-	backgroundTracks[7] = Mix_LoadMUS("./sounds/world_finished.wav");
+	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_underground.wav");
+	backgroundTracks[2] = Mix_LoadMUS("./sounds/background_castle.wav");
+	backgroundTracks[3] = Mix_LoadMUS("./sounds/background_winter.wav");
+	backgroundTracks[4] = Mix_LoadMUS("./sounds/background_alt.wav");
+	backgroundTracks[5] = Mix_LoadMUS("./sounds/background_star.wav");
+	backgroundTracks[6] = Mix_LoadMUS("./sounds/time_passed.wav");
+	backgroundTracks[7] = Mix_LoadMUS("./sounds/game_over.wav");
+	backgroundTracks[8] = Mix_LoadMUS("./sounds/level_finished.wav");
+	backgroundTracks[9] = Mix_LoadMUS("./sounds/world_finished.wav");
 }
 
 void SoundController::loadSoundEffects()
@@ -48,6 +40,34 @@ void SoundController::loadSoundEffects()
 	soundsEffects[13] = Mix_LoadWAV("./sounds/menu_return.wav");
 	soundsEffects[14] = Mix_LoadWAV("./sounds/fire_rocket.wav");
 	soundsEffects[15] = Mix_LoadWAV("./sounds/boss_destroyed.wav");
+	soundsEffects[16] = Mix_LoadWAV("./sounds/fireworks.wav");
+	soundsEffects[17] = Mix_LoadWAV("./sounds/getting_points.wav");
+}
+
+int SoundController::getIndexOfBackgroundMusic()
+{
+	switch (World::LAYOUT_STYLE) {
+	case LayoutStyle::OpenWorld:
+		return 0;
+	case LayoutStyle::Underground:
+		return 1;
+	case LayoutStyle::Castle:
+		return 2;
+	case LayoutStyle::CustomWinter:
+		return 3;
+	default:
+		return 4;
+	}
+}
+
+bool SoundController::initSoundMixer()
+{
+	bool success = true;
+	if (Mix_OpenAudio(16000, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
+		success = false;
+	}
+
+	return success;
 }
 
 void SoundController::loadSounds()
@@ -56,74 +76,42 @@ void SoundController::loadSounds()
 	loadSoundEffects();
 }
 
-void SoundController::playOpenWorldMusic()
+void SoundController::playBackgroundMusic()
 {
 	stopMusic();
-	Mix_PlayMusic(backgroundTracks[0], -1);
-}
 
-void SoundController::playUndergroundMusic()
-{
-	stopMusic();
-	Mix_PlayMusic(backgroundTracks[5], -1);
-}
-
-void SoundController::playCastleMusic()
-{
-	stopMusic();
-	Mix_PlayMusic(backgroundTracks[6], -1);
-}
-
-SoundController::SoundController()
-{
-	initSoundMixer();
-
-	// all audio can be loaded in the constructor 
-	// sound is not pre-loaded, because there will be only one instance of this class
-	loadSounds();
+	int musicIndex = getIndexOfBackgroundMusic();
+	Mix_PlayMusic(backgroundTracks[musicIndex], -1);
 }
 
 void SoundController::playStarMusic()
 {
 	stopMusic();
-	Mix_PlayMusic(backgroundTracks[1], -1);
-}
-
-void SoundController::playLevelFinishedMusic()
-{
-	stopMusic();
-	Mix_PlayMusic(backgroundTracks[2], -1);
-}
-
-void SoundController::playWorldFinishedMusic()
-{
-	stopMusic();
-	Mix_PlayMusic(backgroundTracks[7], -1);
-}
-
-void SoundController::playGameOverMusic()
-{
-	stopMusic();
-	Mix_PlayMusic(backgroundTracks[3], -1);
+	Mix_PlayMusic(backgroundTracks[5], -1);
 }
 
 void SoundController::playTimePassedMusic()
 {
 	stopMusic();
-	Mix_PlayMusic(backgroundTracks[4], -1);
+	Mix_PlayMusic(backgroundTracks[6], -1);
 }
 
-void SoundController::playBackgroundMusic()
+void SoundController::playGameOverMusic()
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		playOpenWorldMusic();
-	}
-	else if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
-		playUndergroundMusic();
-	}
-	else if (World::LAYOUT_STYLE == LayoutStyle::Castle) {
-		playCastleMusic();
-	}
+	stopMusic();
+	Mix_PlayMusic(backgroundTracks[7], -1);
+}
+
+void SoundController::playLevelFinishedMusic()
+{
+	stopMusic();
+	Mix_PlayMusic(backgroundTracks[8], -1);
+}
+
+void SoundController::playWorldFinishedMusic()
+{
+	stopMusic();
+	Mix_PlayMusic(backgroundTracks[9], -1);
 }
 
 void SoundController::playNewLiveAddedEffect()
@@ -176,14 +164,14 @@ void SoundController::playJumpEffect(Player &player)
 	Mix_PlayChannel(-1, soundsEffects[player.isPerformingJumpAsSmall() ? 9 : 10], 0);
 }
 
-void SoundController::playBonusLostEffect()
-{
-	Mix_PlayChannel(-1, soundsEffects[12], 0);
-}
-
 void SoundController::playMarioDeadEffect()
 {
 	Mix_PlayChannel(-1, soundsEffects[11], 0);
+}
+
+void SoundController::playBonusLostEffect()
+{
+	Mix_PlayChannel(-1, soundsEffects[12], 0);
 }
 
 void SoundController::playPipeTravelEffect()
@@ -206,14 +194,23 @@ void SoundController::playFireRocketEffect()
 	Mix_PlayChannel(-1, soundsEffects[14], 0);
 }
 
+void SoundController::playFireworksEffect()
+{
+	Mix_PlayChannel(-1, soundsEffects[16], 0);
+}
+
+void SoundController::playGettingPointsEffect()
+{
+	Mix_PlayChannel(-1, soundsEffects[17], 0);
+}
+
 void SoundController::stopMusic()
 {
 	Mix_HaltMusic();
 }
 
-SoundController::~SoundController()
+void SoundController::closeSoundController()
 {
-	// there will be only one instance of this class, so destructor can safely clean all sounds
 	for (std::size_t i = 0; i < backgroundTracks.size(); ++i) {
 		Mix_FreeMusic(backgroundTracks[i]);
 	}
