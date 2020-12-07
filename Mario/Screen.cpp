@@ -94,6 +94,7 @@ void Screen::loadOtherImages()
 	screenImages[14] = loadPNG("./img/thanks.png", display);
 	screenImages[15] = loadPNG("./img/info_castle.png", display);
 	screenImages[16] = loadPNG("./img/info_custom_worlds.png", display);
+	screenImages[17] = loadPNG("./img/info_winter.png", display);
 }
 
 void Screen::loadWorldImages()
@@ -127,9 +128,9 @@ void Screen::loadCoinImages()
 
 void Screen::loadDeadMarioImages()
 {
-	for (std::size_t k = 17; k < screenImages.size(); ++k) {
+	for (std::size_t k = 18; k < screenImages.size(); ++k) {
 		std::string filename = "./img/mario_dead";
-		filename += std::to_string(k - 16);
+		filename += std::to_string(k - 17);
 		filename += ".png";
 		screenImages[k] = loadPNG(filename, display);
 	}
@@ -259,23 +260,82 @@ void Screen::drawCoins(int coins)
 	drawSurface(display, img2, 286, 40);
 }
 
-void Screen::drawAddingPointsAnimation(World &world)
+void Screen::drawAddingPointsAnimation(World &world, bool checker)
 {
 	for (int i = time; i >= 0; --i) {
 		fillBackground();
 		world.performActions();
-		world.draw(display, false);
-		player->addPoints(100);
+		world.draw(display, !checker);
+		player->addPoints(checker ? 100 : 50);
 		drawScreenElements();
 		drawTime(time);
 		drawPoints(player->getPoints());
 		drawCoins(player->getCoins());
 		--time;
 		updateView();
-		if (i % 6 == 0) {
+
+		if (checker && (i % 6 == 0)) {
 			SoundController::playGettingPointsEffect();
 		}
+
 		std::this_thread::sleep_for(std::chrono::milliseconds(20));
+	}
+}
+
+void Screen::addExplosions(World &world, int i)
+{
+	std::array<int, 10> xPositions = { 290, 390, 275, 350, 290, 350, 250, 365, 320, 320 };
+	std::array<int, 10> yPositions = { 270, 230, 190, 270, 215, 215, 230, 190, 200, 170 };
+
+	if (i % 50 == 0) {
+		int index = i / 50;
+		index %= 10;
+		world.addExplosion(Position(camera->getBeginningOfCamera() + xPositions[index - 1], yPositions[index - 1]));
+	}
+}
+
+void Screen::drawFireworks(World &world)
+{
+	for (int i = 0; i < 2500; ++i) {
+		fillBackground();
+
+		world.performActions();
+		world.draw(display);
+
+		drawScreenElements();
+		drawTime(0);
+		drawPoints(player->getPoints());
+		drawCoins(player->getCoins());
+		updateView();
+
+		if (i <= 2000) {
+			if (i % 250 == 0) {
+				SoundController::playFireworksEffect();
+			}
+
+			addExplosions(world, i);
+		}
+	}
+}
+
+void Screen::drawWinterWorldThankYouScreen(World& world)
+{
+	for (int i = 0; i < 2000; ++i) {
+		fillBackground();
+		world.draw(display);
+		drawScreenElements();
+		drawTime(0);
+		drawPoints(player->getPoints());
+		drawCoins(player->getCoins());
+
+		if (i > 300) {
+			drawSurface(display, screenImages[14], 330, 160);
+		}
+		if (i > 600) {
+			drawSurface(display, screenImages[17], 330, 275);
+		}
+
+		updateView();
 	}
 }
 
@@ -475,7 +535,7 @@ void Screen::drawDeadMario(World &world)
 	SoundController::stopMusic();
 	SoundController::playMarioDeadEffect();
 
-	int index = player->getDeadMarioImageIndex() + 17;
+	int index = player->getDeadMarioImageIndex() + 18;
 	SDL_Surface* img = screenImages[index];
 	int shift = 0;
 	for (int i = 0; i < 2400; ++i) {
@@ -550,7 +610,7 @@ void Screen::drawLevelFinishedScreen(World &world)
 		updateScreen(world);
 	}
 
-	drawAddingPointsAnimation(world);
+	drawAddingPointsAnimation(world, true);
 }
 
 void Screen::drawWorldFinishedScreen(World &world)
@@ -562,6 +622,22 @@ void Screen::drawWorldFinishedScreen(World &world)
 	}
 
 	drawThankYouScreen(world);
+}
+
+void Screen::drawCustomWorldFinishedScreen(World &world)
+{
+	SoundController::playLevelFinishedMusic();
+
+	while (player->isStillRunning()) {
+		updateScreen(world);
+	}
+
+	drawAddingPointsAnimation(world, false);
+
+	SoundController::stopMusic();
+	drawFireworks(world);
+
+	drawWinterWorldThankYouScreen(world);
 }
 
 void Screen::updateScreen(World &world)

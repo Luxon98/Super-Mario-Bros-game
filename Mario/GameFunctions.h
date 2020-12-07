@@ -53,6 +53,8 @@ void showLevelFinishingAnimation(Player &player, World &world, Screen &screen, i
 
 void showWorldFinishingAnimation(Player &player, World &world, Screen &screen);
 
+void showCustomWorldFinishingAnimation(Player &player, World &world, Screen &screen);
+
 void runGame();
 
 #endif //GameFunctions_H

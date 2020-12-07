@@ -280,6 +280,22 @@ void showWorldFinishingAnimation(Player &player, World &world, Screen &screen)
 	screen.drawWorldFinishedScreen(world);
 }
 
+void showCustomWorldFinishingAnimation(Player &player, World &world, Screen &screen)
+{
+	SoundController::playFlagDownEffect();
+	world.switchOnFlag();
+	player.setSlidingParameters();
+	getPointsFromFlag(player, world);
+
+	while (!world.isFlagDown()) {
+		world.performActions();
+		screen.updateScreen(world);
+	}
+	player.setFinishingRunParameters(0);
+
+	screen.drawCustomWorldFinishedScreen(world);
+}
+
 void runGame()
 {
 	bool loadResourcesStatus = true;
@@ -294,6 +310,8 @@ void runGame()
 		}
 		return;
 	}
+
+	initSound();
 
 	try {
 		preloadImages(screen.getDisplay());
@@ -395,7 +413,7 @@ void runGame()
 						break;
 					}
 					else if (isLevelCustom(level)) {
-						showLevelFinishingAnimation(*player, world, screen, level);
+						showCustomWorldFinishingAnimation(*player, world, screen);
 						winStatus = true;
 						break;
 					}

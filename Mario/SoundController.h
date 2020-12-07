@@ -31,7 +31,7 @@ public:
 	static void playNewLiveAddedEffect();
 	static void playBlockDestroyedEffect();
 	static void playBlockHittedEffect();
-	static void playBonusAppeardEffect();
+	static void playBonusAppearedEffect();
 	static void playBonusCollectedEffect();
 	static void playCoinCollectedEffect();
 	static void playEnemyDestroyedEffect(bool bossFlag = false);

@@ -20,7 +20,7 @@ bool isDifferenceInInterval(int difference, int begin, int shift, int repetition
 	return false;
 }
 
-bool areAtTheSameWidth(const WorldObject& firstObject, const WorldObject& secondObject)
+bool areAtTheSameWidth(const WorldObject &firstObject, const WorldObject &secondObject)
 {
 	if (firstObject.getX() + firstObject.getWidth() / 2 > secondObject.getX() - secondObject.getWidth() / 2
 		&& firstObject.getX() <= secondObject.getX()) {
@@ -36,7 +36,7 @@ bool areAtTheSameWidth(const WorldObject& firstObject, const WorldObject& second
 	return false;
 }
 
-bool areAtTheSameHeight(const WorldObject& firstObject, const WorldObject& secondObject)
+bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secondObject)
 {
 	if (firstObject.getY() >= secondObject.getY() && firstObject.getY() - firstObject.getHeight() / 2
 		< secondObject.getY() + secondObject.getHeight() / 2) {
@@ -52,7 +52,7 @@ bool areAtTheSameHeight(const WorldObject& firstObject, const WorldObject& secon
 	return false;
 }
 
-bool isElementDirectlyAboveObject(const WorldObject& element, const WorldObject& object)
+bool isElementDirectlyAboveObject(const WorldObject &element, const WorldObject &object)
 {
 	if (element.getY() + element.getHeight() / 2 == object.getY() - object.getHeight() / 2) {
 		return true;
@@ -61,7 +61,7 @@ bool isElementDirectlyAboveObject(const WorldObject& element, const WorldObject&
 	return false;
 }
 
-bool isMonsterCloseAboveBlock(const LivingObject& monster, const Block& block)
+bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block)
 {
 	if (abs((monster.getY() + monster.getHeight() / 2) - (block.getY() - block.getHeight() / 2)) < 2) {
 		return true;
