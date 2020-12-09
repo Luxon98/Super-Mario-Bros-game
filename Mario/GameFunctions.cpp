@@ -391,6 +391,8 @@ void runGame()
 
 				checkPointMark = world.getLastReachedCheckPointMark();
 				if (checkPointMark != -1) {
+					player->resetModel();
+
 					SoundController::playPipeTravelEffect();
 
 					if (isPlayerEnteringPipe(level, checkPointMark)) {

@@ -146,6 +146,7 @@ public:
 	void setPositionXY(int level);
 	void setPositionXY(int level, int checkPointMark);
 	void reborn(int level);
+	void resetModel();
 	void resetSteps();
 	void setSlidingParameters();
 	void setFinishingRunParameters(int level); 

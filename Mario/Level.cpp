@@ -24,6 +24,7 @@
 #include "Princess.h"
 #include "CustomWinterDecoration.h"
 #include "FireSerpent.h"
+#include "Player.h"
 
 
 void Level::setFirstLevel(World &world, bool checker)
@@ -135,7 +136,7 @@ void Level::setFirstLevel(World &world, bool checker)
 
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 9 - i; ++j) {
-			world.blocks.push_back(Block(BlockType::Indestructible, Position(5806 + i * 32 + j * 32, 400 - i * 32)));
+			world.blocks.push_back(Block(BlockType::Indestructible, Position(5808 + i * 32 + j * 32, 400 - i * 32)));
 		}
 	}
 
@@ -144,23 +145,23 @@ void Level::setFirstLevel(World &world, bool checker)
 	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(5454, 288)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(5486, 288)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(6350, 400)));
-	world.blocks.push_back(Block(BlockType::Tube, Position(926, 399)));
-	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(926, 368)));
-	world.blocks.push_back(Block(BlockType::Tube, Position(1266, 399)));
-	world.blocks.push_back(Block(BlockType::Tube, Position(1266, 367)));
-	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(1266, 336)));
-	world.blocks.push_back(Block(BlockType::Tube, Position(1502, 399)));
-	world.blocks.push_back(Block(BlockType::Tube, Position(1502, 367)));
-	world.blocks.push_back(Block(BlockType::Tube, Position(1502, 335)));
-	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(1502, 304)));
-	world.blocks.push_back(Block(BlockType::Tube, Position(1854, 399)));
-	world.blocks.push_back(Block(BlockType::Tube, Position(1854, 367)));
-	world.blocks.push_back(Block(BlockType::Tube, Position(1854, 335)));
-	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(1854, 304)));
-	world.blocks.push_back(Block(BlockType::Tube, Position(5246, 399)));
-	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(5246, 368)));
-	world.blocks.push_back(Block(BlockType::Tube, Position(5754, 399)));
-	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(5754, 368)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(928, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(928, 368)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(1248, 399)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(1248, 367)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(1248, 336)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(1504, 399)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(1504, 367)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(1504, 335)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(1504, 304)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(1856, 399)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(1856, 367)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(1856, 335)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(1856, 304)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(5248, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(5248, 368)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(5760, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(5760, 368)));
 
 	if (checker) {
 		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2064, 288)));
@@ -222,7 +223,7 @@ void Level::setFirstLevel(World &world, bool checker)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5200, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5270, 400))));
 
-	world.checkPoints.push_back(CheckPoint(Position(1854, 265), false, 1));
+	world.checkPoints.push_back(CheckPoint(Position(1856, 265), false, 1));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(6542, 336), false)));
 	world.flag = std::make_unique<Flag>(Flag(Position(6335, 116)));
@@ -1240,7 +1241,7 @@ void Level::setWinterWorld(World &world)
 	}
 
 	world.blocks.push_back(Block(BlockType::Destructible, Position(8772, 240)));
-	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(8996, 272)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(8996, 256)));
 	world.blocks.push_back(Block(BlockType::Ground, Position(9732, 336)));
 
 	for (int i = 9764; i < 10340; i += 32) {
@@ -1815,8 +1816,14 @@ void Level::setWinterHiddenStage(World &world)
 	}
 
 	world.blocks.push_back(Block(BlockType::AlternativeEmpty, Position(592, 295)));
-
-	world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(592, 170)));
+	
+	int coins = world.getPlayer().getCoins();
+	if (coins < 25) {
+		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(592, 170)));
+	}
+	else {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(592, 170)));
+	}
 
 	world.blocks.push_back(Block(BlockType::TubeLeftEntry, Position(583, 352)));
 	for (int i = 367; i > 15; i -= 32) {

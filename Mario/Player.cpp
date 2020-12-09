@@ -488,7 +488,11 @@ bool Player::isArmed() const
 
 bool Player::isInsensitive() const
 {
-	return (currentState == PlayerState::Insensitive);
+	if (currentState == PlayerState::Insensitive || currentAnimationState == PlayerAnimation::Growing) {
+		return true;
+	}
+	
+	return false;
 }
 
 bool Player::isImmortal() const
@@ -745,6 +749,11 @@ void Player::reborn(int level)
 	currentAnimationState = PlayerAnimation::NoAnimation;
 	movementBlock = false;
 	resetMovement();
+}
+
+void Player::resetModel()
+{
+	model = 0;
 }
 
 void Player::resetSteps()

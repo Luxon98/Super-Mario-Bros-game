@@ -48,6 +48,11 @@ bool Shell::isActive() const
 	return active;
 }
 
+bool Shell::isRed() const
+{
+	return red;
+}
+
 bool Shell::shouldTurnIntoTurtle() const
 {
 	if (red) {

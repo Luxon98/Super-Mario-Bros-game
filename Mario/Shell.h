@@ -24,6 +24,7 @@ public:
 	Shell(Position position, bool red = false);
 	static void loadShellImage(SDL_Surface* display);
 	bool isActive() const;
+	bool isRed() const;
 	bool shouldTurnIntoTurtle() const;
 	void setActiveStateParameters(Direction direction);
 	void resetCreationTime();

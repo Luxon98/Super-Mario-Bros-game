@@ -5,6 +5,7 @@
 #include "Block.h"
 #include "Plant.h"
 #include "FireRocket.h"
+#include "Shell.h"
 #include "Boss.h"
 #include "Player.h"
 
@@ -84,6 +85,26 @@ bool isMonsterCrushproof(std::shared_ptr<LivingObject> monster)
 bool isMonsterResistantToKnocks(std::shared_ptr<LivingObject> monster)
 {
 	if (std::dynamic_pointer_cast<FireRocket>(monster) || std::dynamic_pointer_cast<Boss>(monster)) {
+		return true;
+	}
+
+	return false;
+}
+
+bool isMonsterResistantToFireBalls(std::shared_ptr<LivingObject> monster)
+{
+	if (std::dynamic_pointer_cast<FireRocket>(monster)) {
+		return true;
+	}
+
+	return false;
+}
+
+bool isMonsterResistantToCollisionWithShell(std::shared_ptr<LivingObject> monster)
+{
+	if (std::dynamic_pointer_cast<Shell>(monster) || std::dynamic_pointer_cast<FireRocket>(monster) 
+		|| std::dynamic_pointer_cast<Boss>(monster)) {
+
 		return true;
 	}
 

@@ -215,7 +215,7 @@ void handleImmortalPlayerCollisions(std::shared_ptr<LivingObject> monster, World
 	if (std::dynamic_pointer_cast<Turtle>(monster) || (std::dynamic_pointer_cast<Shell>(monster)
 		&& std::dynamic_pointer_cast<Shell>(monster)->isActive())) {
 
-		world.addDestroyedTurtle(monster->getPosition(), direction);
+		world.addDestroyedTurtle(monster->getPosition(), direction, std::dynamic_pointer_cast<Shell>(monster)->isRed());
 	}
 	else if (std::dynamic_pointer_cast<Creature>(monster)) {
 		world.addDestroyedCreature(monster->getPosition(), direction);
@@ -305,7 +305,7 @@ void handleShellsAndMonstersCollisions(World &world, Player &player)
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if (std::dynamic_pointer_cast<Shell>(*it) && std::dynamic_pointer_cast<Shell>(*it)->isActive()) {
 			for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
-				if (!(std::dynamic_pointer_cast<Shell>(*it2)) && (areAtTheSameWidth(**it, **it2)
+				if (!isMonsterResistantToCollisionWithShell(*it2) && (areAtTheSameWidth(**it, **it2)
 					&& areAtTheSameHeight(**it, **it2))) {
 
 					int points = 200;
@@ -368,7 +368,9 @@ void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 	int index = 0;
 	for (auto it = fireballs.begin(); it != fireballs.end(); ++it, ++index) {
 		for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
-			if (areAtTheSameWidth(*it, **it2) && areAtTheSameHeight(*it, **it2)) {
+			if (!isMonsterResistantToFireBalls(*it2) && (areAtTheSameWidth(*it, **it2) 
+				&& areAtTheSameHeight(*it, **it2))) {
+
 				int points = 200;
 				handleFireBallCollision(fireballs[index], *it2, world, &points);
 				handleFireBallDestruction(fireballs[index], world, index);
