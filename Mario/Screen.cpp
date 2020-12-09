@@ -75,7 +75,7 @@ void Screen::setPositionOfTheScreen(int begX, int endX)
 void Screen::loadDigitImages()
 {
 	for (std::size_t i = 0; i < digitImages.size(); ++i) {
-		std::string filename = "./img/";
+		std::string filename = "./img/digit_imgs/";
 		filename += std::to_string(i);
 		filename += ".png";
 		digitImages[i] = loadPNG(filename, display);
@@ -84,42 +84,42 @@ void Screen::loadDigitImages()
 
 void Screen::loadOtherImages()
 {
-	screenImages[0] = loadPNG("./img/mario.png", display);
-	screenImages[1] = loadPNG("./img/time.png", display);
-	screenImages[2] = loadPNG("./img/x.png", display);
+	screenImages[0] = loadPNG("./img/scr_imgs/mario.png", display);
+	screenImages[1] = loadPNG("./img/scr_imgs/time.png", display);
+	screenImages[2] = loadPNG("./img/scr_imgs/x.png", display);
 
-	screenImages[11] = loadPNG("./img/mario_right1.png", display);
-	screenImages[12] = loadPNG("./img/timeup.png", display);
-	screenImages[13] = loadPNG("./img/gameover.png", display);
-	screenImages[14] = loadPNG("./img/thanks.png", display);
-	screenImages[15] = loadPNG("./img/info_castle.png", display);
-	screenImages[16] = loadPNG("./img/info_custom_worlds.png", display);
-	screenImages[17] = loadPNG("./img/info_winter.png", display);
+	screenImages[11] = loadPNG("./img/mario_imgs/mario_right1.png", display);
+	screenImages[12] = loadPNG("./img/scr_imgs/timeup.png", display);
+	screenImages[13] = loadPNG("./img/scr_imgs/gameover.png", display);
+	screenImages[14] = loadPNG("./img/scr_imgs/thanks.png", display);
+	screenImages[15] = loadPNG("./img/scr_imgs/info_castle.png", display);
+	screenImages[16] = loadPNG("./img/scr_imgs/info_custom_worlds.png", display);
+	screenImages[17] = loadPNG("./img/scr_imgs/info_winter.png", display);
 }
 
 void Screen::loadWorldImages()
 {
 	for (std::size_t i = 0; i < 4; ++i) {
-		std::string filename = "./img/world1";
+		std::string filename = "./img/scr_imgs/world1";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		worldImages[i] = loadPNG(filename, display);
 	}
-	worldImages[4] = loadPNG("./img/world_custom.png", display);
+	worldImages[4] = loadPNG("./img/scr_imgs/world_custom.png", display);
 
 	for (std::size_t j = 5; j < 9; ++j) {
-		std::string filename = "./img/world_start1";
+		std::string filename = "./img/scr_imgs/world_start1";
 		filename += std::to_string(j - 4);
 		filename += ".png";
 		worldImages[j] = loadPNG(filename, display);
 	}
-	worldImages[9] = loadPNG("./img/world_start_custom.png", display);
+	worldImages[9] = loadPNG("./img/scr_imgs/world_start_custom.png", display);
 }
 
 void Screen::loadCoinImages()
 {
 	for (int j = 3; j < 11; ++j) {
-		std::string filename = "./img/s_coin";
+		std::string filename = "./img/scr_imgs/s_coin";
 		filename += std::to_string(j - 2);
 		filename += ".png";
 		screenImages[j] = loadPNG(filename, display);
@@ -129,7 +129,7 @@ void Screen::loadCoinImages()
 void Screen::loadDeadMarioImages()
 {
 	for (std::size_t k = 18; k < screenImages.size(); ++k) {
-		std::string filename = "./img/mario_dead";
+		std::string filename = "./img/mario_imgs/mario_dead";
 		filename += std::to_string(k - 17);
 		filename += ".png";
 		screenImages[k] = loadPNG(filename, display);

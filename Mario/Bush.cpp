@@ -19,7 +19,7 @@ Bush::Bush(int type, Position position)
 void Bush::loadBushImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < bushImages.size(); ++i) {
-		std::string filename = "./img/bush";
+		std::string filename = "./img/ie_imgs/bush";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		bushImages[i] = loadPNG(filename, display);

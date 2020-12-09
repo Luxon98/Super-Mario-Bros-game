@@ -68,7 +68,7 @@ Star::Star(Position position)
 void Star::loadStarImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < starImages.size(); ++i) {
-		std::string filename = "./img/star";
+		std::string filename = "./img/bonus_imgs/star";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		starImages[i] = loadPNG(filename, display);

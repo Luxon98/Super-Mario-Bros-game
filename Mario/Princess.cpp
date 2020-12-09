@@ -16,8 +16,8 @@ Princess::Princess(Position position, bool fakePrincessFlag) : fakePrincessFlag(
 
 void Princess::loadPrincessImages(SDL_Surface* display)
 {
-	princessImages[0] = loadPNG("./img/princess.png", display);
-	princessImages[1] = loadPNG("./img/fake_princess.png", display);
+	princessImages[0] = loadPNG("./img/ie_imgs/princess.png", display);
+	princessImages[1] = loadPNG("./img/ie_imgs/fake_princess.png", display);
 }
 
 void Princess::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

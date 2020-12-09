@@ -19,7 +19,7 @@ Button::Button(Position position)
 void Button::loadButtonImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < buttonImages.size(); ++i) {
-		std::string filename = "./img/button";
+		std::string filename = "./img/other_imgs/button";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		buttonImages[i] = loadPNG(filename, display);

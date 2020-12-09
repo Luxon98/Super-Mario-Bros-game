@@ -27,7 +27,7 @@ FireSerpent::FireSerpent(int counter, Position position)
 void FireSerpent::loadFireSerpentImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < fireSerpentImages.size(); ++i) {
-		std::string filename = "./img/fire_serpent";
+		std::string filename = "./img/other_imgs/fire_serpent";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		fireSerpentImages[i] = loadPNG(filename, display);

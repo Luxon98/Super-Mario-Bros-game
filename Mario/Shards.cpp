@@ -46,7 +46,7 @@ Shards::Shards(Position position)
 void Shards::loadShardsImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < shardsImages.size(); ++i) {
-		std::string filename = "./img/shard";
+		std::string filename = "./img/te_imgs/shard";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		shardsImages[i] = loadPNG(filename, display);

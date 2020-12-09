@@ -17,8 +17,8 @@ Castle::Castle(Position position, bool bigCastleFlag)
 
 void Castle::loadCastleImages(SDL_Surface* display)
 {
-	castleImages[0] = loadPNG("./img/castle.png", display);
-	castleImages[1] = loadPNG("./img/big_castle.png", display);
+	castleImages[0] = loadPNG("./img/ie_imgs/castle.png", display);
+	castleImages[1] = loadPNG("./img/ie_imgs/big_castle.png", display);
 }
 
 void Castle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

@@ -40,9 +40,9 @@ Mushroom::Mushroom(Position position, bool oneUp)
 
 void Mushroom::loadMushroomImages(SDL_Surface* display)
 {
-	mushroomImages[0] = loadPNG("./img/mushroom_red.png", display);
-	mushroomImages[1] = loadPNG("./img/mushroom_green.png", display);
-	mushroomImages[2] = loadPNG("./img/mushroom_brown_blue.png", display);
+	mushroomImages[0] = loadPNG("./img/bonus_imgs/mushroom_red.png", display);
+	mushroomImages[1] = loadPNG("./img/bonus_imgs/mushroom_green.png", display);
+	mushroomImages[2] = loadPNG("./img/bonus_imgs/mushroom_brown_blue.png", display);
 }
 
 bool Mushroom::isOneUp() const

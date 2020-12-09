@@ -41,14 +41,14 @@ Turtle::Turtle(Position position)
 
 void Turtle::loadTurtleImages(SDL_Surface* display)
 {
-	turtleImages[0] = loadPNG("./img/turtle_left1.png", display);
-	turtleImages[1] = loadPNG("./img/turtle_left2.png", display);
-	turtleImages[2] = loadPNG("./img/turtle_right1.png", display);
-	turtleImages[3] = loadPNG("./img/turtle_right2.png", display);
-	turtleImages[4] = loadPNG("./img/turtle_left3.png", display);
-	turtleImages[5] = loadPNG("./img/turtle_left4.png", display);
-	turtleImages[6] = loadPNG("./img/turtle_right3.png", display);
-	turtleImages[7] = loadPNG("./img/turtle_right4.png", display);
+	turtleImages[0] = loadPNG("./img/npc_imgs/turtle_left1.png", display);
+	turtleImages[1] = loadPNG("./img/npc_imgs/turtle_left2.png", display);
+	turtleImages[2] = loadPNG("./img/npc_imgs/turtle_right1.png", display);
+	turtleImages[3] = loadPNG("./img/npc_imgs/turtle_right2.png", display);
+	turtleImages[4] = loadPNG("./img/npc_imgs/turtle_left3.png", display);
+	turtleImages[5] = loadPNG("./img/npc_imgs/turtle_left4.png", display);
+	turtleImages[6] = loadPNG("./img/npc_imgs/turtle_right3.png", display);
+	turtleImages[7] = loadPNG("./img/npc_imgs/turtle_right4.png", display);
 }
 
 void Turtle::setMoveDirection(Direction direction)

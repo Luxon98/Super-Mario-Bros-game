@@ -72,8 +72,8 @@ Boss::Boss(Position position)
 
 void Boss::loadBossImages(SDL_Surface* display)
 {
-	bossImages[0] = loadPNG("./img/boss1.png", display);
-	bossImages[1] = loadPNG("./img/boss2.png", display);
+	bossImages[0] = loadPNG("./img/npc_imgs/boss1.png", display);
+	bossImages[1] = loadPNG("./img/npc_imgs/boss2.png", display);
 }
 
 int Boss::getHealthPoints() const

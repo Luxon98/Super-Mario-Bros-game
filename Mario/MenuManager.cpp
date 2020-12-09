@@ -10,21 +10,21 @@ std::array<SDL_Surface*, 2> MenuManager::menuImages;
 
 void MenuManager::SubmenuManager::loadSubmenuSprites(SDL_Surface* display)
 {
-	submenuImages[0] = loadPNG("./img/submenu.png", display);
-	submenuImages[1] = loadPNG("./img/menu_ret1.png", display);
-	submenuImages[2] = loadPNG("./img/menu_ret2.png", display);
-	submenuImages[3] = loadPNG("./img/menu_classic.png", display);
-	submenuImages[4] = loadPNG("./img/menu_custom.png", display);
-	submenuImages[5] = loadPNG("./img/menu_rectangle.png", display);
-	submenuImages[6] = loadPNG("./img/menu_third_option.png", display);
-	submenuImages[7] = loadPNG("./img/menu_winter_world.png", display);
-	submenuImages[8] = loadPNG("./img/menu_hl_world.png", display);
+	submenuImages[0] = loadPNG("./img/menu_imgs/submenu.png", display);
+	submenuImages[1] = loadPNG("./img/menu_imgs/menu_ret1.png", display);
+	submenuImages[2] = loadPNG("./img/menu_imgs/menu_ret2.png", display);
+	submenuImages[3] = loadPNG("./img/menu_imgs/menu_classic.png", display);
+	submenuImages[4] = loadPNG("./img/menu_imgs/menu_custom.png", display);
+	submenuImages[5] = loadPNG("./img/menu_imgs/menu_rectangle.png", display);
+	submenuImages[6] = loadPNG("./img/menu_imgs/menu_third_option.png", display);
+	submenuImages[7] = loadPNG("./img/menu_imgs/menu_winter_world.png", display);
+	submenuImages[8] = loadPNG("./img/menu_imgs/menu_hl_world.png", display);
 }
 
 void MenuManager::SubmenuManager::loadSubmenuDigits(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < digitImages.size(); ++i) {
-		std::string filename = "./img/";
+		std::string filename = "./img/digit_imgs/";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		digitImages[i] = loadPNG(filename, display);
@@ -232,8 +232,8 @@ MenuManager::MenuManager()
 
 void MenuManager::loadMenuImages(SDL_Surface* display)
 {
-	menuImages[0] = loadPNG("./img/menu.png", display);
-	menuImages[1] = loadPNG("./img/menu_mushroom.png", display);
+	menuImages[0] = loadPNG("./img/menu_imgs/menu.png", display);
+	menuImages[1] = loadPNG("./img/menu_imgs/menu_mushroom.png", display);
 
 	SubmenuManager::loadSubmenuImages(display);
 }

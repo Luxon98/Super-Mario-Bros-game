@@ -364,7 +364,7 @@ void World::playBlockSoundEffects()
 	if ((blockType >= BlockType::BonusWithOneUpMushroom && blockType <= BlockType::BonusWithStar) 
 		&& blockType != BlockType::BonusWithCoin) {
 
-		SoundController::playBonusAppeardEffect();
+		SoundController::playBonusAppearedEffect();
 	}
 	else if (blockType == BlockType::Monetary || blockType == BlockType::BonusWithCoin) {
 		SoundController::playCoinCollectedEffect();

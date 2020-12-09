@@ -65,7 +65,7 @@ Plant::Plant(Position position, bool delay)
 void Plant::loadPlantImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < plantImages.size(); ++i) {
-		std::string filename = "./img/plant";
+		std::string filename = "./img/npc_imgs/plant";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		plantImages[i] = loadPNG(filename, display);

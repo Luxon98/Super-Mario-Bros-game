@@ -36,7 +36,7 @@ Shell::Shell(Position position, bool red)
 void Shell::loadShellImage(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < shellImages.size(); ++i) {
-		std::string filename = "./img/shell";
+		std::string filename = "./img/other_imgs/shell";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		shellImages[i] = loadPNG(filename, display);

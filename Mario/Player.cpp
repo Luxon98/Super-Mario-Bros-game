@@ -433,12 +433,12 @@ Player::Player(Position position)
 void Player::loadPlayerImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < playerImages.size() / 2; ++i) {
-		std::string filename = "./img/mario_left";
+		std::string filename = "./img/mario_imgs/mario_left";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		playerImages[i] = loadPNG(filename, display);
-		filename.replace(12, 4, "right");
-		playerImages[i + 70] = loadPNG(filename, display);
+		filename.replace(23, 4, "right");
+		playerImages[i + (playerImages.size() / 2)] = loadPNG(filename, display);
 	}
 }
 

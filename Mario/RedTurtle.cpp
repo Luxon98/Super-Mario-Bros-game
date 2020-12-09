@@ -95,7 +95,7 @@ RedTurtle::RedTurtle(Position position, bool flying)
 void RedTurtle::loadTurtleImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < redTurtleImages.size(); ++i) {
-		std::string filename = "./img/red_turtle";
+		std::string filename = "./img/npc_imgs/red_turtle";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		redTurtleImages[i] = loadPNG(filename, display);

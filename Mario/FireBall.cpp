@@ -84,7 +84,7 @@ FireBall::FireBall(Position position, Direction direction)
 void FireBall::loadFireBallImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < fireBallImages.size(); ++i) {
-		std::string filename = "./img/fireball";
+		std::string filename = "./img/other_imgs/fireball";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		fireBallImages[i] = loadPNG(filename, display);

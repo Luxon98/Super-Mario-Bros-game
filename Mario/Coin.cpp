@@ -42,7 +42,7 @@ Coin::Coin(Position position)
 void Coin::loadCoinImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < coinImages.size(); ++i) {
-		std::string filename = "./img/coin";
+		std::string filename = "./img/other_imgs/coin";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		coinImages[i] = loadPNG(filename, display);

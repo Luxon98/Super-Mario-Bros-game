@@ -18,15 +18,15 @@ CustomWinterDecoration::CustomWinterDecoration(DecorationType type, Position pos
 
 void CustomWinterDecoration::loadDecorationImages(SDL_Surface* display)
 {
-	decorationImages[0] = loadPNG("./img/sky_star1.png", display);
-	decorationImages[1] = loadPNG("./img/sky_star2.png", display);
-	decorationImages[2] = loadPNG("./img/sky_star3.png", display);
-	decorationImages[3] = loadPNG("./img/christmas_tree.png", display);
-	decorationImages[4] = loadPNG("./img/winter_cloud1.png", display);
-	decorationImages[5] = loadPNG("./img/winter_cloud2.png", display);
-	decorationImages[6] = loadPNG("./img/moon.png", display);
-	decorationImages[7] = loadPNG("./img/signpost.png", display);
-	decorationImages[8] = loadPNG("./img/second_signpost.png", display);
+	decorationImages[0] = loadPNG("./img/ie_imgs/sky_star1.png", display);
+	decorationImages[1] = loadPNG("./img/ie_imgs/sky_star2.png", display);
+	decorationImages[2] = loadPNG("./img/ie_imgs/sky_star3.png", display);
+	decorationImages[3] = loadPNG("./img/ie_imgs/christmas_tree.png", display);
+	decorationImages[4] = loadPNG("./img/ie_imgs/winter_cloud1.png", display);
+	decorationImages[5] = loadPNG("./img/ie_imgs/winter_cloud2.png", display);
+	decorationImages[6] = loadPNG("./img/ie_imgs/moon.png", display);
+	decorationImages[7] = loadPNG("./img/ie_imgs/signpost.png", display);
+	decorationImages[8] = loadPNG("./img/ie_imgs/second_signpost.png", display);
 }
 
 void CustomWinterDecoration::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

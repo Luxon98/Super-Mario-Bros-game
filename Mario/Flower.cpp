@@ -40,7 +40,7 @@ Flower::Flower(Position position)
 void Flower::loadFlowerImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < flowerImages.size(); ++i) {
-		std::string filename = "./img/flower";
+		std::string filename = "./img/bonus_imgs/flower";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		flowerImages[i] = loadPNG(filename, display);

@@ -21,10 +21,10 @@ Flag::Flag(Position position)
 
 void Flag::loadFlagImages(SDL_Surface* display)
 {
-	flagImages[0] = loadPNG("./img/flag.png", display);
-	flagImages[1] = loadPNG("./img/stick.png", display);
-	flagImages[2] = loadPNG("./img/winter_flag.png", display);
-	flagImages[3] = loadPNG("./img/winter_stick.png", display);
+	flagImages[0] = loadPNG("./img/other_imgs/flag.png", display);
+	flagImages[1] = loadPNG("./img/other_imgs/stick.png", display);
+	flagImages[2] = loadPNG("./img/other_imgs/winter_flag.png", display);
+	flagImages[3] = loadPNG("./img/other_imgs/winter_stick.png", display);
 }
 
 bool Flag::isActive() const

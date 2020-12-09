@@ -111,7 +111,7 @@ Size Block::getSizeFromLength()
 void Block::loadPlainBlockImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < blockImages.size(); ++i) {
-		std::string filename = "./img/block";
+		std::string filename = "./img/block_imgs/block";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		blockImages[i] = loadPNG(filename, display);
@@ -121,7 +121,7 @@ void Block::loadPlainBlockImages(SDL_Surface* display)
 void Block::loadLandImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < landImages.size(); ++i) {
-		std::string filename = "./img/land";
+		std::string filename = "./img/block_imgs/land";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		landImages[i] = loadPNG(filename, display);

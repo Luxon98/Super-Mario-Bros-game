@@ -16,7 +16,7 @@ Rock::Rock(Position position)
 
 void Rock::loadRockImage(SDL_Surface* display)
 {
-	rockImage = loadPNG("./img/rock.png", display);
+	rockImage = loadPNG("./img/ie_imgs/rock.png", display);
 }
 
 void Rock::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

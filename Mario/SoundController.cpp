@@ -129,7 +129,7 @@ void SoundController::playBlockHittedEffect()
 	Mix_PlayChannel(-1, soundsEffects[2], 0);
 }
 
-void SoundController::playBonusAppeardEffect()
+void SoundController::playBonusAppearedEffect()
 {
 	Mix_PlayChannel(-1, soundsEffects[3], 0);
 }

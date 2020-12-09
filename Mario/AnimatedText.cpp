@@ -20,12 +20,12 @@ AnimatedText::AnimatedText(TextType type, Position position)
 
 void AnimatedText::loadAnimatedTextImages(SDL_Surface* display)
 {
-	animatedTextImages[0] = loadPNG("./img/100.png", display);
-	animatedTextImages[1] = loadPNG("./img/200.png", display);
-	animatedTextImages[2] = loadPNG("./img/400.png", display);
-	animatedTextImages[3] = loadPNG("./img/1000.png", display);
-	animatedTextImages[4] = loadPNG("./img/5000.png", display);
-	animatedTextImages[5] = loadPNG("./img/1UP.png", display);
+	animatedTextImages[0] = loadPNG("./img/te_imgs/100.png", display);
+	animatedTextImages[1] = loadPNG("./img/te_imgs/200.png", display);
+	animatedTextImages[2] = loadPNG("./img/te_imgs/400.png", display);
+	animatedTextImages[3] = loadPNG("./img/te_imgs/1000.png", display);
+	animatedTextImages[4] = loadPNG("./img/te_imgs/5000.png", display);
+	animatedTextImages[5] = loadPNG("./img/te_imgs/1UP.png", display);
 }
 
 void AnimatedText::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

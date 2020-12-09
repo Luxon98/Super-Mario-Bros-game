@@ -16,7 +16,7 @@ Lava::Lava(Position position)
 
 void Lava::loadLavaImage(SDL_Surface* display)
 {
-	lavaImage = loadPNG("./img/lava.png", display);
+	lavaImage = loadPNG("./img/ie_imgs/lava.png", display);
 }
 
 void Lava::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

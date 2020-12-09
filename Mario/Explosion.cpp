@@ -29,7 +29,7 @@ Explosion::Explosion(Position position)
 void Explosion::loadExplosionImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < explosionImages.size(); ++i) {
-		std::string filename = "./img/explosion";
+		std::string filename = "./img/te_imgs/explosion";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		explosionImages[i] = loadPNG(filename, display);

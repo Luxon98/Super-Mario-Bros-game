@@ -32,7 +32,7 @@ CrushedCreature::CrushedCreature(Position position)
 void CrushedCreature::loadCrushedCreatureImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < crushedCreatureImages.size(); ++i) {
-		std::string filename = "./img/crushed_creature";
+		std::string filename = "./img/te_imgs/crushed_creature";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		crushedCreatureImages[i] = loadPNG(filename, display);

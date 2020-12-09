@@ -49,7 +49,7 @@ FireRocket::FireRocket(Position position)
 void FireRocket::loadFireRocketImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < rocketImages.size(); ++i) {
-		std::string filename = "./img/fire_rocket";
+		std::string filename = "./img/npc_imgs/fire_rocket";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		rocketImages[i] = loadPNG(filename, display);

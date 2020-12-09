@@ -139,10 +139,10 @@ Platform::Platform(Position position, PlatformType platformType)
 
 void Platform::loadPlatformImage(SDL_Surface* display)
 {
-	platformImages[0] = loadPNG("./img/platform.png", display);
-	platformImages[1] = loadPNG("./img/small_platform.png", display);
-	platformImages[2] = loadPNG("./img/bridge_element.png", display);
-	platformImages[3] = loadPNG("./img/span.png", display);
+	platformImages[0] = loadPNG("./img/other_imgs/platform.png", display);
+	platformImages[1] = loadPNG("./img/other_imgs/small_platform.png", display);
+	platformImages[2] = loadPNG("./img/other_imgs/bridge_element.png", display);
+	platformImages[3] = loadPNG("./img/other_imgs/span.png", display);
 }
 
 int Platform::getBridgeLength() const

@@ -53,7 +53,7 @@ Creature::Creature(Position position)
 void Creature::loadCreatureImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < creatureImages.size(); ++i) {
-		std::string filename = "./img/creature";
+		std::string filename = "./img/npc_imgs/creature";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		creatureImages[i] = loadPNG(filename, display);

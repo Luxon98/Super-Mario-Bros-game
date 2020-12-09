@@ -18,7 +18,7 @@ Cloud::Cloud(int type, Position position)
 void Cloud::loadCloudImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < cloudImages.size(); ++i) {
-		std::string filename = "./img/cloud";
+		std::string filename = "./img/ie_imgs/cloud";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		cloudImages[i] = loadPNG(filename, display);

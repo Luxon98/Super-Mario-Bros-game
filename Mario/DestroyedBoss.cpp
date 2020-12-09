@@ -32,9 +32,9 @@ DestroyedBoss::DestroyedBoss(Position position, bool normal) : normal(normal)
 
 void DestroyedBoss::loadDestroyedBossImages(SDL_Surface* display)
 {
-	destroyedBossImages[0] = loadPNG("./img/boss1.png", display);
-	destroyedBossImages[1] = loadPNG("./img/boss2.png", display);
-	destroyedBossImages[2] = loadPNG("./img/destroyed_boss.png", display);
+	destroyedBossImages[0] = loadPNG("./img/npc_imgs/boss1.png", display);
+	destroyedBossImages[1] = loadPNG("./img/npc_imgs/boss2.png", display);
+	destroyedBossImages[2] = loadPNG("./img/te_imgs/destroyed_boss.png", display);
 }
 
 void DestroyedBoss::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
