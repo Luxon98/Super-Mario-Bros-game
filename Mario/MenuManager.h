@@ -11,7 +11,7 @@ struct SDL_Surface;
 enum class CustomWorld
 {
 	WinterWorld,
-	HalloweenWorld
+	SummerWorld
 };
 
 

@@ -14,7 +14,7 @@ void SoundController::loadBackgroundTracks()
 	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_underground.wav");
 	backgroundTracks[2] = Mix_LoadMUS("./sounds/background_castle.wav");
 	backgroundTracks[3] = Mix_LoadMUS("./sounds/background_winter.wav");
-	backgroundTracks[4] = Mix_LoadMUS("./sounds/background_alt.wav");
+	backgroundTracks[4] = Mix_LoadMUS("./sounds/background_summer.wav");
 	backgroundTracks[5] = Mix_LoadMUS("./sounds/background_star.wav");
 	backgroundTracks[6] = Mix_LoadMUS("./sounds/time_passed.wav");
 	backgroundTracks[7] = Mix_LoadMUS("./sounds/game_over.wav");

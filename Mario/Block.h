@@ -32,7 +32,7 @@ class Block : public WorldObject
 {
 private:
 	static std::array<SDL_Surface*, 48> blockImages;
-	static std::array<SDL_Surface*, 6> landImages;
+	static std::array<SDL_Surface*, 12> landImages;
 	static bool blockImage;
 	bool collisionsFlag;
 	int availableCoins;

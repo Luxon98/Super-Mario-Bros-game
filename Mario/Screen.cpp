@@ -165,7 +165,7 @@ void Screen::setBlackBackground()
 
 void Screen::fillBackground()
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld || World::LAYOUT_STYLE == LayoutStyle::CustomSummer) {
 		setBlueBackground();
 	}
 	else {

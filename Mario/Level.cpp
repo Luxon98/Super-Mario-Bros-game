@@ -1861,3 +1861,110 @@ void Level::setWinterHiddenStage(World &world)
 	world.flag = nullptr;
 	world.button = nullptr;
 }
+
+void Level::setSummerWorld(World& world)
+{
+	world.blocks.clear();
+	world.platforms.clear();
+	world.inanimateElements.clear();
+	world.bonusElements.clear();
+	world.monsters.clear();
+	world.temporaryElements.clear();
+	world.destroyedElements.clear();
+	world.fireballs.clear();
+	world.checkPoints.clear();
+	world.fireSerpents.clear();
+
+	world.slidingCounter = 0;
+	world.resetImages();
+
+	world.WORLD_HEIGHT = 480;
+	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
+
+
+	for (int i = 16; i < 656; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+	world.blocks.push_back(Block(BlockType::Ground, Position(16, 400)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(48, 400)));
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(32, 367)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(32, 336)));
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(576, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(576, 368)));
+
+	for (int i = 144; i < 304; i += 32) {
+		world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(i, 304)));
+		world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(i, 192)));
+	}
+	world.blocks.push_back(Block(BlockType::BonusWithRedMushroom, Position(304, 304)));
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(304, 192)));
+
+	for (int i = 656, j = 400; i < 912; i += 32, j -= 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(i, j)));
+	}
+
+	for (int i = 1040, j = 176; i < 1296; i += 32, j += 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(i, j)));
+	}
+
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(880, 288)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(1040, 288)));
+
+	world.blocks.push_back(Block(Position(1405, 435), 7));
+	world.blocks.push_back(Block(Position(1652, 397), 15));
+	world.blocks.push_back(Block(Position(1974, 442), 11));
+	world.blocks.push_back(Block(Position(1740, 200), 7));
+	world.blocks.push_back(Block(Position(2310, 291), 9));
+	world.blocks.push_back(Block(Position(2447, 416), 5));
+	world.blocks.push_back(Block(Position(2628, 370), 5));
+
+	world.blocks.push_back(Block(BlockType::Ground, Position(2132, 464)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(2132, 432)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(2164, 464)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(2164, 432)));
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(2148, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(2148, 368)));
+
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(1970, 104)));
+
+	for (int i = 2752; i < 3360; i += 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(i, 464)));
+	}
+
+	for (int i = 2784; i < 3104; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 304)));
+	}
+
+	for (int i = 304; i > -32; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(3104, i)));
+	}
+
+	for (int i = 0; i < 6; ++i) {
+		for (int j = 0; j < 7 - i; ++j) {
+			world.blocks.push_back(Block(BlockType::Indestructible, Position(3360 + i * 32 + j * 32, 464 - i * 32)));
+		}
+	}
+
+	for (int i = 464; i > 304; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(3744, i)));
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(3904, i)));
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(4064, i)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(4250, 463)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(4250, 431)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(4250, 399)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(4250, 367)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4250, 336)));
+
+	world.platforms.push_back(Platform(Position(960, 460), PlatformType::MovingVerticallyPlatform));
+	world.platforms.push_back(Platform(Position(1970, 335), PlatformType::MovingVerticallyPlatform));
+
+
+	world.flag = nullptr;
+	world.button = nullptr;
+}

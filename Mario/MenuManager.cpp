@@ -18,7 +18,7 @@ void MenuManager::SubmenuManager::loadSubmenuSprites(SDL_Surface* display)
 	submenuImages[5] = loadPNG("./img/menu_imgs/menu_rectangle.png", display);
 	submenuImages[6] = loadPNG("./img/menu_imgs/menu_third_option.png", display);
 	submenuImages[7] = loadPNG("./img/menu_imgs/menu_winter_world.png", display);
-	submenuImages[8] = loadPNG("./img/menu_imgs/menu_hl_world.png", display);
+	submenuImages[8] = loadPNG("./img/menu_imgs/menu_summer_world.png", display);
 }
 
 void MenuManager::SubmenuManager::loadSubmenuDigits(SDL_Surface* display)
@@ -39,7 +39,7 @@ int MenuManager::SubmenuManager::getCustomWorldIndex() const
 void MenuManager::SubmenuManager::changeCustomWorld()
 {
 	if (customWorld == CustomWorld::WinterWorld) {
-		customWorld = CustomWorld::HalloweenWorld;
+		customWorld = CustomWorld::SummerWorld;
 	}
 	else {
 		customWorld = CustomWorld::WinterWorld;
@@ -110,9 +110,9 @@ MenuManager::SubmenuManager::SubmenuManager()
 {
 	submenuOptionNumber = 1;
 	gameSpeed = 7;
-	customGame = false;
+	customGame = true;  //false
 	returnStatus = false;
-	customWorld = CustomWorld::WinterWorld;
+	customWorld = CustomWorld::SummerWorld;  //CustomWorld::WinterWorld
 }
 
 void MenuManager::SubmenuManager::loadSubmenuImages(SDL_Surface* display)
@@ -260,7 +260,7 @@ int MenuManager::getGameSpeed() const
 int MenuManager::getLevel() const
 {
 	if (submenuManager.customGame) {
-		return (submenuManager.customWorld == CustomWorld::WinterWorld ? 77 : 77);  // 77 : 88
+		return (submenuManager.customWorld == CustomWorld::WinterWorld ? 77 : 88);
 	}
 
 	return 1;

@@ -11,13 +11,13 @@
 // pictures of blocks with indexes 0-35 are pictures from the original Super Mario Bros
 // the last twelve are custom graphics, created by me for the needs of the Winter World
 std::array<SDL_Surface*, 48> Block::blockImages;
-std::array<SDL_Surface*, 6> Block::landImages;
+std::array<SDL_Surface*, 12> Block::landImages;
 
 bool Block::blockImage = true;
 
 int Block::computeBaseIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld || World::LAYOUT_STYLE == LayoutStyle::CustomSummer) {
 		return 0;
 	}
 	else if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
@@ -33,9 +33,10 @@ int Block::computeBaseIndex() const
 
 int Block::computeLandImageIndex() const
 {
+	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::CustomSummer ? 6 : 0);
 	for (int length = 5, index = 0; length <= 15; length += 2, ++index) {
 		if (length == lengthOfLand) {
-			return index;
+			return index + baseIndex;
 		}
 	}
 

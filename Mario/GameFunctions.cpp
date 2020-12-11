@@ -119,6 +119,11 @@ void resetScreenForCustomLevels(Screen &screen, int level, int checkPointMark)
 			screen.resetScreen(6860, 7500, false);
 		}
 	}
+	else if (level == 88) {
+		if (checkPointMark == -1) {
+			screen.resetScreen(0, 640);
+		}
+	}
 }
 
 void resetScreen(Screen &screen, int level, int checkPointMark)
@@ -147,6 +152,9 @@ void changeLevel(int level, World &world, bool playerState)
 	}
 	else if (level == 77) {
 		Level::setWinterWorld(world);
+	}
+	else if (level == 88) {
+		Level::setSummerWorld(world);
 	}
 }
 
