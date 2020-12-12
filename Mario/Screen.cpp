@@ -599,7 +599,7 @@ void Screen::drawBridgeSpolilingScreen(World &world)
 		drawCoins(player->getCoins());
 		updateView();
 	} 
-	while (!world.areTemporaryElementsEmpty() || !world.isBridgeDestroyedAlready());
+	while (!world.areAnimatedElementsEmpty() || !world.isBridgeDestroyedAlready());
 }
 
 void Screen::drawLevelFinishedScreen(World &world)

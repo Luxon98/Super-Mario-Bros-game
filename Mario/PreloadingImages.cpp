@@ -17,6 +17,7 @@
 #include "Button.h"
 #include "AnimatedText.h"
 #include "AnimatedCoin.h"
+#include "Snowflake.h"
 #include "Shards.h"
 #include "Explosion.h"
 #include "CrushedCreature.h"
@@ -80,6 +81,7 @@ void preloadTemporaryObjectImages(SDL_Surface* display)
 	Shards::loadShardsImages(display);
 	AnimatedCoin::loadAnimatedCoinImages(display);
 	AnimatedText::loadAnimatedTextImages(display);
+	Snowflake::loadSnowflakeImage(display);
 }
 
 void preloadOtherImages(SDL_Surface* display)

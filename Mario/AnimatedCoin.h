@@ -2,13 +2,13 @@
 #define AnimatedCoin_H
 
 #include <array>
-#include "TemporaryObject.h"
+#include "AnimatedObject.h"
 
 class Position;
 struct SDL_Surface;
 
 
-class AnimatedCoin : public TemporaryObject 
+class AnimatedCoin : public AnimatedObject 
 {
 private:
 	static std::array<SDL_Surface*, 7> animatedCoinImages;

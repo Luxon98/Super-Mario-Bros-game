@@ -3,13 +3,13 @@
 
 #include <array>
 #include <vector>
-#include "TemporaryObject.h"
+#include "AnimatedObject.h"
 
 class Position;
 struct SDL_Surface;
 
 
-class Shards : public TemporaryObject
+class Shards : public AnimatedObject
 {
 private:
 	static std::array<SDL_Surface*, 6> shardsImages;

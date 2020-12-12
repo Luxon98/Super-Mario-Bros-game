@@ -2,9 +2,9 @@
 #define DestroyedBoss_H
 
 #include <array>
-#include "TemporaryObject.h"
+#include "AnimatedObject.h"
 
-class DestroyedBoss : public TemporaryObject
+class DestroyedBoss : public AnimatedObject
 {
 private:
 	static std::array<SDL_Surface*, 3> destroyedBossImages;

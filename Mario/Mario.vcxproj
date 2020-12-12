@@ -186,10 +186,11 @@
     <ClCompile Include="Shards.cpp" />
     <ClCompile Include="Shell.cpp" />
     <ClCompile Include="Size.cpp" />
+    <ClCompile Include="Snowflake.cpp" />
     <ClCompile Include="SoundController.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="TemporaryObject.cpp" />
+    <ClCompile Include="AnimatedObject.cpp" />
     <ClCompile Include="Turtle.cpp" />
     <ClCompile Include="UtilityFunctions.cpp" />
     <ClCompile Include="World.cpp" />
@@ -247,10 +248,11 @@
     <ClInclude Include="Shards.h" />
     <ClInclude Include="Shell.h" />
     <ClInclude Include="Size.h" />
+    <ClInclude Include="Snowflake.h" />
     <ClInclude Include="SoundController.h" />
     <ClInclude Include="Star.h" />
     <ClInclude Include="Button.h" />
-    <ClInclude Include="TemporaryObject.h" />
+    <ClInclude Include="AnimatedObject.h" />
     <ClInclude Include="Turtle.h" />
     <ClInclude Include="UtilityFunctions.h" />
     <ClInclude Include="World.h" />

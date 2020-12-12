@@ -120,15 +120,15 @@ void World::setMovementDirection(LivingObject &monster)
 	}
 }
 
-void World::deleteTemporaryElements()
+void World::deleteAnimatedElements()
 {
-	for (std::size_t i = 0; i < temporaryElements.size(); ++i) {
-		if (temporaryElements[i]->shouldBeRemoved()) {
-			if (std::dynamic_pointer_cast<AnimatedCoin>(temporaryElements[i])) {
-				addAnimatedText(TextType::TWO_HUNDRED, Position(temporaryElements[i]->getPosition()));
+	for (std::size_t i = 0; i < animatedElements.size(); ++i) {
+		if (animatedElements[i]->shouldBeRemoved()) {
+			if (std::dynamic_pointer_cast<AnimatedCoin>(animatedElements[i])) {
+				addAnimatedText(TextType::TWO_HUNDRED, Position(animatedElements[i]->getPosition()));
 			}
 
-			temporaryElements.erase(temporaryElements.begin() + i);
+			animatedElements.erase(animatedElements.begin() + i);
 		}
 	}
 
@@ -199,7 +199,7 @@ void World::performFireBallsActions()
 
 		if (fireballs[i].shouldBeRemoved()) {
 			int shift = determineShift(fireballs[i], 7);
-			temporaryElements.push_back(std::make_shared<Explosion>(Explosion(
+			animatedElements.push_back(std::make_shared<Explosion>(Explosion(
 				Position(fireballs[i].getX() + shift, fireballs[i].getY()))));
 
 			fireballs.erase(fireballs.begin() + i);
@@ -246,10 +246,10 @@ void World::performWorldActions(bool playerActionFlag)
 	}
 }
 
-void World::slideTemporaryElements()
+void World::slideAnimatedElements()
 {
-	for (auto &temporaryElement : temporaryElements) {
-		temporaryElement->slide();
+	for (auto &animatedElement : animatedElements) {
+		animatedElement->slide();
 	}
 
 	for (auto &destroyedElement : destroyedElements) {
@@ -381,10 +381,10 @@ void World::drawInanimateElements(SDL_Surface* display)
 	}
 }
 
-void World::drawTemporaryElements(SDL_Surface* display)
+void World::drawAnimatedElements(SDL_Surface* display)
 {
-	for (const auto &temporaryElement : temporaryElements) {
-		temporaryElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	for (const auto &animatedElement : animatedElements) {
+		animatedElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 }
 
@@ -528,9 +528,9 @@ bool World::isBridgeDestroyedAlready() const
 	return true;
 }
 
-bool World::areTemporaryElementsEmpty() const
+bool World::areAnimatedElementsEmpty() const
 {
-	return (temporaryElements.size() == 0);
+	return (animatedElements.size() == 0);
 }
 
 int World::getLastReachedCheckPointMark() const
@@ -661,7 +661,7 @@ void World::addShell(Position position, bool red)
 
 void World::addCrushedCreature(Position position)
 {
-	temporaryElements.push_back(std::make_shared<CrushedCreature>(CrushedCreature(position)));
+	animatedElements.push_back(std::make_shared<CrushedCreature>(CrushedCreature(position)));
 }
 
 void World::addDestroyedCreature(Position position, Direction slideDirection)
@@ -676,23 +676,23 @@ void World::addDestroyedTurtle(Position position, Direction slideDirection, bool
 
 void World::addDestroyedBoss(Position position, bool normal)
 {
-	temporaryElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, normal)));
+	animatedElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, normal)));
 }
 
 void World::addExplosion(Position position)
 {
-	temporaryElements.push_back(std::make_shared<Explosion>(Explosion(position)));
+	animatedElements.push_back(std::make_shared<Explosion>(Explosion(position)));
 }
 
 void World::addAnimatedText(TextType type, Position position)
 {
-	temporaryElements.push_back(std::make_shared<AnimatedText>(AnimatedText(type, position)));
+	animatedElements.push_back(std::make_shared<AnimatedText>(AnimatedText(type, position)));
 }
 
 void World::addAnimatedCoin()
 {
 	Position position = Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 50);
-	temporaryElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(position)));
+	animatedElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(position)));
 }
 
 void World::performActions(bool playerActionFlag)
@@ -700,8 +700,8 @@ void World::performActions(bool playerActionFlag)
 	++gameCounter;
 	if (gameCounter % (10 - gameSpeed) == 0) {
 		performWorldActions(playerActionFlag);
-		deleteTemporaryElements();
-		slideTemporaryElements();
+		deleteAnimatedElements();
+		slideAnimatedElements();
 
 		handleBonusCollecting(*player, *this);
 		handleShellsAndMonstersCollisions(*this, *player);
@@ -722,7 +722,7 @@ void World::performActions(bool playerActionFlag)
 void World::draw(SDL_Surface* display, bool drawPlayer)
 {
 	drawInanimateElements(display);
-	drawTemporaryElements(display);
+	drawAnimatedElements(display);
 	drawBonusesAndMonsters(display);
 	drawPlatformsAndFireballs(display);
 	drawOtherObjects(display, drawPlayer);

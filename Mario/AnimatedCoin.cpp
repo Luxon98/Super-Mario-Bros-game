@@ -19,12 +19,13 @@ AnimatedCoin::AnimatedCoin(Position position)
 	this->position = position;
 	slideCounter = 0;
 	auxiliaryCounter = 0;
+	imageIndex = 0;
 }
 
 void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < animatedCoinImages.size(); ++i) {
-		std::string filename = "./img/te_imgs/a_coin";
+		std::string filename = "./img/anm_imgs/a_coin";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		animatedCoinImages[i] = loadPNG(filename, display);

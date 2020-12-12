@@ -40,7 +40,7 @@ DestroyedCreature::DestroyedCreature(Position position, Direction slideDirection
 void DestroyedCreature::loadDestroyedCreatureImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < destroyedCreatureImages.size(); ++i) {
-		std::string filename = "./img/te_imgs/destroyed_creature";
+		std::string filename = "./img/anm_imgs/destroyed_creature";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		destroyedCreatureImages[i] = loadPNG(filename, display);

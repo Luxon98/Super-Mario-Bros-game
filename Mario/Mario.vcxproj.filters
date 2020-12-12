@@ -114,9 +114,6 @@
     <ClCompile Include="Shell.cpp">
       <Filter>Source Files\LivingObjects</Filter>
     </ClCompile>
-    <ClCompile Include="TemporaryObject.cpp">
-      <Filter>Source Files\AbstractClasses</Filter>
-    </ClCompile>
     <ClCompile Include="CrushedCreature.cpp">
       <Filter>Source Files\TemporaryObjects</Filter>
     </ClCompile>
@@ -243,6 +240,12 @@
     <ClCompile Include="CustomWinterDecoration.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
+    <ClCompile Include="AnimatedObject.cpp">
+      <Filter>Source Files\AbstractClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Snowflake.cpp">
+      <Filter>Source Files\TemporaryObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -286,9 +289,6 @@
     </ClInclude>
     <ClInclude Include="Shell.h">
       <Filter>Header Files\LivingObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="TemporaryObject.h">
-      <Filter>Header Files\AbstractClasses</Filter>
     </ClInclude>
     <ClInclude Include="CrushedCreature.h">
       <Filter>Header Files\TemporaryObjects</Filter>
@@ -421,6 +421,12 @@
     </ClInclude>
     <ClInclude Include="CustomWinterDecoration.h">
       <Filter>Header Files\InanimateObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedObject.h">
+      <Filter>Header Files\AbstractClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Snowflake.h">
+      <Filter>Header Files\TemporaryObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

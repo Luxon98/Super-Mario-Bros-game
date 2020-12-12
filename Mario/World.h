@@ -17,7 +17,7 @@ class BonusObject;
 class Position;
 class Level;
 class InanimateObject;
-class TemporaryObject;
+class AnimatedObject;
 class LivingObject;
 class Camera;
 enum class TextType;
@@ -42,8 +42,8 @@ private:
 	std::vector<std::shared_ptr<InanimateObject>> inanimateElements;
 	std::vector<std::shared_ptr<BonusObject>> bonusElements;
 	std::vector<std::shared_ptr<LivingObject>> monsters;
-	std::vector<std::shared_ptr<TemporaryObject>> temporaryElements;
-	std::vector<std::shared_ptr<TemporaryObject>> destroyedElements;
+	std::vector<std::shared_ptr<AnimatedObject>> animatedElements;
+	std::vector<std::shared_ptr<AnimatedObject>> destroyedElements;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Camera> camera; 
 	std::unique_ptr<Flag> flag;
@@ -63,7 +63,7 @@ private:
 	bool isLastTouchedBlockBonus() const;
 	void changeColors();
 	void setMovementDirection(LivingObject &monster);
-	void deleteTemporaryElements();
+	void deleteAnimatedElements();
 	void handleFireballStatus();
 	void performBonusElementsActions();
 	void performMonstersActions();
@@ -71,7 +71,7 @@ private:
 	void performPlatformsActions();
 	void performFireSerpentsActions();
 	void performWorldActions(bool playerActionFlag = true);
-	void slideTemporaryElements();
+	void slideAnimatedElements();
 	void slideBlock();
 	void collectCoin();
 	void addShards(Position position);
@@ -84,7 +84,7 @@ private:
 	void drawBonusesAndMonsters(SDL_Surface* display);
 	void drawPlatformsAndFireballs(SDL_Surface* display);
 	void drawOtherObjects(SDL_Surface* display, bool drawPlayer);
-	void drawTemporaryElements(SDL_Surface* display);
+	void drawAnimatedElements(SDL_Surface* display);
 	void drawDestroyedElements(SDL_Surface* display);
 	friend class Level;
 
@@ -105,7 +105,7 @@ public:
 	bool isFlagDown() const;
 	bool isPlayerFinishingWorld() const;
 	bool isBridgeDestroyedAlready() const;
-	bool areTemporaryElementsEmpty() const;
+	bool areAnimatedElementsEmpty() const;
 	int getLastReachedCheckPointMark() const;
 	void setGameSpeed(int gameSpeed);
 	void setPlayer(std::shared_ptr<Player> player);

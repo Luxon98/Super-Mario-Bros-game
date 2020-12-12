@@ -2,14 +2,14 @@
 #define DestroyedCreature_H
 
 #include <array>
-#include "TemporaryObject.h"
+#include "AnimatedObject.h"
 #include "Direction.h"
 
 class Position;
 struct SDL_Surface;
 
 
-class DestroyedCreature : public TemporaryObject
+class DestroyedCreature : public AnimatedObject
 {
 private:
 	static std::array<SDL_Surface*, 6> destroyedCreatureImages;

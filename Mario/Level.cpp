@@ -25,6 +25,7 @@
 #include "CustomWinterDecoration.h"
 #include "FireSerpent.h"
 #include "Player.h"
+#include "Snowflake.h"
 
 
 void Level::setFirstLevel(World &world, bool checker)
@@ -34,7 +35,7 @@ void Level::setFirstLevel(World &world, bool checker)
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
-	world.temporaryElements.clear();
+	world.animatedElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
@@ -237,7 +238,7 @@ void Level::setSecondLevel(World &world, bool checker)
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
-	world.temporaryElements.clear();
+	world.animatedElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
@@ -505,7 +506,7 @@ void Level::setThirdLevel(World &world)
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
-	world.temporaryElements.clear();
+	world.animatedElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
@@ -714,7 +715,7 @@ void Level::setFourthLevel(World &world)
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
-	world.temporaryElements.clear();
+	world.animatedElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
@@ -894,7 +895,7 @@ void Level::setFirstHiddenStage(World &world)
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
-	world.temporaryElements.clear();
+	world.animatedElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
@@ -948,7 +949,7 @@ void Level::setSecondHiddenStage(World &world)
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
-	world.temporaryElements.clear();
+	world.animatedElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
@@ -1016,7 +1017,7 @@ void Level::setSecondStageOnSecondLevel(World &world)
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
-	world.temporaryElements.clear();
+	world.animatedElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
@@ -1065,7 +1066,7 @@ void Level::setWinterWorld(World &world)
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
-	world.temporaryElements.clear();
+	world.animatedElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
@@ -1507,6 +1508,12 @@ void Level::setWinterWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
 		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(9633, 125))));
 
+	for (int i = -60; i < 11200; i += 100) {
+		for (int j = 0, k = 24; j < 480; j += 60, k += 24) {
+			world.animatedElements.push_back(std::make_shared<Snowflake>(Snowflake(Position(i - k, j))));
+		}
+	}
+
 	world.checkPoints.push_back(CheckPoint(Position(5997, 297), false, 1));
 	world.checkPoints.push_back(CheckPoint(Position(9908, 201), false, 3));
 
@@ -1521,7 +1528,7 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
-	world.temporaryElements.clear();
+	world.animatedElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
@@ -1789,7 +1796,7 @@ void Level::setWinterHiddenStage(World &world)
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
-	world.temporaryElements.clear();
+	world.animatedElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
@@ -1869,7 +1876,7 @@ void Level::setSummerWorld(World& world)
 	world.inanimateElements.clear();
 	world.bonusElements.clear();
 	world.monsters.clear();
-	world.temporaryElements.clear();
+	world.animatedElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();

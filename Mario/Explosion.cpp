@@ -29,7 +29,7 @@ Explosion::Explosion(Position position)
 void Explosion::loadExplosionImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < explosionImages.size(); ++i) {
-		std::string filename = "./img/te_imgs/explosion";
+		std::string filename = "./img/anm_imgs/explosion";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		explosionImages[i] = loadPNG(filename, display);
@@ -51,4 +51,3 @@ bool Explosion::shouldBeRemoved() const
 }
 
 void Explosion::slide() {}
-
