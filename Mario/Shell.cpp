@@ -55,7 +55,7 @@ bool Shell::isRed() const
 
 bool Shell::shouldTurnIntoTurtle() const
 {
-	if (red) {
+	if (red || active) {
 		return false;
 	}
 

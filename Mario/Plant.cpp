@@ -19,7 +19,7 @@ int Plant::computeImageIndex() const
 
 bool Plant::isOutsidePipe() const
 {
-	if (stepsCounter >= 45 && stepsCounter <= 585) {
+	if (stepsCounter >= 42 && stepsCounter <= 588) {
 		return true;
 	}
 
@@ -57,6 +57,7 @@ Plant::Plant(Position position, bool delay)
 	size = Size(24, 44);
 	movement = Movement(0, 1, Direction::None, Direction::Up);
 	this->position = position;
+	auxiliaryCounter = 0;
 	model = 1;
 	stepsCounter = (delay ? 629 : -1);
 	changeModelCounter = 0;
@@ -83,7 +84,7 @@ void Plant::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) c
 void Plant::move(World &world)
 {
 	++stepsCounter;
-	if (stepsCounter < 90 || (stepsCounter >= 540 && stepsCounter < 720)) {
+	if (stepsCounter < 90 || (stepsCounter >= 540 && stepsCounter < 820)) {
 		slide(world);
 	}
 	else {
@@ -93,7 +94,7 @@ void Plant::move(World &world)
 	if (stepsCounter == 90) {
 		movement.setVerticalDirection(Direction::Down);
 	}
-	else if (stepsCounter == 720) {
+	else if (stepsCounter == 820) {
 		movement.setVerticalDirection(Direction::Up);
 		stepsCounter = -1;
 	}

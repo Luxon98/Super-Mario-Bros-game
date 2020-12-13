@@ -40,6 +40,7 @@ FireRocket::FireRocket(Position position)
 	size = Size(50, 16);
 	movement = Movement(1, 0, Direction::None);
 	this->position = position;
+	inactive = false;
 	model = 1;
 	stepsCounter = 0;
 	changeModelCounter = 0;
@@ -56,6 +57,11 @@ void FireRocket::loadFireRocketImages(SDL_Surface* display)
 	}
 }
 
+bool FireRocket::isInactive() const
+{
+	return inactive;
+}
+
 void FireRocket::setMoveDirection(Direction direction)
 {
 	movement.setDirection(direction);
@@ -63,7 +69,7 @@ void FireRocket::setMoveDirection(Direction direction)
 
 void FireRocket::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) {
+	if ((position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) && !inactive) {
 		drawSurface(display, rocketImages[computeImageIndex()], position.getX() - beginningOfCamera, position.getY());
 	}
 }
@@ -71,8 +77,16 @@ void FireRocket::draw(SDL_Surface* display, int beginningOfCamera, int endOfCame
 void FireRocket::move(World &world)
 {
 	if (movement.getDirection() == Direction::Left) {
-		position.setX(position.getX() - 1);
-		changeModel();
+		int alignment = computeHorizontalAlignment(Direction::Left, movement.getSpeed(), *this, world);
+		int distance = movement.getSpeed() - alignment;
+		
+		if (distance != 0) {
+			position.setX(position.getX() - distance);
+			changeModel();
+		}
+		else {
+			inactive = true;
+		}
 
 		if (isRightTime() && isPlayerCloseToFireRocket(*this, world)) {
 			lastSoundTime = std::chrono::steady_clock::now();

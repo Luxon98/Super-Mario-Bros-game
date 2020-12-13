@@ -18,7 +18,7 @@ private:
 	bool flying;
 	int model;
 	int computeImageIndex() const override;
-	void fly();
+	void fly(World &world);
 	void patrol(World &world);
 	void changeModel();
 

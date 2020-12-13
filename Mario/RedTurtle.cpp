@@ -24,11 +24,15 @@ int RedTurtle::computeImageIndex() const
 	return baseIndex + (model - 1);
 }
 
-void RedTurtle::fly()
+void RedTurtle::fly(World &world)
 {
 	++stepsCounter;
 	if (stepsCounter % 3 == 0) {
-		int verticalDistance = movement.getVerticalSpeed();
+		int alignment = computeVerticalAlignment(movement.getVerticalDirection(), 
+			movement.getVerticalSpeed(), *this, world);
+
+		int verticalDistance = movement.getVerticalSpeed() - alignment;
+		
 		if (movement.getVerticalDirection() == Direction::Up) {
 			verticalDistance *= -1;
 		}
@@ -113,7 +117,7 @@ void RedTurtle::loseFlyingAbility()
 	stepsCounter = 0;
 	movement.setVerticalDirection(Direction::None);
 	movement.setDirection(Direction::Left);
-	movement.setVerticalSpeed(2);
+	movement.setVerticalSpeed(3);
 	position.setY(position.getY() + 10);
 }
 
@@ -133,7 +137,7 @@ void RedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamer
 void RedTurtle::move(World &world)
 {
 	if (flying) {
-		fly();
+		fly(world);
 	}
 	else {
 		if (movement.getDirection() != Direction::None) {

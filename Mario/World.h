@@ -66,6 +66,7 @@ private:
 	void deleteAnimatedElements();
 	void handleFireballStatus();
 	void performBonusElementsActions();
+	void performSpecificMonstersActions(int index);
 	void performMonstersActions();
 	void performFireBallsActions();
 	void performPlatformsActions();

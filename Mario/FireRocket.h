@@ -15,6 +15,7 @@ class FireRocket : public IndependentLivingObject
 {
 private:
 	static std::array<SDL_Surface*, 2> rocketImages;
+	bool inactive;
 	int model;
 	std::chrono::steady_clock::time_point lastSoundTime;
 	bool isRightTime();
@@ -24,6 +25,7 @@ private:
 public:
 	FireRocket(Position position);
 	static void loadFireRocketImages(SDL_Surface* display);
+	bool isInactive() const;
 	void setMoveDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;

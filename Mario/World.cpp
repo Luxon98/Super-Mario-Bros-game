@@ -162,6 +162,21 @@ void World::performBonusElementsActions()
 	}
 }
 
+void World::performSpecificMonstersActions(int index)
+{
+	if (std::dynamic_pointer_cast<Shell>(monsters[index])) {
+		if (std::dynamic_pointer_cast<Shell>(monsters[index])->shouldTurnIntoTurtle()) {
+			monsters.push_back(std::make_shared<Turtle>(Turtle(Position(monsters[index]->getPosition()))));
+			monsters.erase(monsters.begin() + index);
+		}
+	}
+	else if (std::dynamic_pointer_cast<FireRocket>(monsters[index])) {
+		if (std::dynamic_pointer_cast<FireRocket>(monsters[index])->isInactive()) {
+			monsters.erase(monsters.begin() + index);
+		}
+	}
+}
+
 void World::performMonstersActions()
 {
 	for (std::size_t i = 0; i < monsters.size(); ++i) {
@@ -170,25 +185,13 @@ void World::performMonstersActions()
 		}
 
 		if (isObjectOutsideWorld(*monsters[i])) {
-			deleteMonster(i);
+			monsters.erase(monsters.begin() + i);
 			break;
 		}
 
 		monsters[i]->move(*this);
 
-		if (std::dynamic_pointer_cast<Shell>(monsters[i])) {
-			if (isObjectOutsideCamera(*monsters[i])) {
-				deleteMonster(i);
-				break;
-			}
-
-			if (!(std::dynamic_pointer_cast<Shell>(monsters[i])->isActive())
-				&& std::dynamic_pointer_cast<Shell>(monsters[i])->shouldTurnIntoTurtle()) {
-
-				monsters.push_back(std::make_shared<Turtle>(Turtle(Position(monsters[i]->getPosition()))));
-				monsters.erase(monsters.begin() + i);
-			}
-		}
+		performSpecificMonstersActions(i);
 	}
 }
 

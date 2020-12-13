@@ -15,6 +15,7 @@ class Plant : public IndependentLivingObject
 private:
 	static std::array<SDL_Surface*, 4> plantImages;
 	int model;
+	int auxiliaryCounter;
 	int computeImageIndex() const override;
 	bool isOutsidePipe() const;
 	void slide(World &world);
