@@ -44,7 +44,7 @@ int Screen::computeDifference() const
 
 int Screen::getInitialTime() const
 {
-	if (level > 3 && level < 4) {
+	if (level == 3 || level == 4) {
 		return 300;
 	}
 	else if (level == 77 || level == 88) {
@@ -264,7 +264,6 @@ void Screen::drawAddingPointsAnimation(World &world, bool checker)
 {
 	for (int i = time; i >= 0; --i) {
 		fillBackground();
-		world.performActions();
 		world.draw(display, !checker);
 		player->addPoints(checker ? 100 : 50);
 		drawScreenElements();
@@ -604,7 +603,7 @@ void Screen::drawBridgeSpolilingScreen(World &world)
 
 void Screen::drawLevelFinishedScreen(World &world)
 {
-	SoundController::playLevelFinishedMusic();
+	SoundController::playLevelFinishedEffect();
 
 	while (player->isStillRunning()) {
 		updateScreen(world);
@@ -615,7 +614,7 @@ void Screen::drawLevelFinishedScreen(World &world)
 
 void Screen::drawWorldFinishedScreen(World &world)
 {
-	SoundController::playWorldFinishedMusic();
+	SoundController::playWorldFinishedEffect();
 
 	while (player->isStillRunning()) {
 		updateScreen(world);
@@ -626,7 +625,7 @@ void Screen::drawWorldFinishedScreen(World &world)
 
 void Screen::drawCustomWorldFinishedScreen(World &world)
 {
-	SoundController::playLevelFinishedMusic();
+	SoundController::playWorldFinishedEffect();
 
 	while (player->isStillRunning()) {
 		updateScreen(world);

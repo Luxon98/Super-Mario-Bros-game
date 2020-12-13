@@ -5,8 +5,8 @@
 #include "LayoutStyle.h"
 
 
-std::array<Mix_Music*, 10> SoundController::backgroundTracks;
-std::array<Mix_Chunk*, 18> SoundController::soundsEffects;
+std::array<Mix_Music*, 8> SoundController::backgroundTracks;
+std::array<Mix_Chunk*, 20> SoundController::soundsEffects;
 
 void SoundController::loadBackgroundTracks()
 {
@@ -18,8 +18,6 @@ void SoundController::loadBackgroundTracks()
 	backgroundTracks[5] = Mix_LoadMUS("./sounds/background_star.wav");
 	backgroundTracks[6] = Mix_LoadMUS("./sounds/time_passed.wav");
 	backgroundTracks[7] = Mix_LoadMUS("./sounds/game_over.wav");
-	backgroundTracks[8] = Mix_LoadMUS("./sounds/level_finished.wav");
-	backgroundTracks[9] = Mix_LoadMUS("./sounds/world_finished.wav");
 }
 
 void SoundController::loadSoundEffects()
@@ -42,6 +40,8 @@ void SoundController::loadSoundEffects()
 	soundsEffects[15] = Mix_LoadWAV("./sounds/boss_destroyed.wav");
 	soundsEffects[16] = Mix_LoadWAV("./sounds/fireworks.wav");
 	soundsEffects[17] = Mix_LoadWAV("./sounds/getting_points.wav");
+	soundsEffects[18] = Mix_LoadWAV("./sounds/level_finished.wav");
+	soundsEffects[19] = Mix_LoadWAV("./sounds/world_finished.wav");
 }
 
 int SoundController::getIndexOfBackgroundMusic()
@@ -100,18 +100,6 @@ void SoundController::playGameOverMusic()
 {
 	stopMusic();
 	Mix_PlayMusic(backgroundTracks[7], -1);
-}
-
-void SoundController::playLevelFinishedMusic()
-{
-	stopMusic();
-	Mix_PlayMusic(backgroundTracks[8], -1);
-}
-
-void SoundController::playWorldFinishedMusic()
-{
-	stopMusic();
-	Mix_PlayMusic(backgroundTracks[9], -1);
 }
 
 void SoundController::playNewLiveAddedEffect()
@@ -202,6 +190,18 @@ void SoundController::playFireworksEffect()
 void SoundController::playGettingPointsEffect()
 {
 	Mix_PlayChannel(-1, soundsEffects[17], 0);
+}
+
+void SoundController::playLevelFinishedEffect()
+{
+	stopMusic();
+	Mix_PlayChannel(-1, soundsEffects[18], 0);
+}
+
+void SoundController::playWorldFinishedEffect()
+{
+	stopMusic();
+	Mix_PlayChannel(-1, soundsEffects[19], 0);
 }
 
 void SoundController::stopMusic()

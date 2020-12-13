@@ -12,8 +12,8 @@ class SoundController final
 {
 private:
 	// tracks and sound effects are declared as static here, because functions from SDL_mixer library require it
-	static std::array<Mix_Music*, 10> backgroundTracks;
-	static std::array<Mix_Chunk*, 18> soundsEffects;
+	static std::array<Mix_Music*, 8> backgroundTracks;
+	static std::array<Mix_Chunk*, 20> soundsEffects;
 	static void loadBackgroundTracks();
 	static void loadSoundEffects();
 	static int getIndexOfBackgroundMusic();
@@ -26,8 +26,6 @@ public:
 	static void playStarMusic();
 	static void playTimePassedMusic();
 	static void playGameOverMusic();
-	static void playLevelFinishedMusic();
-	static void playWorldFinishedMusic();
 	static void playNewLiveAddedEffect();
 	static void playBlockDestroyedEffect();
 	static void playBlockHittedEffect();
@@ -46,6 +44,8 @@ public:
 	static void playFireRocketEffect();
 	static void playFireworksEffect();
 	static void playGettingPointsEffect();
+	static void playLevelFinishedEffect();
+	static void playWorldFinishedEffect();
 	static void stopMusic();
 	static void closeSoundController();
 };

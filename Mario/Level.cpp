@@ -1,5 +1,6 @@
 #include "Level.h"
 
+#include <random>
 #include "World.h"
 #include "Screen.h"
 #include "Block.h"
@@ -1508,9 +1509,16 @@ void Level::setWinterWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
 		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(9633, 125))));
 
-	for (int i = -60; i < 11200; i += 100) {
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> distX(-10, 10);
+	std::uniform_int_distribution<std::mt19937::result_type> distY(-15, 15);
+
+	for (int i = -60; i < 10500; i += 100) {
 		for (int j = 0, k = 24; j < 480; j += 60, k += 24) {
-			world.animatedElements.push_back(std::make_shared<Snowflake>(Snowflake(Position(i - k, j))));
+			int x = i - k - distX(rng);
+			int y = j + distY(rng);
+			world.animatedElements.push_back(std::make_shared<Snowflake>(Snowflake(Position(x, y))));
 		}
 	}
 
@@ -1785,6 +1793,19 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
 		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(5167, 377))));
 
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> distX(-10, 10);
+	std::uniform_int_distribution<std::mt19937::result_type> distY(-15, 15);
+
+	for (int i = -60; i < 5800; i += 100) {
+		for (int j = 0, k = 24; j < 480; j += 60, k += 24) {
+			int x = i - k - distX(rng);
+			int y = j + distY(rng);
+			world.animatedElements.push_back(std::make_shared<Snowflake>(Snowflake(Position(x, y))));
+		}
+	}
+
 	world.flag = std::make_unique<Flag>(Flag(Position(4689, 116)));
 	world.button = nullptr;
 }
@@ -1869,7 +1890,7 @@ void Level::setWinterHiddenStage(World &world)
 	world.button = nullptr;
 }
 
-void Level::setSummerWorld(World& world)
+void Level::setSummerWorld(World &world)
 {
 	world.blocks.clear();
 	world.platforms.clear();
