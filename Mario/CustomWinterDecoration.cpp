@@ -1,14 +1,12 @@
 #include "CustomWinterDecoration.h"
 
-#include <string>
-#include "Size.h"
 #include "Position.h"
 #include "SDL_Utility.h"
 
 
 std::array<SDL_Surface*, 9> CustomWinterDecoration::decorationImages;
 
-CustomWinterDecoration::CustomWinterDecoration(DecorationType type, Position position)
+CustomWinterDecoration::CustomWinterDecoration(WinterDecorationType type, Position position)
 {
 	this->position = position;
 	decorationType = type;

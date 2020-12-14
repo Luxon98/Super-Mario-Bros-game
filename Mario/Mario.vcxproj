@@ -151,6 +151,7 @@
     <ClCompile Include="CollisionHandling.cpp" />
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="CrushedCreature.cpp" />
+    <ClCompile Include="CustomSummerDecoration.cpp" />
     <ClCompile Include="CustomWinterDecoration.cpp" />
     <ClCompile Include="DestroyedBoss.cpp" />
     <ClCompile Include="DestroyedCreature.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="CollisionHandling.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="CrushedCreature.h" />
+    <ClInclude Include="CustomSummerDecoration.h" />
     <ClInclude Include="CustomWinterDecoration.h" />
     <ClInclude Include="DestroyedBoss.h" />
     <ClInclude Include="DestroyedCreature.h" />

@@ -24,6 +24,7 @@
 #include "Lava.h"
 #include "Princess.h"
 #include "CustomWinterDecoration.h"
+#include "CustomSummerDecoration.h"
 #include "FireSerpent.h"
 #include "Player.h"
 #include "Snowflake.h"
@@ -1301,213 +1302,213 @@ void Level::setWinterWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(8772, 210))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SIGNPOST, Position(49, 389))));
+		CustomWinterDecoration(WinterDecorationType::SIGNPOST, Position(49, 389))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(715, 377))));
+		CustomWinterDecoration(WinterDecorationType::CHRISTMAS_TREE, Position(715, 377))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(185, 75))));
+		CustomWinterDecoration(WinterDecorationType::WINTER_CLOUD, Position(185, 75))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(572, 160))));
+		CustomWinterDecoration(WinterDecorationType::SMALL_WINTER_CLOUD, Position(572, 160))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(805, 76))));
+		CustomWinterDecoration(WinterDecorationType::SMALL_WINTER_CLOUD, Position(805, 76))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(1081, 94))));
+		CustomWinterDecoration(WinterDecorationType::WINTER_CLOUD, Position(1081, 94))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(1305, 73))));
+		CustomWinterDecoration(WinterDecorationType::SMALL_WINTER_CLOUD, Position(1305, 73))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(1627, 88))));
+		CustomWinterDecoration(WinterDecorationType::SMALL_WINTER_CLOUD, Position(1627, 88))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::MOON, Position(1884, 126))));
+		CustomWinterDecoration(WinterDecorationType::MOON, Position(1884, 126))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(2576, 377))));
+		CustomWinterDecoration(WinterDecorationType::CHRISTMAS_TREE, Position(2576, 377))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(6120, 345))));
+		CustomWinterDecoration(WinterDecorationType::CHRISTMAS_TREE, Position(6120, 345))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(10060, 249))));
+		CustomWinterDecoration(WinterDecorationType::CHRISTMAS_TREE, Position(10060, 249))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(10235, 80))));
+		CustomWinterDecoration(WinterDecorationType::WINTER_CLOUD, Position(10235, 80))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SECOND_SIGNPOST, Position(9924, 100))));
+		CustomWinterDecoration(WinterDecorationType::SECOND_SIGNPOST, Position(9924, 100))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(2013, 111))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(2013, 111))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(1998, 65))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(1998, 65))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(2104, 75))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(2104, 75))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(2147, 68))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(2147, 68))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(2179, 87))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(2179, 87))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(2257, 102))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(2257, 102))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(2300, 64))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(2300, 64))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(2321, 105))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(2321, 105))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(2402, 67))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(2402, 67))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(2489, 131))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(2489, 131))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(2575, 84))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(2575, 84))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(2670, 121))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(2670, 121))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(2801, 79))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(2801, 79))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(2889, 91))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(2889, 91))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(2950, 103))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(2950, 103))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(3012, 97))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(3012, 97))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(3087, 69))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(3087, 69))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(3112, 113))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(3112, 113))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(3358, 95))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(3358, 95))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(3417, 80))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(3417, 80))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(3499, 112))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(3499, 112))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(3580, 91))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(3580, 91))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(3661, 120))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(3661, 120))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(3801, 142))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(3801, 142))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(3794, 71))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(3794, 71))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(3885, 110))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(3885, 110))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(3935, 93))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(3935, 93))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(3998, 81))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(3998, 81))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(4102, 99))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(4102, 99))));
 
 	for (int i = 0; i < 5; ++i) {
 		world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-			CustomWinterDecoration(DecorationType::WHITE_STAR, Position(4187 + i * 135, 104))));
+			CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(4187 + i * 135, 104))));
 
 		world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-			CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(4251 + i * 135, 88))));
+			CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(4251 + i * 135, 88))));
 
 		world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-			CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(4301 + i * 135, 123))));
+			CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(4301 + i * 135, 123))));
 	}
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(4560, 69))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(4560, 69))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(4712, 145))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(4712, 145))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(4475, 78))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(4475, 78))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(4800, 135))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(4800, 135))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(5000, 127))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(5000, 127))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(5073, 100))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(5073, 100))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(5163, 126))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(5163, 126))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(5225, 84))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(5225, 84))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(5371, 138))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(5371, 138))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(5450, 103))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(5450, 103))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(5526, 79))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(5526, 79))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::MOON, Position(5612, 99))));
+		CustomWinterDecoration(WinterDecorationType::MOON, Position(5612, 99))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(6385, 75))));
+		CustomWinterDecoration(WinterDecorationType::WINTER_CLOUD, Position(6385, 75))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(6805, 84))));
+		CustomWinterDecoration(WinterDecorationType::SMALL_WINTER_CLOUD, Position(6805, 84))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(7081, 101))));
+		CustomWinterDecoration(WinterDecorationType::WINTER_CLOUD, Position(7081, 101))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(7327, 73))));
+		CustomWinterDecoration(WinterDecorationType::SMALL_WINTER_CLOUD, Position(7327, 73))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(7895, 112))));
+		CustomWinterDecoration(WinterDecorationType::WINTER_CLOUD, Position(7895, 112))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(8140, 160))));
+		CustomWinterDecoration(WinterDecorationType::SMALL_WINTER_CLOUD, Position(8140, 160))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(7876, 377))));
+		CustomWinterDecoration(WinterDecorationType::CHRISTMAS_TREE, Position(7876, 377))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(8760, 69))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(8760, 69))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(9012, 145))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(9012, 145))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(9275, 78))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(9275, 78))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(9633, 125))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(9633, 125))));
 
 	std::random_device dev;
 	std::mt19937 rng(dev());
@@ -1713,85 +1714,85 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(3180, 300))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SIGNPOST, Position(226, 389))));
+		CustomWinterDecoration(WinterDecorationType::SIGNPOST, Position(226, 389))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::MOON, Position(225, 111))));
+		CustomWinterDecoration(WinterDecorationType::MOON, Position(225, 111))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(45, 88))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(45, 88))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(125, 104))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(125, 104))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(77, 167))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(77, 167))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(702, 377))));
+		CustomWinterDecoration(WinterDecorationType::CHRISTMAS_TREE, Position(702, 377))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(2600, 153))));
+		CustomWinterDecoration(WinterDecorationType::CHRISTMAS_TREE, Position(2600, 153))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(525, 67))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(525, 67))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(601, 74))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(601, 74))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(439, 82))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(439, 82))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(751, 107))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(751, 107))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(825, 93))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(825, 93))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(889, 111))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(889, 111))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(1001, 75))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(1001, 75))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(1325, 73))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(1325, 73))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(1089, 85))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(1089, 85))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(1200, 107))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(1200, 107))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(1134, 134))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(1134, 134))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WHITE_STAR, Position(1540, 81))));
+		CustomWinterDecoration(WinterDecorationType::WHITE_STAR, Position(1540, 81))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::YELLOW_STAR, Position(1600, 105))));
+		CustomWinterDecoration(WinterDecorationType::YELLOW_STAR, Position(1600, 105))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::GOLDEN_STAR, Position(1630, 120))));
+		CustomWinterDecoration(WinterDecorationType::GOLDEN_STAR, Position(1630, 120))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(3212, 99))));
+		CustomWinterDecoration(WinterDecorationType::SMALL_WINTER_CLOUD, Position(3212, 99))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(3875, 123))));
+		CustomWinterDecoration(WinterDecorationType::WINTER_CLOUD, Position(3875, 123))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(4124, 87))));
+		CustomWinterDecoration(WinterDecorationType::SMALL_WINTER_CLOUD, Position(4124, 87))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::WINTER_CLOUD, Position(5012, 115))));
+		CustomWinterDecoration(WinterDecorationType::WINTER_CLOUD, Position(5012, 115))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::SMALL_WINTER_CLOUD, Position(5225, 89))));
+		CustomWinterDecoration(WinterDecorationType::SMALL_WINTER_CLOUD, Position(5225, 89))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
-		CustomWinterDecoration(DecorationType::CHRISTMAS_TREE, Position(5167, 377))));
+		CustomWinterDecoration(WinterDecorationType::CHRISTMAS_TREE, Position(5167, 377))));
 
 	std::random_device dev;
 	std::mt19937 rng(dev());
@@ -1909,16 +1910,13 @@ void Level::setSummerWorld(World &world)
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
 
-
 	for (int i = 16; i < 656; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
 	}
 	world.blocks.push_back(Block(BlockType::Ground, Position(16, 400)));
 	world.blocks.push_back(Block(BlockType::Ground, Position(48, 400)));
-
-	world.blocks.push_back(Block(BlockType::Tube, Position(32, 367)));
-	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(32, 336)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(80, 400)));
 
 	world.blocks.push_back(Block(BlockType::Tube, Position(576, 399)));
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(576, 368)));
@@ -1963,9 +1961,16 @@ void Level::setSummerWorld(World &world)
 		world.blocks.push_back(Block(BlockType::Indestructible, Position(i, 464)));
 	}
 
-	for (int i = 2784; i < 3104; i += 32) {
+	for (int i = 2784; i < 3104; i += 32) { 
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 304)));
 	}
+
+	for (int i = 3104; i < 3328; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 208)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(3184, 175)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(3184, 143)));
 
 	for (int i = 304; i > -32; i -= 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(3104, i)));
@@ -1989,8 +1994,42 @@ void Level::setSummerWorld(World &world)
 	world.blocks.push_back(Block(BlockType::Tube, Position(4250, 367)));
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4250, 336)));
 
+	world.blocks.push_back(Block(BlockType::TubeLeftEntry, Position(2996, 256)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 271)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 239)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 207)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 175)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 143)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 111)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 79)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 47)));
+	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 15)));
+
 	world.platforms.push_back(Platform(Position(960, 460), PlatformType::MovingVerticallyPlatform));
 	world.platforms.push_back(Platform(Position(1970, 335), PlatformType::MovingVerticallyPlatform));
+
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(525, 105))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(823, 424))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(1079, 99))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1256, 160))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1402, 202))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1479, 87))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1713, 73))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(2100, 102))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(2431, 94))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(2310, 430))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(2612, 131))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(2889, 76))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(3385, 85))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(3305, 281))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(3687, 103))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(3821, 407))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(4154, 105))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(4619, 122))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(4513, 425))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
+		CustomSummerDecoration(SummerDecorationType::PALM, Position(43, 349))));
 
 
 	world.flag = nullptr;

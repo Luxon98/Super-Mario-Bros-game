@@ -31,6 +31,7 @@
 #include "Castle.h"
 #include "Princess.h"
 #include "CustomWinterDecoration.h"
+#include "CustomSummerDecoration.h"
 #include "Block.h"
 #include "Platform.h"
 #include "FireSerpent.h"
@@ -56,6 +57,7 @@ void preloadInanimateObjectImages(SDL_Surface* display)
 	Castle::loadCastleImages(display);
 	Princess::loadPrincessImages(display);
 	CustomWinterDecoration::loadDecorationImages(display);
+	CustomSummerDecoration::loadDecorationImages(display);
 }
 
 void preloadLivingObjectImages(SDL_Surface* display)

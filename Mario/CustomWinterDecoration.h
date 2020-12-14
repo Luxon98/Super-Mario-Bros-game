@@ -11,7 +11,7 @@ struct SDL_Surface;
 // these enum and class are responsible for background elements that are not from the original game
 // graphics in this class were created to embellish a custom Winter World
 
-enum class DecorationType
+enum class WinterDecorationType
 {
 	YELLOW_STAR = 1,
 	GOLDEN_STAR = 2,
@@ -29,10 +29,10 @@ class CustomWinterDecoration : public InanimateObject
 {
 private:
 	static std::array<SDL_Surface*, 9> decorationImages;
-	DecorationType decorationType;
+	WinterDecorationType decorationType;
 
 public:
-	CustomWinterDecoration(DecorationType type, Position position);
+	CustomWinterDecoration(WinterDecorationType type, Position position);
 	static void loadDecorationImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };

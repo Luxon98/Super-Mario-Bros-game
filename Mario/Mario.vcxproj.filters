@@ -246,6 +246,9 @@
     <ClCompile Include="Snowflake.cpp">
       <Filter>Source Files\TemporaryObjects</Filter>
     </ClCompile>
+    <ClCompile Include="CustomSummerDecoration.cpp">
+      <Filter>Source Files\InanimateObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -427,6 +430,9 @@
     </ClInclude>
     <ClInclude Include="Snowflake.h">
       <Filter>Header Files\TemporaryObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomSummerDecoration.h">
+      <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
