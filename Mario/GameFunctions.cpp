@@ -46,7 +46,7 @@ bool isLevelCustom(int level)
 
 bool isCheckPointLeadingToHiddenStage(int level, int checkPointMark)
 {
-	if ((level == 1 || level == 2 || level == 77) && checkPointMark == 1) {
+	if ((level != 3 && level != 4) && checkPointMark == 1) {
 		return true;
 	}
 
@@ -61,6 +61,9 @@ bool isPlayerEnteringPipe(int level, int checkPointMark)
 	else if (level == 77 && (checkPointMark == 1 || checkPointMark == 3)) {
 		return true;
 	}
+	else if (level == 88 && checkPointMark == 2) {
+		return true;
+	}
 
 	return false;
 }
@@ -71,6 +74,9 @@ bool isPlayerExitingPipe(int level, int checkPointMark)
 		return true;
 	}
 	else if (level == 77 && (checkPointMark == 2 || checkPointMark == 3)) {
+		return true;
+	}
+	else if (level == 88 && (checkPointMark == 1 || checkPointMark == 2)) {
 		return true;
 	}
 
@@ -122,6 +128,12 @@ void resetScreenForCustomLevels(Screen &screen, int level, int checkPointMark)
 	else if (level == 88) {
 		if (checkPointMark == -1) {
 			screen.resetScreen(0, 640);
+		}
+		else if (checkPointMark == 1) {
+			screen.resetScreen(0, 640, false);
+		}
+		else if (checkPointMark == 2) {
+			screen.resetScreen(3000, 3640, false);
 		}
 	}
 }
@@ -204,6 +216,14 @@ void setSubWorldForCustomLevels(int level, int checkPointMark, World &world)
 		}
 		else if (checkPointMark == 3) {
 			Level::setSecondStageOnWinterWorld(world);
+		}
+	}
+	else if (level == 88) {
+		if (checkPointMark == 1) {
+			Level::setSummerHiddenStage(world);
+		}
+		else if (checkPointMark == 2) {
+			Level::setSummerWorld(world);
 		}
 	}
 }

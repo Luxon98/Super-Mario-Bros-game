@@ -2031,6 +2031,99 @@ void Level::setSummerWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
 		CustomSummerDecoration(SummerDecorationType::PALM, Position(43, 349))));
 
+	world.checkPoints.push_back(CheckPoint(Position(3003, 266), true, 1));
+	//world.checkPoints.push_back(CheckPoint(Position(4250, 297), false, 3));
+
+
+	world.flag = nullptr;
+	world.button = nullptr;
+}
+
+void Level::setSummerHiddenStage(World &world)
+{
+	world.blocks.clear();
+	world.platforms.clear();
+	world.inanimateElements.clear();
+	world.bonusElements.clear();
+	world.monsters.clear();
+	world.animatedElements.clear();
+	world.destroyedElements.clear();
+	world.fireballs.clear();
+	world.checkPoints.clear();
+	world.fireSerpents.clear();
+
+	world.slidingCounter = 0;
+	world.resetImages();
+
+	world.WORLD_HEIGHT = 480;
+	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
+
+	for (int i = 16; i < 656; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+	}
+
+	for (int i = 48; i < 448; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(16, i)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(624, i)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Ground, Position(80, 432)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(112, 432)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(528, 432)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(560, 432)));
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(96, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(96, 368)));
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(544, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(544, 368)));
+
+	for (int i = 208; i < 464; i += 32) {
+		world.blocks.push_back(Block(BlockType::BonusWithRedMushroom, Position(i, 368)));
+	}
+
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(208, 400)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(208, 432)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(432, 400)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(432, 432)));
+
+	for (int i = 320; i > 160; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(320, i)));
+	}
+
+	for (int i = 256; i < 416; i += 32) {
+		if (i != 320) {
+			world.blocks.push_back(Block(BlockType::Indestructible, Position(i, 256)));
+		}
+	}
+
+	for (int i = 96; i < 192; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 192)));
+	}
+
+	for (int i = 480; i < 576; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 192)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Empty, Position(280, 138)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(240, 114)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(200, 90)));
+
+	world.blocks.push_back(Block(BlockType::Empty, Position(360, 138)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(400, 114)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(440, 90)));
+
+	for (int i = 240; i < 432; i += 32) {
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 400))));
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 432))));
+	}
+
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(16, 18))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(624, 18))));
+
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(320, 81))));
+
+	world.checkPoints.push_back(CheckPoint(Position(544, 329), false, 2));
 
 	world.flag = nullptr;
 	world.button = nullptr;

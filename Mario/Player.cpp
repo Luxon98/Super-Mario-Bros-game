@@ -738,6 +738,14 @@ void Player::setPositionXY(int level, int checkPointMark)
 			position.setXY(77, posY - 32);
 		}
 	}
+	else if (level == 88) {
+		if (checkPointMark == 1) {
+			position.setXY(96, posY);
+		}
+		else if (checkPointMark == 2) {
+			position.setXY(3184, posY - 224);
+		}
+	}
 }
 
 void Player::reborn(int level)
