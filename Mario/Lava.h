@@ -1,6 +1,7 @@
 #ifndef Lava_H
 #define Lava_H
 
+#include <array>
 #include "InanimateObject.h"
 
 class Position;
@@ -10,7 +11,7 @@ struct SDL_Surface;
 class Lava : public InanimateObject
 {
 private:
-	static SDL_Surface* lavaImage;
+	static std::array<SDL_Surface*, 2> lavaImages;
 
 public:
 	Lava(Position position);

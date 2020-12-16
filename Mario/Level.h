@@ -18,6 +18,7 @@ public:
 	static void setSecondStageOnWinterWorld(World &world);
 	static void setWinterHiddenStage(World &world);
 	static void setSummerWorld(World &world);
+	static void setSecondStageOnSummerWorld(World &world);
 	static void setSummerHiddenStage(World &world);
 };
 

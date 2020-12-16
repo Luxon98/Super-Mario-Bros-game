@@ -745,6 +745,9 @@ void Player::setPositionXY(int level, int checkPointMark)
 		else if (checkPointMark == 2) {
 			position.setXY(3184, posY - 224);
 		}
+		else if (checkPointMark == 3) {
+			position.setXY(160, posY);
+		}
 	}
 }
 

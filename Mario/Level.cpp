@@ -2032,7 +2032,183 @@ void Level::setSummerWorld(World &world)
 		CustomSummerDecoration(SummerDecorationType::PALM, Position(43, 349))));
 
 	world.checkPoints.push_back(CheckPoint(Position(3003, 266), true, 1));
-	//world.checkPoints.push_back(CheckPoint(Position(4250, 297), false, 3));
+	world.checkPoints.push_back(CheckPoint(Position(4250, 297), false, 3));
+
+	world.flag = nullptr;
+	world.button = nullptr;
+}
+
+void Level::setSecondStageOnSummerWorld(World &world)
+{
+	world.blocks.clear();
+	world.platforms.clear();
+	world.inanimateElements.clear();
+	world.bonusElements.clear();
+	world.monsters.clear();
+	world.animatedElements.clear();
+	world.destroyedElements.clear();
+	world.fireballs.clear();
+	world.checkPoints.clear();
+	world.fireSerpents.clear();
+
+	world.slidingCounter = 0;
+	world.resetImages();
+
+	world.WORLD_HEIGHT = 450;
+	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
+
+
+	for (int i = 128; i < 960; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(160, 399)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(160, 368)));
+
+	world.blocks.push_back(Block(BlockType::Ground, Position(896, 400)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(928, 400)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(928, 368)));
+
+	for (int i = 784; i < 912; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 256)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(832, 223)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(832, 192)));
+
+	world.platforms.push_back(Platform(Position(1124, 368), PlatformType::Bridge));
+
+	for (int i = 464; i > 272; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(1312, i)));
+	}
+
+	for (int i = 464; i > 304; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(1344, i)));
+
+		if (i != 336) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(1376, i)));
+		}
+	}
+	
+	world.platforms.push_back(Platform(Position(1572, 368), PlatformType::Bridge));
+
+	for (int i = 464; i > 272; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(1760, i)));
+	}
+
+	for (int i = 464; i > 304; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(1792, i)));
+
+		if (i != 336) {
+			world.blocks.push_back(Block(BlockType::Ground, Position(1824, i)));
+		}
+	}
+
+	world.blocks.push_back(Block(BlockType::Empty, Position(1984, 400)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(2144, 400)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(2304, 400)));
+
+	for (int i = 464; i > 368; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(2464, i)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(2496, i)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Empty, Position(2736, 400)));
+	world.blocks.push_back(Block(BlockType::Empty, Position(2976, 400)));
+
+	for (int i = 464; i > 368; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(3216, i)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(3248, i)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Empty, Position(3512, 400)));
+
+	for (int i = 464; i > 368; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(3776, i)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(3808, i)));
+	}
+
+	for (int i = 3904; i < 4224; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+
+	for (int i = 0; i < 6; ++i) {
+		for (int j = 0; j < 7 - i; ++j) {
+			world.blocks.push_back(Block(BlockType::Indestructible, Position(4000 + i * 32 + j * 32, 400 - i * 32)));
+		}
+	}
+
+	for (int i = 464; i > 240; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(4384, i)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(4512, i)));
+	}
+
+	for (int i = 4416; i < 4512; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+	}
+
+	for (int i = 431; i >= 367; i -= 32) {
+		world.blocks.push_back(Block(BlockType::Tube, Position(4448, i)));
+	}
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4448, 336)));
+
+
+	for (int i = 8; i < 120; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
+	}
+
+	for (int i = 952; i < 1304; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
+	}
+
+	for (int i = 1400; i < 1752; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
+	}
+
+	for (int i = 1848; i < 2456; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
+	}
+
+	for (int i = 2520; i < 3208; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
+	}
+
+	for (int i = 3272; i < 3768; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
+	}
+
+	for (int i = 3832; i < 3896; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
+	}
+
+	for (int i = 4216; i < 4376; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
+	}
+	
+	for (int i = 4536; i < 5656; i += 16) {
+		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
+	}
+
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(250, 113))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(656, 75))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(944, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(1214, 77))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1838, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(2190, 78))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(2478, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(2750, 75))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(3374, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(3726, 74))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(4014, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(4286, 75))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(4910, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(5262, 76))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(5550, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(5822, 81))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(6446, 104))));
 
 
 	world.flag = nullptr;
