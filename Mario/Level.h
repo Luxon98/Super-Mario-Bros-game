@@ -20,6 +20,7 @@ public:
 	static void setSummerWorld(World &world);
 	static void setSecondStageOnSummerWorld(World &world);
 	static void setSummerHiddenStage(World &world);
+	static void setSecondSummerHiddenStage(World &world);
 };
 
 #endif //Level_H
