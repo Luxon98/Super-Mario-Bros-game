@@ -768,6 +768,7 @@ void Player::reborn(int level)
 void Player::resetModel()
 {
 	model = 0;
+	flags.orientationFlag = true;
 }
 
 void Player::resetSteps()

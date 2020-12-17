@@ -6,6 +6,9 @@ class World;
 
 class Level 
 {
+private:
+	static bool summerHiddenStageChecker;
+
 public:
 	static void setFirstLevel(World &world, bool checker = true);
 	static void setSecondLevel(World &world, bool checker = true);

@@ -560,6 +560,7 @@ void Screen::drawDeadMario(World &world)
 
 void Screen::drawMarioPipeTravellingScreen(World &world, Direction direction)
 {
+	player->resetModel();
 	SDL_Surface* img = player->getImage();
 	int x = player->getX() - camera->getBeginningOfCamera();
 	int y = player->getY() + (direction == Direction::Down ? 0 : 70);
@@ -572,6 +573,7 @@ void Screen::drawMarioPipeTravellingScreen(World &world, Direction direction)
 		world.draw(display, false);
 
 		drawScreenElements();
+		time = computeTime();
 		drawTime(time);
 		drawPoints(player->getPoints());
 		drawCoins(player->getCoins());

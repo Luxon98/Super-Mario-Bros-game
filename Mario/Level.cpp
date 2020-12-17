@@ -30,6 +30,8 @@
 #include "Snowflake.h"
 
 
+bool Level::summerHiddenStageChecker = false;
+
 void Level::setFirstLevel(World &world, bool checker)
 {
 	world.blocks.clear();
@@ -2210,7 +2212,10 @@ void Level::setSecondStageOnSummerWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(5822, 81))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(6446, 104))));
 
-	world.checkPoints.push_back(CheckPoint(Position(832, 153), false, 4));
+	if (!summerHiddenStageChecker) {
+		world.checkPoints.push_back(CheckPoint(Position(832, 153), false, 4));
+		summerHiddenStageChecker = true;
+	}
 
 	world.flag = nullptr;
 	world.button = nullptr;
