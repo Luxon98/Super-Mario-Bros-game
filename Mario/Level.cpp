@@ -1912,6 +1912,8 @@ void Level::setSummerWorld(World &world)
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
 
+	summerHiddenStageChecker = false;
+
 	for (int i = 16; i < 656; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
@@ -2216,6 +2218,106 @@ void Level::setSecondStageOnSummerWorld(World &world)
 		world.checkPoints.push_back(CheckPoint(Position(832, 153), false, 4));
 		summerHiddenStageChecker = true;
 	}
+
+	world.checkPoints.push_back(CheckPoint(Position(4448, 297), false, 6));
+
+	world.flag = nullptr;
+	world.button = nullptr;
+}
+
+void Level::setThirdStageOnSummerWorld(World &world)
+{
+	world.blocks.clear();
+	world.platforms.clear();
+	world.inanimateElements.clear();
+	world.bonusElements.clear();
+	world.monsters.clear();
+	world.animatedElements.clear();
+	world.destroyedElements.clear();
+	world.fireballs.clear();
+	world.checkPoints.clear();
+	world.fireSerpents.clear();
+
+	world.slidingCounter = 0;
+	world.resetImages();
+
+	world.WORLD_HEIGHT = 480;
+	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
+
+
+	world.blocks.push_back(Block(BlockType::Destructible, Position(60, 432)));
+	world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(110, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(160, 432)));
+
+	for (int i = 256; i < 1760; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Ground, Position(288, 304)));
+	world.blocks.push_back(Block(BlockType::Ground, Position(320, 304)));
+
+	world.blocks.push_back(Block(BlockType::Tube, Position(304, 271)));
+	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(304, 239)));
+
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(672, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(704, 288)));
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(736, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(768, 288)));
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(800, 288)));
+
+	world.blocks.push_back(Block(BlockType::Monetary, Position(1440, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(1472, 288)));
+	world.blocks.push_back(Block(BlockType::Destructible, Position(1504, 288)));
+
+	for (int i = 2144; i < 2464; i += 32) {
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
+		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
+	}
+
+	for (int i = 2368; i < 2464; i += 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(i, 400)));
+	}
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(2400, 368)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(2432, 368)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(2432, 336)));
+
+	for (int i = 304; i < 496; i += 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(2816, i)));
+	}
+
+	for (int i = 80; i < 240; i += 32) {
+		world.blocks.push_back(Block(BlockType::Indestructible, Position(2816, i)));
+	}
+
+	for (int i = 2848; i < 3808; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 464)));
+	}
+
+	for (int i = 2848; i < 3008; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 434)));
+	}
+
+	for (int i = 2848; i < 2976; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 404)));
+	}
+
+	for (int i = 2848; i < 2944; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 374)));
+	}
+
+	for (int i = 2848; i < 2912; i += 32) {
+		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 344)));
+	}
+
+	world.blocks.push_back(Block(BlockType::Destructible, Position(2848, 314)));
+
+
+	world.platforms.push_back(Platform(Position(2000, 420), PlatformType::MovingHorizontallyPlatform));
+
+	// bridge and boss should always be added last
+	world.platforms.push_back(Platform(Position(2628, 336), PlatformType::Bridge));
+	//world.monsters.push_back(std::make_shared<Boss>(Boss(Position(4575, 285))));
 
 	world.flag = nullptr;
 	world.button = nullptr;

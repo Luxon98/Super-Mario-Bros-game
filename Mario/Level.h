@@ -22,6 +22,7 @@ public:
 	static void setWinterHiddenStage(World &world);
 	static void setSummerWorld(World &world);
 	static void setSecondStageOnSummerWorld(World &world);
+	static void setThirdStageOnSummerWorld(World &world);
 	static void setSummerHiddenStage(World &world);
 	static void setSecondSummerHiddenStage(World &world);
 };
