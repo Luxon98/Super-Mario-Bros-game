@@ -599,14 +599,14 @@ void World::switchOnFlag()
 
 void World::spoilBridgeAndBoss()
 {
-	if (platforms[platforms.size() - 1].getPlatformType() == PlatformType::Bridge) {
+	if (platforms.size() > 0 && (platforms[platforms.size() - 1].getPlatformType() == PlatformType::Bridge)) {
 		platforms[platforms.size() - 1].reduceBridge();
 		if (platforms[platforms.size() - 1].getBridgeLength() == 0) {
 			platforms.pop_back();
 		}
 	}
 
-	if (std::dynamic_pointer_cast<Boss>(monsters[monsters.size() - 1])) {
+	if (monsters.size() > 0 && (std::dynamic_pointer_cast<Boss>(monsters[monsters.size() - 1]))) {
 		addDestroyedBoss(monsters[monsters.size() - 1]->getPosition(), false);
 		monsters.pop_back();
 		SoundController::playEnemyDestroyedEffect(true);

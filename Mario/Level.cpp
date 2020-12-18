@@ -2286,7 +2286,7 @@ void Level::setThirdStageOnSummerWorld(World &world)
 		world.blocks.push_back(Block(BlockType::Indestructible, Position(2816, i)));
 	}
 
-	for (int i = 80; i < 240; i += 32) {
+	for (int i = 76; i < 236; i += 32) {
 		world.blocks.push_back(Block(BlockType::Indestructible, Position(2816, i)));
 	}
 
@@ -2312,15 +2312,30 @@ void Level::setThirdStageOnSummerWorld(World &world)
 
 	world.blocks.push_back(Block(BlockType::Destructible, Position(2848, 314)));
 
-
 	world.platforms.push_back(Platform(Position(2000, 420), PlatformType::MovingHorizontallyPlatform));
+
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(82, 109))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(371, 165))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(525, 137))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(752, 100))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(1152, 124))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1371, 165))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(1625, 104))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(2302, 99))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(1852, 155))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(2025, 120))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(3025, 116))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(3455, 168))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
+		CustomSummerDecoration(SummerDecorationType::PALM, Position(3393, 413))));
 
 	// bridge and boss should always be added last
 	world.platforms.push_back(Platform(Position(2628, 336), PlatformType::Bridge));
 	//world.monsters.push_back(std::make_shared<Boss>(Boss(Position(4575, 285))));
 
 	world.flag = nullptr;
-	world.button = nullptr;
+	world.button = std::make_unique<Button>(Button(Position(2816, 272)));
 }
 
 void Level::setSummerHiddenStage(World &world)

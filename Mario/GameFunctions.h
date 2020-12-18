@@ -53,7 +53,9 @@ void showLevelFinishingAnimation(Player &player, World &world, Screen &screen, i
 
 void showWorldFinishingAnimation(Player &player, World &world, Screen &screen);
 
-void showCustomWorldFinishingAnimation(Player &player, World &world, Screen &screen);
+void showWinterWorldFinishingAnimation(Player &player, World &world, Screen &screen);
+
+void showSummerWorldFinishingAnimation(Player &player, World &world, Screen &screen);
 
 void runGame();
 

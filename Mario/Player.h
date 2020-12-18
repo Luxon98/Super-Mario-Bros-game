@@ -149,7 +149,7 @@ public:
 	void resetModel();
 	void resetSteps();
 	void setSlidingParameters();
-	void setFinishingRunParameters(int level); 
+	void setFinishingRunParameters(int distance); 
 };
 
 #endif //Player_H

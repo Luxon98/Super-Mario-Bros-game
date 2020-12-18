@@ -788,10 +788,10 @@ void Player::setSlidingParameters()
 	position.setX(position.getX() - 8);
 }
 
-void Player::setFinishingRunParameters(int level)
+void Player::setFinishingRunParameters(int distance)
 {
 	resetMovement();
-	playerMovement.stepsRight = (level != 4 ? 185 : 275);
+	playerMovement.stepsRight = distance;
 	changeModelCounter = 0;
 	model = 0;
 	flags.setDefaultFlags(flags.armedFlag);

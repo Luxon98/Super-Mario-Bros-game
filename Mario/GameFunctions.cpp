@@ -169,7 +169,8 @@ void changeLevel(int level, World &world, bool playerState)
 		Level::setWinterWorld(world);
 	}
 	else if (level == 88) {
-		Level::setSummerWorld(world);
+		Level::setThirdStageOnSummerWorld(world);
+		//Level::setSummerWorld(world);
 	}
 }
 
@@ -308,7 +309,7 @@ void showLevelFinishingAnimation(Player &player, World &world, Screen &screen, i
 		world.performActions();
 		screen.updateScreen(world);
 	}
-	player.setFinishingRunParameters(level);
+	player.setFinishingRunParameters(185);
 
 	screen.drawLevelFinishedScreen(world);
 }
@@ -316,11 +317,11 @@ void showLevelFinishingAnimation(Player &player, World &world, Screen &screen, i
 void showWorldFinishingAnimation(Player &player, World &world, Screen &screen)
 {
 	screen.drawBridgeSpolilingScreen(world);
-	player.setFinishingRunParameters(4);
+	player.setFinishingRunParameters(275);
 	screen.drawWorldFinishedScreen(world);
 }
 
-void showCustomWorldFinishingAnimation(Player &player, World &world, Screen &screen)
+void showWinterWorldFinishingAnimation(Player &player, World &world, Screen &screen)
 {
 	SoundController::playFlagDownEffect();
 	world.switchOnFlag();
@@ -331,9 +332,16 @@ void showCustomWorldFinishingAnimation(Player &player, World &world, Screen &scr
 		world.performActions();
 		screen.updateScreen(world);
 	}
-	player.setFinishingRunParameters(0);
+	player.setFinishingRunParameters(185);
 
-	screen.drawCustomWorldFinishedScreen(world);
+	screen.drawCustomWorldFinishedScreen(world, 77);
+}
+
+void showSummerWorldFinishingAnimation(Player &player, World &world, Screen &screen)
+{
+	screen.drawBridgeSpolilingScreen(world);
+	player.setFinishingRunParameters(360);
+	screen.drawCustomWorldFinishedScreen(world, 88);
 }
 
 void runGame()
@@ -453,7 +461,13 @@ void runGame()
 						break;
 					}
 					else if (isLevelCustom(level)) {
-						showCustomWorldFinishingAnimation(*player, world, screen);
+						if (level == 77) {
+							showWinterWorldFinishingAnimation(*player, world, screen);
+						}
+						else {
+							showSummerWorldFinishingAnimation(*player, world, screen);
+						}
+
 						winStatus = true;
 						break;
 					}

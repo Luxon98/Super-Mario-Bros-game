@@ -21,7 +21,7 @@ private:
 	int level;
 	std::chrono::steady_clock::time_point timeBegin;
 	std::array<SDL_Surface*, 10> digitImages;
-	std::array<SDL_Surface*, 23> screenImages;
+	std::array<SDL_Surface*, 24> screenImages;
 	std::array<SDL_Surface*, 10> worldImages;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Camera> camera;
@@ -55,7 +55,7 @@ private:
 	void drawAddingPointsAnimation(World &world, bool checker);
 	void addExplosions(World &world, int i);
 	void drawFireworks(World &world);
-	void drawWinterWorldThankYouScreen(World &world);
+	void drawWinterWorldThankYouScreen(World &world, int level);
 	void drawThankYouInscriptions(int i);
 	void drawThankYouScreen(World &world);
 	int initGUI();
@@ -85,7 +85,7 @@ public:
 	void drawBridgeSpolilingScreen(World &world);
 	void drawLevelFinishedScreen(World &world);
 	void drawWorldFinishedScreen(World &world);
-	void drawCustomWorldFinishedScreen(World &world);
+	void drawCustomWorldFinishedScreen(World &world, int level);
 	void updateScreen(World &world);
 	~Screen();
 };

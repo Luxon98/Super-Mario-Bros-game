@@ -95,6 +95,7 @@ void Screen::loadOtherImages()
 	screenImages[15] = loadPNG("./img/scr_imgs/info_castle.png", display);
 	screenImages[16] = loadPNG("./img/scr_imgs/info_custom_worlds.png", display);
 	screenImages[17] = loadPNG("./img/scr_imgs/info_winter.png", display);
+	screenImages[18] = loadPNG("./img/scr_imgs/info_summer.png", display);
 }
 
 void Screen::loadWorldImages()
@@ -128,9 +129,9 @@ void Screen::loadCoinImages()
 
 void Screen::loadDeadMarioImages()
 {
-	for (std::size_t k = 18; k < screenImages.size(); ++k) {
+	for (std::size_t k = 19; k < screenImages.size(); ++k) {
 		std::string filename = "./img/mario_imgs/mario_dead";
-		filename += std::to_string(k - 17);
+		filename += std::to_string(k - 18);
 		filename += ".png";
 		screenImages[k] = loadPNG(filename, display);
 	}
@@ -317,7 +318,7 @@ void Screen::drawFireworks(World &world)
 	}
 }
 
-void Screen::drawWinterWorldThankYouScreen(World& world)
+void Screen::drawWinterWorldThankYouScreen(World &world, int level)
 {
 	for (int i = 0; i < 2000; ++i) {
 		fillBackground();
@@ -331,7 +332,7 @@ void Screen::drawWinterWorldThankYouScreen(World& world)
 			drawSurface(display, screenImages[14], 330, 160);
 		}
 		if (i > 600) {
-			drawSurface(display, screenImages[17], 330, 275);
+			drawSurface(display, screenImages[17 + (level == 88)], 330, 275);
 		}
 
 		updateView();
@@ -534,7 +535,7 @@ void Screen::drawDeadMario(World &world)
 	SoundController::stopMusic();
 	SoundController::playMarioDeadEffect();
 
-	int index = player->getDeadMarioImageIndex() + 18;
+	int index = player->getDeadMarioImageIndex() + 19;
 	SDL_Surface* img = screenImages[index];
 	int shift = 0;
 	for (int i = 0; i < 2400; ++i) {
@@ -625,7 +626,7 @@ void Screen::drawWorldFinishedScreen(World &world)
 	drawThankYouScreen(world);
 }
 
-void Screen::drawCustomWorldFinishedScreen(World &world)
+void Screen::drawCustomWorldFinishedScreen(World &world, int level)
 {
 	SoundController::playWorldFinishedEffect();
 
@@ -638,7 +639,7 @@ void Screen::drawCustomWorldFinishedScreen(World &world)
 	SoundController::stopMusic();
 	drawFireworks(world);
 
-	drawWinterWorldThankYouScreen(world);
+	drawWinterWorldThankYouScreen(world, level);
 }
 
 void Screen::updateScreen(World &world)
