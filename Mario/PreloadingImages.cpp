@@ -10,8 +10,9 @@
 #include "RedTurtle.h"
 #include "Creature.h"
 #include "Plant.h"
-#include "Shell.h"
 #include "FireRocket.h"
+#include "Shell.h"
+#include "JumpingFish.h"
 #include "Boss.h"
 #include "Flag.h"
 #include "Button.h"
@@ -24,6 +25,7 @@
 #include "DestroyedCreature.h"
 #include "DestroyedTurtle.h"
 #include "DestroyedBoss.h"
+#include "DestroyedFish.h"
 #include "Bush.h"
 #include "Cloud.h"
 #include "Rock.h"
@@ -68,6 +70,7 @@ void preloadLivingObjectImages(SDL_Surface* display)
 	Plant::loadPlantImages(display);
 	FireRocket::loadFireRocketImages(display);
 	Boss::loadBossImages(display);
+	JumpingFish::loadFishImages(display);
 	Shell::loadShellImage(display);
 	FireBall::loadFireBallImages(display);
 	Player::loadPlayerImages(display);
@@ -79,6 +82,7 @@ void preloadTemporaryObjectImages(SDL_Surface* display)
 	DestroyedCreature::loadDestroyedCreatureImages(display);
 	DestroyedTurtle::loadDestroyedTurtleImages(display);
 	DestroyedBoss::loadDestroyedBossImages(display);
+	DestroyedFish::loadDestroyedFishImages(display);
 	Explosion::loadExplosionImages(display);
 	Shards::loadShardsImages(display);
 	AnimatedCoin::loadAnimatedCoinImages(display);

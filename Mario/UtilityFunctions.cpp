@@ -7,6 +7,7 @@
 #include "FireRocket.h"
 #include "Shell.h"
 #include "Boss.h"
+#include "JumpingFish.h"
 #include "Player.h"
 
 
@@ -103,7 +104,7 @@ bool isMonsterResistantToFireBalls(std::shared_ptr<LivingObject> monster)
 bool isMonsterResistantToCollisionWithShell(std::shared_ptr<LivingObject> monster)
 {
 	if (std::dynamic_pointer_cast<Shell>(monster) || std::dynamic_pointer_cast<FireRocket>(monster) 
-		|| std::dynamic_pointer_cast<Boss>(monster)) {
+		|| std::dynamic_pointer_cast<Boss>(monster) || std::dynamic_pointer_cast<JumpingFish>(monster)) {
 
 		return true;
 	}

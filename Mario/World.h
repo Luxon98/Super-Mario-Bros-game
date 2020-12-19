@@ -30,7 +30,7 @@ struct SDL_Surface;
 class World
 {
 private:
-	static constexpr int DISTANCE_FROM_WORLD = 30;
+	static constexpr int DISTANCE_FROM_WORLD = 100;
 	static constexpr int MAX_NUMBER_OF_FIREBALLS = 2;
 	static constexpr int SLIDING_BLOCK_VALUE = 81;
 	std::chrono::steady_clock::time_point lastColoursUpdateTime;
@@ -128,6 +128,7 @@ public:
 	void addDestroyedCreature(Position position, Direction slideDirection);
 	void addDestroyedTurtle(Position position, Direction slideDirection, bool red = false);
 	void addDestroyedBoss(Position position, bool normal = true);
+	void addDestroyedFish(Position position, bool directionFlag);
 	void addExplosion(Position position);
 	void addAnimatedText(TextType type, Position position);
 	void addAnimatedCoin();

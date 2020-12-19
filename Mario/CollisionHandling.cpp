@@ -17,6 +17,7 @@
 #include "FireRocket.h"
 #include "Creature.h"
 #include "Plant.h"
+#include "JumpingFish.h"
 #include "FireBall.h"
 #include "Boss.h"
 #include "Position.h"
@@ -181,10 +182,19 @@ void handleJumpingOnRedTurtle(std::shared_ptr<LivingObject> monster, World &worl
 	SoundController::playEnemyDestroyedEffect();
 }
 
-void handleJumpingOnCreature(std::shared_ptr<LivingObject> monster, World& world, Player& player, int index)
+void handleJumpingOnCreature(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
 {
 	addTextAndPoints(player, world, 100, Position(monster->getX(), monster->getY() - 15));
 	world.addCrushedCreature(Position(monster->getX(), monster->getY() + 8));
+	world.deleteMonster(index);
+	SoundController::playEnemyDestroyedEffect();
+}
+
+void handleJumpingOnFish(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
+{
+	addTextAndPoints(player, world, 200, Position(monster->getX(), monster->getY() - 15));
+	bool directionFlag = std::dynamic_pointer_cast<JumpingFish>(monster)->isGoingLeft();
+	world.addDestroyedFish(monster->getPosition(), directionFlag);
 	world.deleteMonster(index);
 	SoundController::playEnemyDestroyedEffect();
 }
@@ -205,6 +215,9 @@ void handleJumpingOnMonster(std::shared_ptr<LivingObject> monster, World &world,
 	else if (std::dynamic_pointer_cast<Creature>(monster)) {
 		handleJumpingOnCreature(monster, world, player, index);
 	}
+	else if (std::dynamic_pointer_cast<JumpingFish>(monster)) {
+		handleJumpingOnFish(monster, world, player, index);
+	}
 }
 
 void handleImmortalPlayerCollisions(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
@@ -223,6 +236,10 @@ void handleImmortalPlayerCollisions(std::shared_ptr<LivingObject> monster, World
 	}
 	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
 		world.addDestroyedTurtle(monster->getPosition(), direction, true);
+	}
+	else if (std::dynamic_pointer_cast<JumpingFish>(monster)) {
+		bool directionFlag = std::dynamic_pointer_cast<JumpingFish>(monster)->isGoingLeft();
+		world.addDestroyedFish(monster->getPosition(), directionFlag);
 	}
 
 	addTextAndPoints(player, world, points, Position(monster->getX(), monster->getY() - 15));
@@ -350,6 +367,10 @@ void handleFireBallCollision(const FireBall &fireball, std::shared_ptr<LivingObj
 	}
 	else if (std::dynamic_pointer_cast<Boss>(monster)) {
 		handleFireBallAndBossCollision(monster, world, pts);
+	}
+	else if (std::dynamic_pointer_cast<JumpingFish>(monster)) {
+		bool directionFlag = std::dynamic_pointer_cast<JumpingFish>(monster)->isGoingLeft();
+		world.addDestroyedFish(monster->getPosition(), directionFlag);
 	}
 }
 

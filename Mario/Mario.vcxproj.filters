@@ -249,6 +249,12 @@
     <ClCompile Include="CustomSummerDecoration.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
+    <ClCompile Include="JumpingFish.cpp">
+      <Filter>Source Files\LivingObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="DestroyedFish.cpp">
+      <Filter>Source Files\TemporaryObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -433,6 +439,12 @@
     </ClInclude>
     <ClInclude Include="CustomSummerDecoration.h">
       <Filter>Header Files\InanimateObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpingFish.h">
+      <Filter>Header Files\LivingObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyedFish.h">
+      <Filter>Header Files\TemporaryObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

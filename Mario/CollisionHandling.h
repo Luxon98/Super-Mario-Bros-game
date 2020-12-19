@@ -45,6 +45,8 @@ void handleJumpingOnRedTurtle(std::shared_ptr<LivingObject> monster, World &worl
 
 void handleJumpingOnCreature(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
 
+void handleJumpingOnFish(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
+
 void handleJumpingOnMonster(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
 
 void handleImmortalPlayerCollisions(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);

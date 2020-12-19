@@ -15,6 +15,7 @@
 #include "Creature.h"
 #include "FireRocket.h"
 #include "Boss.h"
+#include "JumpingFish.h"
 #include "Shell.h"
 #include "Flag.h"
 #include "Button.h"
@@ -26,6 +27,7 @@
 #include "DestroyedCreature.h"
 #include "DestroyedTurtle.h"
 #include "DestroyedBoss.h"
+#include "DestroyedFish.h"
 #include "Position.h"
 #include "SoundController.h"
 #include "LayoutStyle.h"
@@ -180,8 +182,15 @@ void World::performSpecificMonstersActions(int index)
 void World::performMonstersActions()
 {
 	for (std::size_t i = 0; i < monsters.size(); ++i) {
+		// bad-written code
+		// it will be refactored
 		if (monsters[i]->getMovement().getDirection() == Direction::None && isPlayerCloseEnough(*monsters[i])) {
-			setMovementDirection(*monsters[i]);
+			if (dynamic_cast<JumpingFish*>(&*monsters[i]) && monsters[i]->getX() <= player->getX()) {
+				dynamic_cast<JumpingFish*>(&*monsters[i])->setMoveDirection();
+			}
+			else {
+				setMovementDirection(*monsters[i]);
+			}			
 		}
 
 		if (isObjectOutsideWorld(*monsters[i])) {
@@ -680,6 +689,11 @@ void World::addDestroyedTurtle(Position position, Direction slideDirection, bool
 void World::addDestroyedBoss(Position position, bool normal)
 {
 	animatedElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, normal)));
+}
+
+void World::addDestroyedFish(Position position, bool directionFlag)
+{
+	animatedElements.push_back(std::make_shared<DestroyedFish>(DestroyedFish(position, directionFlag)));
 }
 
 void World::addExplosion(Position position)

@@ -11,6 +11,7 @@
 #include "Plant.h"
 #include "FireRocket.h"
 #include "Boss.h"
+#include "JumpingFish.h"
 #include "Bush.h"
 #include "Cloud.h"
 #include "Coin.h"
@@ -2159,6 +2160,28 @@ void Level::setSecondStageOnSummerWorld(World &world)
 	}
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4448, 336)));
 
+	//
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(550, 288)));
+	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(582, 288)));
+	//
+
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(975, 512), false)));
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1275, 500), true)));
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1375, 512), false)));
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1691, 500), true)));
+
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1845, 499), false)));
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2100, 506), true)));
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2170, 500), false)));
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2417, 513), true)));
+
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2550, 499), false)));
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2813, 512), true))); 
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2825, 503), false)));
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3100, 500), true)));
+
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3387, 512), false)));
+	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3627, 498), true)));
 
 	for (int i = 8; i < 120; i += 16) {
 		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
