@@ -18,6 +18,7 @@
 #include "Creature.h"
 #include "Plant.h"
 #include "JumpingFish.h"
+#include "CloudBombardier.h"
 #include "FireBall.h"
 #include "Boss.h"
 #include "Position.h"
@@ -114,6 +115,17 @@ bool isPlayerCloseToPlant(const Plant &plant, const World &world)
 	int yDifference = plant.getY() - player.getY();
 
 	if (abs(player.getX() - plant.getX()) < 40 && (yDifference > 30 && yDifference < 60)) {
+		return true;
+	}
+
+	return false;
+}
+
+bool isPlayerAheadOfBombardier(const CloudBombardier &bombardier, const World &world)
+{
+	const Player& player = world.getPlayer();
+
+	if (player.getX() > bombardier.getX()) {
 		return true;
 	}
 

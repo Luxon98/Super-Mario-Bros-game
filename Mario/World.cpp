@@ -16,6 +16,7 @@
 #include "FireRocket.h"
 #include "Boss.h"
 #include "JumpingFish.h"
+#include "CloudBombardier.h"
 #include "Shell.h"
 #include "Flag.h"
 #include "Button.h"
@@ -187,6 +188,9 @@ void World::performMonstersActions()
 		if (monsters[i]->getMovement().getDirection() == Direction::None && isPlayerCloseEnough(*monsters[i])) {
 			if (dynamic_cast<JumpingFish*>(&*monsters[i]) && monsters[i]->getX() <= player->getX()) {
 				dynamic_cast<JumpingFish*>(&*monsters[i])->setMoveDirection();
+			}
+			else if (dynamic_cast<CloudBombardier*>(&*monsters[i]) && monsters[i]->getX() <= (player->getX() + 15)) {
+				dynamic_cast<CloudBombardier*>(&*monsters[i])->setActiveState();
 			}
 			else {
 				setMovementDirection(*monsters[i]);

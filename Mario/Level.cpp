@@ -12,6 +12,7 @@
 #include "FireRocket.h"
 #include "Boss.h"
 #include "JumpingFish.h"
+#include "CloudBombardier.h"
 #include "Bush.h"
 #include "Cloud.h"
 #include "Coin.h"
@@ -2334,6 +2335,8 @@ void Level::setThirdStageOnSummerWorld(World &world)
 	}
 
 	world.blocks.push_back(Block(BlockType::Destructible, Position(2848, 314)));
+
+	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(350, 60))));
 
 	world.platforms.push_back(Platform(Position(2000, 420), PlatformType::MovingHorizontallyPlatform));
 

@@ -147,6 +147,7 @@
     <ClCompile Include="Castle.cpp" />
     <ClCompile Include="CheckPoint.cpp" />
     <ClCompile Include="Cloud.cpp" />
+    <ClCompile Include="CloudBombardier.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CollisionHandling.cpp" />
     <ClCompile Include="Creature.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Castle.h" />
     <ClInclude Include="CheckPoint.h" />
     <ClInclude Include="Cloud.h" />
+    <ClInclude Include="CloudBombardier.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CollisionHandling.h" />
     <ClInclude Include="Creature.h" />

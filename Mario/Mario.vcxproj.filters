@@ -255,6 +255,9 @@
     <ClCompile Include="DestroyedFish.cpp">
       <Filter>Source Files\TemporaryObjects</Filter>
     </ClCompile>
+    <ClCompile Include="CloudBombardier.cpp">
+      <Filter>Source Files\LivingObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -445,6 +448,9 @@
     </ClInclude>
     <ClInclude Include="DestroyedFish.h">
       <Filter>Header Files\TemporaryObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudBombardier.h">
+      <Filter>Header Files\LivingObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

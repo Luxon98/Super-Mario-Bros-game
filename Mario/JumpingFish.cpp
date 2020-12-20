@@ -59,8 +59,8 @@ void JumpingFish::setMoveDirection()
 void JumpingFish::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) {
-		SDL_Surface* creatureImg = fishImages[computeImageIndex()];
-		drawSurface(display, creatureImg, position.getX() - beginningOfCamera, position.getY());
+		SDL_Surface* fishImg = fishImages[computeImageIndex()];
+		drawSurface(display, fishImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
 

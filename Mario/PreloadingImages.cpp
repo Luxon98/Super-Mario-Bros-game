@@ -13,6 +13,7 @@
 #include "FireRocket.h"
 #include "Shell.h"
 #include "JumpingFish.h"
+#include "CloudBombardier.h"
 #include "Boss.h"
 #include "Flag.h"
 #include "Button.h"
@@ -71,6 +72,7 @@ void preloadLivingObjectImages(SDL_Surface* display)
 	FireRocket::loadFireRocketImages(display);
 	Boss::loadBossImages(display);
 	JumpingFish::loadFishImages(display);
+	CloudBombardier::loadBombardierImages(display);
 	Shell::loadShellImage(display);
 	FireBall::loadFireBallImages(display);
 	Player::loadPlayerImages(display);
