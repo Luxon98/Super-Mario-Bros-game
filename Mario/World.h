@@ -129,6 +129,7 @@ public:
 	void addDestroyedTurtle(Position position, Direction slideDirection, bool red = false);
 	void addDestroyedBoss(Position position, bool normal = true);
 	void addDestroyedFish(Position position, bool directionFlag);
+	void addDestroyedBombardier(Position position, bool leftSide);
 	void addExplosion(Position position);
 	void addAnimatedText(TextType type, Position position);
 	void addAnimatedCoin();

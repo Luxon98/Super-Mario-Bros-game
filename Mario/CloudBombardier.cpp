@@ -31,6 +31,11 @@ void CloudBombardier::loadBombardierImages(SDL_Surface* display)
 	bombardierImages[2] = loadPNG("./img/npc_imgs/cloud.png", display);
 }
 
+bool CloudBombardier::isGoingLeft() const
+{
+	return (movement.getDirection() == Direction::Left);
+}
+
 void CloudBombardier::setActiveState()
 {
 	active = true;
@@ -72,7 +77,7 @@ void CloudBombardier::move(World &world)
 			position.setX(position.getX() + distance);
 		}
 
-		if (stepsCounter % 150 == 0) {
+		if (stepsCounter % 75 == 0) {
 			Direction direction = (isPlayerAheadOfBombardier(*this, world) ? Direction::Right : Direction::Left);
 			movement.setDirection(direction);
 		}

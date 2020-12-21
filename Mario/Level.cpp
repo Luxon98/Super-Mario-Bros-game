@@ -2161,11 +2161,6 @@ void Level::setSecondStageOnSummerWorld(World &world)
 	}
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4448, 336)));
 
-	//
-	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(550, 288)));
-	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(582, 288)));
-	//
-
 	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(975, 512), false)));
 	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1275, 500), true)));
 	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1375, 512), false)));
@@ -2336,7 +2331,8 @@ void Level::setThirdStageOnSummerWorld(World &world)
 
 	world.blocks.push_back(Block(BlockType::Destructible, Position(2848, 314)));
 
-	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(350, 60))));
+	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(450, 60))));
+	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1650, 60))));
 
 	world.platforms.push_back(Platform(Position(2000, 420), PlatformType::MovingHorizontallyPlatform));
 

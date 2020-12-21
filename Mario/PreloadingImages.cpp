@@ -27,6 +27,7 @@
 #include "DestroyedTurtle.h"
 #include "DestroyedBoss.h"
 #include "DestroyedFish.h"
+#include "DestroyedBombardier.h"
 #include "Bush.h"
 #include "Cloud.h"
 #include "Rock.h"
@@ -85,6 +86,7 @@ void preloadTemporaryObjectImages(SDL_Surface* display)
 	DestroyedTurtle::loadDestroyedTurtleImages(display);
 	DestroyedBoss::loadDestroyedBossImages(display);
 	DestroyedFish::loadDestroyedFishImages(display);
+	DestroyedBombardier::loadDestroyedBombardierImages(display);
 	Explosion::loadExplosionImages(display);
 	Shards::loadShardsImages(display);
 	AnimatedCoin::loadAnimatedCoinImages(display);

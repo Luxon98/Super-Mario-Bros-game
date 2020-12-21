@@ -29,6 +29,7 @@
 #include "DestroyedTurtle.h"
 #include "DestroyedBoss.h"
 #include "DestroyedFish.h"
+#include "DestroyedBombardier.h"
 #include "Position.h"
 #include "SoundController.h"
 #include "LayoutStyle.h"
@@ -697,7 +698,12 @@ void World::addDestroyedBoss(Position position, bool normal)
 
 void World::addDestroyedFish(Position position, bool directionFlag)
 {
-	animatedElements.push_back(std::make_shared<DestroyedFish>(DestroyedFish(position, directionFlag)));
+	destroyedElements.push_back(std::make_shared<DestroyedFish>(DestroyedFish(position, directionFlag)));
+}
+
+void World::addDestroyedBombardier(Position position, bool leftSide)
+{
+	destroyedElements.push_back(std::make_shared<DestroyedBombardier>(DestroyedBombardier(position, leftSide)));
 }
 
 void World::addExplosion(Position position)

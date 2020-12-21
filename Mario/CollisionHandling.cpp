@@ -253,6 +253,10 @@ void handleImmortalPlayerCollisions(std::shared_ptr<LivingObject> monster, World
 		bool directionFlag = std::dynamic_pointer_cast<JumpingFish>(monster)->isGoingLeft();
 		world.addDestroyedFish(monster->getPosition(), directionFlag);
 	}
+	else if (std::dynamic_pointer_cast<CloudBombardier>(monster)) {
+		bool leftSide = std::dynamic_pointer_cast<CloudBombardier>(monster)->isGoingLeft();
+		world.addDestroyedBombardier(monster->getPosition(), leftSide);
+	}
 
 	addTextAndPoints(player, world, points, Position(monster->getX(), monster->getY() - 15));
 	world.deleteMonster(index);
@@ -383,6 +387,10 @@ void handleFireBallCollision(const FireBall &fireball, std::shared_ptr<LivingObj
 	else if (std::dynamic_pointer_cast<JumpingFish>(monster)) {
 		bool directionFlag = std::dynamic_pointer_cast<JumpingFish>(monster)->isGoingLeft();
 		world.addDestroyedFish(monster->getPosition(), directionFlag);
+	}
+	else if (std::dynamic_pointer_cast<CloudBombardier>(monster)) {
+		bool leftSide = std::dynamic_pointer_cast<CloudBombardier>(monster)->isGoingLeft();
+		world.addDestroyedBombardier(monster->getPosition(), leftSide);
 	}
 }
 
