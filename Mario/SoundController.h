@@ -43,6 +43,7 @@ public:
 	static void playReturnedToMenuEffect();
 	static void playFireRocketEffect();
 	static void playFireworksEffect();
+	static void playBombDroppedEffect();
 	static void playGettingPointsEffect();
 	static void playLevelFinishedEffect();
 	static void playWorldFinishedEffect();

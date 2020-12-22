@@ -1,5 +1,5 @@
-#ifndef FireRocket_H
-#define FireRocket_H
+#ifndef FireMissle_H
+#define FireMissle_H
 
 #include <array>
 #include <chrono>
@@ -11,19 +11,27 @@ enum class Direction;
 struct SDL_Surface;
 
 
-class FireRocket : public IndependentLivingObject
+enum class MissleType
+{
+	Rocket,
+	Bomb
+};
+
+
+class FireMissle : public IndependentLivingObject
 {
 private:
-	static std::array<SDL_Surface*, 2> rocketImages;
+	static std::array<SDL_Surface*, 3> missleImages;
 	bool inactive;
 	int model;
+	MissleType missleType;
 	std::chrono::steady_clock::time_point lastSoundTime;
 	bool isRightTime();
 	int computeImageIndex() const override;
 	void changeModel();
 
 public:
-	FireRocket(Position position);
+	FireMissle(Position position, MissleType type);
 	static void loadFireRocketImages(SDL_Surface* display);
 	bool isInactive() const;
 	void setMoveDirection(Direction direction);
@@ -31,4 +39,4 @@ public:
 	void move(World &world) override;
 };
 
-#endif //FireRocket_H
+#endif //FireMissle_H

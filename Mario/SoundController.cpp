@@ -10,19 +10,19 @@ std::array<Mix_Chunk*, 20> SoundController::soundsEffects;
 
 void SoundController::loadBackgroundTracks()
 {
-	/*backgroundTracks[0] = Mix_LoadMUS("./sounds/background_open.wav");
+	backgroundTracks[0] = Mix_LoadMUS("./sounds/background_open.wav");
 	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_underground.wav");
 	backgroundTracks[2] = Mix_LoadMUS("./sounds/background_castle.wav");
 	backgroundTracks[3] = Mix_LoadMUS("./sounds/background_winter.wav");
 	backgroundTracks[4] = Mix_LoadMUS("./sounds/background_summer.wav");
 	backgroundTracks[5] = Mix_LoadMUS("./sounds/background_star.wav");
 	backgroundTracks[6] = Mix_LoadMUS("./sounds/time_passed.wav");
-	backgroundTracks[7] = Mix_LoadMUS("./sounds/game_over.wav");*/
+	backgroundTracks[7] = Mix_LoadMUS("./sounds/game_over.wav");
 }
 
 void SoundController::loadSoundEffects()
 {
-	/*soundsEffects[0] = Mix_LoadWAV("./sounds/1up_collected.wav");
+	soundsEffects[0] = Mix_LoadWAV("./sounds/1up_collected.wav");
 	soundsEffects[1] = Mix_LoadWAV("./sounds/block_destroyed.wav");
 	soundsEffects[2] = Mix_LoadWAV("./sounds/block_hitted.wav");
 	soundsEffects[3] = Mix_LoadWAV("./sounds/bonus_appeard.wav");
@@ -41,7 +41,7 @@ void SoundController::loadSoundEffects()
 	soundsEffects[16] = Mix_LoadWAV("./sounds/fireworks.wav");
 	soundsEffects[17] = Mix_LoadWAV("./sounds/getting_points.wav");
 	soundsEffects[18] = Mix_LoadWAV("./sounds/level_finished.wav");
-	soundsEffects[19] = Mix_LoadWAV("./sounds/world_finished.wav");*/
+	soundsEffects[19] = Mix_LoadWAV("./sounds/world_finished.wav");
 }
 
 int SoundController::getIndexOfBackgroundMusic()
@@ -185,6 +185,11 @@ void SoundController::playFireRocketEffect()
 void SoundController::playFireworksEffect()
 {
 	Mix_PlayChannel(-1, soundsEffects[16], 0);
+}
+
+void SoundController::playBombDroppedEffect()
+{
+	Mix_PlayChannel(-1, soundsEffects[6], 0);
 }
 
 void SoundController::playGettingPointsEffect()

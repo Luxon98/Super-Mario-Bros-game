@@ -11,7 +11,7 @@
 
 // pictures with indexes 0-3 are pictures from the original Super Mario Bros
 // the last two are custom graphics, created by me for the needs of the Winter World
-std::array<SDL_Surface*, 6> Creature::creatureImages;
+std::array<SDL_Surface*, 8> Creature::creatureImages;
 
 int Creature::computeBaseIndex() const
 {
@@ -20,6 +20,9 @@ int Creature::computeBaseIndex() const
 	}
 	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
 		return 4;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::CustomSummer) {
+		return 6;
 	}
 	else {
 		return 0;

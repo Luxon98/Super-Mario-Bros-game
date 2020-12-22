@@ -9,7 +9,7 @@
 #include "Turtle.h"
 #include "RedTurtle.h"
 #include "Plant.h"
-#include "FireRocket.h"
+#include "FireMissle.h"
 #include "Boss.h"
 #include "JumpingFish.h"
 #include "CloudBombardier.h"
@@ -872,9 +872,9 @@ void Level::setFourthLevel(World &world)
 
 	world.platforms.push_back(Platform(Position(4576, 210), PlatformType::SmallPlatform));
 
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(3200, 235))));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(4000, 280))));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(4450, 200))));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(3200, 235), MissleType::Rocket)));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(4000, 280), MissleType::Rocket)));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(4450, 200), MissleType::Rocket)));
 
 	world.fireSerpents.push_back(FireSerpent(1, Position(960, 336)));
 	world.fireSerpents.push_back(FireSerpent(8, Position(1584, 207)));
@@ -1281,7 +1281,7 @@ void Level::setWinterWorld(World &world)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2920, 400))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(2080, 420))));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2325, 397), false)));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(3640, 300))));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(3640, 300), MissleType::Rocket)));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(4143, 420), true)));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(4912, 388))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4320, 400))));
@@ -1292,7 +1292,7 @@ void Level::setWinterWorld(World &world)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(6208, 368))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(6700, 420))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(7408, 388))));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(7800, 224))));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(7800, 224), MissleType::Rocket)));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(8160, 400))));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(8376, 245), true)));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(8660, 420), true)));
@@ -1660,20 +1660,20 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(4112, 420))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(910, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1285, 368))));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(1450, 315))));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(1450, 315), MissleType::Rocket)));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1536, 256))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1830, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2295, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2460, 400))));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(2050, 250))));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(2050, 365))));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(2800, 240))));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(3110, 283))));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(2400, 75))));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(2050, 250), MissleType::Rocket)));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(2050, 365), MissleType::Rocket)));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(2800, 240), MissleType::Rocket)));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(3110, 283), MissleType::Rocket)));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(2400, 75), MissleType::Rocket)));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2800, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3100, 400))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3400, 400))));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(3330, 252))));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(3330, 252), MissleType::Rocket)));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2700, 255), true)));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2850, 176))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3020, 176))));
@@ -1681,7 +1681,7 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2300, 176))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2685, 176))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1720, 176))));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(1755, 132))));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(1755, 132), MissleType::Rocket)));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(1744, 163))));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(1904, 131), true)));
 	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(2524, 163))));
@@ -1689,7 +1689,7 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2920, 400))));
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2325, 397), false)));
-	world.monsters.push_back(std::make_shared<FireRocket>(FireRocket(Position(3640, 300))));
+	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(3640, 300), MissleType::Rocket)));
 
 	world.fireSerpents.push_back(FireSerpent(1, Position(2246, 320)));
 
@@ -1961,8 +1961,6 @@ void Level::setSummerWorld(World &world)
 	world.blocks.push_back(Block(BlockType::Tube, Position(2148, 399)));
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(2148, 368)));
 
-	world.blocks.push_back(Block(BlockType::BonusWithFlower, Position(1970, 104)));
-
 	for (int i = 2752; i < 3360; i += 32) {
 		world.blocks.push_back(Block(BlockType::Indestructible, Position(i, 464)));
 	}
@@ -2011,8 +2009,16 @@ void Level::setSummerWorld(World &world)
 	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 47)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 15)));
 
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(580, 327))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(880, 144))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1475, 403))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2348, 259))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2655, 348))));
+	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3315, 176))));
+	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1985, 52))));
+	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(3700, 60))));
+
 	world.platforms.push_back(Platform(Position(960, 460), PlatformType::MovingVerticallyPlatform));
-	world.platforms.push_back(Platform(Position(1970, 335), PlatformType::MovingVerticallyPlatform));
 
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(525, 105))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(823, 424))));
@@ -2160,6 +2166,9 @@ void Level::setSecondStageOnSummerWorld(World &world)
 		world.blocks.push_back(Block(BlockType::Tube, Position(4448, i)));
 	}
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4448, 336)));
+
+	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(450, 60))));
+	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1185, 52))));
 
 	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(975, 512), false)));
 	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1275, 500), true)));

@@ -12,7 +12,7 @@ struct SDL_Surface;
 class DestroyedCreature : public AnimatedObject
 {
 private:
-	static std::array<SDL_Surface*, 6> destroyedCreatureImages;
+	static std::array<SDL_Surface*, 8> destroyedCreatureImages;
 	Direction slideDirection;
 	int computeBaseIndex() const;
 	int computeImageIndex() const override;

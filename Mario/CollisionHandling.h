@@ -11,7 +11,7 @@ class BonusObject;
 class Block;
 class Plant;
 class CloudBombardier;
-class FireRocket;
+class FireMissle;
 class Mushroom;
 class Platform;
 class FireBall;
@@ -26,7 +26,7 @@ bool isMonsterStandingOnBlock(const LivingObject &monster, const Block &block);
 
 bool isMushroomStandingOnBlock(const World &world, const Block &block);
 
-bool isPlayerCloseToFireRocket(const FireRocket &fireRocket, const World &world);
+bool isPlayerCloseToFireRocket(const FireMissle &fireRocket, const World &world);
 
 bool isPlayerCloseToPlant(const Plant &plant, const World &world);
 

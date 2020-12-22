@@ -8,7 +8,7 @@
 
 // the first four pictures are from the original Mario
 // the last two are custom pictures, created for the needs of the Winter world
-std::array<SDL_Surface*, 6> DestroyedCreature::destroyedCreatureImages;
+std::array<SDL_Surface*, 8> DestroyedCreature::destroyedCreatureImages;
 
 int DestroyedCreature::computeBaseIndex() const
 {
@@ -17,6 +17,9 @@ int DestroyedCreature::computeBaseIndex() const
 	}
 	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
 		return 4;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::CustomSummer) {
+		return 6;
 	}
 	else {
 		return 0;

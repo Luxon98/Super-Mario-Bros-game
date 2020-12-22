@@ -36,6 +36,11 @@ bool CloudBombardier::isGoingLeft() const
 	return (movement.getDirection() == Direction::Left);
 }
 
+bool CloudBombardier::isReadyToDropBomb() const
+{
+	return (stepsCounter % 175 == 0 && (stepsCounter > 0 && stepsCounter < 1300));
+}
+
 void CloudBombardier::setActiveState()
 {
 	active = true;

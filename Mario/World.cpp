@@ -13,7 +13,7 @@
 #include "FireBall.h"
 #include "Turtle.h"
 #include "Creature.h"
-#include "FireRocket.h"
+#include "FireMissle.h"
 #include "Boss.h"
 #include "JumpingFish.h"
 #include "CloudBombardier.h"
@@ -116,8 +116,8 @@ void World::setMovementDirection(LivingObject &monster)
 	else if (dynamic_cast<Creature*>(&monster)) {
 		dynamic_cast<Creature*>(&monster)->setMoveDirection(Direction::Left);
 	}
-	else if (dynamic_cast<FireRocket*>(&monster)) {
-		dynamic_cast<FireRocket*>(&monster)->setMoveDirection(Direction::Left);
+	else if (dynamic_cast<FireMissle*>(&monster)) {
+		dynamic_cast<FireMissle*>(&monster)->setMoveDirection(Direction::Left);
 	}
 	else if (dynamic_cast<Boss*>(&monster)) {
 		dynamic_cast<Boss*>(&monster)->setMoveDirection(Direction::Left);
@@ -174,9 +174,20 @@ void World::performSpecificMonstersActions(int index)
 			monsters.erase(monsters.begin() + index);
 		}
 	}
-	else if (std::dynamic_pointer_cast<FireRocket>(monsters[index])) {
-		if (std::dynamic_pointer_cast<FireRocket>(monsters[index])->isInactive()) {
+	else if (std::dynamic_pointer_cast<FireMissle>(monsters[index])) {
+		if (std::dynamic_pointer_cast<FireMissle>(monsters[index])->isInactive()) {
+			Position position = monsters[index]->getPosition();
+			position.setY(position.getY() + 7);
 			monsters.erase(monsters.begin() + index);
+			addExplosion(position);
+		}
+	}
+	else if (std::dynamic_pointer_cast<CloudBombardier>(monsters[index])) {
+		if (std::dynamic_pointer_cast<CloudBombardier>(monsters[index])->isReadyToDropBomb()) {
+			Position position = monsters[index]->getPosition();
+			position.setY(position.getY() + 12);
+			monsters.push_back(std::make_shared<FireMissle>(FireMissle(position, MissleType::Bomb)));
+			SoundController::playBombDroppedEffect();
 		}
 	}
 }

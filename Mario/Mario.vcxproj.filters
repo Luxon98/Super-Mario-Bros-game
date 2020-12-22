@@ -198,9 +198,6 @@
     <ClCompile Include="Lava.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
-    <ClCompile Include="FireRocket.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Platform.cpp">
       <Filter>Source Files\OtherObjects</Filter>
     </ClCompile>
@@ -260,6 +257,9 @@
     </ClCompile>
     <ClCompile Include="DestroyedBombardier.cpp">
       <Filter>Source Files\TemporaryObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="FireMissle.cpp">
+      <Filter>Source Files\LivingObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -395,9 +395,6 @@
     <ClInclude Include="Lava.h">
       <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
-    <ClInclude Include="FireRocket.h">
-      <Filter>Header Files\LivingObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>Header Files\OtherObjects</Filter>
     </ClInclude>
@@ -457,6 +454,9 @@
     </ClInclude>
     <ClInclude Include="DestroyedBombardier.h">
       <Filter>Header Files\TemporaryObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="FireMissle.h">
+      <Filter>Header Files\LivingObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

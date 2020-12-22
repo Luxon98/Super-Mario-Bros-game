@@ -4,7 +4,7 @@
 #include "LivingObject.h"
 #include "Block.h"
 #include "Plant.h"
-#include "FireRocket.h"
+#include "FireMissle.h"
 #include "Shell.h"
 #include "Boss.h"
 #include "JumpingFish.h"
@@ -75,7 +75,7 @@ bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block)
 
 bool isMonsterCrushproof(std::shared_ptr<LivingObject> monster)
 {
-	if (std::dynamic_pointer_cast<Plant>(monster) || std::dynamic_pointer_cast<FireRocket>(monster)
+	if (std::dynamic_pointer_cast<Plant>(monster) || std::dynamic_pointer_cast<FireMissle>(monster)
 		|| std::dynamic_pointer_cast<Boss>(monster) || std::dynamic_pointer_cast<CloudBombardier>(monster)) {
 
 		return true;
@@ -86,7 +86,7 @@ bool isMonsterCrushproof(std::shared_ptr<LivingObject> monster)
 
 bool isMonsterResistantToKnocks(std::shared_ptr<LivingObject> monster)
 {
-	if (std::dynamic_pointer_cast<FireRocket>(monster) || std::dynamic_pointer_cast<Boss>(monster)) {
+	if (std::dynamic_pointer_cast<FireMissle>(monster) || std::dynamic_pointer_cast<Boss>(monster)) {
 		return true;
 	}
 
@@ -95,7 +95,7 @@ bool isMonsterResistantToKnocks(std::shared_ptr<LivingObject> monster)
 
 bool isMonsterResistantToFireBalls(std::shared_ptr<LivingObject> monster)
 {
-	if (std::dynamic_pointer_cast<FireRocket>(monster)) {
+	if (std::dynamic_pointer_cast<FireMissle>(monster)) {
 		return true;
 	}
 
@@ -104,7 +104,7 @@ bool isMonsterResistantToFireBalls(std::shared_ptr<LivingObject> monster)
 
 bool isMonsterResistantToCollisionWithShell(std::shared_ptr<LivingObject> monster)
 {
-	if (std::dynamic_pointer_cast<Shell>(monster) || std::dynamic_pointer_cast<FireRocket>(monster) 
+	if (std::dynamic_pointer_cast<Shell>(monster) || std::dynamic_pointer_cast<FireMissle>(monster) 
 		|| std::dynamic_pointer_cast<Boss>(monster) || std::dynamic_pointer_cast<JumpingFish>(monster)
 		|| std::dynamic_pointer_cast<CloudBombardier>(monster)) {
 

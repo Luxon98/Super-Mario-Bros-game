@@ -8,7 +8,7 @@
 
 // the first two pictures are from the original Mario
 // the last one is a picture created for the needs of the Winter world
-std::array<SDL_Surface*, 3> CrushedCreature::crushedCreatureImages;
+std::array<SDL_Surface*, 4> CrushedCreature::crushedCreatureImages;
 
 int CrushedCreature::computeImageIndex() const
 {
@@ -17,6 +17,9 @@ int CrushedCreature::computeImageIndex() const
 	}
 	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
 		return 2;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::CustomSummer) {
+		return 3;
 	}
 	else {
 		return 0;

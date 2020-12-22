@@ -14,7 +14,7 @@
 #include "Shell.h"
 #include "Turtle.h"
 #include "RedTurtle.h"
-#include "FireRocket.h"
+#include "FireMissle.h"
 #include "Creature.h"
 #include "Plant.h"
 #include "JumpingFish.h"
@@ -98,7 +98,7 @@ bool isMushroomStandingOnBlock(const World &world, const Block &block)
 	return false;
 }
 
-bool isPlayerCloseToFireRocket(const FireRocket &fireRocket, const World &world)
+bool isPlayerCloseToFireRocket(const FireMissle &fireRocket, const World &world)
 {
 	const Player& player = world.getPlayer();
 

@@ -10,7 +10,7 @@
 #include "RedTurtle.h"
 #include "Creature.h"
 #include "Plant.h"
-#include "FireRocket.h"
+#include "FireMissle.h"
 #include "Shell.h"
 #include "JumpingFish.h"
 #include "CloudBombardier.h"
@@ -70,7 +70,7 @@ void preloadLivingObjectImages(SDL_Surface* display)
 	Turtle::loadTurtleImages(display);
 	RedTurtle::loadTurtleImages(display);
 	Plant::loadPlantImages(display);
-	FireRocket::loadFireRocketImages(display);
+	FireMissle::loadFireRocketImages(display);
 	Boss::loadBossImages(display);
 	JumpingFish::loadFishImages(display);
 	CloudBombardier::loadBombardierImages(display);
