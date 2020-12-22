@@ -1973,6 +1973,8 @@ void Level::setSummerWorld(World &world)
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 208)));
 	}
 
+	world.blocks.push_back(Block(BlockType::BonusWithCoin, Position(2848, 192)));
+
 	world.blocks.push_back(Block(BlockType::Tube, Position(3184, 175)));
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(3184, 143)));
 
@@ -2009,6 +2011,11 @@ void Level::setSummerWorld(World &world)
 	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 47)));
 	world.blocks.push_back(Block(BlockType::Tube, Position(3058, 15)));
 
+	world.blocks.push_back(Block(BlockType::Ground, Position(4454, 214)));
+
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(4596, 368)));
+	world.blocks.push_back(Block(BlockType::Indestructible, Position(4628, 368)));
+
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(580, 327))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(880, 144))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1475, 403))));
@@ -2019,6 +2026,15 @@ void Level::setSummerWorld(World &world)
 	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(3700, 60))));
 
 	world.platforms.push_back(Platform(Position(960, 460), PlatformType::MovingVerticallyPlatform));
+
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(3264, 160))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(3296, 160))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(4596, 336))));
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(4628, 336))));
+
+	for (int i = 2800; i < 3300; i += 64) {
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(i, 385))));
+	}
 
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(525, 105))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(823, 424))));
@@ -2039,9 +2055,16 @@ void Level::setSummerWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(4154, 105))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(4619, 122))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(4513, 425))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(4825, 352))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(5051, 279))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(5221, 156))));
+	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(5276, 403))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
 		CustomSummerDecoration(SummerDecorationType::PALM, Position(43, 349))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
+		CustomSummerDecoration(SummerDecorationType::PALM, Position(4450, 163))));
 
 	world.checkPoints.push_back(CheckPoint(Position(3003, 266), true, 1));
 	world.checkPoints.push_back(CheckPoint(Position(4250, 297), false, 3));
@@ -2167,7 +2190,6 @@ void Level::setSecondStageOnSummerWorld(World &world)
 	}
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4448, 336)));
 
-	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(450, 60))));
 	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1185, 52))));
 
 	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(975, 512), false)));
@@ -2242,8 +2264,15 @@ void Level::setSecondStageOnSummerWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(5822, 81))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(6446, 104))));
 
+	world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(3936, 402))));
+
 	if (!summerHiddenStageChecker) {
 		world.checkPoints.push_back(CheckPoint(Position(832, 153), false, 4));
+		world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(450, 60))));
+		world.monsters.push_back(std::make_shared<Creature>(Creature(Position(880, 400))));
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(880, 226))));
+		world.inanimateElements.push_back(std::make_shared<Coin>(Coin(Position(784, 226))));
+
 		summerHiddenStageChecker = true;
 	}
 
@@ -2271,7 +2300,6 @@ void Level::setThirdStageOnSummerWorld(World &world)
 
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
-
 
 	world.blocks.push_back(Block(BlockType::Destructible, Position(60, 432)));
 	world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(110, 288)));
