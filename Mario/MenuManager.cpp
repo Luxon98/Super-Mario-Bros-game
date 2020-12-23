@@ -110,9 +110,9 @@ MenuManager::SubmenuManager::SubmenuManager()
 {
 	submenuOptionNumber = 1;
 	gameSpeed = 7;
-	customGame = true;  //false
+	customGame = false;
 	returnStatus = false;
-	customWorld = CustomWorld::SummerWorld;  //CustomWorld::WinterWorld
+	customWorld = CustomWorld::WinterWorld; 
 }
 
 void MenuManager::SubmenuManager::loadSubmenuImages(SDL_Surface* display)
