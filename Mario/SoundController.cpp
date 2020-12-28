@@ -10,38 +10,38 @@ std::array<Mix_Chunk*, 20> SoundController::soundsEffects;
 
 void SoundController::loadBackgroundTracks()
 {
-	//backgroundTracks[0] = Mix_LoadMUS("./sounds/background_open.wav");
-	//backgroundTracks[1] = Mix_LoadMUS("./sounds/background_underground.wav");
-	//backgroundTracks[2] = Mix_LoadMUS("./sounds/background_castle.wav");
-	//backgroundTracks[3] = Mix_LoadMUS("./sounds/background_winter.wav");
-	//backgroundTracks[4] = Mix_LoadMUS("./sounds/background_summer.wav");
-	//backgroundTracks[5] = Mix_LoadMUS("./sounds/background_star.wav");
-	//backgroundTracks[6] = Mix_LoadMUS("./sounds/time_passed.wav");
-	//backgroundTracks[7] = Mix_LoadMUS("./sounds/game_over.wav");
+	backgroundTracks[0] = Mix_LoadMUS("./sounds/background_open.wav");
+	backgroundTracks[1] = Mix_LoadMUS("./sounds/background_underground.wav");
+	backgroundTracks[2] = Mix_LoadMUS("./sounds/background_castle.wav");
+	backgroundTracks[3] = Mix_LoadMUS("./sounds/background_winter.wav");
+	backgroundTracks[4] = Mix_LoadMUS("./sounds/background_summer.wav");
+	backgroundTracks[5] = Mix_LoadMUS("./sounds/background_star.wav");
+	backgroundTracks[6] = Mix_LoadMUS("./sounds/time_passed.wav");
+	backgroundTracks[7] = Mix_LoadMUS("./sounds/game_over.wav");
 }
 
 void SoundController::loadSoundEffects()
 {
-	//soundsEffects[0] = Mix_LoadWAV("./sounds/1up_collected.wav");
-	//soundsEffects[1] = Mix_LoadWAV("./sounds/block_destroyed.wav");
-	//soundsEffects[2] = Mix_LoadWAV("./sounds/block_hitted.wav");
-	//soundsEffects[3] = Mix_LoadWAV("./sounds/bonus_appeard.wav");
-	//soundsEffects[4] = Mix_LoadWAV("./sounds/bonus_collected.wav");
-	//soundsEffects[5] = Mix_LoadWAV("./sounds/coin_sound.wav");
-	//soundsEffects[6] = Mix_LoadWAV("./sounds/enemy_destroyed.wav");
-	//soundsEffects[7] = Mix_LoadWAV("./sounds/fireball_popped.wav");
-	//soundsEffects[8] = Mix_LoadWAV("./sounds/flag_down.wav");
-	//soundsEffects[9] = Mix_LoadWAV("./sounds/jump_small.wav");
-	//soundsEffects[10] = Mix_LoadWAV("./sounds/jump_tall.wav");
-	//soundsEffects[11] = Mix_LoadWAV("./sounds/mario_dead.wav");
-	//soundsEffects[12] = Mix_LoadWAV("./sounds/back_to_small.wav");
-	//soundsEffects[13] = Mix_LoadWAV("./sounds/menu_return.wav");
-	//soundsEffects[14] = Mix_LoadWAV("./sounds/fire_rocket.wav");
-	//soundsEffects[15] = Mix_LoadWAV("./sounds/boss_destroyed.wav");
-	//soundsEffects[16] = Mix_LoadWAV("./sounds/fireworks.wav");
-	//soundsEffects[17] = Mix_LoadWAV("./sounds/getting_points.wav");
-	//soundsEffects[18] = Mix_LoadWAV("./sounds/level_finished.wav");
-	//soundsEffects[19] = Mix_LoadWAV("./sounds/world_finished.wav");
+	soundsEffects[0] = Mix_LoadWAV("./sounds/1up_collected.wav");
+	soundsEffects[1] = Mix_LoadWAV("./sounds/block_destroyed.wav");
+	soundsEffects[2] = Mix_LoadWAV("./sounds/block_hitted.wav");
+	soundsEffects[3] = Mix_LoadWAV("./sounds/bonus_appeard.wav");
+	soundsEffects[4] = Mix_LoadWAV("./sounds/bonus_collected.wav");
+	soundsEffects[5] = Mix_LoadWAV("./sounds/coin_sound.wav");
+	soundsEffects[6] = Mix_LoadWAV("./sounds/enemy_destroyed.wav");
+	soundsEffects[7] = Mix_LoadWAV("./sounds/fireball_popped.wav");
+	soundsEffects[8] = Mix_LoadWAV("./sounds/flag_down.wav");
+	soundsEffects[9] = Mix_LoadWAV("./sounds/jump_small.wav");
+	soundsEffects[10] = Mix_LoadWAV("./sounds/jump_tall.wav");
+	soundsEffects[11] = Mix_LoadWAV("./sounds/mario_dead.wav");
+	soundsEffects[12] = Mix_LoadWAV("./sounds/back_to_small.wav");
+	soundsEffects[13] = Mix_LoadWAV("./sounds/menu_return.wav");
+	soundsEffects[14] = Mix_LoadWAV("./sounds/fire_rocket.wav");
+	soundsEffects[15] = Mix_LoadWAV("./sounds/boss_destroyed.wav");
+	soundsEffects[16] = Mix_LoadWAV("./sounds/fireworks.wav");
+	soundsEffects[17] = Mix_LoadWAV("./sounds/getting_points.wav");
+	soundsEffects[18] = Mix_LoadWAV("./sounds/level_finished.wav");
+	soundsEffects[19] = Mix_LoadWAV("./sounds/world_finished.wav");
 }
 
 int SoundController::getIndexOfBackgroundMusic()
@@ -80,6 +80,7 @@ void SoundController::playBackgroundMusic()
 {
 	stopMusic();
 
+	Mix_VolumeMusic(MIX_MAX_VOLUME);
 	int musicIndex = getIndexOfBackgroundMusic();
 	Mix_PlayMusic(backgroundTracks[musicIndex], -1);
 }
@@ -87,18 +88,24 @@ void SoundController::playBackgroundMusic()
 void SoundController::playStarMusic()
 {
 	stopMusic();
+
+	Mix_VolumeMusic(MIX_MAX_VOLUME);
 	Mix_PlayMusic(backgroundTracks[5], -1);
 }
 
 void SoundController::playTimePassedMusic()
 {
 	stopMusic();
+
+	Mix_VolumeMusic(MIX_MAX_VOLUME);
 	Mix_PlayMusic(backgroundTracks[6], -1);
 }
 
 void SoundController::playGameOverMusic()
 {
 	stopMusic();
+
+	Mix_VolumeMusic(MIX_MAX_VOLUME);
 	Mix_PlayMusic(backgroundTracks[7], -1);
 }
 
@@ -212,6 +219,7 @@ void SoundController::playWorldFinishedEffect()
 void SoundController::stopMusic()
 {
 	Mix_HaltMusic();
+	Mix_VolumeMusic(0);
 }
 
 void SoundController::closeSoundController()

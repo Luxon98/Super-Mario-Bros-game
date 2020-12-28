@@ -173,6 +173,9 @@ void World::performSpecificMonstersActions(int index)
 			monsters.push_back(std::make_shared<Turtle>(Turtle(Position(monsters[index]->getPosition()))));
 			monsters.erase(monsters.begin() + index);
 		}
+		else if (isObjectOutsideCamera(*monsters[index])) {              // SHOULD BE TESTED AGAIN
+			monsters.erase(monsters.begin() + index);
+		}
 	}
 	else if (std::dynamic_pointer_cast<FireMissle>(monsters[index])) {
 		if (std::dynamic_pointer_cast<FireMissle>(monsters[index])->isInactive()) {
@@ -632,7 +635,8 @@ void World::spoilBridgeAndBoss()
 	}
 
 	if (monsters.size() > 0 && (std::dynamic_pointer_cast<Boss>(monsters[monsters.size() - 1]))) {
-		addDestroyedBoss(monsters[monsters.size() - 1]->getPosition(), false);
+		addDestroyedBoss(monsters[monsters.size() - 1]->getPosition(), 
+			monsters[monsters.size() - 1]->getMovement().getDirection(), false);
 		monsters.pop_back();
 		SoundController::playEnemyDestroyedEffect(true);
 	}
@@ -702,9 +706,9 @@ void World::addDestroyedTurtle(Position position, Direction slideDirection, bool
 	destroyedElements.push_back(std::make_shared<DestroyedTurtle>(DestroyedTurtle(position, slideDirection, red)));
 }
 
-void World::addDestroyedBoss(Position position, bool normal)
+void World::addDestroyedBoss(Position position, Direction direction, bool normal)
 {
-	animatedElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, normal)));
+	animatedElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, direction, normal)));
 }
 
 void World::addDestroyedFish(Position position, bool directionFlag)

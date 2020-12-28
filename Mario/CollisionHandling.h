@@ -10,7 +10,6 @@ class LivingObject;
 class BonusObject;
 class Block;
 class Plant;
-class CloudBombardier;
 class FireMissle;
 class Mushroom;
 class Platform;
@@ -30,7 +29,7 @@ bool isPlayerCloseToFireRocket(const FireMissle &fireRocket, const World &world)
 
 bool isPlayerCloseToPlant(const Plant &plant, const World &world);
 
-bool isPlayerAheadOfBombardier(const CloudBombardier &bombardier, const World &world);
+bool isPlayerAheadOfMonster(const LivingObject &monster, const World &world);
 
 bool isPlayerStandingOnThisPlatform(const Player &player, const Platform &platform);
 

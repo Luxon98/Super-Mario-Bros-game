@@ -121,11 +121,11 @@ bool isPlayerCloseToPlant(const Plant &plant, const World &world)
 	return false;
 }
 
-bool isPlayerAheadOfBombardier(const CloudBombardier &bombardier, const World &world)
+bool isPlayerAheadOfMonster(const LivingObject &monster, const World &world)
 {
 	const Player& player = world.getPlayer();
 
-	if (player.getX() > bombardier.getX()) {
+	if (player.getX() > monster.getX()) {
 		return true;
 	}
 
@@ -362,7 +362,7 @@ void handleFireBallAndBossCollision(std::shared_ptr<LivingObject> monster, World
 	}
 	else {
 		*pts = 5000;
-		world.addDestroyedBoss(monster->getPosition());
+		world.addDestroyedBoss(monster->getPosition(), monster->getMovement().getDirection());
 	}
 }
 

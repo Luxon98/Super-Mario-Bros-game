@@ -5,13 +5,15 @@
 #include "Position.h"
 #include "SDL_Utility.h"
 #include "World.h"
+#include "CollisionHandling.h"
 
 
-std::array<SDL_Surface*, 2> Boss::bossImages;
+std::array<SDL_Surface*, 4> Boss::bossImages;
 
 int Boss::computeImageIndex() const
 {
-	return model - 1;
+	int baseIndex = (movement.getDirection() == Direction::Left ? 0 : 2);
+	return baseIndex + (model - 1);
 }
 
 void Boss::changeModel()
@@ -24,38 +26,41 @@ void Boss::changeModel()
 	}
 }
 
-void Boss::moveAndJump()
+void Boss::moveAndJump(World &world)
 {
 	++auxiliaryCounter;
+
+	int multiplier = (movement.getDirection() == Direction::Left ? 1 : -1);
 	if (auxiliaryCounter < 11) {
-		position.setX(position.getX() - 1);
+		position.setX(position.getX() - (1 * multiplier));
 		position.setY(position.getY() - 2);
 	}
 	else if (auxiliaryCounter >= 11 && auxiliaryCounter < 18) {
-		position.setX(position.getX() - 1);
+		position.setX(position.getX() - (1 * multiplier));
 		position.setY(position.getY() - 1);
 	}
 	else if (auxiliaryCounter >= 18 && auxiliaryCounter < 22) {
-		position.setX(position.getX() - 1);
+		position.setX(position.getX() - (1 * multiplier));
 	}
 	else if (auxiliaryCounter >= 22 && auxiliaryCounter < 28) {
-		position.setX(position.getX() - 1);
+		position.setX(position.getX() - (1 * multiplier));
 		position.setY(position.getY() + 2);
 	}
 	else if (auxiliaryCounter >= 28 && auxiliaryCounter < 37) {
 		position.setY(position.getY() + 1);
 	}
 	else if (auxiliaryCounter >= 37 && auxiliaryCounter < 40) {
-		position.setX(position.getX() + 1);
+		position.setX(position.getX() + (1 * multiplier));
 	}
 	else if (auxiliaryCounter >= 40 && auxiliaryCounter < 45) {
-		position.setX(position.getX() - 1);
+		position.setX(position.getX() - (1 * multiplier));
 		position.setY(position.getY() + 2);
 	}
 	else if (auxiliaryCounter == 120) {
 		position.setY(position.getY() - 4);
 		auxiliaryCounter = 0;
-	}
+		movement.setDirection(isPlayerAheadOfMonster(*this, world) ? Direction::Right : Direction::Left);
+ 	}
 }
 
 Boss::Boss(Position position)
@@ -74,6 +79,8 @@ void Boss::loadBossImages(SDL_Surface* display)
 {
 	bossImages[0] = loadPNG("./img/npc_imgs/boss1.png", display);
 	bossImages[1] = loadPNG("./img/npc_imgs/boss2.png", display);
+	bossImages[2] = loadPNG("./img/npc_imgs/boss3.png", display);
+	bossImages[3] = loadPNG("./img/npc_imgs/boss4.png", display);
 }
 
 int Boss::getHealthPoints() const
@@ -98,7 +105,7 @@ void Boss::move(World &world)
 {
 	++stepsCounter;
 	if (movement.getDirection() != Direction::None && stepsCounter & 1) {
-		moveAndJump();
+		moveAndJump(world);
 		changeModel();
 	}
 }

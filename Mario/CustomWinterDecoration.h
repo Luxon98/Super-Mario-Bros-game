@@ -29,7 +29,7 @@ enum class WinterDecorationType
 class CustomWinterDecoration : public InanimateObject
 {
 private:
-	static std::array<SDL_Surface*, 9> decorationImages;
+	static std::array<SDL_Surface*, 10> decorationImages;
 	WinterDecorationType decorationType;
 
 public:

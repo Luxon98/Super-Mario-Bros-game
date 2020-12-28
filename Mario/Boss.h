@@ -14,13 +14,13 @@ struct SDL_Surface;
 class Boss : public IndependentLivingObject
 {
 private:
-	static std::array<SDL_Surface*, 2> bossImages;
+	static std::array<SDL_Surface*, 4> bossImages;
 	int model;
 	int healthPoints;
 	int auxiliaryCounter;
 	int computeImageIndex() const override;
 	void changeModel();
-	void moveAndJump();
+	void moveAndJump(World &world);
 
 public:
 	Boss(Position position);

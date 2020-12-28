@@ -4,7 +4,7 @@
 #include "SDL_Utility.h"
 
 
-std::array<SDL_Surface*, 9> CustomWinterDecoration::decorationImages;
+std::array<SDL_Surface*, 10> CustomWinterDecoration::decorationImages;
 
 CustomWinterDecoration::CustomWinterDecoration(WinterDecorationType type, Position position)
 {

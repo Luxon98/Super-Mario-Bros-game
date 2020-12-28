@@ -83,7 +83,7 @@ void CloudBombardier::move(World &world)
 		}
 
 		if (stepsCounter % 75 == 0) {
-			Direction direction = (isPlayerAheadOfBombardier(*this, world) ? Direction::Right : Direction::Left);
+			Direction direction = (isPlayerAheadOfMonster(*this, world) ? Direction::Right : Direction::Left);
 			movement.setDirection(direction);
 		}
 

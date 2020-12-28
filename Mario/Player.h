@@ -66,6 +66,8 @@ private:
 		bool slideFlag;
 		bool changeDirectionFlag;
 		bool downPipeFlag;
+		bool inAirFlag;
+		bool rejumpFlag;
 		Flags();
 		void setDefaultFlags(bool armedFlag);
 	};

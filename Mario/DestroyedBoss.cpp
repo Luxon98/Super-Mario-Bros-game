@@ -5,27 +5,32 @@
 #include "World.h"
 
 
-std::array<SDL_Surface*, 3> DestroyedBoss::destroyedBossImages;
+std::array<SDL_Surface*, 6> DestroyedBoss::destroyedBossImages;
 
 int DestroyedBoss::computeImageIndex() const
 {
+	int baseIndex = (direction == Direction::Left ? 0 : 3);
+
 	if (!normal) {
 		if (auxiliaryCounter < 45 || (auxiliaryCounter >= 70 && auxiliaryCounter < 95)
 			|| (auxiliaryCounter >= 120 && auxiliaryCounter < 145)) {
-			return 0;
+
+			return baseIndex + 0;
 		}
 		else {
-			return 1;
+			return baseIndex + 1;
 		}
 	}
 	else {
-		return 2;
+		return baseIndex + 2;
 	}
 }
 
-DestroyedBoss::DestroyedBoss(Position position, bool normal) : normal(normal)
+DestroyedBoss::DestroyedBoss(Position position, Direction direction, bool normal)
 {
 	this->position = position;
+	this->direction = direction;
+	this->normal = normal;
 	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
 }
@@ -34,7 +39,10 @@ void DestroyedBoss::loadDestroyedBossImages(SDL_Surface* display)
 {
 	destroyedBossImages[0] = loadPNG("./img/npc_imgs/boss1.png", display);
 	destroyedBossImages[1] = loadPNG("./img/npc_imgs/boss2.png", display);
-	destroyedBossImages[2] = loadPNG("./img/anm_imgs/destroyed_boss.png", display);
+	destroyedBossImages[2] = loadPNG("./img/anm_imgs/destroyed_boss1.png", display);
+	destroyedBossImages[3] = loadPNG("./img/npc_imgs/boss3.png", display);
+	destroyedBossImages[4] = loadPNG("./img/npc_imgs/boss4.png", display);
+	destroyedBossImages[5] = loadPNG("./img/anm_imgs/destroyed_boss2.png", display);
 }
 
 void DestroyedBoss::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

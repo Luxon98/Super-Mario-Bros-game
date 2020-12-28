@@ -127,7 +127,7 @@ public:
 	void addCrushedCreature(Position position);
 	void addDestroyedCreature(Position position, Direction slideDirection);
 	void addDestroyedTurtle(Position position, Direction slideDirection, bool red = false);
-	void addDestroyedBoss(Position position, bool normal = true);
+	void addDestroyedBoss(Position position, Direction direction, bool normal = true);
 	void addDestroyedFish(Position position, bool directionFlag);
 	void addDestroyedBombardier(Position position, bool leftSide);
 	void addExplosion(Position position);

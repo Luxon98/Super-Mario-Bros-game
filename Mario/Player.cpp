@@ -31,6 +31,8 @@ Player::Flags::Flags()
 	slideFlag = false;
 	changeDirectionFlag = false;
 	downPipeFlag = false;
+	inAirFlag = false;
+	rejumpFlag = false;
 }
 
 void Player::Flags::setDefaultFlags(bool armedFlag)
@@ -42,6 +44,8 @@ void Player::Flags::setDefaultFlags(bool armedFlag)
 	slideFlag = false;
 	changeDirectionFlag = false;
 	downPipeFlag = false;
+	inAirFlag = false;
+	rejumpFlag = false;
 }
 
 Player::PlayerMovement::PlayerMovement()
@@ -252,10 +256,16 @@ void Player::resetMovement()
 	playerMovement.setSpeed(1);
 }
 
-void Player::changeModelAndAirFlagStatus(World &world)
+void Player::changeModelAndAirFlagStatus(World &world) // BAD NAME
 {
 	if (!isCharacterStandingOnSomething(*this, world)) {
-		model = 4;
+		if (flags.inAirFlag) {
+			model = 4;
+		}
+		else {
+			model = 3;
+			// to rework
+		}
 		return;
 	}
 
@@ -380,6 +390,9 @@ void Player::moveUp(World &world)
 	
 	if (isCharacterStandingOnSomething(*this, world)) {
 		model = 0;
+	}
+	else if (!flags.rejumpFlag) {
+		flags.inAirFlag = true;
 	}
 }
 
@@ -525,7 +538,7 @@ bool Player::isPerformingJumpAsSmall() const
 
 bool Player::isGoingToPipe() const
 {
-	if (flags.downPipeFlag && playerMovement.stepsUp == 0) {
+	if (flags.downPipeFlag && playerMovement.stepsUp == 0 && currentState != PlayerState::Insensitive) {
 		return true;
 	}
 
@@ -648,6 +661,7 @@ void Player::loseBonusOrLife()
 void Player::performAdditionalJump()
 {
 	playerMovement.stepsUp = 40;
+	flags.rejumpFlag = true;
 }
 
 void Player::move(World &world)
@@ -666,6 +680,10 @@ void Player::move(World &world)
 			}
 			else if (!isCharacterStandingOnSomething(*this, world)) {
 				moveDown(world);
+			}
+			else {
+				flags.inAirFlag = false;
+				flags.rejumpFlag = false;
 			}
 
 			if (playerMovement.stepsLeft > 0) {
