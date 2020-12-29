@@ -458,5 +458,8 @@
     <ClInclude Include="FireMissle.h">
       <Filter>Header Files\LivingObjects</Filter>
     </ClInclude>
+    <ClInclude Include="RandomGenerator.h">
+      <Filter>Header Files\OtherFiles</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

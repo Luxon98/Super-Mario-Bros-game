@@ -22,23 +22,23 @@ void KeyboardController::handleDownArrow(Player &player)
 
 void KeyboardController::handleLeftAndRightArrowsWhenStanding(Player &player)
 {
-	if (player.playerMovement.stepsLeft > 0) {
-		player.playerMovement.stepsLeft -= 4;
+	if (player.stepsCounter.stepsLeft > 0) {
+		player.stepsCounter.stepsLeft -= 4;
 	}
-	else if (player.playerMovement.stepsRight > 0) {
-		player.playerMovement.stepsRight -= 4;
+	else if (player.stepsCounter.stepsRight > 0) {
+		player.stepsCounter.stepsRight -= 4;
 	}
 }
 
 void KeyboardController::handleLeftAndUpArrowsWhenStanding(Player &player)
 {
-	if (player.playerMovement.stepsLeft > 0) {
-		player.playerMovement.stepsLeft += 18;
-		player.playerMovement.stepsUp = 2 * player.playerMovement.stepsLeft;
+	if (player.stepsCounter.stepsLeft > 0) {
+		player.stepsCounter.stepsLeft += 18;
+		player.stepsCounter.stepsUp = 2 * player.stepsCounter.stepsLeft;
 	}
 	else {
-		player.playerMovement.stepsLeft = 36;
-		player.playerMovement.stepsUp = 72;
+		player.stepsCounter.stepsLeft = 36;
+		player.stepsCounter.stepsUp = 72;
 	}
 
 	SoundController::playJumpEffect(player);
@@ -46,13 +46,13 @@ void KeyboardController::handleLeftAndUpArrowsWhenStanding(Player &player)
 
 void KeyboardController::handleRightAndUpArrowsWhenStanding(Player &player)
 {
-	if (player.playerMovement.stepsRight > 0) {
-		player.playerMovement.stepsRight += 18;
-		player.playerMovement.stepsUp = 2 * player.playerMovement.stepsRight;
+	if (player.stepsCounter.stepsRight > 0) {
+		player.stepsCounter.stepsRight += 18;
+		player.stepsCounter.stepsUp = 2 * player.stepsCounter.stepsRight;
 	}
 	else {
-		player.playerMovement.stepsRight = 36;
-		player.playerMovement.stepsUp = 72;
+		player.stepsCounter.stepsRight = 36;
+		player.stepsCounter.stepsUp = 72;
 	}
 
 	SoundController::playJumpEffect(player);
@@ -60,66 +60,66 @@ void KeyboardController::handleRightAndUpArrowsWhenStanding(Player &player)
 
 void KeyboardController::handleLeftArrowWhenStanding(Player &player)
 {
-	if (player.playerMovement.stepsLeft > 0 && player.playerMovement.stepsLeft < 60) {
-		player.playerMovement.stepsLeft += 8;
+	if (player.stepsCounter.stepsLeft > 0 && player.stepsCounter.stepsLeft < 60) {
+		player.stepsCounter.stepsLeft += 8;
 	}
 	else {
-		player.playerMovement.stepsLeft = 56;
+		player.stepsCounter.stepsLeft = 56;
 	}
 }
 
 void KeyboardController::handleRightArrowWhenStanding(Player &player)
 {
-	if (player.playerMovement.stepsRight > 0 && player.playerMovement.stepsRight < 60) {
-		player.playerMovement.stepsRight += 8;
+	if (player.stepsCounter.stepsRight > 0 && player.stepsCounter.stepsRight < 60) {
+		player.stepsCounter.stepsRight += 8;
 	}
 	else {
-		player.playerMovement.stepsRight = 56;
+		player.stepsCounter.stepsRight = 56;
 	}
 }
 
 void KeyboardController::handleUpArrowWhenStanding(Player &player)
 {
-	player.playerMovement.stepsUp = 101;
+	player.stepsCounter.stepsUp = 101;
 	SoundController::playJumpEffect(player);
 }
 
 void KeyboardController::handleLeftAndRightArrowsWhenInAir(Player &player)
 {
-	if (keysState[Direction::Left] && player.playerMovement.stepsLeft == 0) {
-		player.playerMovement.stepsLeft = 24;
+	if (keysState[Direction::Left] && player.stepsCounter.stepsLeft == 0) {
+		player.stepsCounter.stepsLeft = 24;
 	}
-	else if (keysState[Direction::Right] && player.playerMovement.stepsRight == 0) {
-		player.playerMovement.stepsRight = 24;
+	else if (keysState[Direction::Right] && player.stepsCounter.stepsRight == 0) {
+		player.stepsCounter.stepsRight = 24;
 	}
 }
 
 void KeyboardController::handleLeftAndUpArrowsWhenInAir(Player &player)
 {
-	if (player.playerMovement.stepsLeft > 0) {
-		player.playerMovement.stepsLeft += 8;
+	if (player.stepsCounter.stepsLeft > 0) {
+		player.stepsCounter.stepsLeft += 8;
 	}
 	else {
-		player.playerMovement.stepsLeft = 16;
+		player.stepsCounter.stepsLeft = 16;
 	}
 
 	if (!doubleJumpFlag) {
-		player.playerMovement.stepsUp += (player.getY() > 200 ? 45 : 20);
+		player.stepsCounter.stepsUp += (player.getY() > 200 ? 45 : 20);
 		doubleJumpFlag = true;
 	}
 }
 
 void KeyboardController::handleRightAndUpArrowsWhenInAir(Player &player)
 {
-	if (player.playerMovement.stepsRight > 0) {
-		player.playerMovement.stepsRight += 8;
+	if (player.stepsCounter.stepsRight > 0) {
+		player.stepsCounter.stepsRight += 8;
 	}
 	else {
-		player.playerMovement.stepsRight = 16;
+		player.stepsCounter.stepsRight = 16;
 	}
 
 	if (!doubleJumpFlag) {
-		player.playerMovement.stepsUp += (player.getY() > 200 ? 45 : 20);
+		player.stepsCounter.stepsUp += (player.getY() > 200 ? 45 : 20);
 		doubleJumpFlag = true;
 	}
 }
@@ -127,28 +127,28 @@ void KeyboardController::handleRightAndUpArrowsWhenInAir(Player &player)
 void KeyboardController::handleUpArrowWhenInAir(Player &player)
 {
 	if (!doubleJumpFlag) {
-		player.playerMovement.stepsUp += (player.getY() > 200 ? 65 : 30);
+		player.stepsCounter.stepsUp += (player.getY() > 200 ? 65 : 30);
 		doubleJumpFlag = true;
 	}
 }
 
 void KeyboardController::handleLeftArrowWhenInAir(Player &player)
 {
-	if (player.playerMovement.stepsLeft > 0) {
-		player.playerMovement.stepsLeft += 12;
+	if (player.stepsCounter.stepsLeft > 0) {
+		player.stepsCounter.stepsLeft += 12;
 	}
 	else {
-		player.playerMovement.stepsLeft = 24;
+		player.stepsCounter.stepsLeft = 24;
 	}
 }
 
 void KeyboardController::handleRightArrowWhenInAir(Player &player)
 {
-	if (player.playerMovement.stepsRight > 0) {
-		player.playerMovement.stepsRight += 12;
+	if (player.stepsCounter.stepsRight > 0) {
+		player.stepsCounter.stepsRight += 12;
 	}
 	else {
-		player.playerMovement.stepsRight = 24;
+		player.stepsCounter.stepsRight = 24;
 	}
 }
 
@@ -176,7 +176,7 @@ void KeyboardController::handleArrowsWhenStanding(Player &player)
 
 void KeyboardController::handleArrowsWhenInAir(Player &player)
 {
-	if (player.playerMovement.stepsUp == 0) {
+	if (player.stepsCounter.stepsUp == 0) {
 		handleLeftAndRightArrowsWhenInAir(player);
 		return;
 	}

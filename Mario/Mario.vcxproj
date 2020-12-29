@@ -251,6 +251,7 @@
     <ClInclude Include="Position.h" />
     <ClInclude Include="PreloadingImages.h" />
     <ClInclude Include="Princess.h" />
+    <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="RedTurtle.h" />
     <ClInclude Include="Rock.h" />
     <ClInclude Include="Screen.h" />

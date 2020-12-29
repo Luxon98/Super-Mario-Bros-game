@@ -12,11 +12,11 @@ class Coin : public BonusObject
 {
 private:
 	static std::array<SDL_Surface*, 8> coinImages; 
+	static bool coinImage;
 	int computeBaseIndex() const;
 	int computeImageIndex() const;
 
 public:
-	static bool coinImage;
 	Coin(Position position);
 	bool isCoin() const override;
 	int getPointsForCollecting() const override;

@@ -3,7 +3,6 @@
 
 #include <chrono>
 #include <array>
-#include "Movement.h"
 #include "LivingObject.h"
 
 class World;
@@ -72,26 +71,27 @@ private:
 		void setDefaultFlags(bool armedFlag);
 	};
 
-	class PlayerMovement : public Movement
+	class StepsCounter
 	{
 	public:
 		int stepsLeft;
 		int stepsRight;
 		int stepsUp;
-		PlayerMovement();
+		StepsCounter();
 	};
 
 	static std::array<SDL_Surface*, 140> playerImages;
 	int model;
 	Statistics statistics;
 	Flags flags;
-	PlayerMovement playerMovement;
+	StepsCounter stepsCounter;
 	PlayerAnimation currentAnimationState;
 	PlayerState currentState;
 	std::shared_ptr<Camera> camera;
 	std::chrono::steady_clock::time_point animationStartTime;
 	int computeImageIndexWhenSliding() const;
 	int computeImageIndex() const override;
+	int getModelDuringFall() const;
 	void changeStateDuringAnimation();
 	void performGrowingAnimation(int difference);
 	void performShrinkingAnimation(int difference);
@@ -101,7 +101,7 @@ private:
 	long long int lastDifference;
 	bool movementBlock;
 	void resetMovement();
-	void changeModelAndAirFlagStatus(World &world);
+	void changeModel(World &world);
 	bool isHittingCeiling(int distance) const;
 	bool isFallingIntoAbyss(int distance) const;
 	bool isGoingBeyondCamera(int distance) const;
@@ -135,7 +135,6 @@ public:
 	SDL_Surface* getImage() const;
 	void incrementCoins();
 	void incrementLives();
-	void increaseSpeed();
 	void addPoints(int pts);
 	void setCurrentAnimation(PlayerAnimation animation);
 	void setCamera(std::shared_ptr<Camera> camera);

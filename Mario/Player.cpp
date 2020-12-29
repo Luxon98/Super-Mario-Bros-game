@@ -48,13 +48,11 @@ void Player::Flags::setDefaultFlags(bool armedFlag)
 	rejumpFlag = false;
 }
 
-Player::PlayerMovement::PlayerMovement()
+Player::StepsCounter::StepsCounter()
 {
 	stepsLeft = 0;
 	stepsRight = 0;
 	stepsUp = 0;
-	speed = 1;
-	verticalSpeed = 1;
 }
 
 int Player::computeImageIndexWhenSliding() const
@@ -88,6 +86,19 @@ int Player::computeImageIndex() const
 		else {
 			return (70 * flags.orientationFlag + 65);
 		}
+	}
+}
+
+int Player::getModelDuringFall() const
+{
+	if (changeModelCounter <= 2) {
+		return 1;
+	}
+	else if (changeModelCounter == 3) {
+		return 2;
+	}
+	else {
+		return 3;
 	}
 }
 
@@ -220,8 +231,6 @@ void Player::performImmortalAnimation(int difference)
 		lastDifference = 0;
 
 		SoundController::playBackgroundMusic();
-
-		playerMovement.setSpeed(1);
 	}
 }
 
@@ -245,31 +254,27 @@ void Player::performSmallImmortalAnimation(int difference)
 		lastDifference = 0;
 
 		SoundController::playBackgroundMusic();
-
-		playerMovement.setSpeed(1);
 	}
 }
 
 void Player::resetMovement()
 {
 	resetSteps();
-	playerMovement.setSpeed(1);
 }
 
-void Player::changeModelAndAirFlagStatus(World &world) // BAD NAME
+void Player::changeModel(World &world)
 {
 	if (!isCharacterStandingOnSomething(*this, world)) {
 		if (flags.inAirFlag) {
 			model = 4;
 		}
 		else {
-			model = 3;
-			// to rework
+			model = getModelDuringFall();
 		}
 		return;
 	}
 
-	if (playerMovement.stepsLeft == 0 && playerMovement.stepsRight == 0) {
+	if (stepsCounter.stepsLeft == 0 && stepsCounter.stepsRight == 0) {
 		model = 0;
 		return;
 	}
@@ -280,6 +285,8 @@ void Player::changeModelAndAirFlagStatus(World &world) // BAD NAME
 		if (model > 3) {
 			model = 1;
 		}	
+
+		changeModelCounter = 0;
 	}
 }
 
@@ -318,7 +325,7 @@ bool Player::isDuringAnimation() const
 
 bool Player::isAbleToDestroyBlock() const
 {
-	if ((currentState >= PlayerState::Tall && currentState <= PlayerState::ImmortalThird)
+	if ((currentState >= PlayerState::Tall && currentState <= PlayerState::ImmortalThird) 
 		|| currentState == PlayerState::ImmortalFourth) {
 		
 		return true;
@@ -329,18 +336,18 @@ bool Player::isAbleToDestroyBlock() const
 
 void Player::moveLeft(World &world)
 {
-	int alignment = computeHorizontalAlignment(Direction::Left, playerMovement.getSpeed(), *this, world);
-	int distance = playerMovement.getSpeed() - alignment;
+	int alignment = computeHorizontalAlignment(Direction::Left, movement.getSpeed(), *this, world);
+	int distance = movement.getSpeed() - alignment;
 
 	if (!isGoingBeyondCamera(distance)) {
 		position.setX(position.getX() - distance);
 	}
 
-	if (alignment != 0 && playerMovement.stepsUp == 0) {
-		playerMovement.stepsLeft = 0;
+	if (alignment != 0 && stepsCounter.stepsUp == 0) {
+		stepsCounter.stepsLeft = 0;
 	}
 	else {
-		--playerMovement.stepsLeft;
+		--stepsCounter.stepsLeft;
 	}
 
 	flags.orientationFlag = false;
@@ -348,16 +355,16 @@ void Player::moveLeft(World &world)
 
 void Player::moveRight(World &world)
 {
-	int alignment = computeHorizontalAlignment(Direction::Right, playerMovement.getSpeed(), *this, world);
-	int distance = playerMovement.getSpeed() - alignment;
+	int alignment = computeHorizontalAlignment(Direction::Right, movement.getSpeed(), *this, world);
+	int distance = movement.getSpeed() - alignment;
 
 	position.setX(position.getX() + distance);
 
-	if (alignment != 0 && playerMovement.stepsUp == 0) {
-		playerMovement.stepsRight = 0;
+	if (alignment != 0 && stepsCounter.stepsUp == 0) {
+		stepsCounter.stepsRight = 0;
 	}
 	else {
-		--playerMovement.stepsRight;
+		--stepsCounter.stepsRight;
 	}
 
 	flags.orientationFlag = true;
@@ -365,11 +372,11 @@ void Player::moveRight(World &world)
 
 void Player::moveUp(World &world)
 {
-	int alignment = computeVerticalAlignment(Direction::Up, playerMovement.getVerticalSpeed(), *this, world);
-	int distance = playerMovement.getVerticalSpeed() - alignment;
+	int alignment = computeVerticalAlignment(Direction::Up, movement.getVerticalSpeed(), *this, world);
+	int distance = movement.getVerticalSpeed() - alignment;
 	
 	if (distance < 0) {
-		playerMovement.stepsUp = 0;
+		stepsCounter.stepsUp = 0;
 		return;
 	}
 
@@ -377,15 +384,15 @@ void Player::moveUp(World &world)
 		position.setY(position.getY() - distance);
 	}
 	else {
-		playerMovement.stepsUp = 1;
+		stepsCounter.stepsUp = 1;
 	}
 
 	if (isHittingBlock(alignment, Direction::Up)) {
 		hitBlock(world);
-		playerMovement.stepsUp = 0;
+		stepsCounter.stepsUp = 0;
 	}
 	else {
-		--playerMovement.stepsUp;
+		--stepsCounter.stepsUp;
 	}
 	
 	if (isCharacterStandingOnSomething(*this, world)) {
@@ -398,8 +405,8 @@ void Player::moveUp(World &world)
 
 void Player::moveDown(World &world)
 {
-	int alignment = computeVerticalAlignment(Direction::Down, playerMovement.getVerticalSpeed(), *this, world);
-	int distance = playerMovement.getVerticalSpeed() - alignment;
+	int alignment = computeVerticalAlignment(Direction::Down, movement.getVerticalSpeed(), *this, world);
+	int distance = movement.getVerticalSpeed() - alignment;
 
 	if (!isFallingIntoAbyss(distance)) {
 		position.setY(position.getY() + distance);
@@ -415,8 +422,8 @@ void Player::moveDown(World &world)
 
 void Player::slide(World &world)
 {
-	int alignment = computeVerticalAlignment(Direction::Down, playerMovement.getVerticalSpeed(), *this, world);
-	int distance = playerMovement.getVerticalSpeed() - alignment;
+	int alignment = computeVerticalAlignment(Direction::Down, movement.getVerticalSpeed(), *this, world);
+	int distance = movement.getVerticalSpeed() - alignment;
 	
 	if (distance == 0 && !flags.changeDirectionFlag) {
 		flags.orientationFlag = false;
@@ -431,9 +438,10 @@ void Player::slide(World &world)
 Player::Player(Position position)
 {
 	size = Size(32, 32);
+	movement = Movement(1, 1, Direction::None);
 	statistics = Statistics();
 	flags = Flags();
-	playerMovement = PlayerMovement();
+	stepsCounter = StepsCounter();
 	this->position = position;
 	model = 0;
 	changeModelCounter = 0;
@@ -538,7 +546,7 @@ bool Player::isPerformingJumpAsSmall() const
 
 bool Player::isGoingToPipe() const
 {
-	if (flags.downPipeFlag && playerMovement.stepsUp == 0 && currentState != PlayerState::Insensitive) {
+	if (flags.downPipeFlag && stepsCounter.stepsUp == 0 && currentState != PlayerState::Insensitive) {
 		return true;
 	}
 
@@ -547,7 +555,7 @@ bool Player::isGoingToPipe() const
 
 bool Player::isNotJumpingUp() const
 {
-	if (playerMovement.stepsUp < 50) {
+	if (stepsCounter.stepsUp < 50) {
 		return true;
 	}
 
@@ -556,7 +564,7 @@ bool Player::isNotJumpingUp() const
 
 bool Player::isStillRunning()
 {
-	return (playerMovement.stepsRight != 0);
+	return (stepsCounter.stepsRight != 0);
 }
 
 SDL_Surface* Player::getImage() const
@@ -579,11 +587,6 @@ void Player::incrementCoins()
 void Player::incrementLives()
 {
 	++statistics.lives;
-}
-
-void Player::increaseSpeed()
-{
-	playerMovement.setSpeed(2);
 }
 
 void Player::addPoints(int pts)
@@ -660,7 +663,7 @@ void Player::loseBonusOrLife()
 
 void Player::performAdditionalJump()
 {
-	playerMovement.stepsUp = 40;
+	stepsCounter.stepsUp = 40;
 	flags.rejumpFlag = true;
 }
 
@@ -675,7 +678,7 @@ void Player::move(World &world)
 			slide(world);
 		}
 		else {
-			if (playerMovement.stepsUp > 0) {
+			if (stepsCounter.stepsUp > 0) {
 				moveUp(world);
 			}
 			else if (!isCharacterStandingOnSomething(*this, world)) {
@@ -686,14 +689,14 @@ void Player::move(World &world)
 				flags.rejumpFlag = false;
 			}
 
-			if (playerMovement.stepsLeft > 0) {
+			if (stepsCounter.stepsLeft > 0) {
 				moveLeft(world);
 			}
-			else if (playerMovement.stepsRight > 0) {
+			else if (stepsCounter.stepsRight > 0) {
 				moveRight(world);
 			}
 
-			changeModelAndAirFlagStatus(world);
+			changeModel(world);
 		}
 
 		flags.downPipeFlag = false;
@@ -794,9 +797,9 @@ void Player::resetModel()
 
 void Player::resetSteps()
 {
-	playerMovement.stepsLeft = 0;
-	playerMovement.stepsRight = 0;
-	playerMovement.stepsUp = 0;
+	stepsCounter.stepsLeft = 0;
+	stepsCounter.stepsRight = 0;
+	stepsCounter.stepsUp = 0;
 }
 
 void Player::setSlidingParameters()
@@ -809,7 +812,7 @@ void Player::setSlidingParameters()
 void Player::setFinishingRunParameters(int distance)
 {
 	resetMovement();
-	playerMovement.stepsRight = distance;
+	stepsCounter.stepsRight = distance;
 	changeModelCounter = 0;
 	model = 0;
 	flags.setDefaultFlags(flags.armedFlag);

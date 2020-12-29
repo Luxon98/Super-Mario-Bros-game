@@ -1,6 +1,5 @@
 #include "Level.h"
 
-#include <random>
 #include "World.h"
 #include "Screen.h"
 #include "Block.h"
@@ -30,6 +29,7 @@
 #include "FireSerpent.h"
 #include "Player.h"
 #include "Snowflake.h"
+#include "RandomGenerator.h"
 
 
 bool Level::summerHiddenStageChecker = false;
@@ -256,9 +256,20 @@ void Level::setSecondLevel(World &world, bool checker)
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
 
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1294, 274))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1454, 274))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2190, 274))));
+
+	for (int i = 1326; i < 1454; i += 32) {
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 176))));
+	}
+
+	for (int i = 1870; i < 1998; i += 32) {
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 274))));
+	}
+
 	if (checker) {
 		world.blocks.push_back(Block(BlockType::BonusWithOneUpMushroom, Position(2864, 80)));
-
 	}
 	else {
 		world.blocks.push_back(Block(BlockType::Destructible, Position(2864, 80)));
@@ -485,18 +496,6 @@ void Level::setSecondLevel(World &world, bool checker)
 
 	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4847, 397), false)));
 
-	for (int i = 1326; i < 1454; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 176))));
-	}
-
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1294, 274))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1454, 274))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2190, 274))));
-
-	for (int i = 1870; i < 1998; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 274)))); ////
-	}
-
 	world.checkPoints.push_back(CheckPoint(Position(3328, 297), false, 1));
 	world.checkPoints.push_back(CheckPoint(Position(5354, 294), true, 3));
 
@@ -523,6 +522,27 @@ void Level::setThirdLevel(World &world)
 
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::OpenWorld;
+
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(878, 146))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(910, 146))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(942, 146))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1072, 370))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1198, 82))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1230, 82))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1614, 208))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1646, 208))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1934, 146))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1966, 146))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1998, 146))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2030, 146))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2988, 148))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3020, 148))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3118, 148))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3150, 148))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2734, 174))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2766, 174))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3854, 174))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3886, 174))));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(80, 336), false)));
 
@@ -676,27 +696,6 @@ void Level::setThirdLevel(World &world)
 			world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(i, j))));
 		}
 	}
-
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(878, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(910, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(942, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1072, 370))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1198, 82))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1230, 82))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1614, 208))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1646, 208))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1934, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1966, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1998, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2030, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2988, 148))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3020, 148))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3118, 148))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3150, 148))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2734, 174))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2766, 174))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3854, 174))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3886, 174))));
 
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1423, 112))));
 	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1488, 112))));
@@ -913,6 +912,14 @@ void Level::setFirstHiddenStage(World &world)
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
 
+	for (int i = 172; i < 428; i += 32) {
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 306))));
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 242))));
+		if (i != 172 && i != 396) {
+			world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 178))));
+		}
+	}
+
 	for (int i = 16; i < 688; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
@@ -927,14 +934,6 @@ void Level::setFirstHiddenStage(World &world)
 
 	for (int i = 80; i < 432; i += 32) {
 		world.blocks.push_back(Block(BlockType::Destructible, Position(16, i)));
-	}
-
-	for (int i = 172; i < 428; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 306))));
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 242))));
-		if (i != 172 && i != 396) {
-			world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 178))));
-		}
 	}
 
 	world.blocks.push_back(Block(BlockType::TubeLeftEntry, Position(583, 384)));
@@ -966,6 +965,13 @@ void Level::setSecondHiddenStage(World &world)
 
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
+
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(140, 402))));
+
+	for (int i = 172; i < 496; i += 32) {
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 274))));
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 402))));
+	}
 
 	for (int i = 16; i < 688; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
@@ -1002,13 +1008,6 @@ void Level::setSecondHiddenStage(World &world)
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(560, 336)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(560, 336)));
 	world.blocks.push_back(Block(BlockType::Destructible, Position(592, 336)));
-
-	for (int i = 172; i < 496; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 274))));
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 402))));
-	}
-
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(140, 402))));
 
 	world.checkPoints.push_back(CheckPoint(Position(590, 390), true, 2));
 
@@ -1083,6 +1082,11 @@ void Level::setWinterWorld(World &world)
 
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::CustomWinter;
+
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(464, 250))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2992, 272))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(6064, 90))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(8772, 210))));
 
 	for (int i = 16; i < 1168; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
@@ -1300,11 +1304,6 @@ void Level::setWinterWorld(World &world)
 
 	world.fireSerpents.push_back(FireSerpent(1, Position(3552, 208)));
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(464, 250))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2992, 272))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(6064, 90))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(8772, 210))));
-
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
 		CustomWinterDecoration(WinterDecorationType::SIGNPOST, Position(49, 389))));
 
@@ -1514,15 +1513,10 @@ void Level::setWinterWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
 		CustomWinterDecoration(WinterDecorationType::BLUE_STAR, Position(9633, 125))));
 
-	std::random_device dev;
-	std::mt19937 rng(dev());
-	std::uniform_int_distribution<std::mt19937::result_type> distX(-10, 10);
-	std::uniform_int_distribution<std::mt19937::result_type> distY(-15, 15);
-
 	for (int i = -60; i < 10500; i += 100) {
 		for (int j = 0, k = 24; j < 480; j += 60, k += 24) {
-			int x = i - k - distX(rng);
-			int y = j + distY(rng);
+			int x = i - k - getRandomNumber(-10, 10);
+			int y = j + getRandomNumber(-15, 15);
 			world.animatedElements.push_back(std::make_shared<Snowflake>(Snowflake(Position(x, y))));
 		}
 	}
@@ -1552,6 +1546,19 @@ void Level::setSecondStageOnWinterWorld(World &world)
 
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::CustomWinter;
+
+	for (int i = 2812; i < 3068; i += 32) {
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 120))));
+	}
+
+	for (int i = 1792; i < 1888; i += 32) {
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 178))));
+	}
+
+	for (int i = 124; i < 324; i += 40) {
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3462, i))));
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3762, i))));
+	}
 
 	for (int i = 463; i >= 367; i -= 32) {
 		world.blocks.push_back(Block(BlockType::Tube, Position(77, i)));
@@ -1699,19 +1706,6 @@ void Level::setSecondStageOnWinterWorld(World &world)
 		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
 	}
 
-	for (int i = 2812; i < 3068; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 120))));
-	}
-
-	for (int i = 1792; i < 1888; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 178))));
-	}
-
-	for (int i = 124; i < 324; i += 40) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3462, i))));
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3762, i))));
-	}
-
 	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3180, 300))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
@@ -1795,15 +1789,10 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<CustomWinterDecoration>(
 		CustomWinterDecoration(WinterDecorationType::CHRISTMAS_TREE, Position(5167, 377))));
 
-	std::random_device dev;
-	std::mt19937 rng(dev());
-	std::uniform_int_distribution<std::mt19937::result_type> distX(-10, 10);
-	std::uniform_int_distribution<std::mt19937::result_type> distY(-15, 15);
-
 	for (int i = -60; i < 5800; i += 100) {
 		for (int j = 0, k = 24; j < 480; j += 60, k += 24) {
-			int x = i - k - distX(rng);
-			int y = j + distY(rng);
+			int x = i - k - getRandomNumber(-10, 10);
+			int y = j + getRandomNumber(-15, 15);
 			world.animatedElements.push_back(std::make_shared<Snowflake>(Snowflake(Position(x, y))));
 		}
 	}
@@ -1830,6 +1819,13 @@ void Level::setWinterHiddenStage(World &world)
 
 	world.WORLD_HEIGHT = 450;
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
+
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(32, 242))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(520, 169))));
+
+	for (int i = 76; i <= 440; i += 72) {
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 360))));
+	}
 
 	for (int i = 40; i <= 544; i += 72) {
 		world.blocks.push_back(Block(BlockType::AlternativeEmpty, Position(i, 408)));
@@ -1878,14 +1874,6 @@ void Level::setWinterHiddenStage(World &world)
 		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
 	}
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(32, 242))));
-
-	for (int i = 76; i <= 440; i += 72) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 360))));
-	}
-
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(520, 169))));
-
 	world.checkPoints.push_back(CheckPoint(Position(590, 358), true, 2));
 
 	world.flag = nullptr;
@@ -1912,6 +1900,15 @@ void Level::setSummerWorld(World &world)
 	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
 
 	summerHiddenStageChecker = false;
+
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3264, 160))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3296, 160))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(4596, 336))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(4628, 336))));
+
+	for (int i = 2800; i < 3300; i += 64) {
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 385))));
+	}
 
 	for (int i = 16; i < 656; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
@@ -2024,15 +2021,6 @@ void Level::setSummerWorld(World &world)
 
 	world.platforms.push_back(Platform(Position(960, 460), PlatformType::MovingVerticallyPlatform));
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3264, 160))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3296, 160))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(4596, 336))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(4628, 336))));
-
-	for (int i = 2800; i < 3300; i += 64) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 385))));
-	}
-
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(3, Position(525, 105))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(823, 424))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(1079, 99))));
@@ -2089,6 +2077,7 @@ void Level::setSecondStageOnSummerWorld(World &world)
 	world.WORLD_HEIGHT = 450;
 	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
 
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3936, 402))));
 
 	for (int i = 128; i < 960; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
@@ -2261,8 +2250,6 @@ void Level::setSecondStageOnSummerWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(5822, 81))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(6446, 104))));
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3936, 402))));
-
 	if (!summerHiddenStageChecker) {
 		world.checkPoints.push_back(CheckPoint(Position(832, 153), false, 4));
 		world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(450, 60))));
@@ -2422,6 +2409,14 @@ void Level::setSummerHiddenStage(World &world)
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
 
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(16, 18))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(624, 18))));
+
+	for (int i = 240; i < 432; i += 32) {
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 400))));
+		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 432))));
+	}
+
 	for (int i = 16; i < 656; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
 	}
@@ -2477,14 +2472,6 @@ void Level::setSummerHiddenStage(World &world)
 	world.blocks.push_back(Block(BlockType::Empty, Position(400, 114)));
 	world.blocks.push_back(Block(BlockType::Empty, Position(440, 90)));
 
-	for (int i = 240; i < 432; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 400))));
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 432))));
-	}
-
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(16, 18))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(624, 18))));
-
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(320, 81))));
 
 	world.checkPoints.push_back(CheckPoint(Position(544, 329), false, 2));
@@ -2512,6 +2499,10 @@ void Level::setSecondSummerHiddenStage(World &world)
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
 
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(176, 225))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(144, 225))));
+	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(464, 402))));
+
 	for (int i = 16; i < 656; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 432)));
@@ -2537,10 +2528,6 @@ void Level::setSecondSummerHiddenStage(World &world)
 
 	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
 		CustomSummerDecoration(SummerDecorationType::PALM, Position(201, 349))));
-
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(176, 225))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(144, 225))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(464, 402))));
 
 	world.checkPoints.push_back(CheckPoint(Position(544, 329), false, 5));
 

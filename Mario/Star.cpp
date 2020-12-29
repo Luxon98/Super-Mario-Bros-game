@@ -105,7 +105,6 @@ void Star::giveBonus(Player &player)
 	else {
 		player.setCurrentAnimation(PlayerAnimation::Immortal);
 	}
-	player.increaseSpeed();
 
 	SoundController::playStarMusic();
 }
