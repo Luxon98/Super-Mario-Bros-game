@@ -5,6 +5,7 @@
 #include "BonusObject.h"
 
 class World;
+class Player;
 struct SDL_Surface;
 
 
@@ -24,6 +25,7 @@ public:
 	static void loadStarImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
+	void giveBonus(Player &player) override;
 };
 
 #endif //Star_H

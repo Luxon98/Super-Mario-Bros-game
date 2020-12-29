@@ -3,6 +3,8 @@
 #include "Size.h"
 #include "Position.h"
 #include "SDL_Utility.h"
+#include "Player.h"
+#include "SoundController.h"
 #include "World.h"
 #include "LayoutStyle.h"
 
@@ -39,6 +41,16 @@ Coin::Coin(Position position)
 	this->position = position;
 }
 
+bool Coin::isCoin() const
+{
+	return true;
+}
+
+int Coin::getPointsForCollecting() const
+{
+	return 200;
+}
+
 void Coin::loadCoinImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < coinImages.size(); ++i) {
@@ -67,3 +79,10 @@ void Coin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) co
 	}
 }
 
+void Coin::move(World &world) {}
+
+void Coin::giveBonus(Player &player)
+{
+	player.incrementCoins();
+	SoundController::playCoinCollectedEffect();
+}

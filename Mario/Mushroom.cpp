@@ -5,6 +5,8 @@
 #include "Position.h"
 #include "CollisionHandling.h"
 #include "SDL_Utility.h"
+#include "Player.h"
+#include "SoundController.h"
 #include "World.h"
 #include "LayoutStyle.h"
 
@@ -20,11 +22,39 @@ int Mushroom::computeImageIndex() const
 	return 0;
 }
 
-void Mushroom::makeMoveUp(World &world)
+void Mushroom::moveUp(World &world)
 {
 	int alignment = computeVerticalAlignment(Direction::Down, movement.getVerticalSpeed(), *this, world);
 	int verticalDistance = movement.getVerticalSpeed() - alignment;
 	position.setY(position.getY() - verticalDistance);
+}
+
+void Mushroom::moveHorizontally(World &world)
+{
+	int alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
+	int distance = movement.getSpeed() - alignment;
+	if (movement.getDirection() == Direction::Left) {
+		distance *= -1;
+	}
+	position.setX(position.getX() + distance);
+
+	if (alignment > 0) {
+		movement.setDirection(movement.getDirection() == Direction::Right ? Direction::Left : Direction::Right);
+	}
+}
+
+void Mushroom::moveDiagonally(World &world)
+{
+	int alignment = computeVerticalAlignment(Direction::Down, movement.getVerticalSpeed(), *this, world);
+	int verticalDistance = movement.getVerticalSpeed() - alignment;
+	position.setY(position.getY() + verticalDistance);
+
+	alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
+	int distance = movement.getSpeed() - alignment;
+	if (movement.getDirection() == Direction::Left) {
+		distance *= -1;
+	}
+	position.setX(position.getX() + distance);
 }
 
 Mushroom::Mushroom(Position position, bool oneUp)
@@ -45,21 +75,9 @@ void Mushroom::loadMushroomImages(SDL_Surface* display)
 	mushroomImages[2] = loadPNG("./img/bonus_imgs/mushroom_brown_blue.png", display);
 }
 
-bool Mushroom::isOneUp() const
+int Mushroom::getPointsForCollecting() const
 {
-	return oneUp;
-}
-
-void Mushroom::decreasePositionY()
-{
-	position.setY(position.getY() - 3);
-}
-
-void Mushroom::setStepsUp(int stepsUp)
-{
-	if (this->stepsUp == 0) {
-		this->stepsUp = stepsUp;
-	}
+	return (oneUp ? 0 : 1000);
 }
 
 void Mushroom::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
@@ -77,7 +95,7 @@ void Mushroom::move(World &world)
 	}
 	else if (stepsCounter & 1) {
 		if (stepsUp > 0) {
-			makeMoveUp(world);
+			moveUp(world);
 			--stepsUp;
 			moveHorizontally(world);
 		}
@@ -91,4 +109,26 @@ void Mushroom::move(World &world)
 		}
 	}
 	++stepsCounter;
+}
+
+void Mushroom::knockUp()
+{
+	position.setY(position.getY() - 3);
+	if (stepsUp == 0) {
+		stepsUp = 30;
+	}
+}
+
+void Mushroom::giveBonus(Player &player)
+{
+	if (!oneUp) {
+		if (player.isSmall()) {
+			player.setCurrentAnimation(PlayerAnimation::Growing);
+		}
+		SoundController::playBonusCollectedEffect();
+	}
+	else {
+		player.incrementLives();
+		SoundController::playNewLiveAddedEffect();
+	}
 }

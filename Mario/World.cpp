@@ -161,7 +161,7 @@ void World::performBonusElementsActions()
 	for (std::size_t i = 0; i < bonusElements.size(); ++i) {
 		bonusElements[i]->move(*this);
 		if (isObjectOutsideWorld(*bonusElements[i])) {
-			deleteLivingElement(i);
+			deleteBonusElement(i);
 		}
 	}
 }
@@ -666,12 +666,7 @@ void World::destroyLastTouchedBlock()
 	SoundController::playBlockDestroyedEffect();
 }
 
-void World::deleteCoin(int index)
-{
-	inanimateElements.erase(inanimateElements.begin() + index);
-}
-
-void World::deleteLivingElement(int index)
+void World::deleteBonusElement(int index)
 {
 	bonusElements.erase(bonusElements.begin() + index);
 }
@@ -745,7 +740,7 @@ void World::performActions(bool playerActionFlag)
 		deleteAnimatedElements();
 		slideAnimatedElements();
 
-		handleBonusCollecting(*player, *this);
+		handleBonusesCollecting(*player, *this);
 		handleShellsAndMonstersCollisions(*this, *player);
 		handleFireBallsAndMonstersCollisions(*this, *player);
 

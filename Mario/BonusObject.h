@@ -1,10 +1,12 @@
 #ifndef BonusObject_H
 #define BonusObject_H
 
-#include "IndependentLivingObject.h"
+#include "LivingObject.h"
+
+class Player;
 
 
-class BonusObject : public IndependentLivingObject
+class BonusObject : public LivingObject
 {
 protected:
 	int growCounter;
@@ -13,6 +15,10 @@ protected:
 
 public:
 	bool isActive() const;
+	virtual bool isCoin() const;
+	virtual int getPointsForCollecting() const;
+	virtual void knockUp();
+	virtual void giveBonus(Player &player) = 0;
 };
 
 #endif //BonusObject_H

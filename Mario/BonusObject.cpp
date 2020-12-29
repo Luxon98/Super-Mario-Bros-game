@@ -19,3 +19,15 @@ bool BonusObject::isActive() const
 {
 	return active;
 }
+
+bool BonusObject::isCoin() const
+{
+	return false;
+}
+
+int BonusObject::getPointsForCollecting() const
+{
+	return 1000;
+}
+
+void BonusObject::knockUp() {}

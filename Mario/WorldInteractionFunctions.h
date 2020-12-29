@@ -14,17 +14,8 @@ void addTextAndPoints(Player &player, World &world, int points);
 
 void addTextAndPoints(Player &player, World &world, int points, Position position);
 
-void collectMushroom(Player &player, World &world, Mushroom &mushroom, int index);
-
-void collectFlower(Player &player, World &world, int index);
-
-void collectStar(Player &player, World &world, int index);
-
-void collectCoin(Player &player, World &world, int index);
-
 void collectCoinByCollision(Player &player, World &world, int index);
 
 void getPointsFromFlag(Player &player, World &world);
 
 #endif //WorldInteractionFunctions_H
-

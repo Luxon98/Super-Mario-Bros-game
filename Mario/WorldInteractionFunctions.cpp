@@ -25,9 +25,12 @@ TextType getTextTypeFromPoints(int points)
 
 void addTextAndPoints(Player &player, World &world, int points)
 {
-	if (points == 1000) {
+	if (points == 200) {
+		player.addPoints(200);
+	}
+	else if (points == 1000) {
 		world.addAnimatedText(TextType::ONE_THOUSAND, Position(player.getX(), player.getY() - 35));
-		player.addPoints(points);
+		player.addPoints(1000);
 	}
 	else {
 		world.addAnimatedText(TextType::ONE_UP, Position(player.getX(), player.getY() - 35));
@@ -41,67 +44,11 @@ void addTextAndPoints(Player &player, World &world, int points, Position positio
 	world.addAnimatedText(type, position);
 }
 
-void collectMushroom(Player &player, World &world, Mushroom &mushroom, int index)
-{
-	if (!mushroom.isOneUp()) {
-		if (player.isSmall()) {
-			player.setCurrentAnimation(PlayerAnimation::Growing);
-		}
-
-		addTextAndPoints(player, world, 1000);
-		SoundController::playBonusCollectedEffect();
-	}
-	else {
-		player.incrementLives();
-		addTextAndPoints(player, world, 0);
-		SoundController::playNewLiveAddedEffect();
-	}
-
-	world.deleteLivingElement(index);
-}
-
-void collectFlower(Player &player, World &world, int index)
-{
-	if (player.isSmall() || player.isInsensitive()) {
-		player.setCurrentAnimation(PlayerAnimation::Growing);
-	}
-	else if (!player.isImmortal() && !player.isArmed()) {
-		player.setCurrentAnimation(PlayerAnimation::Arming);
-	}
-
-	addTextAndPoints(player, world, 1000);
-	world.deleteLivingElement(index);
-	SoundController::playBonusCollectedEffect();
-}
-
-void collectStar(Player &player, World &world, int index)
-{
-	if (player.isSmall()) {
-		player.setCurrentAnimation(PlayerAnimation::ImmortalSmall);
-	}
-	else {
-		player.setCurrentAnimation(PlayerAnimation::Immortal);
-	}
-	player.increaseSpeed();
-
-	addTextAndPoints(player, world, 1000);
-	world.deleteLivingElement(index);
-	SoundController::playStarMusic();
-}
-
-void collectCoin(Player &player, World &world, int index)
-{
-	player.incrementCoins();
-	player.addPoints(200);
-	world.deleteCoin(index);
-	SoundController::playCoinCollectedEffect();
-}
-
 void collectCoinByCollision(Player &player, World &world, int index)
 {
 	player.incrementCoins();
 	player.addPoints(200);
-	world.deleteCoin(index);
+	world.deleteBonusElement(index);
 	world.addAnimatedCoin();
 	SoundController::playCoinCollectedEffect();
 }

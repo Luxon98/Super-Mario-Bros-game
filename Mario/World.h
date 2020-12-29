@@ -119,8 +119,7 @@ public:
 	void changeShellMovementParameters(int index, Direction direction);
 	void resetImages();
 	void destroyLastTouchedBlock();
-	void deleteCoin(int index);
-	void deleteLivingElement(int index);
+	void deleteBonusElement(int index);
 	void deleteMonster(int index);
 	void deleteFireBall(int index);
 	void addShell(Position position, bool red = false);

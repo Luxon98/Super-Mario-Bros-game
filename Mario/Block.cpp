@@ -167,7 +167,7 @@ bool Block::canBeHitted() const
 	return (position.getY() == initialPositionY);
 }
 
-bool Block::canCollideWithMushrooms() const
+bool Block::canCollideWithBonuses() const
 {
 	return collisionsFlag;
 }

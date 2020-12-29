@@ -158,9 +158,9 @@ bool isPlayerJumpingOnMonster(const Player &player, const LivingObject &monster)
 	return ((monster.getY() - player.getY() > 25) && player.isNotJumpingUp());
 }
 
-bool isMushroomStandingOnBlock(const BonusObject &mushroom, const Block &block)
+bool isBonusStandingOnBlock(const BonusObject &bonus, const Block &block)
 {
-	return (isElementDirectlyAboveObject(mushroom, block) && areAtTheSameWidth(mushroom, block));
+	return (isElementDirectlyAboveObject(bonus, block) && areAtTheSameWidth(bonus, block));
 }
 
 void handleJumpingOnShell(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
@@ -458,26 +458,18 @@ void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &
 	}
 }
 
-void handleBlockAndCoinsCollisions(World &world, const Block &block, Player &player)
+void handleBlockAndBonusesCollisions(World &world, const Block &block, Player &player)
 {
-	std::vector<std::shared_ptr<InanimateObject>> elements = world.getInanimateElements();
+	std::vector<std::shared_ptr<BonusObject>> elements = world.getBonusElements();
 	for (auto it = elements.begin(); it != elements.end(); ++it) {
-		if (isElementDirectlyAboveObject(**it, block) && areAtTheSameWidth(**it, block)) {
-			collectCoinByCollision(player, world, it - elements.begin());
-			return;
-		}
-	}
-}
-
-void handleBlockAndMushroomsCollisions(World &world, const Block &block)
-{
-	std::vector<std::shared_ptr<BonusObject>> bonusElements = world.getBonusElements();
-	for (auto &bonusElement : bonusElements) {
-		if (std::dynamic_pointer_cast<Mushroom>(bonusElement)) {
-			if (isMushroomStandingOnBlock(*bonusElement, block) && block.canCollideWithMushrooms()) {
-				std::dynamic_pointer_cast<Mushroom>(bonusElement)->decreasePositionY();
-				std::dynamic_pointer_cast<Mushroom>(bonusElement)->setStepsUp(30);
+		if (isBonusStandingOnBlock(**it, block) && block.canCollideWithBonuses()) {
+			if ((*it)->isCoin()) {
+				collectCoinByCollision(player, world, it - elements.begin());
 			}
+			else {
+				(*it)->knockUp();
+			}
+			return;
 		}
 	}
 }
@@ -485,46 +477,20 @@ void handleBlockAndMushroomsCollisions(World &world, const Block &block)
 void handleBlockCollisions(World &world, const Block &block, Player &player)
 {
 	handleBlockAndMonstersCollisions(world, block, player);
-	handleBlockAndCoinsCollisions(world, block, player);
-	handleBlockAndMushroomsCollisions(world, block);
+	handleBlockAndBonusesCollisions(world, block, player);
 }
 
-void collectBonusIfPossible(Player &player, World &world)
+void handleBonusesCollecting(Player &player, World &world)
 {
 	std::vector<std::shared_ptr<BonusObject>> elements = world.getBonusElements();
-	int i = 0;
-	for (auto it = elements.begin(); it != elements.end(); ++it, ++i) {
-		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it) && (*it)->isActive()) {
-			if (std::dynamic_pointer_cast<Mushroom>(*it)) {
-				collectMushroom(player, world, dynamic_cast<Mushroom&>(**it), i);
-			}
-			else if (std::dynamic_pointer_cast<Flower>(*it)) {
-				collectFlower(player, world, i);
-			}
-			else if (std::dynamic_pointer_cast<Star>(*it)) {
-				collectStar(player, world, i);
-			}
-		}
-	}
-}
-
-void collectCoinIfPossible(Player &player, World &world)
-{
-	std::vector<std::shared_ptr<InanimateObject>> elements = world.getInanimateElements();
 	for (auto it = elements.begin(); it != elements.end(); ++it) {
-		if (std::dynamic_pointer_cast<Coin>(*it) && (areAtTheSameWidth(player, **it) 
-			&& areAtTheSameHeight(player, **it))) {
-			
-			collectCoin(player, world, it - elements.begin());
+		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it) && (*it)->isActive()) {
+			(*it)->giveBonus(player);
+			addTextAndPoints(player, world, (*it)->getPointsForCollecting());
+			world.deleteBonusElement(it - elements.begin());
 			return;
 		}
 	}
-}
-
-void handleBonusCollecting(Player &player, World &world)
-{
-	collectCoinIfPossible(player, world);
-	collectBonusIfPossible(player, world);
 }
 
 int getAlignmentForCollisionFromRight(int distance, const WorldObject &object, const Block &block, const World &world)

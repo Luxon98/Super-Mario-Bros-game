@@ -4,6 +4,8 @@
 #include "Size.h"
 #include "Position.h"
 #include "SDL_Utility.h"
+#include "Player.h"
+#include "SoundController.h"
 #include "World.h"
 #include "LayoutStyle.h"
 
@@ -62,4 +64,16 @@ void Flower::move(World &world)
 	}
 
 	changeModel();
+}
+
+void Flower::giveBonus(Player &player)
+{
+	if (player.isSmall() || player.isInsensitive()) {
+		player.setCurrentAnimation(PlayerAnimation::Growing);
+	}
+	else if (!player.isImmortal() && !player.isArmed()) {
+		player.setCurrentAnimation(PlayerAnimation::Arming);
+	}
+
+	SoundController::playBonusCollectedEffect();
 }

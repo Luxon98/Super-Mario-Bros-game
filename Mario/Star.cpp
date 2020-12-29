@@ -6,6 +6,8 @@
 #include "Position.h"
 #include "CollisionHandling.h"
 #include "SDL_Utility.h"
+#include "Player.h"
+#include "SoundController.h"
 #include "World.h"
 #include "LayoutStyle.h"
 
@@ -93,4 +95,17 @@ void Star::move(World &world)
 		makeHorizontalMove(world);
 	}
 	++stepsCounter;
+}
+
+void Star::giveBonus(Player &player)
+{
+	if (player.isSmall()) {
+		player.setCurrentAnimation(PlayerAnimation::ImmortalSmall);
+	}
+	else {
+		player.setCurrentAnimation(PlayerAnimation::Immortal);
+	}
+	player.increaseSpeed();
+
+	SoundController::playStarMusic();
 }

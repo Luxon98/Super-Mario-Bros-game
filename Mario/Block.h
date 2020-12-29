@@ -55,7 +55,7 @@ public:
 	static void loadBlockImages(SDL_Surface* display);
 	bool hasCoins() const;
 	bool canBeHitted() const;
-	bool canCollideWithMushrooms() const;
+	bool canCollideWithBonuses() const;
 	bool isInvisible() const;
 	BlockType getType() const;
 	static void resetBlockImage();

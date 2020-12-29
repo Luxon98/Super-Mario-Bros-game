@@ -37,7 +37,7 @@ bool isBlockBlockedByAnother(const Block &block, const World &world);
 
 bool isPlayerJumpingOnMonster(const Player &player, const LivingObject &monster);
 
-bool isMushroomStandingOnBlock(const BonusObject &mushroom, const Block &block);
+bool isBonusStandingOnBlock(const BonusObject &bonus, const Block &block);
 
 void handleJumpingOnShell(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
 
@@ -77,17 +77,11 @@ void handleMonsterDestruction(const Block &block, std::shared_ptr<LivingObject> 
 
 void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &player);
 
-void handleBlockAndCoinsCollisions(World &world, const Block &block, Player &player);
-
-void handleBlockAndMushroomsCollisions(World &world, const Block &block);
+void handleBlockAndBonusesCollisions(World &world, const Block &block, Player &player);
 
 void handleBlockCollisions(World &world, const Block &block, Player &player);
 
-void collectBonusIfPossible(Player &player, World &world);
-
-void collectCoinIfPossible(Player &player, World &world);
-
-void handleBonusCollecting(Player &player, World &world);
+void handleBonusesCollecting(Player &player, World &world);
 
 int getAlignmentForCollisionFromRight(int distance, const WorldObject &object, const Block &block, const World &world);
 
