@@ -45,6 +45,7 @@ private:
 	void setBlueBackground();
 	void setBlackBackground();
 	void fillBackground();
+	void drawPressAnyKeyScreen();
 	void drawScreenElements();
 	void drawStartScreenElements(int lives);
 	void drawGameOver();
@@ -55,7 +56,7 @@ private:
 	void drawAddingPointsAnimation(World &world, bool checker);
 	void addExplosions(World &world, int i);
 	void drawFireworks(World &world);
-	void drawWinterWorldThankYouScreen(World &world, int level);
+	void drawCustomWorldThankYouScreen(World &world, int level);
 	void drawThankYouInscriptions(int i);
 	void drawThankYouScreen(World &world);
 	int initGUI();

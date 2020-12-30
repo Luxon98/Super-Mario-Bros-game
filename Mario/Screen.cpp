@@ -8,6 +8,7 @@
 #include "LayoutStyle.h"
 #include "Camera.h"
 #include "FileNotLoadedException.h"
+#include "SDL_Utility.h"
 
 
 bool Screen::coinImage = true;
@@ -93,7 +94,7 @@ void Screen::loadOtherImages()
 	screenImages[13] = loadPNG("./img/scr_imgs/gameover.png", display);
 	screenImages[14] = loadPNG("./img/scr_imgs/thanks.png", display);
 	screenImages[15] = loadPNG("./img/scr_imgs/info_castle.png", display);
-	screenImages[16] = loadPNG("./img/scr_imgs/info_custom_worlds.png", display);
+	screenImages[16] = loadPNG("./img/scr_imgs/info_press_enter.png", display);
 	screenImages[17] = loadPNG("./img/scr_imgs/info_winter.png", display);
 	screenImages[18] = loadPNG("./img/scr_imgs/info_summer.png", display);
 }
@@ -171,6 +172,25 @@ void Screen::fillBackground()
 	}
 	else {
 		setBlackBackground();
+	}
+}
+
+void Screen::drawPressAnyKeyScreen()
+{
+	setBlackBackground();
+	drawSurface(display, screenImages[16], 320, 225);
+	updateView();
+
+	SDL_Event event;
+	while (true) {
+		SDL_PollEvent(&event);
+		if (event.type == SDL_KEYDOWN) {
+			char keyDown = event.key.keysym.scancode;
+
+			if (keyDown == SDL_SCANCODE_RETURN) {
+				break;
+			}
+		}
 	}
 }
 
@@ -318,9 +338,9 @@ void Screen::drawFireworks(World &world)
 	}
 }
 
-void Screen::drawWinterWorldThankYouScreen(World &world, int level)
+void Screen::drawCustomWorldThankYouScreen(World &world, int level)
 {
-	for (int i = 0; i < 2000; ++i) {
+	for (int i = 0; i < 1000; ++i) {
 		fillBackground();
 		world.draw(display);
 		drawScreenElements();
@@ -337,19 +357,17 @@ void Screen::drawWinterWorldThankYouScreen(World &world, int level)
 
 		updateView();
 	}
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 void Screen::drawThankYouInscriptions(int i)
 {
-	if (i > 200 && i <= 1300) {
+	if (i > 200) {
 		drawSurface(display, screenImages[14], 330, 160);
 	}
-	if (i > 500 && i <= 1300) {
+	if (i > 500) {
 		drawSurface(display, screenImages[15], 330, 250);
-	}
-
-	if (i > 1300) {
-		drawSurface(display, screenImages[16], 320, 225);
 	}
 }
 
@@ -365,6 +383,8 @@ void Screen::drawThankYouScreen(World &world)
 		drawThankYouInscriptions(i);
 		updateView();
 	}
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 int Screen::initGUI()
@@ -624,6 +644,7 @@ void Screen::drawWorldFinishedScreen(World &world)
 	}
 
 	drawThankYouScreen(world);
+	drawPressAnyKeyScreen();
 }
 
 void Screen::drawCustomWorldFinishedScreen(World &world, int level)
@@ -639,7 +660,8 @@ void Screen::drawCustomWorldFinishedScreen(World &world, int level)
 	SoundController::stopMusic();
 	drawFireworks(world);
 
-	drawWinterWorldThankYouScreen(world, level);
+	drawCustomWorldThankYouScreen(world, level);
+	drawPressAnyKeyScreen();
 }
 
 void Screen::updateScreen(World &world)
