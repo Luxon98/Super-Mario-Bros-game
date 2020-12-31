@@ -45,7 +45,7 @@ private:
 	void setBlueBackground();
 	void setBlackBackground();
 	void fillBackground();
-	void drawPressAnyKeyScreen();
+	void drawPressEnterScreen();
 	void drawScreenElements();
 	void drawStartScreenElements(int lives);
 	void drawGameOver();

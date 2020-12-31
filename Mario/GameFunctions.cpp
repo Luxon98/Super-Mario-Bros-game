@@ -166,11 +166,11 @@ void changeLevel(int level, World &world, bool playerState)
 		Level::setFourthLevel(world);
 	}
 	else if (level == 77) {
-		//Level::setWinterWorld(world);
-		Level::setSecondStageOnWinterWorld(world);
+		Level::setWinterWorld(world);
 	}
 	else if (level == 88) {
-		Level::setSummerWorld(world);
+		//Level::setSummerWorld(world);
+		Level::setThirdStageOnSummerWorld(world);
 	}
 }
 

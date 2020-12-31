@@ -17,6 +17,10 @@ void BonusObject::grow()
 
 bool BonusObject::isActive() const
 {
+	if (isCoin()) {
+		return true;
+	}
+
 	return active;
 }
 

@@ -175,7 +175,7 @@ void Screen::fillBackground()
 	}
 }
 
-void Screen::drawPressAnyKeyScreen()
+void Screen::drawPressEnterScreen()
 {
 	setBlackBackground();
 	drawSurface(display, screenImages[16], 320, 225);
@@ -310,7 +310,10 @@ void Screen::addExplosions(World &world, int i)
 	if (i % 50 == 0) {
 		int index = i / 50;
 		index %= 10;
-		world.addExplosion(Position(camera->getBeginningOfCamera() + xPositions[index - 1], yPositions[index - 1]));
+
+		if (index >= 1 && index <= 10) {
+			world.addExplosion(Position(camera->getBeginningOfCamera() + xPositions[index - 1], yPositions[index - 1]));
+		}
 	}
 }
 
@@ -644,7 +647,7 @@ void Screen::drawWorldFinishedScreen(World &world)
 	}
 
 	drawThankYouScreen(world);
-	drawPressAnyKeyScreen();
+	drawPressEnterScreen();
 }
 
 void Screen::drawCustomWorldFinishedScreen(World &world, int level)
@@ -661,7 +664,7 @@ void Screen::drawCustomWorldFinishedScreen(World &world, int level)
 	drawFireworks(world);
 
 	drawCustomWorldThankYouScreen(world, level);
-	drawPressAnyKeyScreen();
+	drawPressEnterScreen();
 }
 
 void Screen::updateScreen(World &world)
