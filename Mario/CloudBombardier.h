@@ -19,6 +19,7 @@ private:
 public:
 	CloudBombardier(Position position);
 	static void loadBombardierImages(SDL_Surface* display);
+	bool isCrushproof() const override;
 	bool isGoingLeft() const;
 	bool isReadyToDropBomb() const;
 	void setActiveState();

@@ -102,3 +102,13 @@ void Shell::move(World &world)
 	++stepsCounter;
 }
 
+void Shell::crush(World &world, int index)
+{
+	if (active) {
+		world.changeShellMovementParameters(index, Direction::None);
+	}
+	else {
+		//Direction direction = determineDirection(player, *this);
+		world.changeShellMovementParameters(index, Direction::Right);
+	}
+}

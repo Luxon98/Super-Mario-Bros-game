@@ -32,3 +32,17 @@ void IndependentLivingObject::moveDiagonally(World &world)
 	}
 	position.setX(position.getX() + distance);
 }
+
+int IndependentLivingObject::getPointsForCrushing() const
+{
+	return 0;
+}
+
+bool IndependentLivingObject::isCrushproof() const
+{
+	return false;
+}
+
+void IndependentLivingObject::crush(World &world, int index) {}
+
+void IndependentLivingObject::destroy(World &world) {}

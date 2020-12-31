@@ -73,6 +73,11 @@ void Plant::loadPlantImages(SDL_Surface* display)
 	}
 }
 
+bool Plant::isCrushproof() const
+{
+	return true;
+}
+
 void Plant::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (position.getX() > beginningOfCamera - 75 && position.getX() < endOfCamera + 75) {

@@ -163,72 +163,14 @@ bool isBonusStandingOnBlock(const BonusObject &bonus, const Block &block)
 	return (isElementDirectlyAboveObject(bonus, block) && areAtTheSameWidth(bonus, block));
 }
 
-void handleJumpingOnShell(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
-{
-	if (std::dynamic_pointer_cast<Shell>(monster)->isActive()) {
-		world.changeShellMovementParameters(index, Direction::None);
-	}
-	else {
-		Direction direction = determineDirection(player, *monster);
-		world.changeShellMovementParameters(index, direction);
-	}
-}
-
-void handleJumpingOnTurtle(std::shared_ptr<LivingObject> monster, World& world, int index)
-{
-	world.addShell(Position((monster)->getX(), (monster)->getY() + 6));
-	world.deleteMonster(index);
-	SoundController::playEnemyDestroyedEffect();
-}
-
-void handleJumpingOnRedTurtle(std::shared_ptr<LivingObject> monster, World &world, int index)
-{
-	if (std::dynamic_pointer_cast<RedTurtle>(monster)->isFlying()) {
-		std::dynamic_pointer_cast<RedTurtle>(monster)->loseFlyingAbility();
-	}
-	else {
-		world.addShell(Position(monster->getX(), monster->getY() + 6), true);
-		world.deleteMonster(index);
-	}
-
-	SoundController::playEnemyDestroyedEffect();
-}
-
-void handleJumpingOnCreature(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
-{
-	addTextAndPoints(player, world, 100, Position(monster->getX(), monster->getY() - 15));
-	world.addCrushedCreature(Position(monster->getX(), monster->getY() + 8));
-	world.deleteMonster(index);
-	SoundController::playEnemyDestroyedEffect();
-}
-
-void handleJumpingOnFish(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
-{
-	addTextAndPoints(player, world, 200, Position(monster->getX(), monster->getY() - 15));
-	bool directionFlag = std::dynamic_pointer_cast<JumpingFish>(monster)->isGoingLeft();
-	world.addDestroyedFish(monster->getPosition(), directionFlag);
-	world.deleteMonster(index);
-	SoundController::playEnemyDestroyedEffect();
-}
-
-void handleJumpingOnMonster(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
+void handleJumpingOnMonster(std::shared_ptr<IndependentLivingObject> monster, World &world, Player &player, int index)
 {
 	player.performAdditionalJump();
+	monster->crush(world, index);
 
-	if (std::dynamic_pointer_cast<Shell>(monster)) {
-		handleJumpingOnShell(monster, world, player, index);
-	}
-	else if (std::dynamic_pointer_cast<Turtle>(monster)) {
-		handleJumpingOnTurtle(monster, world, index);
-	}
-	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
-		handleJumpingOnRedTurtle(monster, world, index);
-	}
-	else if (std::dynamic_pointer_cast<Creature>(monster)) {
-		handleJumpingOnCreature(monster, world, player, index);
-	}
-	else if (std::dynamic_pointer_cast<JumpingFish>(monster)) {
-		handleJumpingOnFish(monster, world, player, index);
+	int points = monster->getPointsForCrushing();
+	if (points) {
+		addTextAndPoints(player, world, points, Position(monster->getX(), monster->getY() - 15));
 	}
 }
 
@@ -283,10 +225,10 @@ void handlePlayerAndMonstersCollisions(std::shared_ptr<LivingObject> monster, Wo
 
 void handleCollisionsWithMonsters(Player &player, World &world)
 {
-	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
+	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it)) {
-			if (isPlayerJumpingOnMonster(player, **it) && !isMonsterCrushproof(*it)) {
+			if (isPlayerJumpingOnMonster(player, **it) && !(*it)->isCrushproof()) {
 				handleJumpingOnMonster(*it, world, player, it - monsters.begin());
 			}
 			else {
@@ -334,7 +276,7 @@ void handleShellCollisions(const LivingObject &shell, std::shared_ptr<LivingObje
 
 void handleShellsAndMonstersCollisions(World &world, Player &player)
 {
-	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
+	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if (std::dynamic_pointer_cast<Shell>(*it) && std::dynamic_pointer_cast<Shell>(*it)->isActive()) {
 			for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
@@ -405,7 +347,7 @@ void handleFireBallDestruction(const FireBall &fireball, World &world, int fireb
 void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 {
 	std::vector<FireBall> fireballs = world.getFireBalls();
-	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
+	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
 	int index = 0;
 	for (auto it = fireballs.begin(); it != fireballs.end(); ++it, ++index) {
 		for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
@@ -445,7 +387,7 @@ void handleMonsterDestruction(const Block &block, std::shared_ptr<LivingObject> 
 
 void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &player)
 {
-	std::vector<std::shared_ptr<LivingObject>> monsters = world.getMonsters();
+	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if (isMonsterStandingOnBlock(**it, block)) {
 			int points = 200;

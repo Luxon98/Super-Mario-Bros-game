@@ -24,6 +24,7 @@ private:
 public:
 	Plant(Position position, bool delay = false);
 	static void loadPlantImages(SDL_Surface* display);
+	bool isCrushproof() const override;
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 };

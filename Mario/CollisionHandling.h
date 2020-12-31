@@ -7,6 +7,7 @@ class World;
 class Player;
 class WorldObject;
 class LivingObject;
+class IndependentLivingObject;
 class BonusObject;
 class Block;
 class Plant;
@@ -39,17 +40,7 @@ bool isPlayerJumpingOnMonster(const Player &player, const LivingObject &monster)
 
 bool isBonusStandingOnBlock(const BonusObject &bonus, const Block &block);
 
-void handleJumpingOnShell(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
-
-void handleJumpingOnTurtle(std::shared_ptr<LivingObject> monster, World &world, int index);
-
-void handleJumpingOnRedTurtle(std::shared_ptr<LivingObject> monster, World &world, int index);
-
-void handleJumpingOnCreature(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
-
-void handleJumpingOnFish(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
-
-void handleJumpingOnMonster(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
+void handleJumpingOnMonster(std::shared_ptr<IndependentLivingObject> monster, World &world, Player &player, int index);
 
 void handleImmortalPlayerCollisions(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index);
 

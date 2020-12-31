@@ -60,6 +60,11 @@ void FireMissle::loadFireRocketImages(SDL_Surface* display)
 	missleImages[2] = loadPNG("./img/npc_imgs/fire_bomb.png", display);
 }
 
+bool FireMissle::isCrushproof() const
+{
+	return true;
+}
+
 bool FireMissle::isInactive() const
 {
 	return inactive;

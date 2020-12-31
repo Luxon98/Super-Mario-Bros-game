@@ -5,6 +5,8 @@
 #include "Position.h"
 #include "CollisionHandling.h"
 #include "SDL_Utility.h"
+#include "World.h"
+#include "SoundController.h"
 
 
 std::array<SDL_Surface*, 4> JumpingFish::fishImages;
@@ -44,6 +46,11 @@ void JumpingFish::loadFishImages(SDL_Surface* display)
 		filename += ".png";
 		fishImages[i] = loadPNG(filename, display);
 	}
+}
+
+int JumpingFish::getPointsForCrushing() const
+{
+	return 200;
 }
 
 bool JumpingFish::isGoingLeft() const
@@ -104,4 +111,12 @@ void JumpingFish::move(World &world)
 			changeModel();
 		}
 	}
+}
+
+void JumpingFish::crush(World &world, int index)
+{
+	world.addDestroyedFish(position, directionFlag);
+	world.deleteMonster(index);
+
+	SoundController::playEnemyDestroyedEffect();
 }

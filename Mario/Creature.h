@@ -23,9 +23,11 @@ private:
 public:
 	Creature(Position position);
 	static void loadCreatureImages(SDL_Surface* display);
+	int getPointsForCrushing() const override;
 	void setMoveDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
+	void crush(World &world, int index) override;
 };
 
 #endif //Creature_H

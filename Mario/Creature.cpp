@@ -7,6 +7,7 @@
 #include "SDL_Utility.h"
 #include "World.h"
 #include "LayoutStyle.h"
+#include "SoundController.h"
 
 
 // pictures with indexes 0-3 are pictures from the original Super Mario Bros
@@ -63,6 +64,11 @@ void Creature::loadCreatureImages(SDL_Surface* display)
 	}
 }
 
+int Creature::getPointsForCrushing() const
+{
+	return 100;
+}
+
 void Creature::setMoveDirection(Direction direction)
 {
 	movement.setDirection(direction);
@@ -88,4 +94,12 @@ void Creature::move(World &world)
 		}
 	}
 	++stepsCounter;
+}
+
+void Creature::crush(World &world, int index)
+{
+	world.addCrushedCreature(Position(position.getX(), position.getY() + 8));
+	world.deleteMonster(index);
+
+	SoundController::playEnemyDestroyedEffect();
 }

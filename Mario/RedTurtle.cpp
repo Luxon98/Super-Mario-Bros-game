@@ -7,6 +7,7 @@
 #include "SDL_Utility.h"
 #include "World.h"
 #include "LayoutStyle.h"
+#include "SoundController.h"
 
 
 std::array<SDL_Surface*, 6> RedTurtle::redTurtleImages;
@@ -144,4 +145,17 @@ void RedTurtle::move(World &world)
 			patrol(world);
 		}
 	}
+}
+
+void RedTurtle::crush(World &world, int index)
+{
+	if (flying) {
+		loseFlyingAbility();
+	}
+	else {
+		world.addShell(Position(position.getX(), position.getY() + 6), true);
+		world.deleteMonster(index);
+	}
+
+	SoundController::playEnemyDestroyedEffect();
 }

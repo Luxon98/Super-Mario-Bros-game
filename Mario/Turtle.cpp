@@ -7,6 +7,7 @@
 #include "SDL_Utility.h"
 #include "World.h"
 #include "LayoutStyle.h"
+#include "SoundController.h"
 
 
 std::array<SDL_Surface*, 8> Turtle::turtleImages;
@@ -78,3 +79,10 @@ void Turtle::move(World &world)
 	++stepsCounter;
 }
 
+void Turtle::crush(World &world, int index)
+{
+	world.addShell(Position(position.getX(), position.getY() + 6));
+	world.deleteMonster(index);
+
+	SoundController::playEnemyDestroyedEffect();
+}

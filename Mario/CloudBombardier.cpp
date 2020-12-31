@@ -31,6 +31,11 @@ void CloudBombardier::loadBombardierImages(SDL_Surface* display)
 	bombardierImages[2] = loadPNG("./img/npc_imgs/cloud.png", display);
 }
 
+bool CloudBombardier::isCrushproof() const
+{
+	return true;
+}
+
 bool CloudBombardier::isGoingLeft() const
 {
 	return (movement.getDirection() == Direction::Left);

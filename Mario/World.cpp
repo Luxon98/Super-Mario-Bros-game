@@ -511,7 +511,7 @@ std::vector<std::shared_ptr<BonusObject>> const& World::getBonusElements() const
 	return bonusElements;
 }
 
-std::vector<std::shared_ptr<LivingObject>> const& World::getMonsters() const
+std::vector<std::shared_ptr<IndependentLivingObject>> const& World::getMonsters() const
 {
 	return monsters;
 }

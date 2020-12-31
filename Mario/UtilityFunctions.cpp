@@ -74,17 +74,6 @@ bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block)
 	return false;
 }
 
-bool isMonsterCrushproof(std::shared_ptr<LivingObject> monster)
-{
-	if (std::dynamic_pointer_cast<Plant>(monster) || std::dynamic_pointer_cast<FireMissle>(monster)
-		|| std::dynamic_pointer_cast<Boss>(monster) || std::dynamic_pointer_cast<CloudBombardier>(monster)) {
-
-		return true;
-	}
-
-	return false;
-}
-
 bool isMonsterResistantToKnocks(std::shared_ptr<LivingObject> monster)
 {
 	if (std::dynamic_pointer_cast<FireMissle>(monster) || std::dynamic_pointer_cast<Boss>(monster)) {

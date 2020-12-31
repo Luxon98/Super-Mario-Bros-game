@@ -18,6 +18,7 @@ class Position;
 class Level;
 class InanimateObject;
 class AnimatedObject;
+class IndependentLivingObject;
 class LivingObject;
 class Camera;
 enum class TextType;
@@ -41,7 +42,7 @@ private:
 	std::vector<FireSerpent> fireSerpents;
 	std::vector<std::shared_ptr<InanimateObject>> inanimateElements;
 	std::vector<std::shared_ptr<BonusObject>> bonusElements;
-	std::vector<std::shared_ptr<LivingObject>> monsters;
+	std::vector<std::shared_ptr<IndependentLivingObject>> monsters;
 	std::vector<std::shared_ptr<AnimatedObject>> animatedElements;
 	std::vector<std::shared_ptr<AnimatedObject>> destroyedElements;
 	std::shared_ptr<Player> player;
@@ -99,7 +100,7 @@ public:
 	std::vector<FireSerpent> const& getFireSerpents() const;
 	std::vector<std::shared_ptr<InanimateObject>> const& getInanimateElements() const;
 	std::vector<std::shared_ptr<BonusObject>> const& getBonusElements() const;
-	std::vector<std::shared_ptr<LivingObject>> const& getMonsters() const;
+	std::vector<std::shared_ptr<IndependentLivingObject>> const& getMonsters() const;
 	const Player& getPlayer() const;
 	int getLastTouchedBlockIndex() const;
 	BlockType getLastTouchedBlockType() const;

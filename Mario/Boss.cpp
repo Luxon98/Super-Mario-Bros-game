@@ -83,6 +83,11 @@ void Boss::loadBossImages(SDL_Surface* display)
 	bossImages[3] = loadPNG("./img/npc_imgs/boss4.png", display);
 }
 
+bool Boss::isCrushproof() const
+{
+	return true;
+}
+
 int Boss::getHealthPoints() const
 {
 	return healthPoints;
