@@ -74,15 +74,6 @@ bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block)
 	return false;
 }
 
-bool isMonsterResistantToFireBalls(std::shared_ptr<LivingObject> monster)
-{
-	if (std::dynamic_pointer_cast<FireMissle>(monster)) {
-		return true;
-	}
-
-	return false;
-}
-
 int determineShift(const LivingObject &object, int base)
 {
 	return (object.getMovement().getDirection() == Direction::Left ? base * (-1) : base);

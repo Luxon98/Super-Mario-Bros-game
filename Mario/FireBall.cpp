@@ -75,6 +75,7 @@ FireBall::FireBall(Position position, Direction direction)
 	size = Size(16, 16);
 	movement = Movement(3, 2, direction, Direction::Down);
 	this->position = position;
+	healthPoints = 9; //
 	changeModelCounter = 0;
 	stepsUp = 0;
 	modelIndex = 0;

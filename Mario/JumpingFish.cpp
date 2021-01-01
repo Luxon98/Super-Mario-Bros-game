@@ -32,6 +32,7 @@ JumpingFish::JumpingFish(Position position, bool directionFlag)
 	movement = Movement(1, 3, Direction::None, Direction::Up);
 	this->position = position;
 	this->directionFlag = directionFlag;
+	healthPoints = 1;
 	movingFlag = false;
 	model = 1;
 	stepsCounter = 0;

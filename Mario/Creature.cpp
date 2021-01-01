@@ -49,6 +49,7 @@ Creature::Creature(Position position)
 	size = Size(32, 32);
 	movement = Movement(1, 3, Direction::None);
 	this->position = position;
+	healthPoints = 1;
 	model = 1;
 	stepsCounter = 0;
 	changeModelCounter = 0;
@@ -74,7 +75,7 @@ int Creature::getPointsForDestroying() const
 	return 100;
 }
 
-bool Creature::isMonsterResistantToCollisionWithShell() const
+bool Creature::isResistantToCollisionWithShell() const
 {
 	return false;
 }

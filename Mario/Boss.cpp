@@ -68,8 +68,8 @@ Boss::Boss(Position position)
 	size = Size(58, 64);
 	movement = Movement(1, 1, Direction::None);
 	this->position = position;
-	model = 1;
 	healthPoints = 5;
+	model = 1;
 	auxiliaryCounter = 0;
 	stepsCounter = 0;
 	changeModelCounter = 0;
@@ -98,11 +98,6 @@ int Boss::getPointsForDestroying() const
 	return 5000;
 }
 
-int Boss::getHealthPoints() const
-{
-	return healthPoints;
-}
-
 void Boss::setMoveDirection(Direction direction)
 {
 	movement.setDirection(direction);
@@ -123,9 +118,4 @@ void Boss::move(World &world)
 		moveAndJump(world);
 		changeModel();
 	}
-}
-
-void Boss::decrementHealthPoints()
-{
-	--healthPoints;
 }

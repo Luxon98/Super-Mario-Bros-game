@@ -20,6 +20,7 @@ CloudBombardier::CloudBombardier(Position position)
 	size = Size(32, 32);
 	movement = Movement(1, 1, Direction::None, Direction::Down);
 	this->position = position;
+	healthPoints = 1;
 	active = false;
 	stepsCounter = 0;
 	changeModelCounter = 0;

@@ -52,10 +52,6 @@ void handlePlayerCollisions(Player &player, World &world);
 
 void handleShellsAndMonstersCollisions(World &world, Player &player);
 
-void handleFireBallAndBossCollision(std::shared_ptr<LivingObject> monster, World &world, int * pts);
-
-void handleFireBallCollision(const FireBall &fireball, std::shared_ptr<LivingObject> monster, World &world, int * pts);
-
 void handleFireBallDestruction(const FireBall &fireball, World &world, int fireballIndex);
 
 void handleFireBallsAndMonstersCollisions(World &world, Player &player);

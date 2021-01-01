@@ -16,7 +16,6 @@ class Boss : public IndependentLivingObject
 private:
 	static std::array<SDL_Surface*, 4> bossImages;
 	int model;
-	int healthPoints;
 	int auxiliaryCounter;
 	int computeImageIndex() const override;
 	void changeModel();
@@ -28,11 +27,9 @@ public:
 	bool isCrushproof() const override;
 	bool isResistantToImmortalPlayer() const override;
 	int getPointsForDestroying() const override;
-	int getHealthPoints() const;
 	void setMoveDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
-	void decrementHealthPoints();
 };
 
 #endif //Boss_H

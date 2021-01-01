@@ -40,6 +40,7 @@ FireMissle::FireMissle(Position position, MissleType type)
 	size = Size(50, 16);
 	movement = Movement(1, 1, Direction::None);
 	this->position = position;
+	healthPoints = 2;
 	inactive = false;
 	model = 1;
 	stepsCounter = 0;
@@ -66,6 +67,11 @@ bool FireMissle::isCrushproof() const
 }
 
 bool FireMissle::isResistantToImmortalPlayer() const
+{
+	return true;
+}
+
+bool FireMissle::isResistantToFireBalls() const
 {
 	return true;
 }

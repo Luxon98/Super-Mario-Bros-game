@@ -34,6 +34,11 @@ void IndependentLivingObject::moveDiagonally(World &world)
 	position.setX(position.getX() + distance);
 }
 
+int IndependentLivingObject::getHealthPoints() const
+{
+	return healthPoints;
+}
+
 int IndependentLivingObject::getPointsForCrushing() const
 {
 	return 0;
@@ -54,14 +59,24 @@ bool IndependentLivingObject::isResistantToImmortalPlayer() const
 	return false;
 }
 
-bool IndependentLivingObject::isMonsterResistantToCollisionWithShell() const
+bool IndependentLivingObject::isResistantToCollisionWithShell() const
 {
 	return true;
+}
+
+bool IndependentLivingObject::isResistantToFireBalls() const
+{
+	return false;
 }
 
 bool IndependentLivingObject::isActiveShell() const
 {
 	return false;
+}
+
+void IndependentLivingObject::decrementHealthPoints()
+{
+	--healthPoints;
 }
 
 void IndependentLivingObject::crush(World &world, int index) {}

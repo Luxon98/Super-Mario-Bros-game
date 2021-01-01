@@ -87,6 +87,7 @@ RedTurtle::RedTurtle(Position position, bool flying)
 	movement = Movement(1, 3, Direction::Left);
 	this->position = position;
 	this->flying = flying;
+	healthPoints = 1;
 	model = 1;
 	stepsCounter = 0;
 	changeModelCounter = 0;
@@ -107,7 +108,7 @@ void RedTurtle::loadTurtleImages(SDL_Surface* display)
 	}
 }
 
-bool RedTurtle::isMonsterResistantToCollisionWithShell() const
+bool RedTurtle::isResistantToCollisionWithShell() const
 {
 	return false;
 }

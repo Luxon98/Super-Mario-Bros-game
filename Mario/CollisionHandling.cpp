@@ -203,7 +203,7 @@ void handleCollisionsWithMonsters(Player &player, World &world)
 			else {
 				handlePlayerAndMonstersCollisions(*it, world, player, it - monsters.begin());
 			}
-			break;
+			break; //
 		}
 	}
 }
@@ -215,7 +215,7 @@ void handleCollisionsWithFireSerpents(Player &player, World &world)
 		if (areAtTheSameWidth(player, fireSerpent) && areAtTheSameHeight(player, fireSerpent)) {
 			if (!player.isImmortal() && !player.isInsensitive()) {
 				player.loseBonusOrLife();
-				break;
+				return;
 			}
 		}
 	}
@@ -233,7 +233,7 @@ void handleShellsAndMonstersCollisions(World &world, Player &player)
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if ((*it)->isActiveShell()) {
 			for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
-				if (!(*it2)->isMonsterResistantToCollisionWithShell() && (areAtTheSameWidth(**it, **it2)
+				if (!(*it2)->isResistantToCollisionWithShell() && (areAtTheSameWidth(**it, **it2)
 					&& areAtTheSameHeight(**it, **it2))) {
 
 					Direction direction = determineDirection(**it, **it2);
@@ -244,47 +244,6 @@ void handleShellsAndMonstersCollisions(World &world, Player &player)
 				}
 			}
 		}
-	}
-}
-
-void handleFireBallAndBossCollision(std::shared_ptr<LivingObject> monster, World &world, int * pts)
-{
-	std::dynamic_pointer_cast<Boss>(monster)->decrementHealthPoints();
-
-	if (std::dynamic_pointer_cast<Boss>(monster)->getHealthPoints() != 0) {
-		*pts = -1;
-	}
-	else {
-		*pts = 5000;
-		world.addDestroyedBoss(monster->getPosition(), monster->getMovement().getDirection());
-	}
-}
-
-void handleFireBallCollision(const FireBall &fireball, std::shared_ptr<LivingObject> monster, World &world, int * pts)
-{
-	Direction direction = fireball.getMovement().getDirection();
-	int alignment = (direction == Direction::Left ? -5 : 5);
-
-	if (std::dynamic_pointer_cast<Creature>(monster)) {
-		world.addDestroyedCreature(Position(monster->getX() + alignment, monster->getY()), direction);
-		*pts = 100;
-	}
-	else if (std::dynamic_pointer_cast<Turtle>(monster) || std::dynamic_pointer_cast<Shell>(monster)) {
-		world.addDestroyedTurtle(Position((monster)->getX() + alignment, (monster)->getY()), direction);
-	}
-	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
-		world.addDestroyedTurtle(Position(monster->getX() + alignment, monster->getY()), direction, true);
-	}
-	else if (std::dynamic_pointer_cast<Boss>(monster)) {
-		handleFireBallAndBossCollision(monster, world, pts);
-	}
-	else if (std::dynamic_pointer_cast<JumpingFish>(monster)) {
-		bool directionFlag = std::dynamic_pointer_cast<JumpingFish>(monster)->isGoingLeft();
-		world.addDestroyedFish(monster->getPosition(), directionFlag);
-	}
-	else if (std::dynamic_pointer_cast<CloudBombardier>(monster)) {
-		bool leftSide = std::dynamic_pointer_cast<CloudBombardier>(monster)->isGoingLeft();
-		world.addDestroyedBombardier(monster->getPosition(), leftSide);
 	}
 }
 
@@ -303,14 +262,16 @@ void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 	int index = 0;
 	for (auto it = fireballs.begin(); it != fireballs.end(); ++it, ++index) {
 		for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
-			if (!isMonsterResistantToFireBalls(*it2) && (areAtTheSameWidth(*it, **it2) 
+			if (!(*it2)->isResistantToFireBalls() && (areAtTheSameWidth(*it, **it2) 
 				&& areAtTheSameHeight(*it, **it2))) {
 
-				int points = 200;
-				handleFireBallCollision(fireballs[index], *it2, world, &points);
 				handleFireBallDestruction(fireballs[index], world, index);
 
-				if (points != -1) {
+				(*it2)->decrementHealthPoints();
+				if ((*it2)->getHealthPoints() == 0) {
+					int points = (*it2)->getPointsForDestroying();
+					Direction direction = (*it).getMovement().getDirection();
+					(*it2)->destroy(world, direction);
 					world.deleteMonster(it2 - monsters.begin());
 					addTextAndPoints(player, world, points, Position((*it2)->getX(), (*it2)->getY() - 15));
 					bool bossFlag = (points == 5000);

@@ -29,6 +29,7 @@ Shell::Shell(Position position, bool red)
 	movement = Movement(3, 2, Direction::None);
 	this->position = position;
 	this->red = red;
+	healthPoints = 1;
 	stepsCounter = 0;
 	creationTime = std::chrono::steady_clock::now();
 	active = false;

@@ -22,7 +22,7 @@ private:
 public:
 	Turtle(Position position);
 	static void loadTurtleImages(SDL_Surface* display);
-	bool isMonsterResistantToCollisionWithShell() const override;
+	bool isResistantToCollisionWithShell() const override;
 	void setMoveDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;

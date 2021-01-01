@@ -57,6 +57,7 @@ Plant::Plant(Position position, bool delay)
 	size = Size(24, 44);
 	movement = Movement(0, 1, Direction::None, Direction::Up);
 	this->position = position;
+	healthPoints = 1;
 	auxiliaryCounter = 0;
 	model = 1;
 	stepsCounter = (delay ? 629 : -1);
@@ -78,7 +79,7 @@ bool Plant::isCrushproof() const
 	return true;
 }
 
-bool Plant::isMonsterResistantToCollisionWithShell() const
+bool Plant::isResistantToCollisionWithShell() const
 {
 	return false;
 }
