@@ -25,6 +25,7 @@ public:
 	void setActiveState();
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
+	void destroy(World &world, Direction direction) override;
 };
 
 #endif //CloudBombardier_H

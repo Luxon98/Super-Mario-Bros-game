@@ -26,6 +26,8 @@ public:
 	Boss(Position position);
 	static void loadBossImages(SDL_Surface* display);
 	bool isCrushproof() const override;
+	bool isResistantToImmortalPlayer() const override;
+	int getPointsForDestroying() const override;
 	int getHealthPoints() const;
 	void setMoveDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

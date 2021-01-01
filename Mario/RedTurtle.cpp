@@ -159,3 +159,8 @@ void RedTurtle::crush(World &world, int index)
 
 	SoundController::playEnemyDestroyedEffect();
 }
+
+void RedTurtle::destroy(World &world, Direction direction)
+{
+	world.addDestroyedTurtle(position, direction, true);
+}

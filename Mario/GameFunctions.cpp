@@ -16,14 +16,14 @@
 #include "FileNotLoadedException.h"
 
 
-void setCameraPointer(Player& player, World& world, Screen& screen, std::shared_ptr<Camera> camera)
+void setCameraPointer(Player &player, World& world, Screen& screen, std::shared_ptr<Camera> camera)
 {
 	player.setCamera(camera);
 	world.setCamera(camera);
 	screen.setCamera(camera);
 }
 
-void setPlayerPointer(World& world, Screen& screen, std::shared_ptr<Player> player)
+void setPlayerPointer(World &world, Screen& screen, std::shared_ptr<Player> player)
 {
 	world.setPlayer(player);
 	screen.setPlayer(player);

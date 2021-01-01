@@ -34,6 +34,7 @@ public:
 	FireMissle(Position position, MissleType type);
 	static void loadFireRocketImages(SDL_Surface* display);
 	bool isCrushproof() const override;
+	bool isResistantToImmortalPlayer() const override;
 	bool isInactive() const;
 	void setMoveDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;

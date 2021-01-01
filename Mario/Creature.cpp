@@ -69,6 +69,11 @@ int Creature::getPointsForCrushing() const
 	return 100;
 }
 
+int Creature::getPointsForDestroying() const
+{
+	return 100;
+}
+
 void Creature::setMoveDirection(Direction direction)
 {
 	movement.setDirection(direction);
@@ -102,4 +107,9 @@ void Creature::crush(World &world, int index)
 	world.deleteMonster(index);
 
 	SoundController::playEnemyDestroyedEffect();
+}
+
+void Creature::destroy(World &world, Direction direction)
+{
+	world.addDestroyedCreature(position, direction);
 }

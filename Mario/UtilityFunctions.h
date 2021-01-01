@@ -20,8 +20,6 @@ bool isElementDirectlyAboveObject(const WorldObject &element, const WorldObject 
 
 bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block);
 
-bool isMonsterResistantToKnocks(std::shared_ptr<LivingObject> monster);
-
 bool isMonsterResistantToFireBalls(std::shared_ptr<LivingObject> monster);
 
 bool isMonsterResistantToCollisionWithShell(std::shared_ptr<LivingObject> monster);

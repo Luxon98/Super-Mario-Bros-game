@@ -3,6 +3,7 @@
 #include "CollisionHandling.h"
 #include "Movement.h"
 #include "Position.h"
+#include "World.h"
 
 
 void IndependentLivingObject::moveHorizontally(World &world)
@@ -38,11 +39,21 @@ int IndependentLivingObject::getPointsForCrushing() const
 	return 0;
 }
 
+int IndependentLivingObject::getPointsForDestroying() const
+{
+	return 200;
+}
+
 bool IndependentLivingObject::isCrushproof() const
+{
+	return false;
+}
+
+bool IndependentLivingObject::isResistantToImmortalPlayer() const
 {
 	return false;
 }
 
 void IndependentLivingObject::crush(World &world, int index) {}
 
-void IndependentLivingObject::destroy(World &world) {}
+void IndependentLivingObject::destroy(World &world, Direction direction) {}

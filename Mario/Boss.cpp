@@ -88,6 +88,16 @@ bool Boss::isCrushproof() const
 	return true;
 }
 
+bool Boss::isResistantToImmortalPlayer() const
+{
+	return true;
+}
+
+int Boss::getPointsForDestroying() const
+{
+	return 5000;
+}
+
 int Boss::getHealthPoints() const
 {
 	return healthPoints;

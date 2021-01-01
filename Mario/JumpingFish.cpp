@@ -120,3 +120,8 @@ void JumpingFish::crush(World &world, int index)
 
 	SoundController::playEnemyDestroyedEffect();
 }
+
+void JumpingFish::destroy(World &world, Direction direction)
+{
+	world.addDestroyedFish(position, (direction == Direction::Left));
+}

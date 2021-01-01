@@ -174,48 +174,15 @@ void handleJumpingOnMonster(std::shared_ptr<IndependentLivingObject> monster, Wo
 	}
 }
 
-void handleImmortalPlayerCollisions(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
+void handlePlayerAndMonstersCollisions(std::shared_ptr<IndependentLivingObject> monster, World &world, Player &player, int index)
 {
-	int points = 200;
-	Direction direction = determineDirection(player, *monster);
-
-	if (std::dynamic_pointer_cast<Turtle>(monster) || (std::dynamic_pointer_cast<Shell>(monster)
-		&& std::dynamic_pointer_cast<Shell>(monster)->isActive())) {
-
-		world.addDestroyedTurtle(monster->getPosition(), direction, std::dynamic_pointer_cast<Shell>(monster)->isRed());
-	}
-	else if (std::dynamic_pointer_cast<Creature>(monster)) {
-		world.addDestroyedCreature(monster->getPosition(), direction);
-		points = 100;
-	}
-	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
-		world.addDestroyedTurtle(monster->getPosition(), direction, true);
-	}
-	else if (std::dynamic_pointer_cast<JumpingFish>(monster)) {
-		bool directionFlag = std::dynamic_pointer_cast<JumpingFish>(monster)->isGoingLeft();
-		world.addDestroyedFish(monster->getPosition(), directionFlag);
-	}
-	else if (std::dynamic_pointer_cast<CloudBombardier>(monster)) {
-		bool leftSide = std::dynamic_pointer_cast<CloudBombardier>(monster)->isGoingLeft();
-		world.addDestroyedBombardier(monster->getPosition(), leftSide);
-	}
-
-	addTextAndPoints(player, world, points, Position(monster->getX(), monster->getY() - 15));
-	world.deleteMonster(index);
-	SoundController::playEnemyDestroyedEffect();
-}
-
-void handlePlayerAndMonstersCollisions(std::shared_ptr<LivingObject> monster, World &world, Player &player, int index)
-{
-	if (std::dynamic_pointer_cast<Shell>(monster) && !(std::dynamic_pointer_cast<Shell>(monster)->isActive())) {
-		Direction direction = determineDirection(player, *monster);
-		world.changeShellMovementParameters(index, direction);
-		return;
-	}
-
 	if (player.isImmortal()) {
-		if (!isMonsterResistantToKnocks(monster)) {
-			handleImmortalPlayerCollisions(monster, world, player, index);
+		if (!monster->isResistantToImmortalPlayer()) {
+			Direction direction = determineDirection(player, *monster);
+			monster->destroy(world, direction);
+			addTextAndPoints(player, world, monster->getPointsForDestroying(), Position(monster->getX(), monster->getY() - 15));
+			world.deleteMonster(index);
+			SoundController::playEnemyDestroyedEffect();
 		}
 	}
 	else if (!player.isInsensitive()) {

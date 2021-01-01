@@ -8,6 +8,7 @@
 #include "World.h"
 #include "LayoutStyle.h"
 #include "UtilityFunctions.h"
+#include "Player.h"
 
 
 std::array<SDL_Surface*, 3> Shell::shellImages;
@@ -41,6 +42,11 @@ void Shell::loadShellImage(SDL_Surface* display)
 		filename += ".png";
 		shellImages[i] = loadPNG(filename, display);
 	}
+}
+
+bool Shell::isResistantToImmortalPlayer() const
+{
+	return !active;
 }
 
 bool Shell::isActive() const
@@ -108,7 +114,13 @@ void Shell::crush(World &world, int index)
 		world.changeShellMovementParameters(index, Direction::None);
 	}
 	else {
-		//Direction direction = determineDirection(player, *this);
-		world.changeShellMovementParameters(index, Direction::Right);
+		const Player& player = world.getPlayer();
+		Direction direction = (player.getX() <= getX() ? Direction::Right : Direction::Left);
+		world.changeShellMovementParameters(index, direction);
 	}
+}
+
+void Shell::destroy(World &world, Direction direction)
+{
+	world.addDestroyedTurtle(position, direction, red);
 }

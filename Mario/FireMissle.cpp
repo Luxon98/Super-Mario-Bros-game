@@ -65,6 +65,11 @@ bool FireMissle::isCrushproof() const
 	return true;
 }
 
+bool FireMissle::isResistantToImmortalPlayer() const
+{
+	return true;
+}
+
 bool FireMissle::isInactive() const
 {
 	return inactive;

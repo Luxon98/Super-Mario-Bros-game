@@ -5,6 +5,7 @@
 #include "Position.h"
 #include "SDL_Utility.h"
 #include "CollisionHandling.h"
+#include "World.h"
 
 
 std::array<SDL_Surface*, 3> CloudBombardier::bombardierImages;
@@ -99,4 +100,9 @@ void CloudBombardier::move(World &world)
 			position.setY(600);
 		}
 	}
+}
+
+void CloudBombardier::destroy(World &world, Direction direction)
+{
+	world.addDestroyedBombardier(position, (direction == Direction::Left));
 }

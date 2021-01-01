@@ -31,6 +31,7 @@ public:
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 	void crush(World &world, int index) override;
+	void destroy(World &world, Direction direction) override;
 };
 
 #endif //RedTurtle_H
