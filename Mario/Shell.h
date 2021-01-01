@@ -24,6 +24,7 @@ public:
 	Shell(Position position, bool red = false);
 	static void loadShellImage(SDL_Surface* display);
 	bool isResistantToImmortalPlayer() const override;
+	bool isActiveShell() const override;
 	bool isActive() const;
 	bool isRed() const;
 	bool shouldTurnIntoTurtle() const;

@@ -50,8 +50,6 @@ void handleCollisionsWithFireSerpents(Player &player, World &world);
 
 void handlePlayerCollisions(Player &player, World &world);
 
-void handleShellCollisions(const LivingObject &shell, std::shared_ptr<LivingObject> monster, World &world, int * pts);
-
 void handleShellsAndMonstersCollisions(World &world, Player &player);
 
 void handleFireBallAndBossCollision(std::shared_ptr<LivingObject> monster, World &world, int * pts);

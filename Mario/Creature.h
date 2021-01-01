@@ -25,6 +25,7 @@ public:
 	static void loadCreatureImages(SDL_Surface* display);
 	int getPointsForCrushing() const override;
 	int getPointsForDestroying() const override;
+	bool isMonsterResistantToCollisionWithShell() const override;
 	void setMoveDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;

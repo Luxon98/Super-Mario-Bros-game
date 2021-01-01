@@ -74,6 +74,11 @@ int Creature::getPointsForDestroying() const
 	return 100;
 }
 
+bool Creature::isMonsterResistantToCollisionWithShell() const
+{
+	return false;
+}
+
 void Creature::setMoveDirection(Direction direction)
 {
 	movement.setDirection(direction);

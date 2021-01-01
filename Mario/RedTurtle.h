@@ -25,6 +25,7 @@ private:
 public:
 	RedTurtle(Position position, bool flying);
 	static void loadTurtleImages(SDL_Surface* display);
+	bool isMonsterResistantToCollisionWithShell() const override;
 	bool isFlying() const;
 	void loseFlyingAbility();
 	void setMoveDirection(Direction direction);

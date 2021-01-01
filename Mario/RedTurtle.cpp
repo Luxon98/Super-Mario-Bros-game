@@ -107,6 +107,11 @@ void RedTurtle::loadTurtleImages(SDL_Surface* display)
 	}
 }
 
+bool RedTurtle::isMonsterResistantToCollisionWithShell() const
+{
+	return false;
+}
+
 bool RedTurtle::isFlying() const
 {
 	return flying;

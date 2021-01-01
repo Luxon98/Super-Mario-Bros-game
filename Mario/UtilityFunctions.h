@@ -22,8 +22,6 @@ bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block);
 
 bool isMonsterResistantToFireBalls(std::shared_ptr<LivingObject> monster);
 
-bool isMonsterResistantToCollisionWithShell(std::shared_ptr<LivingObject> monster);
-
 int determineShift(const LivingObject &object, int base);
 
 int determineShift(Direction direction, int base);

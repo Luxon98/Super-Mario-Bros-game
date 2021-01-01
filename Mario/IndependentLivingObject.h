@@ -17,6 +17,8 @@ public:
 	virtual int getPointsForDestroying() const;
 	virtual bool isCrushproof() const;
 	virtual bool isResistantToImmortalPlayer() const;
+	virtual bool isMonsterResistantToCollisionWithShell() const;
+	virtual bool isActiveShell() const;
 	virtual void crush(World &world, int index);
 	virtual void destroy(World &world, Direction direction);
 };

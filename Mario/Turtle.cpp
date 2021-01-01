@@ -52,6 +52,11 @@ void Turtle::loadTurtleImages(SDL_Surface* display)
 	turtleImages[7] = loadPNG("./img/npc_imgs/turtle_right4.png", display);
 }
 
+bool Turtle::isMonsterResistantToCollisionWithShell() const
+{
+	return false;
+}
+
 void Turtle::setMoveDirection(Direction direction)
 {
 	movement.setDirection(direction);

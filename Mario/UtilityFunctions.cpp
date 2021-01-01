@@ -83,18 +83,6 @@ bool isMonsterResistantToFireBalls(std::shared_ptr<LivingObject> monster)
 	return false;
 }
 
-bool isMonsterResistantToCollisionWithShell(std::shared_ptr<LivingObject> monster)
-{
-	if (std::dynamic_pointer_cast<Shell>(monster) || std::dynamic_pointer_cast<FireMissle>(monster) 
-		|| std::dynamic_pointer_cast<Boss>(monster) || std::dynamic_pointer_cast<JumpingFish>(monster)
-		|| std::dynamic_pointer_cast<CloudBombardier>(monster)) {
-
-		return true;
-	}
-
-	return false;
-}
-
 int determineShift(const LivingObject &object, int base)
 {
 	return (object.getMovement().getDirection() == Direction::Left ? base * (-1) : base);

@@ -184,7 +184,9 @@ void handlePlayerAndMonstersCollisions(std::shared_ptr<IndependentLivingObject> 
 			world.deleteMonster(index);
 			SoundController::playEnemyDestroyedEffect();
 		}
+		//inactive shell
 	}
+	//inactive shell
 	else if (!player.isInsensitive()) {
 		player.loseBonusOrLife();
 	}
@@ -225,37 +227,20 @@ void handlePlayerCollisions(Player &player, World &world)
 	handleCollisionsWithFireSerpents(player, world);
 }
 
-void handleShellCollisions(const LivingObject &shell, std::shared_ptr<LivingObject> monster, World &world, int * pts)
-{
-	Direction direction = determineDirection(shell, *monster);
-
-	if (std::dynamic_pointer_cast<Creature>(monster)) {
-		world.addDestroyedCreature(monster->getPosition(), direction);
-		*pts = 100;
-	}
-	else if (std::dynamic_pointer_cast<Turtle>(monster) || std::dynamic_pointer_cast<Shell>(monster)) {
-		world.addDestroyedTurtle(monster->getPosition(), direction);
-	}
-	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
-		world.addDestroyedTurtle(monster->getPosition(), direction, true);
-	}
-}
-
 void handleShellsAndMonstersCollisions(World &world, Player &player)
 {
 	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
-		if (std::dynamic_pointer_cast<Shell>(*it) && std::dynamic_pointer_cast<Shell>(*it)->isActive()) {
+		if ((*it)->isActiveShell()) {
 			for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
-				if (!isMonsterResistantToCollisionWithShell(*it2) && (areAtTheSameWidth(**it, **it2)
+				if (!(*it2)->isMonsterResistantToCollisionWithShell() && (areAtTheSameWidth(**it, **it2)
 					&& areAtTheSameHeight(**it, **it2))) {
 
-					int points = 200;
-					handleShellCollisions(**it, *it2, world, &points);
-
+					Direction direction = determineDirection(**it, **it2);
+					(*it2)->destroy(world, direction);
+					addTextAndPoints(player, world, (*it2)->getPointsForDestroying(), (*it2)->getPosition());
 					world.deleteMonster(it2 - monsters.begin());
-					addTextAndPoints(player, world, points, (*it2)->getPosition());
-					SoundController::playEnemyDestroyedEffect();
+					SoundController::playEnemyDestroyedEffect();					
 				}
 			}
 		}

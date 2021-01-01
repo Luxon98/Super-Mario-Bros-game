@@ -49,6 +49,11 @@ bool Shell::isResistantToImmortalPlayer() const
 	return !active;
 }
 
+bool Shell::isActiveShell() const
+{
+	return active;
+}
+
 bool Shell::isActive() const
 {
 	return active;

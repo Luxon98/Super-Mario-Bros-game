@@ -54,6 +54,16 @@ bool IndependentLivingObject::isResistantToImmortalPlayer() const
 	return false;
 }
 
+bool IndependentLivingObject::isMonsterResistantToCollisionWithShell() const
+{
+	return true;
+}
+
+bool IndependentLivingObject::isActiveShell() const
+{
+	return false;
+}
+
 void IndependentLivingObject::crush(World &world, int index) {}
 
 void IndependentLivingObject::destroy(World &world, Direction direction) {}
