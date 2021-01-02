@@ -1,12 +1,9 @@
 #ifndef CollisionHandling_H
 #define CollisionHandling_H
 
-#include <memory>
-
 class World;
 class Player;
 class WorldObject;
-class LivingObject;
 class IndependentLivingObject;
 class BonusObject;
 class Block;
@@ -22,27 +19,33 @@ bool isCharacterHittingObject(const WorldObject &figure, const WorldObject &bloc
 
 bool isCharacterStandingOnSomething(const WorldObject &figure, const World &world);
 
-bool isMonsterStandingOnBlock(const LivingObject &monster, const Block &block);
+bool isMonsterStandingOnBlock(const IndependentLivingObject &monster, const Block &block);
 
-bool isMushroomStandingOnBlock(const World &world, const Block &block);
+bool isBonusStandingOnBlock(const BonusObject &bonus, const Block &block);
+
+bool isBlockBlockedByAnother(const Block &block, const World &world);
 
 bool isPlayerCloseToFireRocket(const FireMissle &fireRocket, const World &world);
 
 bool isPlayerCloseToPlant(const Plant &plant, const World &world);
 
-bool isPlayerAheadOfMonster(const LivingObject &monster, const World &world);
+bool isPlayerAheadOfMonster(const IndependentLivingObject &monster, const World &world);
 
 bool isPlayerStandingOnThisPlatform(const Player &player, const Platform &platform);
 
-bool isBlockBlockedByAnother(const Block &block, const World &world);
+bool isPlayerJumpingOnMonster(const Player &player, const IndependentLivingObject &monster);
 
-bool isPlayerJumpingOnMonster(const Player &player, const LivingObject &monster);
+void handleMonsterDestroying(IndependentLivingObject &npc, World &world, Player &player, Direction direction);
 
-bool isBonusStandingOnBlock(const BonusObject &bonus, const Block &block);
+void handleMonsterDeleting(World &world, int index, bool bossFlag = false);
 
-void handleJumpingOnMonster(std::shared_ptr<IndependentLivingObject> monster, World &world, Player &player, int index);
+void handleMonsterHpReducing(IndependentLivingObject &npc, World &world, Player &player, int index);
 
-void handlePlayerAndMonstersCollisions(IndependentLivingObject &monster, World &world, Player &player, int index);
+void handleFireBallDeleting(const FireBall &fireball, World &world, int index);
+
+void handleJumpingOnMonster(IndependentLivingObject &npc, World &world, Player &player, int index);
+
+void handlePlayerAndMonsterCollision(IndependentLivingObject &npc, World &world, Player &player, int index);
 
 void handleCollisionsWithMonsters(Player &player, World &world);
 
@@ -51,8 +54,6 @@ void handleCollisionsWithFireSerpents(Player &player, World &world);
 void handlePlayerCollisions(Player &player, World &world);
 
 void handleShellsAndMonstersCollisions(World &world, Player &player);
-
-void handleFireBallDestruction(const FireBall &fireball, World &world, int fireballIndex);
 
 void handleFireBallsAndMonstersCollisions(World &world, Player &player);
 
@@ -64,20 +65,20 @@ void handleBlockCollisions(World &world, const Block &block, Player &player);
 
 void handleBonusesCollecting(Player &player, World &world);
 
-int getAlignmentForCollisionFromRight(int distance, const WorldObject &object, const Block &block, const World &world);
+int getAlignmentForCollisionFromRight(int dist, const WorldObject &obj, const Block &block, const World &world);
 
-int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject &object, const World &world);
+int getHorizontalAlignmentForCollisionWithBlocks(Direction dir, int dist, const WorldObject &obj, const World &world);
 
-int getHorizontalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject &object, const World &world);
+int getHorizontalAlignmentForCollisionWithPlatforms(Direction dir, int dist, const WorldObject &obj, const World &world);
 
-int computeHorizontalAlignment(Direction direction, int distance, const WorldObject &object, const World &world);
+int computeHorizontalAlignment(Direction dir, int dist, const WorldObject &obj, const World &world);
 
 // this method additionaly set the last touched block's index
-int getVerticalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject &object, World &world);
+int getVerticalAlignmentForCollisionWithBlocks(Direction dir, int dist, const WorldObject &obj, World &world);
 
 // this method additionaly set the last touched block's index to -1
-int getVerticalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject &object, World &world);
+int getVerticalAlignmentForCollisionWithPlatforms(Direction dir, int dist, const WorldObject &obj, World &world);
 
-int computeVerticalAlignment(Direction direction, int distance, const WorldObject &object, World &world);
+int computeVerticalAlignment(Direction dir, int dist, const WorldObject &obj, World &world);
 
 #endif //CollisionHandling_H

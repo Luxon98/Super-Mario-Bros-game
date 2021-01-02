@@ -75,7 +75,7 @@ bool isCharacterStandingOnSomething(const WorldObject &figure, const World &worl
 	return false;
 }
 
-bool isMonsterStandingOnBlock(const LivingObject &monster, const Block &block)
+bool isMonsterStandingOnBlock(const IndependentLivingObject &monster, const Block &block)
 {
 	if (isMonsterCloseAboveBlock(monster, block) && areAtTheSameWidth(monster, block)) {
 		return true;
@@ -84,14 +84,17 @@ bool isMonsterStandingOnBlock(const LivingObject &monster, const Block &block)
 	return false;
 }
 
-bool isMushroomStandingOnBlock(const World &world, const Block &block)
+bool isBonusStandingOnBlock(const BonusObject &bonus, const Block &block)
 {
-	std::vector<std::shared_ptr<BonusObject>> bonusElements = world.getBonusElements();
-	for (auto &bonusElement : bonusElements) {
-		if (std::dynamic_pointer_cast<Mushroom>(bonusElement)) {
-			if (isElementDirectlyAboveObject(*bonusElement, block) && areAtTheSameWidth(*bonusElement, block)) {
-				return true;
-			}
+	return (isElementDirectlyAboveObject(bonus, block) && areAtTheSameWidth(bonus, block));
+}
+
+bool isBlockBlockedByAnother(const Block &block, const World &world)
+{
+	std::vector<Block> blocks = world.getBlocks();
+	for (auto &element : blocks) {
+		if (block.getX() == element.getX() && block.getY() == (element.getY() + block.getHeight())) {
+			return true;
 		}
 	}
 
@@ -121,7 +124,7 @@ bool isPlayerCloseToPlant(const Plant &plant, const World &world)
 	return false;
 }
 
-bool isPlayerAheadOfMonster(const LivingObject &monster, const World &world)
+bool isPlayerAheadOfMonster(const IndependentLivingObject &monster, const World &world)
 {
 	const Player& player = world.getPlayer();
 
@@ -141,59 +144,68 @@ bool isPlayerStandingOnThisPlatform(const Player &player, const Platform &platfo
 	return false;
 }
 
-bool isBlockBlockedByAnother(const Block& block, const World& world)
-{
-	std::vector<Block> blocks = world.getBlocks();
-	for (auto &element : blocks) {
-		if (block.getX() == element.getX() && block.getY() == (element.getY() + block.getHeight())) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool isPlayerJumpingOnMonster(const Player &player, const LivingObject &monster)
+bool isPlayerJumpingOnMonster(const Player &player, const IndependentLivingObject &monster)
 {
 	return ((monster.getY() - player.getY() > 25) && player.isNotJumpingUp());
 }
 
-bool isBonusStandingOnBlock(const BonusObject &bonus, const Block &block)
+void handleMonsterDestroying(IndependentLivingObject &npc, World &world, Player &player, Direction direction)
 {
-	return (isElementDirectlyAboveObject(bonus, block) && areAtTheSameWidth(bonus, block));
+	npc.destroy(world, direction);
+	addTextAndPoints(player, world, npc.getPointsForDestroying(), Position(npc.getX(), npc.getY() - 15));
 }
 
-void handleJumpingOnMonster(std::shared_ptr<IndependentLivingObject> monster, World &world, Player &player, int index)
+void handleMonsterDeleting(World &world, int index, bool bossFlag)
+{
+	world.deleteMonster(index);
+	SoundController::playEnemyDestroyedEffect(bossFlag);
+}
+
+void handleMonsterHpReducing(IndependentLivingObject &npc, World &world, Player &player, int index)
+{
+	npc.decrementHealthPoints();
+	if (npc.getHealthPoints() == 0) {
+		Direction direction = npc.getMovement().getDirection();
+		handleMonsterDestroying(npc, world, player, direction);
+		handleMonsterDeleting(world, index, (npc.getPointsForDestroying() == 5000));
+	}
+}
+
+void handleFireBallDeleting(const FireBall &fireball, World &world, int index)
+{
+	int alignment = (fireball.getMovement().getDirection() == Direction::Left ? -5 : 5);
+
+	world.deleteFireBall(index);
+	world.addExplosion(Position(fireball.getX() + alignment, fireball.getY()));
+}
+
+void handleJumpingOnMonster(IndependentLivingObject &npc, World &world, Player &player, int index)
 {
 	player.performAdditionalJump();
-	monster->crush(world, index);
+	npc.crush(world, index);
 
-	int points = monster->getPointsForCrushing();
+	int points = npc.getPointsForCrushing();
 	if (points) {
-		addTextAndPoints(player, world, points, Position(monster->getX(), monster->getY() - 15));
+		addTextAndPoints(player, world, points, Position(npc.getX(), npc.getY() - 15));
 	}
 }
 
-void handlePlayerAndMonstersCollisions(IndependentLivingObject &monster, World &world, Player &player, int index)
+void handlePlayerAndMonsterCollision(IndependentLivingObject &npc, World &world, Player &player, int index)
 {
 	if (player.isImmortal()) {
-		if (!monster.isResistantToImmortalPlayer()) {
-			Direction direction = determineDirection(player, monster);
-			monster.destroy(world, direction);
-			addTextAndPoints(player, world, monster.getPointsForDestroying(), Position(monster.getX(), monster.getY() - 15));
-			world.deleteMonster(index);
-			SoundController::playEnemyDestroyedEffect();
+		if (!npc.isResistantToImmortalPlayer()) {
+			Direction direction = determineDirection(player, npc);
+			handleMonsterDestroying(npc, world, player, direction);
+			handleMonsterDeleting(world, index);
 		}
-		else if (isInactiveShell(monster)) {
-			Direction direction = determineDirection(player, monster);
-			dynamic_cast<Shell*>(&monster)->setActiveStateParameters(direction);
-			dynamic_cast<Shell*>(&monster)->resetCreationTime();
+		else if (isInactiveShell(npc)) {
+			Direction direction = determineDirection(player, npc);
+			dynamic_cast<Shell*>(&npc)->setActiveState(direction);
 		}
 	}
-	else if (isInactiveShell(monster)) {
-		Direction direction = determineDirection(player, monster);
-		dynamic_cast<Shell*>(&monster)->setActiveStateParameters(direction);
-		dynamic_cast<Shell*>(&monster)->resetCreationTime();
+	else if (isInactiveShell(npc)) {
+		Direction direction = determineDirection(player, npc);
+		dynamic_cast<Shell*>(&npc)->setActiveState(direction);
 	}
 	else if (!player.isInsensitive()) {
 		player.loseBonusOrLife();
@@ -204,14 +216,14 @@ void handleCollisionsWithMonsters(Player &player, World &world)
 {
 	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
-		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it)) {
+		if (areColliding(player, **it)) {
 			if (isPlayerJumpingOnMonster(player, **it) && !(*it)->isCrushproof()) {
-				handleJumpingOnMonster(*it, world, player, it - monsters.begin());
+				handleJumpingOnMonster(**it, world, player, it - monsters.begin());
 			}
 			else {
-				handlePlayerAndMonstersCollisions(**it, world, player, it - monsters.begin());
+				handlePlayerAndMonsterCollision(**it, world, player, it - monsters.begin());
 			}
-			break; //
+			return;
 		}
 	}
 }
@@ -220,11 +232,9 @@ void handleCollisionsWithFireSerpents(Player &player, World &world)
 {
 	std::vector<FireSerpent> fireSerpents = world.getFireSerpents();
 	for (const auto &fireSerpent : fireSerpents) {
-		if (areAtTheSameWidth(player, fireSerpent) && areAtTheSameHeight(player, fireSerpent)) {
-			if (!player.isImmortal() && !player.isInsensitive()) {
-				player.loseBonusOrLife();
-				return;
-			}
+		if (areColliding(player, fireSerpent) && !player.isImmortal() && !player.isInsensitive()) {
+			player.loseBonusOrLife();
+			return;
 		}
 	}
 }
@@ -241,50 +251,27 @@ void handleShellsAndMonstersCollisions(World &world, Player &player)
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if ((*it)->isActiveShell()) {
 			for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
-				if (!(*it2)->isResistantToCollisionWithShell() && (areAtTheSameWidth(**it, **it2)
-					&& areAtTheSameHeight(**it, **it2))) {
-
+				if (!(*it2)->isResistantToCollisionWithShell() && areColliding(**it, **it2)) {
 					Direction direction = determineDirection(**it, **it2);
-					(*it2)->destroy(world, direction);
-					addTextAndPoints(player, world, (*it2)->getPointsForDestroying(), (*it2)->getPosition());
-					world.deleteMonster(it2 - monsters.begin());
-					SoundController::playEnemyDestroyedEffect();					
+					handleMonsterDestroying(**it2, world, player, direction);
+					handleMonsterDeleting(world, it2 - monsters.begin());	
+					return;
 				}
 			}
 		}
 	}
 }
 
-void handleFireBallDestruction(const FireBall &fireball, World &world, int fireballIndex)
-{
-	int alignment = (fireball.getMovement().getDirection() == Direction::Left ? -5 : 5);
-
-	world.deleteFireBall(fireballIndex);
-	world.addExplosion(Position(fireball.getX() + alignment, fireball.getY()));
-}
-
 void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 {
 	std::vector<FireBall> fireballs = world.getFireBalls();
 	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
-	int index = 0;
-	for (auto it = fireballs.begin(); it != fireballs.end(); ++it, ++index) {
+	for (auto it = fireballs.begin(); it != fireballs.end(); ++it) {
 		for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
-			if (!(*it2)->isResistantToFireBalls() && (areAtTheSameWidth(*it, **it2) 
-				&& areAtTheSameHeight(*it, **it2))) {
-
-				handleFireBallDestruction(fireballs[index], world, index);
-
-				(*it2)->decrementHealthPoints();
-				if ((*it2)->getHealthPoints() == 0) {
-					int points = (*it2)->getPointsForDestroying();
-					Direction direction = (*it).getMovement().getDirection();
-					(*it2)->destroy(world, direction);
-					world.deleteMonster(it2 - monsters.begin());
-					addTextAndPoints(player, world, points, Position((*it2)->getX(), (*it2)->getY() - 15));
-					bool bossFlag = (points == 5000);
-					SoundController::playEnemyDestroyedEffect(bossFlag);
-				}
+			if (!(*it2)->isResistantToFireBalls() && areColliding(*it, **it2)) {
+				handleMonsterHpReducing(**it2, world, player, it2 - monsters.begin());
+				handleFireBallDeleting(*it, world, it - fireballs.begin());
+				return;
 			}
 		}
 	}
@@ -295,12 +282,9 @@ void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &
 	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
 		if (!(*it)->isResistantToCollisionWithBlock() && isMonsterStandingOnBlock(**it, block)) {
-			int points = (*it)->getPointsForDestroying();
 			Direction direction = determineDirection(block, **it);
-			(*it)->destroy(world, direction);
-			addTextAndPoints(player, world, points, Position((*it)->getX(), (*it)->getY() - 15));
-			world.deleteMonster(it - monsters.begin());
-			SoundController::playEnemyDestroyedEffect();
+			handleMonsterDestroying(**it, world, player, direction);
+			handleMonsterDeleting(world, it - monsters.begin());
 		}
 	}
 }
@@ -340,36 +324,34 @@ void handleBonusesCollecting(Player &player, World &world)
 	}
 }
 
-int getAlignmentForCollisionFromRight(int distance, const WorldObject &object, const Block &block, const World &world)
+int getAlignmentForCollisionFromRight(int dist, const WorldObject &obj, const Block &block, const World &world)
 {
 	int alignment = 0;
 
 	if (block.getType() == BlockType::TubeLeftEntry) {
-		if (!isCharacterStandingOnSomething(object, world)) {
-			alignment = (object.getX() + distance + object.getWidth() / 2) - (block.getX() - block.getWidth() / 2);
+		if (!isCharacterStandingOnSomething(obj, world)) {
+			alignment = (obj.getX() + dist + obj.getWidth() / 2) - (block.getX() - block.getWidth() / 2);
 		}
 	}
 	else {
-		alignment = (object.getX() + distance + object.getWidth() / 2) - (block.getX() - block.getWidth() / 2);
+		alignment = (obj.getX() + dist + obj.getWidth() / 2) - (block.getX() - block.getWidth() / 2);
 	}
 	
 	return (alignment > 0 ? alignment : 0);
 }
 
-int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject &object, const World &world)
+int getHorizontalAlignmentForCollisionWithBlocks(Direction dir, int dist, const WorldObject &obj, const World &world)
 {
 	int alignment = 0;
 	std::vector<Block> blocks = world.getBlocks();
-	
-	for (auto &block : blocks) {
-		if (areAtTheSameHeight(object, block) && isCharacterHittingObject(object, block, direction, distance)
-			&& !block.isInvisible()) {
 
-			if (direction == Direction::Right) {
-				alignment = getAlignmentForCollisionFromRight(distance, object, block, world);
+	for (auto &block : blocks) {
+		if (areAtTheSameHeight(obj, block) && isCharacterHittingObject(obj, block, dir, dist) && !block.isInvisible()) {
+			if (dir == Direction::Right) {
+				alignment = getAlignmentForCollisionFromRight(dist, obj, block, world);
 			}
-			else if (direction == Direction::Left) {
-				alignment = (block.getX() + block.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2);
+			else if (dir == Direction::Left) {
+				alignment = (block.getX() + block.getWidth() / 2) - (obj.getX() - dist - obj.getWidth() / 2);
 			}
 			break;
 		}
@@ -378,18 +360,18 @@ int getHorizontalAlignmentForCollisionWithBlocks(Direction direction, int distan
 	return (alignment > 0 ? alignment : 0);
 }
 
-int getHorizontalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject &object, const World &world)
+int getHorizontalAlignmentForCollisionWithPlatforms(Direction dir, int dist, const WorldObject &obj, const World &world)
 {
 	int alignment = 0;
 	std::vector<Platform> platforms = world.getPlatforms();
 
 	for (auto &platform : platforms) {
-		if (areAtTheSameHeight(object, platform) && isCharacterHittingObject(object, platform, direction, distance)) {
-			if (direction == Direction::Right) {
-				alignment = (object.getX() + distance + object.getWidth() / 2) - (platform.getX() - platform.getWidth() / 2);
+		if (areAtTheSameHeight(obj, platform) && isCharacterHittingObject(obj, platform, dir, dist)) {
+			if (dir == Direction::Right) {
+				alignment = (obj.getX() + dist + obj.getWidth() / 2) - (platform.getX() - platform.getWidth() / 2);
 			}
-			else if (direction == Direction::Left) {
-				alignment = (platform.getX() + platform.getWidth() / 2) - (object.getX() - distance - object.getWidth() / 2);
+			else if (dir == Direction::Left) {
+				alignment = (platform.getX() + platform.getWidth() / 2) - (obj.getX() - dist - obj.getWidth() / 2);
 			}
 			break;
 		}
@@ -398,31 +380,31 @@ int getHorizontalAlignmentForCollisionWithPlatforms(Direction direction, int dis
 	return (alignment > 0 ? alignment : 0);
 }
 
-int computeHorizontalAlignment(Direction direction, int distance, const WorldObject &object, const World &world)
+int computeHorizontalAlignment(Direction dir, int dist, const WorldObject &obj, const World &world)
 {
-	int firstAlignment = getHorizontalAlignmentForCollisionWithBlocks(direction, distance, object, world);
-	int secondAlignment = getHorizontalAlignmentForCollisionWithPlatforms(direction, distance, object, world);
+	int firstAlignment = getHorizontalAlignmentForCollisionWithBlocks(dir, dist, obj, world);
+	int secondAlignment = getHorizontalAlignmentForCollisionWithPlatforms(dir, dist, obj, world);
 
 	return (firstAlignment >= secondAlignment ? firstAlignment : secondAlignment);
 }
 
 // this method additionaly set the last touched block's index
-int getVerticalAlignmentForCollisionWithBlocks(Direction direction, int distance, const WorldObject &object, World &world)
+int getVerticalAlignmentForCollisionWithBlocks(Direction dir, int dist, const WorldObject &obj, World &world)
 {
 	int alignment = 0;
 	std::vector<Block> blocks = world.getBlocks();
 
 	for (auto it = blocks.begin(); it != blocks.end(); ++it) {
-		if (areAtTheSameWidth(object, *it) && isCharacterHittingObject(object, *it, direction, distance)) {
-			if (direction == Direction::Up) {
-				alignment = (it->getY() + it->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2);
+		if (areAtTheSameWidth(obj, *it) && isCharacterHittingObject(obj, *it, dir, dist)) {
+			if (dir == Direction::Up) {
+				alignment = (it->getY() + it->getHeight() / 2) - (obj.getY() - dist - obj.getHeight() / 2);
 
 				if (alignment > 0) {
 					world.setLastTouchedBlock(it - blocks.begin());	// 
 				}
 			}
-			else if ( direction == Direction::Down && !it->isInvisible()) {
-				alignment = (object.getY() + distance + object.getHeight() / 2) - (it->getY() - it->getHeight() / 2);
+			else if ( dir == Direction::Down && !it->isInvisible()) {
+				alignment = (obj.getY() + dist + obj.getHeight() / 2) - (it->getY() - it->getHeight() / 2);
 			}
 			break;
 		}
@@ -432,22 +414,22 @@ int getVerticalAlignmentForCollisionWithBlocks(Direction direction, int distance
 }
 
 // this method additionaly set the last touched block's index to -1
-int getVerticalAlignmentForCollisionWithPlatforms(Direction direction, int distance, const WorldObject &object, World &world)
+int getVerticalAlignmentForCollisionWithPlatforms(Direction dir, int dist, const WorldObject &obj, World &world)
 {
 	int alignment = 0;
 	std::vector<Platform> platforms = world.getPlatforms();
 
 	for (auto it = platforms.begin(); it != platforms.end(); ++it) {
-		if (areAtTheSameWidth(object, *it) && isCharacterHittingObject(object, *it, direction, distance)) {
-			if (direction == Direction::Up) {
-				alignment = (it->getY() + it->getHeight() / 2) - (object.getY() - distance - object.getHeight() / 2);
+		if (areAtTheSameWidth(obj, *it) && isCharacterHittingObject(obj, *it, dir, dist)) {
+			if (dir == Direction::Up) {
+				alignment = (it->getY() + it->getHeight() / 2) - (obj.getY() - dist - obj.getHeight() / 2);
 
 				if (alignment > 0) {
 					world.setLastTouchedBlock(-1);	// 
 				}
 			}
-			else if (direction == Direction::Down) {
-				alignment = (object.getY() + distance + object.getHeight() / 2) - (it->getY() - it->getHeight() / 2);
+			else if (dir == Direction::Down) {
+				alignment = (obj.getY() + dist + obj.getHeight() / 2) - (it->getY() - it->getHeight() / 2);
 			}
 			break;
 		}
@@ -456,10 +438,10 @@ int getVerticalAlignmentForCollisionWithPlatforms(Direction direction, int dista
 	return (alignment > 0 ? alignment : 0);
 }
 
-int computeVerticalAlignment(Direction direction, int distance, const WorldObject &object, World &world)
+int computeVerticalAlignment(Direction dir, int dist, const WorldObject &obj, World &world)
 {
-	int firstAlignment = getVerticalAlignmentForCollisionWithBlocks(direction, distance, object, world);
-	int secondAlignment = getVerticalAlignmentForCollisionWithPlatforms(direction, distance, object, world);
+	int firstAlignment = getVerticalAlignmentForCollisionWithBlocks(dir, dist, obj, world);
+	int secondAlignment = getVerticalAlignmentForCollisionWithPlatforms(dir, dist, obj, world);
 
 	return (firstAlignment >= secondAlignment ? firstAlignment : secondAlignment);
 }

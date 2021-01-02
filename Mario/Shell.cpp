@@ -75,17 +75,14 @@ bool Shell::shouldTurnIntoTurtle() const
 	return (creationTime + std::chrono::milliseconds(25000) < timePoint);
 }
 
-void Shell::setActiveStateParameters(Direction direction)
+void Shell::setActiveState(Direction direction)
 {
 	movement.setDirection(direction);
 	active = (movement.getDirection() != Direction::None);
 
 	int shift = determineShift(*this, 3);
 	position.setX(position.getX() + shift);
-}
 
-void Shell::resetCreationTime()
-{
 	creationTime = std::chrono::steady_clock::now();
 }
 

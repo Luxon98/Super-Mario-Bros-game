@@ -28,8 +28,7 @@ public:
 	bool isActive() const;
 	bool isRed() const;
 	bool shouldTurnIntoTurtle() const;
-	void setActiveStateParameters(Direction direction);
-	void resetCreationTime();
+	void setActiveState(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 	void crush(World &world, int index) override;

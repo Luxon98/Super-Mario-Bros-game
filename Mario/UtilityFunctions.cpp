@@ -56,6 +56,15 @@ bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secon
 	return false;
 }
 
+bool areColliding(const WorldObject &firstObject, const WorldObject &secondObject)
+{
+	if (areAtTheSameHeight(firstObject, secondObject) && areAtTheSameWidth(firstObject, secondObject)) {
+		return true;
+	}
+
+	return false;
+}
+
 bool isElementDirectlyAboveObject(const WorldObject &element, const WorldObject &object)
 {
 	if (element.getY() + element.getHeight() / 2 == object.getY() - object.getHeight() / 2) {
@@ -65,7 +74,7 @@ bool isElementDirectlyAboveObject(const WorldObject &element, const WorldObject 
 	return false;
 }
 
-bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block)
+bool isMonsterCloseAboveBlock(const IndependentLivingObject &monster, const Block &block)
 {
 	if (abs((monster.getY() + monster.getHeight() / 2) - (block.getY() - block.getHeight() / 2)) < 2) {
 		return true;
@@ -80,7 +89,7 @@ bool isInactiveShell(IndependentLivingObject &npc)
 	return (shell && !shell->isActive());
 }
 
-int determineShift(const LivingObject &object, int base)
+int determineShift(const IndependentLivingObject &object, int base)
 {
 	return (object.getMovement().getDirection() == Direction::Left ? base * (-1) : base);
 }

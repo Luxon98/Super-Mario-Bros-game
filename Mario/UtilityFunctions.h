@@ -1,10 +1,7 @@
 #ifndef UtilityFunctions_H
 #define UtilityFunctions_H
 
-#include <memory>
-
 class WorldObject;
-class LivingObject;
 class IndependentLivingObject;
 class Block;
 class Player;
@@ -17,13 +14,15 @@ bool areAtTheSameWidth(const WorldObject &firstObject, const WorldObject &second
 
 bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secondObject);
 
+bool areColliding(const WorldObject &firstObject, const WorldObject &secondObject);
+
 bool isElementDirectlyAboveObject(const WorldObject &element, const WorldObject &object);
 
-bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block);
+bool isMonsterCloseAboveBlock(const IndependentLivingObject &monster, const Block &block);
 
 bool isInactiveShell(IndependentLivingObject &npc);
 
-int determineShift(const LivingObject &object, int base);
+int determineShift(const IndependentLivingObject &object, int base);
 
 int determineShift(Direction direction, int base);
 
