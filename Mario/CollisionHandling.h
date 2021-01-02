@@ -42,7 +42,7 @@ bool isBonusStandingOnBlock(const BonusObject &bonus, const Block &block);
 
 void handleJumpingOnMonster(std::shared_ptr<IndependentLivingObject> monster, World &world, Player &player, int index);
 
-void handlePlayerAndMonstersCollisions(std::shared_ptr<IndependentLivingObject> monster, World &world, Player &player, int index);
+void handlePlayerAndMonstersCollisions(IndependentLivingObject &monster, World &world, Player &player, int index);
 
 void handleCollisionsWithMonsters(Player &player, World &world);
 
@@ -55,8 +55,6 @@ void handleShellsAndMonstersCollisions(World &world, Player &player);
 void handleFireBallDestruction(const FireBall &fireball, World &world, int fireballIndex);
 
 void handleFireBallsAndMonstersCollisions(World &world, Player &player);
-
-void handleMonsterDestruction(const Block &block, std::shared_ptr<LivingObject> monster, World &world, int * pts);
 
 void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &player);
 

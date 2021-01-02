@@ -113,6 +113,11 @@ bool RedTurtle::isResistantToCollisionWithShell() const
 	return false;
 }
 
+bool RedTurtle::isResistantToCollisionWithBlock() const
+{
+	return false;
+}
+
 bool RedTurtle::isFlying() const
 {
 	return flying;

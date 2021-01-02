@@ -57,6 +57,11 @@ bool Turtle::isResistantToCollisionWithShell() const
 	return false;
 }
 
+bool Turtle::isResistantToCollisionWithBlock() const
+{
+	return false;
+}
+
 void Turtle::setMoveDirection(Direction direction)
 {
 	movement.setDirection(direction);

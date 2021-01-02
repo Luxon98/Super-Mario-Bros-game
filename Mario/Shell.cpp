@@ -116,6 +116,7 @@ void Shell::move(World &world)
 
 void Shell::crush(World &world, int index)
 {
+	// to rework
 	if (active) {
 		world.changeShellMovementParameters(index, Direction::None);
 	}

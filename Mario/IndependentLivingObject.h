@@ -20,6 +20,7 @@ public:
 	virtual bool isCrushproof() const;
 	virtual bool isResistantToImmortalPlayer() const;
 	virtual bool isResistantToCollisionWithShell() const;
+	virtual bool isResistantToCollisionWithBlock() const;
 	virtual bool isResistantToFireBalls() const;
 	virtual bool isActiveShell() const;
 	void decrementHealthPoints();

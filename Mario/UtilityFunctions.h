@@ -5,6 +5,7 @@
 
 class WorldObject;
 class LivingObject;
+class IndependentLivingObject;
 class Block;
 class Player;
 enum class Direction;
@@ -19,6 +20,8 @@ bool areAtTheSameHeight(const WorldObject &firstObject, const WorldObject &secon
 bool isElementDirectlyAboveObject(const WorldObject &element, const WorldObject &object);
 
 bool isMonsterCloseAboveBlock(const LivingObject &monster, const Block &block);
+
+bool isInactiveShell(IndependentLivingObject &npc);
 
 int determineShift(const LivingObject &object, int base);
 

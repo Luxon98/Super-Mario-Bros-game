@@ -26,6 +26,7 @@ public:
 	int getPointsForCrushing() const override;
 	int getPointsForDestroying() const override;
 	bool isResistantToCollisionWithShell() const override;
+	bool isResistantToCollisionWithBlock() const override;
 	void setMoveDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;

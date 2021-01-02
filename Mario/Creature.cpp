@@ -80,6 +80,11 @@ bool Creature::isResistantToCollisionWithShell() const
 	return false;
 }
 
+bool Creature::isResistantToCollisionWithBlock() const
+{
+	return false;
+}
+
 void Creature::setMoveDirection(Direction direction)
 {
 	movement.setDirection(direction);

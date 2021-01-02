@@ -174,19 +174,27 @@ void handleJumpingOnMonster(std::shared_ptr<IndependentLivingObject> monster, Wo
 	}
 }
 
-void handlePlayerAndMonstersCollisions(std::shared_ptr<IndependentLivingObject> monster, World &world, Player &player, int index)
+void handlePlayerAndMonstersCollisions(IndependentLivingObject &monster, World &world, Player &player, int index)
 {
 	if (player.isImmortal()) {
-		if (!monster->isResistantToImmortalPlayer()) {
-			Direction direction = determineDirection(player, *monster);
-			monster->destroy(world, direction);
-			addTextAndPoints(player, world, monster->getPointsForDestroying(), Position(monster->getX(), monster->getY() - 15));
+		if (!monster.isResistantToImmortalPlayer()) {
+			Direction direction = determineDirection(player, monster);
+			monster.destroy(world, direction);
+			addTextAndPoints(player, world, monster.getPointsForDestroying(), Position(monster.getX(), monster.getY() - 15));
 			world.deleteMonster(index);
 			SoundController::playEnemyDestroyedEffect();
 		}
-		//inactive shell
+		else if (isInactiveShell(monster)) {
+			Direction direction = determineDirection(player, monster);
+			dynamic_cast<Shell*>(&monster)->setActiveStateParameters(direction);
+			dynamic_cast<Shell*>(&monster)->resetCreationTime();
+		}
 	}
-	//inactive shell
+	else if (isInactiveShell(monster)) {
+		Direction direction = determineDirection(player, monster);
+		dynamic_cast<Shell*>(&monster)->setActiveStateParameters(direction);
+		dynamic_cast<Shell*>(&monster)->resetCreationTime();
+	}
 	else if (!player.isInsensitive()) {
 		player.loseBonusOrLife();
 	}
@@ -201,7 +209,7 @@ void handleCollisionsWithMonsters(Player &player, World &world)
 				handleJumpingOnMonster(*it, world, player, it - monsters.begin());
 			}
 			else {
-				handlePlayerAndMonstersCollisions(*it, world, player, it - monsters.begin());
+				handlePlayerAndMonstersCollisions(**it, world, player, it - monsters.begin());
 			}
 			break; //
 		}
@@ -282,30 +290,14 @@ void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 	}
 }
 
-void handleMonsterDestruction(const Block &block, std::shared_ptr<LivingObject> monster, World &world, int * pts)
-{
-	Direction direction = determineDirection(block, *monster);
-
-	if (std::dynamic_pointer_cast<Creature>(monster)) {
-		world.addDestroyedCreature(monster->getPosition(), direction);
-		*pts = 100;
-	}
-	else if (std::dynamic_pointer_cast<Turtle>(monster)) {
-		world.addDestroyedTurtle(monster->getPosition(), direction);
-	}
-	else if (std::dynamic_pointer_cast<RedTurtle>(monster)) {
-		world.addDestroyedTurtle(monster->getPosition(), direction, true);
-	}
-}
-
 void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &player)
 {
 	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
 	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
-		if (isMonsterStandingOnBlock(**it, block)) {
-			int points = 200;
-			handleMonsterDestruction(block, *it, world, &points);
-		
+		if (!(*it)->isResistantToCollisionWithBlock() && isMonsterStandingOnBlock(**it, block)) {
+			int points = (*it)->getPointsForDestroying();
+			Direction direction = determineDirection(block, **it);
+			(*it)->destroy(world, direction);
 			addTextAndPoints(player, world, points, Position((*it)->getX(), (*it)->getY() - 15));
 			world.deleteMonster(it - monsters.begin());
 			SoundController::playEnemyDestroyedEffect();

@@ -64,6 +64,11 @@ bool IndependentLivingObject::isResistantToCollisionWithShell() const
 	return true;
 }
 
+bool IndependentLivingObject::isResistantToCollisionWithBlock() const
+{
+	return true;
+}
+
 bool IndependentLivingObject::isResistantToFireBalls() const
 {
 	return false;
