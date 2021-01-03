@@ -1,12 +1,12 @@
-#ifndef IndependentLivingObject_H
-#define IndependentLivingObject_H
+#ifndef IndependentMovingObject_H
+#define IndependentMovingObject_H
 
-#include "LivingObject.h"
+#include "MovingObject.h"
 
 class World;
 
 
-class IndependentLivingObject : public LivingObject
+class IndependentMovingObject : public MovingObject
 {
 protected:
 	int healthPoints;
@@ -28,4 +28,4 @@ public:
 	virtual void destroy(World &world, Direction direction);
 };
 
-#endif //IndependentLivingObject_H
+#endif //IndependentMovingObject_H

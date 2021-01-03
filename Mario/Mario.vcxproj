@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedCoin.cpp" />
+    <ClCompile Include="AnimatedObject.cpp" />
     <ClCompile Include="AnimatedText.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BonusObject.cpp" />
@@ -173,7 +174,7 @@
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="Lava.cpp" />
     <ClCompile Include="Level.cpp" />
-    <ClCompile Include="LivingObject.cpp" />
+    <ClCompile Include="MovingObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuManager.cpp" />
     <ClCompile Include="Movement.cpp" />
@@ -195,7 +196,7 @@
     <ClCompile Include="SoundController.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="AnimatedObject.cpp" />
+    <ClCompile Include="TemporaryObject.cpp" />
     <ClCompile Include="Turtle.cpp" />
     <ClCompile Include="UtilityFunctions.cpp" />
     <ClCompile Include="World.cpp" />
@@ -204,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedCoin.h" />
+    <ClInclude Include="AnimatedObject.h" />
     <ClInclude Include="AnimatedText.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="BonusObject.h" />
@@ -235,13 +237,13 @@
     <ClInclude Include="Flower.h" />
     <ClInclude Include="GameFunctions.h" />
     <ClInclude Include="InanimateObject.h" />
-    <ClInclude Include="IndependentLivingObject.h" />
+    <ClInclude Include="IndependentMovingObject.h" />
     <ClInclude Include="JumpingFish.h" />
     <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="Lava.h" />
     <ClInclude Include="LayoutStyle.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="LivingObject.h" />
+    <ClInclude Include="MovingObject.h" />
     <ClInclude Include="MenuManager.h" />
     <ClInclude Include="Movement.h" />
     <ClInclude Include="Mushroom.h" />
@@ -263,7 +265,7 @@
     <ClInclude Include="SoundController.h" />
     <ClInclude Include="Star.h" />
     <ClInclude Include="Button.h" />
-    <ClInclude Include="AnimatedObject.h" />
+    <ClInclude Include="TemporaryObject.h" />
     <ClInclude Include="Turtle.h" />
     <ClInclude Include="UtilityFunctions.h" />
     <ClInclude Include="World.h" />

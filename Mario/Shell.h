@@ -3,7 +3,7 @@
 
 #include <chrono>
 #include <array>
-#include "IndependentLivingObject.h"
+#include "IndependentMovingObject.h"
 
 class World;
 class Position;
@@ -11,7 +11,7 @@ enum class Direction;
 struct SDL_Surface;
 
 
-class Shell : public IndependentLivingObject
+class Shell : public IndependentMovingObject
 {
 private:
 	static std::array<SDL_Surface*, 3> shellImages;

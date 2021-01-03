@@ -1,4 +1,4 @@
-#include "IndependentLivingObject.h"
+#include "IndependentMovingObject.h"
 
 #include "CollisionHandling.h"
 #include "Movement.h"
@@ -6,7 +6,7 @@
 #include "World.h"
 
 
-void IndependentLivingObject::moveHorizontally(World &world)
+void IndependentMovingObject::moveHorizontally(World &world)
 {
 	int alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
 	int distance = movement.getSpeed() - alignment;
@@ -20,7 +20,7 @@ void IndependentLivingObject::moveHorizontally(World &world)
 	}
 }
 
-void IndependentLivingObject::moveDiagonally(World &world)
+void IndependentMovingObject::moveDiagonally(World &world)
 {
 	int alignment = computeVerticalAlignment(Direction::Down, movement.getVerticalSpeed(), *this, world);
 	int verticalDistance = movement.getVerticalSpeed() - alignment;
@@ -34,56 +34,56 @@ void IndependentLivingObject::moveDiagonally(World &world)
 	position.setX(position.getX() + distance);
 }
 
-int IndependentLivingObject::getHealthPoints() const
+int IndependentMovingObject::getHealthPoints() const
 {
 	return healthPoints;
 }
 
-int IndependentLivingObject::getPointsForCrushing() const
+int IndependentMovingObject::getPointsForCrushing() const
 {
 	return 0;
 }
 
-int IndependentLivingObject::getPointsForDestroying() const
+int IndependentMovingObject::getPointsForDestroying() const
 {
 	return 200;
 }
 
-bool IndependentLivingObject::isCrushproof() const
+bool IndependentMovingObject::isCrushproof() const
 {
 	return false;
 }
 
-bool IndependentLivingObject::isResistantToImmortalPlayer() const
+bool IndependentMovingObject::isResistantToImmortalPlayer() const
 {
 	return false;
 }
 
-bool IndependentLivingObject::isResistantToCollisionWithShell() const
+bool IndependentMovingObject::isResistantToCollisionWithShell() const
 {
 	return true;
 }
 
-bool IndependentLivingObject::isResistantToCollisionWithBlock() const
+bool IndependentMovingObject::isResistantToCollisionWithBlock() const
 {
 	return true;
 }
 
-bool IndependentLivingObject::isResistantToFireBalls() const
+bool IndependentMovingObject::isResistantToFireBalls() const
 {
 	return false;
 }
 
-bool IndependentLivingObject::isActiveShell() const
+bool IndependentMovingObject::isActiveShell() const
 {
 	return false;
 }
 
-void IndependentLivingObject::decrementHealthPoints()
+void IndependentMovingObject::decrementHealthPoints()
 {
 	--healthPoints;
 }
 
-void IndependentLivingObject::crush(World &world, int index) {}
+void IndependentMovingObject::crush(World &world, int index) {}
 
-void IndependentLivingObject::destroy(World &world, Direction direction) {}
+void IndependentMovingObject::destroy(World &world, Direction direction) {}

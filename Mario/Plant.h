@@ -2,7 +2,7 @@
 #define Plant_H
 
 #include <array>
-#include "IndependentLivingObject.h"
+#include "IndependentMovingObject.h"
 
 class World;
 class Position;
@@ -10,7 +10,7 @@ struct SDL_Surface;
 
 
 // this class is the counterpart of NPC, which in the original Mario series was called 'Piranha Plant'
-class Plant : public IndependentLivingObject
+class Plant : public IndependentMovingObject
 {
 private:
 	static std::array<SDL_Surface*, 4> plantImages;

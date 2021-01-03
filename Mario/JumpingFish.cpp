@@ -117,7 +117,7 @@ void JumpingFish::move(World &world)
 void JumpingFish::crush(World &world, int index)
 {
 	world.addDestroyedFish(position, directionFlag);
-	world.deleteMonster(index);
+	world.deleteNpc(index);
 
 	SoundController::playEnemyDestroyedEffect();
 }

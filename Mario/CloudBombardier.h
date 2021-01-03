@@ -2,14 +2,14 @@
 #define CloudBombardier_H
 
 #include <array>
-#include "IndependentLivingObject.h"
+#include "IndependentMovingObject.h"
 
 class World;
 class Position;
 struct SDL_Surface;
 
 
-class CloudBombardier : public IndependentLivingObject
+class CloudBombardier : public IndependentMovingObject
 {
 private:
 	static std::array<SDL_Surface*, 3> bombardierImages;

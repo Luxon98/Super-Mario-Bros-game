@@ -2,7 +2,6 @@
 
 #include <random>
 #include "WorldObject.h"
-#include "LivingObject.h"
 #include "Block.h"
 #include "Plant.h"
 #include "FireMissle.h"
@@ -74,22 +73,22 @@ bool isElementDirectlyAboveObject(const WorldObject &element, const WorldObject 
 	return false;
 }
 
-bool isMonsterCloseAboveBlock(const IndependentLivingObject &monster, const Block &block)
+bool isNpcCloseAboveBlock(const IndependentMovingObject &npc, const Block &block)
 {
-	if (abs((monster.getY() + monster.getHeight() / 2) - (block.getY() - block.getHeight() / 2)) < 2) {
+	if (abs((npc.getY() + npc.getHeight() / 2) - (block.getY() - block.getHeight() / 2)) < 2) {
 		return true;
 	}
 
 	return false;
 }
 
-bool isInactiveShell(IndependentLivingObject &npc)
+bool isInactiveShell(IndependentMovingObject &npc)
 {
 	auto shell = dynamic_cast<Shell*>(&npc);
 	return (shell && !shell->isActiveShell());
 }
 
-int determineShift(const IndependentLivingObject &object, int base)
+int determineShift(const IndependentMovingObject &object, int base)
 {
 	return (object.getMovement().getDirection() == Direction::Left ? base * (-1) : base);
 }

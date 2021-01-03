@@ -2,7 +2,7 @@
 #define UtilityFunctions_H
 
 class WorldObject;
-class IndependentLivingObject;
+class IndependentMovingObject;
 class Block;
 class Player;
 enum class Direction;
@@ -18,11 +18,11 @@ bool areColliding(const WorldObject &firstObject, const WorldObject &secondObjec
 
 bool isElementDirectlyAboveObject(const WorldObject &element, const WorldObject &object);
 
-bool isMonsterCloseAboveBlock(const IndependentLivingObject &monster, const Block &block);
+bool isNpcCloseAboveBlock(const IndependentMovingObject &npc, const Block &block);
 
-bool isInactiveShell(IndependentLivingObject &npc);
+bool isInactiveShell(IndependentMovingObject &npc);
 
-int determineShift(const IndependentLivingObject &object, int base);
+int determineShift(const IndependentMovingObject &object, int base);
 
 int determineShift(Direction direction, int base);
 

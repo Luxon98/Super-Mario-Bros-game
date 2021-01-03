@@ -48,7 +48,7 @@ void collectCoinByCollision(Player &player, World &world, int index)
 {
 	player.incrementCoins();
 	player.addPoints(200);
-	world.deleteBonusElement(index);
+	world.deleteBonus(index);
 	world.addAnimatedCoin();
 	SoundController::playCoinCollectedEffect();
 }

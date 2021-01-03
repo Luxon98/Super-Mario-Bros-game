@@ -2,14 +2,14 @@
 #define DestroyedBombardier_H
 
 #include <array>
-#include "AnimatedObject.h"
+#include "TemporaryObject.h"
 #include "Direction.h"
 
 class Position;
 struct SDL_Surface;
 
 
-class DestroyedBombardier :	public AnimatedObject 
+class DestroyedBombardier :	public TemporaryObject 
 {
 private:
 	static std::array<SDL_Surface*, 2> destroyedBombardierImages;

@@ -3,7 +3,7 @@
 
 #include <chrono>
 #include <array>
-#include "LivingObject.h"
+#include "MovingObject.h"
 
 class World;
 class KeyboardController;
@@ -24,7 +24,7 @@ enum class PlayerAnimation
 };
 
 
-class Player : public LivingObject
+class Player : public MovingObject
 {
 private:
 	enum class PlayerState

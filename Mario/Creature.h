@@ -2,7 +2,7 @@
 #define Creature_H
 
 #include <array>
-#include "IndependentLivingObject.h"
+#include "IndependentMovingObject.h"
 
 class World;
 class Position;
@@ -11,7 +11,7 @@ struct SDL_Surface;
 
 
 // this class is the counterpart of NPC, which in the original Mario series was called 'Goomba'
-class Creature : public IndependentLivingObject
+class Creature : public IndependentMovingObject
 {
 private:
 	static std::array<SDL_Surface*, 8> creatureImages; 

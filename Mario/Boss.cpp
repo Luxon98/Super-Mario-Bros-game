@@ -59,7 +59,7 @@ void Boss::moveAndJump(World &world)
 	else if (auxiliaryCounter == 120) {
 		position.setY(position.getY() - 4);
 		auxiliaryCounter = 0;
-		movement.setDirection(isPlayerAheadOfMonster(*this, world) ? Direction::Right : Direction::Left);
+		movement.setDirection(isPlayerAheadOfNpc(*this, world) ? Direction::Right : Direction::Left);
  	}
 }
 

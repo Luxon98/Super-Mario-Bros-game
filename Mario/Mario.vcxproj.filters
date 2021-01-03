@@ -67,6 +67,12 @@
     <Filter Include="Source Files\OtherFiles">
       <UniqueIdentifier>{b9fbe667-97c0-455d-b864-c20e83098226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\AnimatedObjects">
+      <UniqueIdentifier>{6ddd5208-278b-412b-bf4d-09f6601b0923}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AnimatedObjects">
+      <UniqueIdentifier>{75a40fb2-d2c9-4488-969c-c1e6be2a92d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,9 +89,6 @@
     </ClCompile>
     <ClCompile Include="SDL_Utility.cpp">
       <Filter>Source Files\HandlingAndControlling</Filter>
-    </ClCompile>
-    <ClCompile Include="LivingObject.cpp">
-      <Filter>Source Files\AbstractClasses</Filter>
     </ClCompile>
     <ClCompile Include="InanimateObject.cpp">
       <Filter>Source Files\AbstractClasses</Filter>
@@ -237,12 +240,6 @@
     <ClCompile Include="CustomWinterDecoration.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedObject.cpp">
-      <Filter>Source Files\AbstractClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Snowflake.cpp">
-      <Filter>Source Files\TemporaryObjects</Filter>
-    </ClCompile>
     <ClCompile Include="CustomSummerDecoration.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
@@ -260,6 +257,18 @@
     </ClCompile>
     <ClCompile Include="FireMissle.cpp">
       <Filter>Source Files\LivingObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="TemporaryObject.cpp">
+      <Filter>Source Files\AbstractClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedObject.cpp">
+      <Filter>Source Files\AbstractClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Snowflake.cpp">
+      <Filter>Source Files\AnimatedObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingObject.cpp">
+      <Filter>Source Files\AbstractClasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -285,9 +294,6 @@
       <Filter>Header Files\AbstractClasses</Filter>
     </ClInclude>
     <ClInclude Include="WorldObject.h">
-      <Filter>Header Files\AbstractClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="LivingObject.h">
       <Filter>Header Files\AbstractClasses</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -352,9 +358,6 @@
     </ClInclude>
     <ClInclude Include="Direction.h">
       <Filter>Header Files\OtherFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="IndependentLivingObject.h">
-      <Filter>Header Files\AbstractClasses</Filter>
     </ClInclude>
     <ClInclude Include="FileNotLoadedException.h">
       <Filter>Header Files\Exceptions</Filter>
@@ -434,12 +437,6 @@
     <ClInclude Include="CustomWinterDecoration.h">
       <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
-    <ClInclude Include="AnimatedObject.h">
-      <Filter>Header Files\AbstractClasses</Filter>
-    </ClInclude>
-    <ClInclude Include="Snowflake.h">
-      <Filter>Header Files\TemporaryObjects</Filter>
-    </ClInclude>
     <ClInclude Include="CustomSummerDecoration.h">
       <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
@@ -460,6 +457,21 @@
     </ClInclude>
     <ClInclude Include="RandomGenerator.h">
       <Filter>Header Files\OtherFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="TemporaryObject.h">
+      <Filter>Header Files\AbstractClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedObject.h">
+      <Filter>Header Files\AbstractClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Snowflake.h">
+      <Filter>Header Files\AnimatedObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingObject.h">
+      <Filter>Header Files\AbstractClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="IndependentMovingObject.h">
+      <Filter>Header Files\AbstractClasses</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

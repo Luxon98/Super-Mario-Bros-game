@@ -6,15 +6,8 @@
 
 SDL_Surface* Snowflake::snowflakeImage = nullptr;
 
-int Snowflake::computeImageIndex() const
-{
-	// this inherited function is not really needed in this class, but I left it to keep the code simple
-	return 0;
-}
-
 Snowflake::Snowflake(Position position)
 {
-	creationTime = std::chrono::steady_clock::now();
 	this->position = position;
 	initialPositionX = position.getX();
 	auxiliaryCounter = 0;
@@ -33,12 +26,7 @@ void Snowflake::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamer
 	}
 }
 
-bool Snowflake::shouldBeRemoved() const
-{
-	return false;
-}
-
-void Snowflake::slide()
+void Snowflake::move()
 {
 	++auxiliaryCounter;
 	if (auxiliaryCounter % 3 == 0) {

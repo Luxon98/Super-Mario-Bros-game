@@ -4,7 +4,8 @@
 #include "UtilityFunctions.h"
 #include "Block.h"
 #include "Camera.h"
-#include "LivingObject.h"
+#include "MovingObject.h"
+#include "AnimatedObject.h"
 #include "Player.h"
 #include "Coin.h"
 #include "Flower.h"
@@ -49,16 +50,16 @@ bool World::isTimeToChangeColors() const
 	return false;
 }
 
-bool World::isPlayerCloseEnough(LivingObject &monster) const
+bool World::isPlayerCloseEnough(IndependentMovingObject &npc) const
 {
-	if (monster.getX() < player->getX() + camera->getReferencePoint() * 1.5) {
+	if (npc.getX() < player->getX() + camera->getReferencePoint() * 1.5) {
 		return true;
 	}
 
 	return false;
 }
 
-bool World::isObjectOutsideCamera(LivingObject &object) const
+bool World::isObjectOutsideCamera(MovingObject &object) const
 {
 	if (object.getX() < camera->getBeginningOfCamera() || object.getX() > camera->getEndOfCamera()) {
 		return true;
@@ -67,7 +68,7 @@ bool World::isObjectOutsideCamera(LivingObject &object) const
 	return false;
 }
 
-bool World::isObjectOutsideWorld(LivingObject &object) const
+bool World::isObjectOutsideWorld(MovingObject &object) const
 {
 	if (object.getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
 		return true;
@@ -108,31 +109,31 @@ void World::changeColors()
 	Button::changeButtonImage();
 }
 
-void World::setMovementDirection(LivingObject &monster)
+void World::setMovementDirection(IndependentMovingObject &npc)
 {
-	if (dynamic_cast<Turtle*>(&monster)) {
-		dynamic_cast<Turtle*>(&monster)->setMoveDirection(Direction::Left);
+	if (dynamic_cast<Turtle*>(&npc)) {
+		dynamic_cast<Turtle*>(&npc)->setMoveDirection(Direction::Left);
 	}
-	else if (dynamic_cast<Creature*>(&monster)) {
-		dynamic_cast<Creature*>(&monster)->setMoveDirection(Direction::Left);
+	else if (dynamic_cast<Creature*>(&npc)) {
+		dynamic_cast<Creature*>(&npc)->setMoveDirection(Direction::Left);
 	}
-	else if (dynamic_cast<FireMissle*>(&monster)) {
-		dynamic_cast<FireMissle*>(&monster)->setMoveDirection(Direction::Left);
+	else if (dynamic_cast<FireMissle*>(&npc)) {
+		dynamic_cast<FireMissle*>(&npc)->setMoveDirection(Direction::Left);
 	}
-	else if (dynamic_cast<Boss*>(&monster)) {
-		dynamic_cast<Boss*>(&monster)->setMoveDirection(Direction::Left);
+	else if (dynamic_cast<Boss*>(&npc)) {
+		dynamic_cast<Boss*>(&npc)->setMoveDirection(Direction::Left);
 	}
 }
 
-void World::deleteAnimatedElements()
+void World::deleteTemporaryElements()
 {
-	for (std::size_t i = 0; i < animatedElements.size(); ++i) {
-		if (animatedElements[i]->shouldBeRemoved()) {
-			if (std::dynamic_pointer_cast<AnimatedCoin>(animatedElements[i])) {
-				addAnimatedText(TextType::TWO_HUNDRED, Position(animatedElements[i]->getPosition()));
+	for (std::size_t i = 0; i < temporaryElements.size(); ++i) {
+		if (temporaryElements[i]->shouldBeRemoved()) {
+			if (std::dynamic_pointer_cast<AnimatedCoin>(temporaryElements[i])) {
+				addAnimatedText(TextType::TWO_HUNDRED, Position(temporaryElements[i]->getPosition()));
 			}
 
-			animatedElements.erase(animatedElements.begin() + i);
+			temporaryElements.erase(temporaryElements.begin() + i);
 		}
 	}
 
@@ -158,68 +159,68 @@ void World::handleFireballStatus()
 
 void World::performBonusElementsActions()
 {
-	for (std::size_t i = 0; i < bonusElements.size(); ++i) {
-		bonusElements[i]->move(*this);
-		if (isObjectOutsideWorld(*bonusElements[i])) {
-			deleteBonusElement(i);
+	for (std::size_t i = 0; i < bonuses.size(); ++i) {
+		bonuses[i]->move(*this);
+		if (isObjectOutsideWorld(*bonuses[i])) {
+			deleteBonus(i);
 		}
 	}
 }
 
-void World::performSpecificMonstersActions(int index)
+void World::performSpecificNpcsActions(int index)
 {
-	if (std::dynamic_pointer_cast<Shell>(monsters[index])) {
-		if (std::dynamic_pointer_cast<Shell>(monsters[index])->shouldTurnIntoTurtle()) {
-			monsters.push_back(std::make_shared<Turtle>(Turtle(Position(monsters[index]->getPosition()))));
-			monsters.erase(monsters.begin() + index);
+	if (std::dynamic_pointer_cast<Shell>(npcs[index])) {
+		if (std::dynamic_pointer_cast<Shell>(npcs[index])->shouldTurnIntoTurtle()) {
+			npcs.push_back(std::make_shared<Turtle>(Turtle(Position(npcs[index]->getPosition()))));
+			npcs.erase(npcs.begin() + index);
 		}
-		else if (isObjectOutsideCamera(*monsters[index])) {              // SHOULD BE TESTED AGAIN
-			monsters.erase(monsters.begin() + index);
+		else if (isObjectOutsideCamera(*npcs[index])) {              // SHOULD BE TESTED AGAIN
+			npcs.erase(npcs.begin() + index);
 		}
 	}
-	else if (std::dynamic_pointer_cast<FireMissle>(monsters[index])) {
-		if (std::dynamic_pointer_cast<FireMissle>(monsters[index])->isInactive()) {
-			Position position = monsters[index]->getPosition();
+	else if (std::dynamic_pointer_cast<FireMissle>(npcs[index])) {
+		if (std::dynamic_pointer_cast<FireMissle>(npcs[index])->isInactive()) {
+			Position position = npcs[index]->getPosition();
 			position.setY(position.getY() + 7);
-			monsters.erase(monsters.begin() + index);
+			npcs.erase(npcs.begin() + index);
 			addExplosion(position);
 		}
 	}
-	else if (std::dynamic_pointer_cast<CloudBombardier>(monsters[index])) {
-		if (std::dynamic_pointer_cast<CloudBombardier>(monsters[index])->isReadyToDropBomb()) {
-			Position position = monsters[index]->getPosition();
+	else if (std::dynamic_pointer_cast<CloudBombardier>(npcs[index])) {
+		if (std::dynamic_pointer_cast<CloudBombardier>(npcs[index])->isReadyToDropBomb()) {
+			Position position = npcs[index]->getPosition();
 			position.setY(position.getY() + 12);
-			monsters.push_back(std::make_shared<FireMissle>(FireMissle(position, MissleType::Bomb)));
+			npcs.push_back(std::make_shared<FireMissle>(FireMissle(position, MissleType::Bomb)));
 			SoundController::playBombDroppedEffect();
 		}
 	}
 }
 
-void World::performMonstersActions()
+void World::performNpcsActions()
 {
-	for (std::size_t i = 0; i < monsters.size(); ++i) {
+	for (std::size_t i = 0; i < npcs.size(); ++i) {
 		// bad-written code
 		// it will be refactored
-		if (monsters[i]->getMovement().getDirection() == Direction::None && isPlayerCloseEnough(*monsters[i])) {
-			if (dynamic_cast<JumpingFish*>(&*monsters[i]) && monsters[i]->getX() <= player->getX()) {
-				dynamic_cast<JumpingFish*>(&*monsters[i])->setMoveDirection();
+		if (npcs[i]->getMovement().getDirection() == Direction::None && isPlayerCloseEnough(*npcs[i])) {
+			if (dynamic_cast<JumpingFish*>(&*npcs[i]) && npcs[i]->getX() <= player->getX()) {
+				dynamic_cast<JumpingFish*>(&*npcs[i])->setMoveDirection();
 			}
-			else if (dynamic_cast<CloudBombardier*>(&*monsters[i]) && monsters[i]->getX() <= (player->getX() + 15)) {
-				dynamic_cast<CloudBombardier*>(&*monsters[i])->setActiveState();
+			else if (dynamic_cast<CloudBombardier*>(&*npcs[i]) && npcs[i]->getX() <= (player->getX() + 15)) {
+				dynamic_cast<CloudBombardier*>(&*npcs[i])->setActiveState();
 			}
 			else {
-				setMovementDirection(*monsters[i]);
+				setMovementDirection(*npcs[i]);
 			}			
 		}
 
-		if (isObjectOutsideWorld(*monsters[i])) {
-			monsters.erase(monsters.begin() + i);
+		if (isObjectOutsideWorld(*npcs[i])) {
+			npcs.erase(npcs.begin() + i);
 			break;
 		}
 
-		monsters[i]->move(*this);
+		npcs[i]->move(*this);
 
-		performSpecificMonstersActions(i);
+		performSpecificNpcsActions(i);
 	}
 }
 
@@ -230,7 +231,7 @@ void World::performFireBallsActions()
 
 		if (fireballs[i].shouldBeRemoved()) {
 			int shift = determineShift(fireballs[i], 7);
-			animatedElements.push_back(std::make_shared<Explosion>(Explosion(
+			temporaryElements.push_back(std::make_shared<Explosion>(Explosion(
 				Position(fireballs[i].getX() + shift, fireballs[i].getY()))));
 
 			fireballs.erase(fireballs.begin() + i);
@@ -257,6 +258,13 @@ void World::performFireSerpentsActions()
 	}
 }
 
+void World::performAnimatedElementsActions()
+{
+	for (auto &animatedElement : animatedElements) {
+		animatedElement->move();
+	}
+}
+
 void World::performWorldActions(bool playerActionFlag)
 {
 	if (playerActionFlag) {
@@ -264,9 +272,10 @@ void World::performWorldActions(bool playerActionFlag)
 	}
 	
 	performBonusElementsActions();
-	performMonstersActions();
+	performNpcsActions();
 	performFireBallsActions();
 	performFireSerpentsActions();
+	performAnimatedElementsActions();
 
 	if (slidingCounter) {
 		slideBlock();
@@ -277,9 +286,9 @@ void World::performWorldActions(bool playerActionFlag)
 	}
 }
 
-void World::slideAnimatedElements()
+void World::slideTemporaryElements()
 {
-	for (auto &animatedElement : animatedElements) {
+	for (auto &animatedElement : temporaryElements) {
 		animatedElement->slide();
 	}
 
@@ -360,30 +369,30 @@ void World::subtractCoinFromBlock()
 void World::createNewBonus()
 {
 	if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithRedMushroom) {
-		bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(
+		bonuses.push_back(std::make_shared<Mushroom>(Mushroom(Position(
 			blocks[lastTouchedBlockIndex].getPosition()), false)));
 		blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 	}
 	else if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithFlower) {
 		if (player->isSmall()) {
-			bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(
+			bonuses.push_back(std::make_shared<Mushroom>(Mushroom(Position(
 				blocks[lastTouchedBlockIndex].getPosition()), false)));
 		}
 		else {
-			bonusElements.push_back(std::make_shared<Flower>(Flower(Position(
+			bonuses.push_back(std::make_shared<Flower>(Flower(Position(
 				blocks[lastTouchedBlockIndex].getPosition()))));
 		}
 		blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
 	}
 	else if (blocks[lastTouchedBlockIndex].getType() == BlockType::BonusWithStar) {
-		bonusElements.push_back(std::make_shared<Star>(Star(Position(blocks[lastTouchedBlockIndex].getPosition()))));
+		bonuses.push_back(std::make_shared<Star>(Star(Position(blocks[lastTouchedBlockIndex].getPosition()))));
 		blocks[lastTouchedBlockIndex].setType(BlockType::AlternativeEmpty);
 	}
 }
 
 void World::createOneUpMushroom()
 {
-	bonusElements.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
+	bonuses.push_back(std::make_shared<Mushroom>(Mushroom(Position(blocks[lastTouchedBlockIndex].getX(),
 		blocks[lastTouchedBlockIndex].getY() - 8), true)));
 
 	blocks[lastTouchedBlockIndex].setType(BlockType::Empty);
@@ -412,21 +421,21 @@ void World::drawInanimateElements(SDL_Surface* display)
 	}
 }
 
-void World::drawAnimatedElements(SDL_Surface* display)
+void World::drawTemporaryElements(SDL_Surface* display)
 {
-	for (const auto &animatedElement : animatedElements) {
+	for (const auto &animatedElement : temporaryElements) {
 		animatedElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 }
 
-void World::drawBonusesAndMonsters(SDL_Surface* display)
+void World::drawBonusesAndNpcs(SDL_Surface* display)
 {
-	for (const auto &bonusElement : bonusElements) {
+	for (const auto &bonusElement : bonuses) {
 		bonusElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 
-	for (const auto &monster : monsters) {
-		monster->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	for (const auto &npc : npcs) {
+		npc->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
 	}
 }
 
@@ -470,6 +479,13 @@ void World::drawDestroyedElements(SDL_Surface* display)
 	}
 }
 
+void World::drawAnimatedElements(SDL_Surface* display)
+{
+	for (const auto &animatedElement : animatedElements) {
+		animatedElement->draw(display, camera->getBeginningOfCamera(), camera->getEndOfCamera());
+	}
+}
+
 World::World()
 {
 	gameCounter = 0;
@@ -508,12 +524,12 @@ std::vector<std::shared_ptr<InanimateObject>> const& World::getInanimateElements
 
 std::vector<std::shared_ptr<BonusObject>> const& World::getBonusElements() const
 {
-	return bonusElements;
+	return bonuses;
 }
 
-std::vector<std::shared_ptr<IndependentLivingObject>> const& World::getMonsters() const
+std::vector<std::shared_ptr<IndependentMovingObject>> const& World::getNpcs() const
 {
-	return monsters;
+	return npcs;
 }
 
 const Player& World::getPlayer() const
@@ -561,7 +577,7 @@ bool World::isBridgeDestroyedAlready() const
 
 bool World::areAnimatedElementsEmpty() const
 {
-	return (animatedElements.size() == 0);
+	return (temporaryElements.size() == 0);
 }
 
 int World::getLastReachedCheckPointMark() const
@@ -634,10 +650,10 @@ void World::spoilBridgeAndBoss()
 		}
 	}
 
-	if (monsters.size() > 0 && (std::dynamic_pointer_cast<Boss>(monsters[monsters.size() - 1]))) {
-		addDestroyedBoss(monsters[monsters.size() - 1]->getPosition(), 
-			monsters[monsters.size() - 1]->getMovement().getDirection(), false);
-		monsters.pop_back();
+	if (npcs.size() > 0 && (std::dynamic_pointer_cast<Boss>(npcs[npcs.size() - 1]))) {
+		addDestroyedBoss(npcs[npcs.size() - 1]->getPosition(), 
+			npcs[npcs.size() - 1]->getMovement().getDirection(), false);
+		npcs.pop_back();
 		SoundController::playEnemyDestroyedEffect(true);
 	}
 }
@@ -660,14 +676,14 @@ void World::destroyLastTouchedBlock()
 	SoundController::playBlockDestroyedEffect();
 }
 
-void World::deleteBonusElement(int index)
+void World::deleteBonus(int index)
 {
-	bonusElements.erase(bonusElements.begin() + index);
+	bonuses.erase(bonuses.begin() + index);
 }
 
-void World::deleteMonster(int index)
+void World::deleteNpc(int index)
 {
-	monsters.erase(monsters.begin() + index);
+	npcs.erase(npcs.begin() + index);
 }
 
 void World::deleteFireBall(int index)
@@ -677,12 +693,12 @@ void World::deleteFireBall(int index)
 
 void World::addShell(Position position, bool red)
 {
-	monsters.push_back(std::make_shared<Shell>(Shell(position, red)));
+	npcs.push_back(std::make_shared<Shell>(Shell(position, red)));
 }
 
 void World::addCrushedCreature(Position position)
 {
-	animatedElements.push_back(std::make_shared<CrushedCreature>(CrushedCreature(position)));
+	temporaryElements.push_back(std::make_shared<CrushedCreature>(CrushedCreature(position)));
 }
 
 void World::addDestroyedCreature(Position position, Direction slideDirection)
@@ -697,7 +713,7 @@ void World::addDestroyedTurtle(Position position, Direction slideDirection, bool
 
 void World::addDestroyedBoss(Position position, Direction direction, bool normal)
 {
-	animatedElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, direction, normal)));
+	temporaryElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, direction, normal)));
 }
 
 void World::addDestroyedFish(Position position, bool directionFlag)
@@ -712,18 +728,18 @@ void World::addDestroyedBombardier(Position position, bool leftSide)
 
 void World::addExplosion(Position position)
 {
-	animatedElements.push_back(std::make_shared<Explosion>(Explosion(position)));
+	temporaryElements.push_back(std::make_shared<Explosion>(Explosion(position)));
 }
 
 void World::addAnimatedText(TextType type, Position position)
 {
-	animatedElements.push_back(std::make_shared<AnimatedText>(AnimatedText(type, position)));
+	temporaryElements.push_back(std::make_shared<AnimatedText>(AnimatedText(type, position)));
 }
 
 void World::addAnimatedCoin()
 {
 	Position position = Position(blocks[lastTouchedBlockIndex].getX(), blocks[lastTouchedBlockIndex].getY() - 50);
-	animatedElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(position)));
+	temporaryElements.push_back(std::make_shared<AnimatedCoin>(AnimatedCoin(position)));
 }
 
 void World::performActions(bool playerActionFlag)
@@ -731,12 +747,12 @@ void World::performActions(bool playerActionFlag)
 	++gameCounter;
 	if (gameCounter % (10 - gameSpeed) == 0) {
 		performWorldActions(playerActionFlag);
-		deleteAnimatedElements();
-		slideAnimatedElements();
+		deleteTemporaryElements();
+		slideTemporaryElements();
 
 		handleBonusesCollecting(*player, *this);
-		handleShellsAndMonstersCollisions(*this, *player);
-		handleFireBallsAndMonstersCollisions(*this, *player);
+		handleShellsAndNpcsCollisions(*this, *player);
+		handleFireBallsAndNpcsCollisions(*this, *player);
 
 		if (isTimeToChangeColors()) {
 			changeColors();
@@ -753,8 +769,9 @@ void World::performActions(bool playerActionFlag)
 void World::draw(SDL_Surface* display, bool drawPlayer)
 {
 	drawInanimateElements(display);
+	drawTemporaryElements(display);
+	drawBonusesAndNpcs(display);
 	drawAnimatedElements(display);
-	drawBonusesAndMonsters(display);
 	drawPlatformsAndFireballs(display);
 	drawOtherObjects(display, drawPlayer);
 	drawDestroyedElements(display);

@@ -2,14 +2,14 @@
 #define DestroyedTurtle_H
 
 #include <array>
-#include "AnimatedObject.h"
+#include "TemporaryObject.h"
 #include "Direction.h"
 
 class Position;
 struct SDL_Surface;
 
 
-class DestroyedTurtle : public AnimatedObject
+class DestroyedTurtle : public TemporaryObject
 {
 private:
 	static std::array<SDL_Surface*, 3> destroyedTurtleImages;

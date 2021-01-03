@@ -4,7 +4,7 @@
 class World;
 class Player;
 class WorldObject;
-class IndependentLivingObject;
+class IndependentMovingObject;
 class BonusObject;
 class Block;
 class Plant;
@@ -18,7 +18,7 @@ bool isCharacterHittingObject(const WorldObject &object, const WorldObject &bloc
 
 bool isCharacterStandingOnSomething(const WorldObject &object, const World &world);
 
-bool isMonsterStandingOnBlock(const IndependentLivingObject &npc, const Block &block);
+bool isNpcStandingOnBlock(const IndependentMovingObject &npc, const Block &block);
 
 bool isBonusStandingOnBlock(const BonusObject &bonus, const Block &block);
 
@@ -28,35 +28,35 @@ bool isPlayerCloseToFireRocket(const FireMissle &fireRocket, const World &world)
 
 bool isPlayerCloseToPlant(const Plant &plant, const World &world);
 
-bool isPlayerAheadOfMonster(const IndependentLivingObject &monster, const World &world);
+bool isPlayerAheadOfNpc(const IndependentMovingObject &npc, const World &world);
 
 bool isPlayerStandingOnThisPlatform(const Player &player, const Platform &platform);
 
-bool isPlayerJumpingOnMonster(const Player &player, const IndependentLivingObject &monster);
+bool isPlayerJumpingOnNpc(const Player &player, const IndependentMovingObject &npc);
 
-void handleMonsterDestroying(IndependentLivingObject &npc, World &world, Player &player, Direction direction);
+void handleNpcDestroying(IndependentMovingObject &npc, World &world, Player &player, Direction direction);
 
-void handleMonsterDeleting(World &world, int index, bool bossFlag = false);
+void handleNpcDeleting(World &world, int index, bool bossFlag = false);
 
-void handleMonsterHpReducing(IndependentLivingObject &npc, World &world, Player &player, Direction direction, int index);
+void handleNpcHpReducing(IndependentMovingObject &npc, World &world, Player &player, Direction direction, int index);
 
 void handleFireBallDeleting(const FireBall &fireball, World &world, int index);
 
-void handleJumpingOnMonster(IndependentLivingObject &npc, World &world, Player &player, int index);
+void handleJumpingOnNpc(IndependentMovingObject &npc, World &world, Player &player, int index);
 
-void handlePlayerAndMonsterCollision(IndependentLivingObject &npc, World &world, Player &player, int index);
+void handlePlayerAndNpcCollision(IndependentMovingObject &npc, World &world, Player &player, int index);
 
-void handleCollisionsWithMonsters(Player &player, World &world);
+void handleCollisionsWithNpcs(Player &player, World &world);
 
 void handleCollisionsWithFireSerpents(Player &player, World &world);
 
 void handlePlayerCollisions(Player &player, World &world);
 
-void handleShellsAndMonstersCollisions(World &world, Player &player);
+void handleShellsAndNpcsCollisions(World &world, Player &player);
 
-void handleFireBallsAndMonstersCollisions(World &world, Player &player);
+void handleFireBallsAndNpcsCollisions(World &world, Player &player);
 
-void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &player);
+void handleBlockAndNpcsCollisions(World &world, const Block &block, Player &player);
 
 void handleBlockAndBonusesCollisions(World &world, const Block &block, Player &player);
 

@@ -2,7 +2,7 @@
 #define Boss_H
 
 #include <array>
-#include "IndependentLivingObject.h"
+#include "IndependentMovingObject.h"
 
 class World;
 class Position;
@@ -11,7 +11,7 @@ struct SDL_Surface;
 
 
 // this class is the counterpart of NPC, which in the original Mario series was called 'Fake Bowser'
-class Boss : public IndependentLivingObject
+class Boss : public IndependentMovingObject
 {
 private:
 	static std::array<SDL_Surface*, 4> bossImages;

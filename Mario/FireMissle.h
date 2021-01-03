@@ -3,7 +3,7 @@
 
 #include <array>
 #include <chrono>
-#include "IndependentLivingObject.h"
+#include "IndependentMovingObject.h"
 
 class World;
 class Position;
@@ -18,7 +18,7 @@ enum class MissleType
 };
 
 
-class FireMissle : public IndependentLivingObject
+class FireMissle : public IndependentMovingObject
 {
 private:
 	static std::array<SDL_Surface*, 3> missleImages;

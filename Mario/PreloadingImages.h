@@ -12,6 +12,8 @@ void preloadLivingObjectImages(SDL_Surface* display);
 
 void preloadTemporaryObjectImages(SDL_Surface* display);
 
+void preloadAnimatedObjectImages(SDL_Surface* display);
+
 void preloadOtherImages(SDL_Surface* display);
 
 void preloadImages(SDL_Surface* display);

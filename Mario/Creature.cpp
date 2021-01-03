@@ -115,7 +115,7 @@ void Creature::move(World &world)
 void Creature::crush(World &world, int index)
 {
 	world.addCrushedCreature(Position(position.getX(), position.getY() + 8));
-	world.deleteMonster(index);
+	world.deleteNpc(index);
 
 	SoundController::playEnemyDestroyedEffect();
 }

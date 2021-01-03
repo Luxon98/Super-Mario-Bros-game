@@ -75,9 +75,9 @@ bool isCharacterStandingOnSomething(const WorldObject &object, const World &worl
 	return false;
 }
 
-bool isMonsterStandingOnBlock(const IndependentLivingObject &npc, const Block &block)
+bool isNpcStandingOnBlock(const IndependentMovingObject &npc, const Block &block)
 {
-	if (isMonsterCloseAboveBlock(npc, block) && areAtTheSameWidth(npc, block)) {
+	if (isNpcCloseAboveBlock(npc, block) && areAtTheSameWidth(npc, block)) {
 		return true;
 	}
 
@@ -124,7 +124,7 @@ bool isPlayerCloseToPlant(const Plant &plant, const World &world)
 	return false;
 }
 
-bool isPlayerAheadOfMonster(const IndependentLivingObject &npc, const World &world)
+bool isPlayerAheadOfNpc(const IndependentMovingObject &npc, const World &world)
 {
 	const Player& player = world.getPlayer();
 
@@ -144,29 +144,29 @@ bool isPlayerStandingOnThisPlatform(const Player &player, const Platform &platfo
 	return false;
 }
 
-bool isPlayerJumpingOnMonster(const Player &player, const IndependentLivingObject &monster)
+bool isPlayerJumpingOnNpc(const Player &player, const IndependentMovingObject &npc)
 {
-	return ((monster.getY() - player.getY() > 25) && player.isNotJumpingUp());
+	return ((npc.getY() - player.getY() > 25) && player.isNotJumpingUp());
 }
 
-void handleMonsterDestroying(IndependentLivingObject &npc, World &world, Player &player, Direction direction)
+void handleNpcDestroying(IndependentMovingObject &npc, World &world, Player &player, Direction direction)
 {
 	npc.destroy(world, direction);
 	addTextAndPoints(player, world, npc.getPointsForDestroying(), Position(npc.getX(), npc.getY() - 15));
 }
 
-void handleMonsterDeleting(World &world, int index, bool bossFlag)
+void handleNpcDeleting(World &world, int index, bool bossFlag)
 {
-	world.deleteMonster(index);
+	world.deleteNpc(index);
 	SoundController::playEnemyDestroyedEffect(bossFlag);
 }
 
-void handleMonsterHpReducing(IndependentLivingObject &npc, World &world, Player &player, Direction direction, int index)
+void handleNpcHpReducing(IndependentMovingObject &npc, World &world, Player &player, Direction direction, int index)
 {
 	npc.decrementHealthPoints();
 	if (npc.getHealthPoints() == 0) {
-		handleMonsterDestroying(npc, world, player, direction);
-		handleMonsterDeleting(world, index, (npc.getPointsForDestroying() == 5000));
+		handleNpcDestroying(npc, world, player, direction);
+		handleNpcDeleting(world, index, (npc.getPointsForDestroying() == 5000));
 	}
 }
 
@@ -178,7 +178,7 @@ void handleFireBallDeleting(const FireBall &fireball, World &world, int index)
 	world.addExplosion(Position(fireball.getX() + alignment, fireball.getY()));
 }
 
-void handleJumpingOnMonster(IndependentLivingObject &npc, World &world, Player &player, int index)
+void handleJumpingOnNpc(IndependentMovingObject &npc, World &world, Player &player, int index)
 {
 	player.performAdditionalJump();
 	npc.crush(world, index);
@@ -189,13 +189,13 @@ void handleJumpingOnMonster(IndependentLivingObject &npc, World &world, Player &
 	}
 }
 
-void handlePlayerAndMonsterCollision(IndependentLivingObject &npc, World &world, Player &player, int index)
+void handlePlayerAndNpcCollision(IndependentMovingObject &npc, World &world, Player &player, int index)
 {
 	if (player.isImmortal()) {
 		if (!npc.isResistantToImmortalPlayer()) {
 			Direction direction = determineDirection(player, npc);
-			handleMonsterDestroying(npc, world, player, direction);
-			handleMonsterDeleting(world, index);
+			handleNpcDestroying(npc, world, player, direction);
+			handleNpcDeleting(world, index);
 		}
 		else if (isInactiveShell(npc)) {
 			Direction direction = determineDirection(player, npc);
@@ -211,16 +211,16 @@ void handlePlayerAndMonsterCollision(IndependentLivingObject &npc, World &world,
 	}
 }
 
-void handleCollisionsWithMonsters(Player &player, World &world)
+void handleCollisionsWithNpcs(Player &player, World &world)
 {
-	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
-	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
+	std::vector<std::shared_ptr<IndependentMovingObject>> npcs = world.getNpcs();
+	for (auto it = npcs.begin(); it != npcs.end(); ++it) {
 		if (areColliding(player, **it)) {
-			if (isPlayerJumpingOnMonster(player, **it) && !(*it)->isCrushproof()) {
-				handleJumpingOnMonster(**it, world, player, it - monsters.begin());
+			if (isPlayerJumpingOnNpc(player, **it) && !(*it)->isCrushproof()) {
+				handleJumpingOnNpc(**it, world, player, it - npcs.begin());
 			}
 			else {
-				handlePlayerAndMonsterCollision(**it, world, player, it - monsters.begin());
+				handlePlayerAndNpcCollision(**it, world, player, it - npcs.begin());
 			}
 			return;
 		}
@@ -240,20 +240,20 @@ void handleCollisionsWithFireSerpents(Player &player, World &world)
 
 void handlePlayerCollisions(Player &player, World &world)
 {
-	handleCollisionsWithMonsters(player, world);
+	handleCollisionsWithNpcs(player, world);
 	handleCollisionsWithFireSerpents(player, world);
 }
 
-void handleShellsAndMonstersCollisions(World &world, Player &player)
+void handleShellsAndNpcsCollisions(World &world, Player &player)
 {
-	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
-	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
+	std::vector<std::shared_ptr<IndependentMovingObject>> npcs = world.getNpcs();
+	for (auto it = npcs.begin(); it != npcs.end(); ++it) {
 		if ((*it)->isActiveShell()) {
-			for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
+			for (auto it2 = npcs.begin(); it2 != npcs.end(); ++it2) {
 				if (!(*it2)->isResistantToCollisionWithShell() && areColliding(**it, **it2)) {
 					Direction direction = determineDirection(**it, **it2);
-					handleMonsterDestroying(**it2, world, player, direction);
-					handleMonsterDeleting(world, it2 - monsters.begin());	
+					handleNpcDestroying(**it2, world, player, direction);
+					handleNpcDeleting(world, it2 - npcs.begin());	
 					return;
 				}
 			}
@@ -261,15 +261,15 @@ void handleShellsAndMonstersCollisions(World &world, Player &player)
 	}
 }
 
-void handleFireBallsAndMonstersCollisions(World &world, Player &player)
+void handleFireBallsAndNpcsCollisions(World &world, Player &player)
 {
 	std::vector<FireBall> fireballs = world.getFireBalls();
-	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
+	std::vector<std::shared_ptr<IndependentMovingObject>> npcs = world.getNpcs();
 	for (auto it = fireballs.begin(); it != fireballs.end(); ++it) {
-		for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
+		for (auto it2 = npcs.begin(); it2 != npcs.end(); ++it2) {
 			if (!(*it2)->isResistantToFireBalls() && areColliding(*it, **it2)) {
 				Direction direction = (*it).getMovement().getDirection();
-				handleMonsterHpReducing(**it2, world, player, direction, it2 - monsters.begin());
+				handleNpcHpReducing(**it2, world, player, direction, it2 - npcs.begin());
 				handleFireBallDeleting(*it, world, it - fireballs.begin());
 				return;
 			}
@@ -277,25 +277,25 @@ void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 	}
 }
 
-void handleBlockAndMonstersCollisions(World &world, const Block &block, Player &player)
+void handleBlockAndNpcsCollisions(World &world, const Block &block, Player &player)
 {
-	std::vector<std::shared_ptr<IndependentLivingObject>> monsters = world.getMonsters();
-	for (auto it = monsters.begin(); it != monsters.end(); ++it) {
-		if (!(*it)->isResistantToCollisionWithBlock() && isMonsterStandingOnBlock(**it, block)) {
+	std::vector<std::shared_ptr<IndependentMovingObject>> npcs = world.getNpcs();
+	for (auto it = npcs.begin(); it != npcs.end(); ++it) {
+		if (!(*it)->isResistantToCollisionWithBlock() && isNpcStandingOnBlock(**it, block)) {
 			Direction direction = determineDirection(block, **it);
-			handleMonsterDestroying(**it, world, player, direction);
-			handleMonsterDeleting(world, it - monsters.begin());
+			handleNpcDestroying(**it, world, player, direction);
+			handleNpcDeleting(world, it - npcs.begin());
 		}
 	}
 }
 
 void handleBlockAndBonusesCollisions(World &world, const Block &block, Player &player)
 {
-	std::vector<std::shared_ptr<BonusObject>> elements = world.getBonusElements();
-	for (auto it = elements.begin(); it != elements.end(); ++it) {
+	std::vector<std::shared_ptr<BonusObject>> bonuses = world.getBonusElements();
+	for (auto it = bonuses.begin(); it != bonuses.end(); ++it) {
 		if (isBonusStandingOnBlock(**it, block) && block.canCollideWithBonuses()) {
 			if ((*it)->isCoin()) {
-				collectCoinByCollision(player, world, it - elements.begin());
+				collectCoinByCollision(player, world, it - bonuses.begin());
 			}
 			else {
 				(*it)->knockUp();
@@ -307,18 +307,18 @@ void handleBlockAndBonusesCollisions(World &world, const Block &block, Player &p
 
 void handleBlockCollisions(World &world, const Block &block, Player &player)
 {
-	handleBlockAndMonstersCollisions(world, block, player);
+	handleBlockAndNpcsCollisions(world, block, player);
 	handleBlockAndBonusesCollisions(world, block, player);
 }
 
 void handleBonusesCollecting(Player &player, World &world)
 {
-	std::vector<std::shared_ptr<BonusObject>> elements = world.getBonusElements();
-	for (auto it = elements.begin(); it != elements.end(); ++it) {
+	std::vector<std::shared_ptr<BonusObject>> bonuses = world.getBonusElements();
+	for (auto it = bonuses.begin(); it != bonuses.end(); ++it) {
 		if (areAtTheSameWidth(player, **it) && areAtTheSameHeight(player, **it) && (*it)->isActive()) {
 			(*it)->giveBonus(player);
 			addTextAndPoints(player, world, (*it)->getPointsForCollecting());
-			world.deleteBonusElement(it - elements.begin());
+			world.deleteBonus(it - bonuses.begin());
 			return;
 		}
 	}

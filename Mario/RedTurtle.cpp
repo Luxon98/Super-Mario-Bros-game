@@ -165,7 +165,7 @@ void RedTurtle::crush(World &world, int index)
 	}
 	else {
 		world.addShell(Position(position.getX(), position.getY() + 6), true);
-		world.deleteMonster(index);
+		world.deleteNpc(index);
 	}
 
 	SoundController::playEnemyDestroyedEffect();

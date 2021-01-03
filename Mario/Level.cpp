@@ -39,10 +39,11 @@ void Level::setFirstLevel(World &world, bool checker)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -213,22 +214,22 @@ void Level::setFirstLevel(World &world, bool checker)
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(5822, 72))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(6446, 104))));
 
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(730, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1650, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1710, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2650, 128))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2730, 128))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3180, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3220, 400))));
-	world.monsters.push_back(std::make_shared<Turtle>(Turtle(Position(3350, 397))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3800, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3850, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4050, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4100, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4150, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4200, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5200, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(5270, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(730, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1650, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1710, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2650, 128))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2730, 128))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3180, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3220, 400))));
+	world.npcs.push_back(std::make_shared<Turtle>(Turtle(Position(3350, 397))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3800, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3850, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4050, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4100, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4150, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4200, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(5200, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(5270, 400))));
 
 	world.checkPoints.push_back(CheckPoint(Position(1856, 265), false, 1));
 
@@ -242,9 +243,9 @@ void Level::setSecondLevel(World &world, bool checker)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
@@ -403,7 +404,7 @@ void Level::setSecondLevel(World &world, bool checker)
 		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 240))); 
 		world.blocks.push_back(Block(BlockType::Destructible, Position(i, 272)));
 
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 176))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 176))));
 	}
 	
 	for (int i = 0; i < 5; ++i) {
@@ -459,41 +460,41 @@ void Level::setSecondLevel(World &world, bool checker)
 	world.platforms.push_back(Platform(Position(5010, 120), PlatformType::MovingUpPlatform));
 	world.platforms.push_back(Platform(Position(5010, 380), PlatformType::MovingUpPlatform));
 
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(518, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(558, 368))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(942, 400))));
-	world.monsters.push_back(std::make_shared<Turtle>(Turtle(Position(1525, 397))));
-	world.monsters.push_back(std::make_shared<Turtle>(Turtle(Position(1575, 397))));
-	world.monsters.push_back(std::make_shared<Turtle>(Turtle(Position(1925, 397))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2070, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2125, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2380, 112))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2490, 208))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2535, 208))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3200, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3238, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3276, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3635, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4235, 240))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4385, 272))));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3328, 388))));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3520, 356), true)));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(518, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(558, 368))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(942, 400))));
+	world.npcs.push_back(std::make_shared<Turtle>(Turtle(Position(1525, 397))));
+	world.npcs.push_back(std::make_shared<Turtle>(Turtle(Position(1575, 397))));
+	world.npcs.push_back(std::make_shared<Turtle>(Turtle(Position(1925, 397))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2070, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2125, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2380, 112))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2490, 208))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2535, 208))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3200, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3238, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3276, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3635, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4235, 240))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4385, 272))));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(3328, 388))));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(3520, 356), true)));
 	if (checker) {
-		world.monsters.push_back(std::make_shared<Plant>(Plant(Position(3712, 420))));
+		world.npcs.push_back(std::make_shared<Plant>(Plant(Position(3712, 420))));
 	}
 
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4847, 397), false)));
+	world.npcs.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4847, 397), false)));
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1294, 274))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1454, 274))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2190, 274))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(1294, 274))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(1454, 274))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(2190, 274))));
 
 	for (int i = 1326; i < 1454; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 176))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 176))));
 	}
 
 	for (int i = 1870; i < 1998; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 274))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 274))));
 	}
 
 	world.checkPoints.push_back(CheckPoint(Position(3328, 297), false, 1));
@@ -509,10 +510,11 @@ void Level::setThirdLevel(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -676,37 +678,37 @@ void Level::setThirdLevel(World &world)
 		}
 	}
 
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1423, 112))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1488, 112))));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(989, 141), false)));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2384, 148), true)));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2575, 176))));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3538, 205), false)));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3665, 182), true)));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4348, 397), false)));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1423, 112))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1488, 112))));
+	world.npcs.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(989, 141), false)));
+	world.npcs.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2384, 148), true)));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2575, 176))));
+	world.npcs.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3538, 205), false)));
+	world.npcs.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(3665, 182), true)));
+	world.npcs.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(4348, 397), false)));
 
 	world.inanimateElements.push_back(std::make_shared<Rock>(Rock(Position(3662, 464))));
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(878, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(910, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(942, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1072, 370))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1198, 82))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1230, 82))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1614, 208))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1646, 208))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1934, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1966, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(1998, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2030, 146))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2988, 148))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3020, 148))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3118, 148))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3150, 148))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2734, 174))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2766, 174))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3854, 174))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3886, 174))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(878, 146))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(910, 146))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(942, 146))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(1072, 370))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(1198, 82))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(1230, 82))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(1614, 208))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(1646, 208))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(1934, 146))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(1966, 146))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(1998, 146))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(2030, 146))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(2988, 148))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3020, 148))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3118, 148))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3150, 148))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(2734, 174))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(2766, 174))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3854, 174))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3886, 174))));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(5135, 240), true)));
 	world.flag = std::make_unique<Flag>(Flag(Position(4863, 116))); 
@@ -718,10 +720,11 @@ void Level::setFourthLevel(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -871,9 +874,9 @@ void Level::setFourthLevel(World &world)
 
 	world.platforms.push_back(Platform(Position(4576, 210), PlatformType::SmallPlatform));
 
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(3200, 235), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(4000, 280), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(4450, 200), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(3200, 235), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(4000, 280), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(4450, 200), MissleType::Rocket)));
 
 	world.fireSerpents.push_back(FireSerpent(1, Position(960, 336)));
 	world.fireSerpents.push_back(FireSerpent(8, Position(1584, 207)));
@@ -885,7 +888,7 @@ void Level::setFourthLevel(World &world)
 
 	// bridge and boss should always be added last
 	world.platforms.push_back(Platform(Position(4452, 336), PlatformType::Bridge));
-	world.monsters.push_back(std::make_shared<Boss>(Boss(Position(4575, 285))));
+	world.npcs.push_back(std::make_shared<Boss>(Boss(Position(4575, 285))));
 
 	world.inanimateElements.push_back(std::make_shared<Princess>(Princess(Position(5000, 392), true)));
 
@@ -898,10 +901,11 @@ void Level::setFirstHiddenStage(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -934,10 +938,10 @@ void Level::setFirstHiddenStage(World &world)
 	}
 
 	for (int i = 172; i < 428; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 306))));
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 242))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 306))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 242))));
 		if (i != 172 && i != 396) {
-			world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 178))));
+			world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 178))));
 		}
 	}
 
@@ -952,10 +956,11 @@ void Level::setSecondHiddenStage(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -966,7 +971,7 @@ void Level::setSecondHiddenStage(World &world)
 	world.WORLD_HEIGHT = 480;
 	world.LAYOUT_STYLE = LayoutStyle::Underground;
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(140, 402))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(140, 402))));
 
 	for (int i = 16; i < 688; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
@@ -1005,8 +1010,8 @@ void Level::setSecondHiddenStage(World &world)
 	world.blocks.push_back(Block(BlockType::Destructible, Position(592, 336)));
 
 	for (int i = 172; i < 496; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 274))));
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 402))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 274))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 402))));
 	}
 
 	world.checkPoints.push_back(CheckPoint(Position(590, 390), true, 2));
@@ -1020,10 +1025,11 @@ void Level::setSecondStageOnSecondLevel(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -1057,7 +1063,7 @@ void Level::setSecondStageOnSecondLevel(World &world)
 
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(720, 400)));
 
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(128, 420))));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(128, 420))));
 
 	world.inanimateElements.push_back(std::make_shared<Castle>(Castle(Position(915, 336), false)));
 	world.flag = std::make_unique<Flag>(Flag(Position(703, 116)));
@@ -1069,10 +1075,11 @@ void Level::setWinterWorld(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -1275,27 +1282,27 @@ void Level::setWinterWorld(World &world)
 	world.platforms.push_back(Platform(Position(5640, 375), PlatformType::SmallPlatform));
 	world.platforms.push_back(Platform(Position(6460, 385), PlatformType::MovingVerticallyPlatform));
 
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1040, 336))));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2619, 225), true)));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2920, 400))));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(2080, 420))));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2325, 397), false)));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(3640, 300), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(4143, 420), true)));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(4912, 388))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4320, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4420, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4520, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4620, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4720, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(6208, 368))));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(6700, 420))));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(7408, 388))));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(7800, 224), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(8160, 400))));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(8376, 245), true)));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(8660, 420), true)));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(9088, 368))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1040, 336))));
+	world.npcs.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2619, 225), true)));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2920, 400))));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(2080, 420))));
+	world.npcs.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2325, 397), false)));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(3640, 300), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(4143, 420), true)));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(4912, 388))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4320, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4420, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4520, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4620, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4720, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(6208, 368))));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(6700, 420))));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(7408, 388))));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(7800, 224), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(8160, 400))));
+	world.npcs.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(8376, 245), true)));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(8660, 420), true)));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(9088, 368))));
 
 	world.fireSerpents.push_back(FireSerpent(1, Position(3552, 208)));
 
@@ -1516,10 +1523,10 @@ void Level::setWinterWorld(World &world)
 		}
 	}
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(464, 250))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(2992, 272))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(6064, 90))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(8772, 210))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(464, 250))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(2992, 272))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(6064, 90))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(8772, 210))));
 
 	world.checkPoints.push_back(CheckPoint(Position(5997, 297), false, 1));
 	world.checkPoints.push_back(CheckPoint(Position(9908, 201), false, 3));
@@ -1533,10 +1540,11 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -1648,39 +1656,39 @@ void Level::setSecondStageOnWinterWorld(World &world)
 
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(4704, 400)));
 	
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(4040, 400))));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(4112, 420))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(910, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1285, 368))));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(1450, 315), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1536, 256))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1830, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2295, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2460, 400))));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(2050, 250), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(2050, 365), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(2800, 240), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(3110, 283), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(2400, 75), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2800, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3100, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3400, 400))));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(3330, 252), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2700, 255), true)));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2850, 176))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3020, 176))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1950, 176))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2300, 176))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2685, 176))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1720, 176))));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(1755, 132), MissleType::Rocket)));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(1744, 163))));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(1904, 131), true)));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(2524, 163))));
-	world.monsters.push_back(std::make_shared<Plant>(Plant(Position(2652, 420), true)));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2920, 400))));
-	world.monsters.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2325, 397), false)));
-	world.monsters.push_back(std::make_shared<FireMissle>(FireMissle(Position(3640, 300), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4040, 400))));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(4112, 420))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(910, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1285, 368))));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(1450, 315), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1536, 256))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1830, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2295, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2460, 400))));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(2050, 250), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(2050, 365), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(2800, 240), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(3110, 283), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(2400, 75), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2800, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3100, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3400, 400))));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(3330, 252), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2700, 255), true)));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2850, 176))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3020, 176))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1950, 176))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2300, 176))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2685, 176))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1720, 176))));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(1755, 132), MissleType::Rocket)));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(1744, 163))));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(1904, 131), true)));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(2524, 163))));
+	world.npcs.push_back(std::make_shared<Plant>(Plant(Position(2652, 420), true)));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2920, 400))));
+	world.npcs.push_back(std::make_shared<RedTurtle>(RedTurtle(Position(2325, 397), false)));
+	world.npcs.push_back(std::make_shared<FireMissle>(FireMissle(Position(3640, 300), MissleType::Rocket)));
 
 	world.fireSerpents.push_back(FireSerpent(1, Position(2246, 320)));
 
@@ -1783,19 +1791,19 @@ void Level::setSecondStageOnWinterWorld(World &world)
 	}
 
 	for (int i = 2812; i < 3068; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 120))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 120))));
 	}
 
 	for (int i = 1792; i < 1888; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 178))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 178))));
 	}
 
 	for (int i = 124; i < 324; i += 40) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3462, i))));
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3762, i))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3462, i))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3762, i))));
 	}
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3180, 300))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3180, 300))));
 
 	world.flag = std::make_unique<Flag>(Flag(Position(4689, 116)));
 	world.button = nullptr;
@@ -1806,10 +1814,11 @@ void Level::setWinterHiddenStage(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -1867,11 +1876,11 @@ void Level::setWinterHiddenStage(World &world)
 		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
 	}
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(32, 242))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(520, 169))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(32, 242))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(520, 169))));
 
 	for (int i = 76; i <= 440; i += 72) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 360))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 360))));
 	}
 
 	world.checkPoints.push_back(CheckPoint(Position(590, 358), true, 2));
@@ -1885,10 +1894,11 @@ void Level::setSummerWorld(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -1902,7 +1912,7 @@ void Level::setSummerWorld(World &world)
 	summerHiddenStageChecker = false;
 
 	for (int i = 2800; i < 3300; i += 64) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 385))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 385))));
 	}
 
 	for (int i = 16; i < 656; i += 32) {
@@ -2005,14 +2015,14 @@ void Level::setSummerWorld(World &world)
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(4596, 368)));
 	world.blocks.push_back(Block(BlockType::Indestructible, Position(4628, 368)));
 
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(580, 327))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(880, 144))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1475, 403))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2348, 259))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(2655, 348))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(3315, 176))));
-	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1985, 52))));
-	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(3700, 60))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(580, 327))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(880, 144))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1475, 403))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2348, 259))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2655, 348))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3315, 176))));
+	world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1985, 52))));
+	world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(3700, 60))));
 
 	world.platforms.push_back(Platform(Position(960, 460), PlatformType::MovingVerticallyPlatform));
 
@@ -2046,10 +2056,10 @@ void Level::setSummerWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
 		CustomSummerDecoration(SummerDecorationType::PALM, Position(4450, 163))));
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3264, 160))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3296, 160))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(4596, 336))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(4628, 336))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3264, 160))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3296, 160))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(4596, 336))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(4628, 336))));
 
 	world.checkPoints.push_back(CheckPoint(Position(3003, 266), true, 1));
 	world.checkPoints.push_back(CheckPoint(Position(4250, 297), false, 3));
@@ -2063,10 +2073,11 @@ void Level::setSecondStageOnSummerWorld(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -2174,25 +2185,25 @@ void Level::setSecondStageOnSummerWorld(World &world)
 	}
 	world.blocks.push_back(Block(BlockType::TubeTopEntry, Position(4448, 336)));
 
-	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1185, 52))));
+	world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1185, 52))));
 
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(975, 512), false)));
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1275, 500), true)));
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1375, 512), false)));
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1691, 500), true)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(975, 512), false)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1275, 500), true)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1375, 512), false)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1691, 500), true)));
 
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1845, 499), false)));
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2100, 506), true)));
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2170, 500), false)));
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2417, 513), true)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1845, 499), false)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2100, 506), true)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2170, 500), false)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2417, 513), true)));
 
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2550, 499), false)));
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2813, 512), true))); 
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2825, 503), false)));
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3100, 500), true)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2550, 499), false)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2813, 512), true))); 
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2825, 503), false)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3100, 500), true)));
 
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3387, 512), false)));
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3627, 498), true)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3387, 512), false)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3627, 498), true)));
 
 	for (int i = 8; i < 120; i += 16) {
 		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
@@ -2250,15 +2261,15 @@ void Level::setSecondStageOnSummerWorld(World &world)
 
 	if (!summerHiddenStageChecker) {
 		world.checkPoints.push_back(CheckPoint(Position(832, 153), false, 4));
-		world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(450, 60))));
-		world.monsters.push_back(std::make_shared<Creature>(Creature(Position(880, 400))));
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(880, 226))));
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(784, 226))));
+		world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(450, 60))));
+		world.npcs.push_back(std::make_shared<Creature>(Creature(Position(880, 400))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(880, 226))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(784, 226))));
 
 		summerHiddenStageChecker = true;
 	}
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(3936, 402))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3936, 402))));
 
 	world.checkPoints.push_back(CheckPoint(Position(4448, 297), false, 6));
 
@@ -2271,10 +2282,11 @@ void Level::setThirdStageOnSummerWorld(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -2354,12 +2366,12 @@ void Level::setThirdStageOnSummerWorld(World &world)
 	world.blocks.push_back(Block(BlockType::Ground, Position(1088, 400)));
 	world.blocks.push_back(Block(BlockType::Ground, Position(1056, 400)));
 
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(980, 400))));
-	world.monsters.push_back(std::make_shared<Creature>(Creature(Position(1650, 400))));
-	world.monsters.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1800, 504), false)));
-	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(450, 60))));
-	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1050, 110))));
-	world.monsters.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1650, 60))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(980, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1650, 400))));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1800, 504), false)));
+	world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(450, 60))));
+	world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1050, 110))));
+	world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1650, 60))));
 
 	world.platforms.push_back(Platform(Position(2000, 420), PlatformType::MovingHorizontallyPlatform));
 
@@ -2384,7 +2396,7 @@ void Level::setThirdStageOnSummerWorld(World &world)
 
 	// bridge and boss should always be added last
 	world.platforms.push_back(Platform(Position(2628, 336), PlatformType::Bridge));
-	world.monsters.push_back(std::make_shared<Boss>(Boss(Position(2751, 285))));
+	world.npcs.push_back(std::make_shared<Boss>(Boss(Position(2751, 285))));
 
 	world.flag = nullptr;
 	world.button = std::make_unique<Button>(Button(Position(2816, 272)));
@@ -2395,10 +2407,11 @@ void Level::setSummerHiddenStage(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -2466,12 +2479,12 @@ void Level::setSummerHiddenStage(World &world)
 
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(320, 81))));
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(16, 18))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(624, 18))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(16, 18))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(624, 18))));
 
 	for (int i = 240; i < 432; i += 32) {
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 400))));
-		world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(i, 432))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 400))));
+		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 432))));
 	}
 
 	world.checkPoints.push_back(CheckPoint(Position(544, 329), false, 2));
@@ -2485,10 +2498,11 @@ void Level::setSecondSummerHiddenStage(World &world)
 	world.blocks.clear();
 	world.platforms.clear();
 	world.inanimateElements.clear();
-	world.bonusElements.clear();
-	world.monsters.clear();
-	world.animatedElements.clear();
+	world.bonuses.clear();
+	world.npcs.clear();
+	world.temporaryElements.clear();
 	world.destroyedElements.clear();
+	world.animatedElements.clear();
 	world.fireballs.clear();
 	world.checkPoints.clear();
 	world.fireSerpents.clear();
@@ -2525,9 +2539,9 @@ void Level::setSecondSummerHiddenStage(World &world)
 	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
 		CustomSummerDecoration(SummerDecorationType::PALM, Position(201, 349))));
 
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(176, 225))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(144, 225))));
-	world.bonusElements.push_back(std::make_shared<Coin>(Coin(Position(464, 402))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(176, 225))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(144, 225))));
+	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(464, 402))));
 
 	world.checkPoints.push_back(CheckPoint(Position(544, 329), false, 5));
 

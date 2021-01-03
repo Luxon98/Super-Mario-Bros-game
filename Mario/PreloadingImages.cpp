@@ -91,6 +91,10 @@ void preloadTemporaryObjectImages(SDL_Surface* display)
 	Shards::loadShardsImages(display);
 	AnimatedCoin::loadAnimatedCoinImages(display);
 	AnimatedText::loadAnimatedTextImages(display);
+}
+
+void preloadAnimatedObjectImages(SDL_Surface* display)
+{
 	Snowflake::loadSnowflakeImage(display);
 }
 
@@ -108,5 +112,6 @@ void preloadImages(SDL_Surface* display)
 	preloadInanimateObjectImages(display);
 	preloadLivingObjectImages(display);
 	preloadTemporaryObjectImages(display);
+	preloadAnimatedObjectImages(display);
 	preloadOtherImages(display);
 }

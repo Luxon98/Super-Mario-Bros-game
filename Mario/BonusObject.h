@@ -1,12 +1,12 @@
 #ifndef BonusObject_H
 #define BonusObject_H
 
-#include "LivingObject.h"
+#include "MovingObject.h"
 
 class Player;
 
 
-class BonusObject : public LivingObject
+class BonusObject : public MovingObject
 {
 protected:
 	int growCounter;

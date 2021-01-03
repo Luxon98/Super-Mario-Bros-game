@@ -2,13 +2,13 @@
 #define Explosion_H
 
 #include <array>
-#include "AnimatedObject.h"
+#include "TemporaryObject.h"
 
 class Position;
 struct SDL_Surface;
 
 
-class Explosion : public AnimatedObject
+class Explosion : public TemporaryObject
 {
 private:
 	static std::array<SDL_Surface*, 3> explosionImages;

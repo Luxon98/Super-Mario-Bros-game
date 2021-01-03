@@ -2,7 +2,7 @@
 #define FireBall_H
 
 #include <array>
-#include "IndependentLivingObject.h"
+#include "IndependentMovingObject.h"
 
 class World;
 class Position;
@@ -10,7 +10,7 @@ enum class Direction;
 struct SDL_Surface;
 
 
-class FireBall : public IndependentLivingObject
+class FireBall : public IndependentMovingObject
 {
 private:
 	static std::array<SDL_Surface*, 4> fireBallImages;

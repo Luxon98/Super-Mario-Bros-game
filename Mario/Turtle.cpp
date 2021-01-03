@@ -93,7 +93,7 @@ void Turtle::move(World &world)
 void Turtle::crush(World &world, int index)
 {
 	world.addShell(Position(position.getX(), position.getY() + 6));
-	world.deleteMonster(index);
+	world.deleteNpc(index);
 
 	SoundController::playEnemyDestroyedEffect();
 }

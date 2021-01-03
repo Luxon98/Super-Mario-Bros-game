@@ -2,13 +2,13 @@
 #define CrushedCreature_H
 
 #include <array>
-#include "AnimatedObject.h"
+#include "TemporaryObject.h"
 
 class Position;
 struct SDL_Surface;
 
 
-class CrushedCreature : public AnimatedObject
+class CrushedCreature : public TemporaryObject
 {
 private:
 	static std::array<SDL_Surface*, 4> crushedCreatureImages;

@@ -2,7 +2,7 @@
 #define AnimatedText_H
 
 #include <array>
-#include "AnimatedObject.h"
+#include "TemporaryObject.h"
 
 class Position;
 struct SDL_Surface;
@@ -19,7 +19,7 @@ enum class TextType
 };
 
 
-class AnimatedText : public AnimatedObject 
+class AnimatedText : public TemporaryObject 
 {
 private:
 	static std::array<SDL_Surface*, 6> animatedTextImages;

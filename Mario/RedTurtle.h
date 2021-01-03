@@ -2,7 +2,7 @@
 #define RedTurtle_H
 
 #include <array>
-#include "IndependentLivingObject.h"
+#include "IndependentMovingObject.h"
 
 class World;
 class Position;
@@ -11,7 +11,7 @@ struct SDL_Surface;
 
 
 // this class is the counterpart of NPC, which in the original Mario series was called 'Koopa Paratroopa'
-class RedTurtle : public IndependentLivingObject
+class RedTurtle : public IndependentMovingObject
 {
 private:
 	static std::array<SDL_Surface*, 6> redTurtleImages;

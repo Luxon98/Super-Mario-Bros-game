@@ -2,14 +2,14 @@
 #define JumpingFish_H
 
 #include <array>
-#include "IndependentLivingObject.h"
+#include "IndependentMovingObject.h"
 
 class World;
 class Position;
 struct SDL_Surface;
 
 
-class JumpingFish : public IndependentLivingObject
+class JumpingFish : public IndependentMovingObject
 {
 private:
 	static std::array<SDL_Surface*, 4> fishImages;
