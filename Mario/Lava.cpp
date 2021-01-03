@@ -12,8 +12,7 @@ std::array<SDL_Surface*, 2> Lava::lavaImages;
 Lava::Lava(Position position)
 {
 	this->position = position;
-
-	size = Size(0, 0);
+	size = Size(16, 48);
 }
 
 void Lava::loadLavaImage(SDL_Surface* display)
@@ -24,7 +23,7 @@ void Lava::loadLavaImage(SDL_Surface* display)
 
 void Lava::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		int index = (World::LAYOUT_STYLE == LayoutStyle::CustomSummer);
 		drawSurface(display, lavaImages[index], position.getX() - beginningOfCamera, position.getY());
 	}

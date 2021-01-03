@@ -86,7 +86,7 @@ bool Plant::isResistantToCollisionWithShell() const
 
 void Plant::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 75 && position.getX() < endOfCamera + 75) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* plantImg = plantImages[computeImageIndex()];
 		drawSurface(display, plantImg, position.getX() - beginningOfCamera, position.getY());
 	}

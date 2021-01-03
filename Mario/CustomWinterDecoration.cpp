@@ -6,12 +6,30 @@
 
 std::array<SDL_Surface*, 10> CustomWinterDecoration::decorationImages;
 
+Size CustomWinterDecoration::getSizeFromDecorationType() const
+{
+	if (decorationType >= WinterDecorationType::YELLOW_STAR && decorationType <= WinterDecorationType::BLUE_STAR) {
+		return Size(14, 16);
+	}
+	else if (decorationType == WinterDecorationType::CHRISTMAS_TREE) {
+		return Size(50, 79);
+	}
+	else if (decorationType == WinterDecorationType::SMALL_WINTER_CLOUD) {
+		return Size(64, 48);
+	}
+	else if (decorationType == WinterDecorationType::WINTER_CLOUD) {
+		return Size(96, 48);
+	}
+	else {
+		return Size(58, 58);
+	}
+}
+
 CustomWinterDecoration::CustomWinterDecoration(WinterDecorationType type, Position position)
 {
 	this->position = position;
 	decorationType = type;
-
-	size = Size(0, 0);
+	size = getSizeFromDecorationType();
 }
 
 void CustomWinterDecoration::loadDecorationImages(SDL_Surface* display)
@@ -30,7 +48,7 @@ void CustomWinterDecoration::loadDecorationImages(SDL_Surface* display)
 
 void CustomWinterDecoration::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* decorationImg = decorationImages[static_cast<int>(decorationType) - 1];
 		drawSurface(display, decorationImg, position.getX() - beginningOfCamera, position.getY());
 	}

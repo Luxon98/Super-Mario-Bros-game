@@ -16,6 +16,7 @@ DestroyedFish::DestroyedFish(Position position, bool directionFlag)
 	this->position = position;
 	this->directionFlag = directionFlag;
 	auxiliaryCounter = 0;
+	size = Size(30, 32);
 }
 
 void DestroyedFish::loadDestroyedFishImages(SDL_Surface* display)
@@ -26,7 +27,7 @@ void DestroyedFish::loadDestroyedFishImages(SDL_Surface* display)
 
 void DestroyedFish::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* destroyedFishImg = destroyedFishImages[computeImageIndex()];
 		drawSurface(display, destroyedFishImg, position.getX() - beginningOfCamera, position.getY());
 	}

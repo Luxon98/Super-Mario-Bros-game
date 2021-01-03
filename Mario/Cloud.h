@@ -5,6 +5,7 @@
 #include "InanimateObject.h"
 
 class Position;
+class Size;
 struct SDL_Surface;
 
 
@@ -12,6 +13,7 @@ class Cloud : public InanimateObject
 {
 private:
 	static std::array<SDL_Surface*, 3> cloudImages;
+	Size getSizeFromModel() const;
 
 public:
 	Cloud(int type, Position position);

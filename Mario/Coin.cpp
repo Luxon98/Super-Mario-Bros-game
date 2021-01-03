@@ -73,7 +73,7 @@ void Coin::changeCoinImage()
 
 void Coin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* coinImg = coinImages[computeImageIndex()];
 		drawSurface(display, coinImg, position.getX() - beginningOfCamera, position.getY());
 	}

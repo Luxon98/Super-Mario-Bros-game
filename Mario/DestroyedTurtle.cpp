@@ -26,6 +26,7 @@ DestroyedTurtle::DestroyedTurtle(Position position, Direction slideDirection, bo
 	this->red = red;
 	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
+	size = Size(32, 28);
 }
 
 void DestroyedTurtle::loadDestroyedTurtleImages(SDL_Surface* display)
@@ -40,7 +41,7 @@ void DestroyedTurtle::loadDestroyedTurtleImages(SDL_Surface* display)
 
 void DestroyedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 70 && position.getX() < endOfCamera + 70) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* dtImg = destroyedTurtleImages[computeImageIndex()];
 		drawSurface(display, dtImg, position.getX() - beginningOfCamera, position.getY());
 	}

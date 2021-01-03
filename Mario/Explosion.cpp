@@ -24,6 +24,7 @@ Explosion::Explosion(Position position)
 {
 	this->position = position;
 	creationTime = std::chrono::steady_clock::now();
+	size = Size(32, 32);
 }
 
 void Explosion::loadExplosionImages(SDL_Surface* display)
@@ -38,7 +39,7 @@ void Explosion::loadExplosionImages(SDL_Surface* display)
 
 void Explosion::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 50 && position.getX() < endOfCamera + 50) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* explosionImg = explosionImages[computeImageIndex()];
 		drawSurface(display, explosionImg, position.getX() - beginningOfCamera, position.getY());
 	}

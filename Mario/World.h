@@ -117,7 +117,6 @@ public:
 	void setFireballStatus();
 	void switchOnFlag();
 	void spoilBridgeAndBoss();
-	void changeShellMovementParameters(int index, Direction direction);
 	void resetImages();
 	void destroyLastTouchedBlock();
 	void deleteBonusElement(int index);

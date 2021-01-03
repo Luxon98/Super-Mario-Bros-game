@@ -18,6 +18,7 @@ Snowflake::Snowflake(Position position)
 	this->position = position;
 	initialPositionX = position.getX();
 	auxiliaryCounter = 0;
+	size = Size(4, 4);
 }
 
 void Snowflake::loadSnowflakeImage(SDL_Surface* display)
@@ -27,7 +28,7 @@ void Snowflake::loadSnowflakeImage(SDL_Surface* display)
 
 void Snowflake::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		drawSurface(display, snowflakeImage, position.getX() - beginningOfCamera, position.getY());
 	}
 }

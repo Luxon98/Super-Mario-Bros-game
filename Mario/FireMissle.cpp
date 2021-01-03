@@ -88,7 +88,7 @@ void FireMissle::setMoveDirection(Direction direction)
 
 void FireMissle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if ((position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) && !inactive) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera) && !inactive) {
 		drawSurface(display, missleImages[computeImageIndex()], position.getX() - beginningOfCamera, position.getY());
 	}
 }

@@ -99,7 +99,7 @@ bool FireBall::shouldBeRemoved() const
 
 void FireBall::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* fireballImg = fireBallImages[computeImageIndex()];
 		drawSurface(display, fireballImg, position.getX() - beginningOfCamera, position.getY());
 	}

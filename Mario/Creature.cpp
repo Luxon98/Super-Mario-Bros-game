@@ -92,7 +92,7 @@ void Creature::setMoveDirection(Direction direction)
 
 void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* creatureImg = creatureImages[computeImageIndex()];
 		drawSurface(display, creatureImg, position.getX() - beginningOfCamera, position.getY());
 	}

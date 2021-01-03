@@ -31,7 +31,7 @@ Shell::Shell(Position position, bool red)
 	this->red = red;
 	healthPoints = 1;
 	stepsCounter = 0;
-	creationTime = std::chrono::steady_clock::now();
+	stateTime = std::chrono::steady_clock::now();
 	active = false;
 }
 
@@ -55,11 +55,6 @@ bool Shell::isActiveShell() const
 	return active;
 }
 
-bool Shell::isActive() const
-{
-	return active;
-}
-
 bool Shell::isRed() const
 {
 	return red;
@@ -72,10 +67,10 @@ bool Shell::shouldTurnIntoTurtle() const
 	}
 
 	auto timePoint = std::chrono::steady_clock::now();
-	return (creationTime + std::chrono::milliseconds(25000) < timePoint);
+	return (stateTime + std::chrono::milliseconds(20000) < timePoint);
 }
 
-void Shell::setActiveState(Direction direction)
+void Shell::changeActiveState(Direction direction)
 {
 	movement.setDirection(direction);
 	active = (movement.getDirection() != Direction::None);
@@ -83,12 +78,12 @@ void Shell::setActiveState(Direction direction)
 	int shift = determineShift(*this, 3);
 	position.setX(position.getX() + shift);
 
-	creationTime = std::chrono::steady_clock::now();
+	stateTime = std::chrono::steady_clock::now();
 }
 
 void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* shellImg = shellImages[computeImageIndex()];
 		drawSurface(display, shellImg, position.getX() - beginningOfCamera, position.getY());
 	}
@@ -113,14 +108,13 @@ void Shell::move(World &world)
 
 void Shell::crush(World &world, int index)
 {
-	// to rework
 	if (active) {
-		world.changeShellMovementParameters(index, Direction::None);
+		changeActiveState(Direction::None);
 	}
 	else {
 		const Player& player = world.getPlayer();
-		Direction direction = (player.getX() <= getX() ? Direction::Right : Direction::Left);
-		world.changeShellMovementParameters(index, direction);
+		Direction direction = (player.getX() <= getX() ? Direction::Right : Direction::Left); 	// to simplify
+		changeActiveState(direction);
 	}
 }
 

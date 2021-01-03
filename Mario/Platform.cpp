@@ -52,7 +52,7 @@ Size Platform::getSizeFromPlatformType()
 
 void Platform::drawPlatform(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 120 && position.getX() < endOfCamera + 120) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		int index = (platformType != PlatformType::SmallPlatform ? 0 : 1);
 		drawSurface(display, platformImages[index], position.getX() - beginningOfCamera, position.getY());
 	}
@@ -60,7 +60,7 @@ void Platform::drawPlatform(SDL_Surface* display, int beginningOfCamera, int end
 
 void Platform::drawBridge(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 200 && position.getX() < endOfCamera + 200) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		for (int i = 0; i < bridgeLength; ++i) {
 			int posX = (position.getX() - size.getWidth() / 2) - beginningOfCamera + (i * 8);
 			drawSurface(display, platformImages[2], posX, position.getY());

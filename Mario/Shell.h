@@ -15,7 +15,7 @@ class Shell : public IndependentLivingObject
 {
 private:
 	static std::array<SDL_Surface*, 3> shellImages;
-	std::chrono::steady_clock::time_point creationTime;
+	std::chrono::steady_clock::time_point stateTime;
 	bool active;
 	bool red;
 	int computeImageIndex() const override;
@@ -25,10 +25,9 @@ public:
 	static void loadShellImage(SDL_Surface* display);
 	bool isResistantToImmortalPlayer() const override;
 	bool isActiveShell() const override;
-	bool isActive() const;
 	bool isRed() const;
 	bool shouldTurnIntoTurtle() const;
-	void setActiveState(Direction direction);
+	void changeActiveState(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 	void crush(World &world, int index) override;

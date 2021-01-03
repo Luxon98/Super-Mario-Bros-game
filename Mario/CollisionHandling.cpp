@@ -28,25 +28,25 @@
 #include "WorldInteractionFunctions.h"
 
 
-bool isCharacterHittingObject(const WorldObject &figure, const WorldObject &block, Direction direction, int distance)
+bool isCharacterHittingObject(const WorldObject &object, const WorldObject &block, Direction direction, int distance)
 {
-	if (direction == Direction::Right && figure.getX() < block.getX()
-		&& figure.getX() + distance + figure.getWidth() / 2 >= block.getX() - block.getWidth() / 2) {
+	if (direction == Direction::Right && object.getX() < block.getX()
+		&& object.getX() + distance + object.getWidth() / 2 >= block.getX() - block.getWidth() / 2) {
 
 		return true;
 	}
-	else if (direction == Direction::Left && figure.getX() > block.getX()
-		&& figure.getX() - distance - figure.getWidth() / 2 <= block.getX() + block.getWidth() / 2) {
+	else if (direction == Direction::Left && object.getX() > block.getX()
+		&& object.getX() - distance - object.getWidth() / 2 <= block.getX() + block.getWidth() / 2) {
 
 		return true;
 	}
-	else if (direction == Direction::Up && figure.getY() > block.getY()
-		&& figure.getY() - distance - figure.getHeight() / 2 <= block.getY() + block.getHeight() / 2) {
+	else if (direction == Direction::Up && object.getY() > block.getY()
+		&& object.getY() - distance - object.getHeight() / 2 <= block.getY() + block.getHeight() / 2) {
 
 		return true;
 	}
-	else if (direction == Direction::Down && figure.getY() < block.getY()
-		&& figure.getY() + distance + figure.getHeight() / 2 >= block.getY() - block.getHeight() / 2) {
+	else if (direction == Direction::Down && object.getY() < block.getY()
+		&& object.getY() + distance + object.getHeight() / 2 >= block.getY() - block.getHeight() / 2) {
 
 		return true;
 	}
@@ -54,11 +54,11 @@ bool isCharacterHittingObject(const WorldObject &figure, const WorldObject &bloc
 	return false;
 }
 
-bool isCharacterStandingOnSomething(const WorldObject &figure, const World &world)
+bool isCharacterStandingOnSomething(const WorldObject &object, const World &world)
 {
 	std::vector<Block> blocks = world.getBlocks();
 	for (auto &block : blocks) {
-		if (isElementDirectlyAboveObject(figure, block) && areAtTheSameWidth(figure, block) 
+		if (isElementDirectlyAboveObject(object, block) && areAtTheSameWidth(object, block) 
 			&& !block.isInvisible()) {
 
 			return true;
@@ -67,7 +67,7 @@ bool isCharacterStandingOnSomething(const WorldObject &figure, const World &worl
 
 	std::vector<Platform> platforms = world.getPlatforms();
 	for (auto &platform : platforms) {
-		if (isElementDirectlyAboveObject(figure, platform) && areAtTheSameWidth(figure, platform)) {
+		if (isElementDirectlyAboveObject(object, platform) && areAtTheSameWidth(object, platform)) {
 			return true;
 		}
 	}
@@ -75,9 +75,9 @@ bool isCharacterStandingOnSomething(const WorldObject &figure, const World &worl
 	return false;
 }
 
-bool isMonsterStandingOnBlock(const IndependentLivingObject &monster, const Block &block)
+bool isMonsterStandingOnBlock(const IndependentLivingObject &npc, const Block &block)
 {
-	if (isMonsterCloseAboveBlock(monster, block) && areAtTheSameWidth(monster, block)) {
+	if (isMonsterCloseAboveBlock(npc, block) && areAtTheSameWidth(npc, block)) {
 		return true;
 	}
 
@@ -124,11 +124,11 @@ bool isPlayerCloseToPlant(const Plant &plant, const World &world)
 	return false;
 }
 
-bool isPlayerAheadOfMonster(const IndependentLivingObject &monster, const World &world)
+bool isPlayerAheadOfMonster(const IndependentLivingObject &npc, const World &world)
 {
 	const Player& player = world.getPlayer();
 
-	if (player.getX() > monster.getX()) {
+	if (player.getX() > npc.getX()) {
 		return true;
 	}
 
@@ -161,11 +161,10 @@ void handleMonsterDeleting(World &world, int index, bool bossFlag)
 	SoundController::playEnemyDestroyedEffect(bossFlag);
 }
 
-void handleMonsterHpReducing(IndependentLivingObject &npc, World &world, Player &player, int index)
+void handleMonsterHpReducing(IndependentLivingObject &npc, World &world, Player &player, Direction direction, int index)
 {
 	npc.decrementHealthPoints();
 	if (npc.getHealthPoints() == 0) {
-		Direction direction = npc.getMovement().getDirection();
 		handleMonsterDestroying(npc, world, player, direction);
 		handleMonsterDeleting(world, index, (npc.getPointsForDestroying() == 5000));
 	}
@@ -173,7 +172,7 @@ void handleMonsterHpReducing(IndependentLivingObject &npc, World &world, Player 
 
 void handleFireBallDeleting(const FireBall &fireball, World &world, int index)
 {
-	int alignment = (fireball.getMovement().getDirection() == Direction::Left ? -5 : 5);
+	int alignment = determineShift(fireball.getMovement().getDirection(), 5);
 
 	world.deleteFireBall(index);
 	world.addExplosion(Position(fireball.getX() + alignment, fireball.getY()));
@@ -200,12 +199,12 @@ void handlePlayerAndMonsterCollision(IndependentLivingObject &npc, World &world,
 		}
 		else if (isInactiveShell(npc)) {
 			Direction direction = determineDirection(player, npc);
-			dynamic_cast<Shell*>(&npc)->setActiveState(direction);
+			dynamic_cast<Shell*>(&npc)->changeActiveState(direction);
 		}
 	}
 	else if (isInactiveShell(npc)) {
 		Direction direction = determineDirection(player, npc);
-		dynamic_cast<Shell*>(&npc)->setActiveState(direction);
+		dynamic_cast<Shell*>(&npc)->changeActiveState(direction);
 	}
 	else if (!player.isInsensitive()) {
 		player.loseBonusOrLife();
@@ -269,7 +268,8 @@ void handleFireBallsAndMonstersCollisions(World &world, Player &player)
 	for (auto it = fireballs.begin(); it != fireballs.end(); ++it) {
 		for (auto it2 = monsters.begin(); it2 != monsters.end(); ++it2) {
 			if (!(*it2)->isResistantToFireBalls() && areColliding(*it, **it2)) {
-				handleMonsterHpReducing(**it2, world, player, it2 - monsters.begin());
+				Direction direction = (*it).getMovement().getDirection();
+				handleMonsterHpReducing(**it2, world, player, direction, it2 - monsters.begin());
 				handleFireBallDeleting(*it, world, it - fireballs.begin());
 				return;
 			}

@@ -51,7 +51,7 @@ void Flower::loadFlowerImages(SDL_Surface* display)
 
 void Flower::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* flowerImg = flowerImages[computeImageIndex()];
 		drawSurface(display, flowerImg, position.getX() - beginningOfCamera, position.getY());
 	}

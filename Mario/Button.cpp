@@ -50,7 +50,7 @@ bool Button::isPlayerHittingThisButton(const Player &player)
 
 void Button::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 80 && position.getX() < endOfCamera + 80) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		drawSurface(display, buttonImages[buttonImage - 1], position.getX() - beginningOfCamera, position.getY());
 	}
 }

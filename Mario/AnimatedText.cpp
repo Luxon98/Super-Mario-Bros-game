@@ -16,6 +16,7 @@ AnimatedText::AnimatedText(TextType type, Position position)
 	this->type = type;
 	this->position = position;
 	auxiliaryCounter = 0;
+	size = Size(32, 16);
 }
 
 void AnimatedText::loadAnimatedTextImages(SDL_Surface* display)
@@ -30,7 +31,7 @@ void AnimatedText::loadAnimatedTextImages(SDL_Surface* display)
 
 void AnimatedText::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* animatedTextImg = animatedTextImages[computeImageIndex()];
 		drawSurface(display, animatedTextImg, position.getX() - beginningOfCamera, position.getY());
 	}

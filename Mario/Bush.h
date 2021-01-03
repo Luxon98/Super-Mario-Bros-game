@@ -5,6 +5,7 @@
 #include "InanimateObject.h"
 
 class Position;
+class Size;
 struct SDL_Surface;
 
 
@@ -12,6 +13,7 @@ class Bush : public InanimateObject
 {
 private:
 	static std::array<SDL_Surface*, 5> bushImages;
+	Size getSizeFromModel() const;
 
 public:
 	Bush(int type, Position position);

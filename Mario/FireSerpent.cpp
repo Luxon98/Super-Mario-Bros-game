@@ -17,11 +17,11 @@ void FireSerpent::changePosition()
 
 FireSerpent::FireSerpent(int counter, Position position)
 {
-	size = Size(20, 20);
 	this->position = position;
 	auxiliaryCounter = 0;
 	positionCounter = counter;
 	initialPosition = position;
+	size = Size(20, 20);
 }
 
 void FireSerpent::loadFireSerpentImages(SDL_Surface* display)
@@ -51,8 +51,6 @@ void FireSerpent::move()
 
 void FireSerpent::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
-		drawSurface(display, fireSerpentImages[positionCounter - 1], initialPosition.getX() - beginningOfCamera, 
-			initialPosition.getY());
-	}
+	drawSurface(display, fireSerpentImages[positionCounter - 1], initialPosition.getX() - beginningOfCamera, 
+		initialPosition.getY());
 }

@@ -79,7 +79,7 @@ void Star::loadStarImages(SDL_Surface* display)
 
 void Star::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* starImg = starImages[computeImageIndex()];
 		drawSurface(display, starImg, position.getX() - beginningOfCamera, position.getY());
 	}

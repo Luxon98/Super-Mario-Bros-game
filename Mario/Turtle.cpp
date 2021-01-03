@@ -35,6 +35,7 @@ Turtle::Turtle(Position position)
 	size = Size(26, 44);
 	movement = Movement(1, 3, Direction::None);
 	this->position = position;
+	healthPoints = 1;
 	model = 1;
 	stepsCounter = 0;
 	changeModelCounter = 0;
@@ -69,7 +70,7 @@ void Turtle::setMoveDirection(Direction direction)
 
 void Turtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* turtleImg = turtleImages[computeImageIndex()];
 		drawSurface(display, turtleImg, position.getX() - beginningOfCamera, position.getY());
 	}

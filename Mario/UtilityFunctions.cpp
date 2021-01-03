@@ -86,7 +86,7 @@ bool isMonsterCloseAboveBlock(const IndependentLivingObject &monster, const Bloc
 bool isInactiveShell(IndependentLivingObject &npc)
 {
 	auto shell = dynamic_cast<Shell*>(&npc);
-	return (shell && !shell->isActive());
+	return (shell && !shell->isActiveShell());
 }
 
 int determineShift(const IndependentLivingObject &object, int base)

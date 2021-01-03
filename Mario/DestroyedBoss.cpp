@@ -33,6 +33,7 @@ DestroyedBoss::DestroyedBoss(Position position, Direction direction, bool normal
 	this->normal = normal;
 	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
+	size = Size(64, 64);
 }
 
 void DestroyedBoss::loadDestroyedBossImages(SDL_Surface* display)
@@ -47,7 +48,7 @@ void DestroyedBoss::loadDestroyedBossImages(SDL_Surface* display)
 
 void DestroyedBoss::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* bossImg = destroyedBossImages[computeImageIndex()];
 		drawSurface(display, bossImg, position.getX() - beginningOfCamera, position.getY());
 	}

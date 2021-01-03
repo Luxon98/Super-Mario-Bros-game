@@ -31,6 +31,7 @@ class CustomWinterDecoration : public InanimateObject
 private:
 	static std::array<SDL_Surface*, 10> decorationImages;
 	WinterDecorationType decorationType;
+	Size getSizeFromDecorationType() const;
 
 public:
 	CustomWinterDecoration(WinterDecorationType type, Position position);

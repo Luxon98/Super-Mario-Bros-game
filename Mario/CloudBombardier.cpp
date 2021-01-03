@@ -57,7 +57,7 @@ void CloudBombardier::setActiveState()
 
 void CloudBombardier::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 90 && position.getX() < endOfCamera + 90) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* bombardierImg = bombardierImages[computeImageIndex()];
 		drawSurface(display, bombardierImg, position.getX() - beginningOfCamera, position.getY());
 	}

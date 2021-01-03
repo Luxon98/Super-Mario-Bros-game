@@ -9,17 +9,16 @@ class BonusObject;
 class Block;
 class Plant;
 class FireMissle;
-class Mushroom;
 class Platform;
 class FireBall;
 enum class Direction;
 
 
-bool isCharacterHittingObject(const WorldObject &figure, const WorldObject &block, Direction direction, int distance);
+bool isCharacterHittingObject(const WorldObject &object, const WorldObject &block, Direction direction, int distance);
 
-bool isCharacterStandingOnSomething(const WorldObject &figure, const World &world);
+bool isCharacterStandingOnSomething(const WorldObject &object, const World &world);
 
-bool isMonsterStandingOnBlock(const IndependentLivingObject &monster, const Block &block);
+bool isMonsterStandingOnBlock(const IndependentLivingObject &npc, const Block &block);
 
 bool isBonusStandingOnBlock(const BonusObject &bonus, const Block &block);
 
@@ -39,7 +38,7 @@ void handleMonsterDestroying(IndependentLivingObject &npc, World &world, Player 
 
 void handleMonsterDeleting(World &world, int index, bool bossFlag = false);
 
-void handleMonsterHpReducing(IndependentLivingObject &npc, World &world, Player &player, int index);
+void handleMonsterHpReducing(IndependentLivingObject &npc, World &world, Player &player, Direction direction, int index);
 
 void handleFireBallDeleting(const FireBall &fireball, World &world, int index);
 

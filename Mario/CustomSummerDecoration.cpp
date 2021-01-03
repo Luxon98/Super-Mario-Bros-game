@@ -10,8 +10,7 @@ CustomSummerDecoration::CustomSummerDecoration(SummerDecorationType type, Positi
 {
 	this->position = position;
 	decorationType = type;
-
-	size = Size(0, 0);
+	size = Size(62, 70);
 }
 
 void CustomSummerDecoration::loadDecorationImages(SDL_Surface* display)
@@ -22,7 +21,7 @@ void CustomSummerDecoration::loadDecorationImages(SDL_Surface* display)
 
 void CustomSummerDecoration::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* decorationImg = decorationImages[static_cast<int>(decorationType) - 1];
 		drawSurface(display, decorationImg, position.getX() - beginningOfCamera, position.getY());
 	}

@@ -215,7 +215,7 @@ void Block::addToPositionY(int y)
 
 void Block::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 150 && position.getX() < endOfCamera + 150) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		drawSurface(display, getImage(), position.getX() - beginningOfCamera, position.getY());
 	}
 }

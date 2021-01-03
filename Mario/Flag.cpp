@@ -15,8 +15,7 @@ Flag::Flag(Position position)
 	active = false;
 	stickPositionY = position.getY() + 117;
 	stepsCounter = 0;
-
-	size = Size(0, 0);
+	size = Size(48, 304);
 }
 
 void Flag::loadFlagImages(SDL_Surface* display)
@@ -53,8 +52,7 @@ void Flag::setActiveState()
 
 void Flag::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
-		
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::CustomWinter ? 2 : 0);
 		drawSurface(display, flagImages[baseIndex + 1], position.getX() + 17 - beginningOfCamera, stickPositionY);
 		drawSurface(display, flagImages[baseIndex + 0], position.getX() - beginningOfCamera, position.getY());

@@ -11,8 +11,7 @@ Castle::Castle(Position position, bool bigCastleFlag)
 {
 	this->position = position;
 	this->bigCastleFlag = bigCastleFlag;
-
-	size = Size(0, 0);
+	size = (bigCastleFlag ? Size(296, 352) : Size(160, 160));
 }
 
 void Castle::loadCastleImages(SDL_Surface* display)
@@ -23,7 +22,7 @@ void Castle::loadCastleImages(SDL_Surface* display)
 
 void Castle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 200 && position.getX() < endOfCamera + 200) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* castleImg = castleImages[bigCastleFlag];
 		drawSurface(display, castleImg, position.getX() - beginningOfCamera, position.getY());
 	}

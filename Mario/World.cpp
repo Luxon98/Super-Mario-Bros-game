@@ -642,11 +642,6 @@ void World::spoilBridgeAndBoss()
 	}
 }
 
-void World::changeShellMovementParameters(int index, Direction direction)
-{
-	std::dynamic_pointer_cast<Shell>(monsters[index])->setActiveState(direction);
-}
-
 void World::resetImages()
 {
 	Screen::resetCoinImage();

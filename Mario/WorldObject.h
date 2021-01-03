@@ -12,6 +12,7 @@ class WorldObject
 protected:
 	Position position;
 	Size size;
+	bool isWithinRangeOfCamera(int beginningOfCamera, int endOfCamera) const;
 
 public:
 	int getX() const;

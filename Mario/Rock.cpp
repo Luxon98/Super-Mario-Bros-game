@@ -10,8 +10,7 @@ SDL_Surface* Rock::rockImage = nullptr;
 Rock::Rock(Position position)
 {
 	this->position = position;
-
-	size = Size(0, 0);
+	size = Size(32, 32);
 }
 
 void Rock::loadRockImage(SDL_Surface* display)
@@ -21,7 +20,7 @@ void Rock::loadRockImage(SDL_Surface* display)
 
 void Rock::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		drawSurface(display, rockImage, position.getX() - beginningOfCamera, position.getY());
 	}
 }

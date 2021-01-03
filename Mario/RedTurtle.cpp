@@ -140,7 +140,7 @@ void RedTurtle::setMoveDirection(Direction direction)
 
 void RedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 100 && position.getX() < endOfCamera + 100) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* redTurtleImg = redTurtleImages[computeImageIndex()];
 		drawSurface(display, redTurtleImg, position.getX() - beginningOfCamera, position.getY());
 	}

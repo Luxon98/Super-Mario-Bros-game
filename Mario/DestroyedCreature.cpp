@@ -35,6 +35,7 @@ int DestroyedCreature::computeImageIndex() const
 DestroyedCreature::DestroyedCreature(Position position, Direction slideDirection)
 {
 	this->position = position;
+	size = Size(32, 32);
 	this->slideDirection = slideDirection;
 	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
@@ -52,7 +53,7 @@ void DestroyedCreature::loadDestroyedCreatureImages(SDL_Surface* display)
 
 void DestroyedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 70 && position.getX() < endOfCamera + 70) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* dcImg = destroyedCreatureImages[computeImageIndex()];
 		drawSurface(display, dcImg, position.getX() - beginningOfCamera, position.getY());
 	}

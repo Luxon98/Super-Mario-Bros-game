@@ -29,6 +29,7 @@ int CrushedCreature::computeImageIndex() const
 CrushedCreature::CrushedCreature(Position position)
 {
 	this->position = position;
+	size = Size(32, 16);
 	creationTime = std::chrono::steady_clock::now();
 }
 
@@ -44,7 +45,7 @@ void CrushedCreature::loadCrushedCreatureImages(SDL_Surface* display)
 
 void CrushedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* ccImg = crushedCreatureImages[computeImageIndex()];
 		drawSurface(display, ccImg, position.getX() - beginningOfCamera, position.getY());
 	}

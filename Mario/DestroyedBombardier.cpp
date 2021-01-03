@@ -17,6 +17,7 @@ DestroyedBombardier::DestroyedBombardier(Position position, bool leftSide)
 	this->leftSide = leftSide;
 	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
+	size = Size(32, 48);
 }
 
 void DestroyedBombardier::loadDestroyedBombardierImages(SDL_Surface* display)
@@ -27,7 +28,7 @@ void DestroyedBombardier::loadDestroyedBombardierImages(SDL_Surface* display)
 
 void DestroyedBombardier::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 70 && position.getX() < endOfCamera + 70) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* dbImg = destroyedBombardierImages[computeImageIndex()];
 		drawSurface(display, dbImg, position.getX() - beginningOfCamera, position.getY());
 	}

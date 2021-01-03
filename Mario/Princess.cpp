@@ -10,8 +10,7 @@ std::array<SDL_Surface*, 2> Princess::princessImages;
 Princess::Princess(Position position, bool fakePrincessFlag) : fakePrincessFlag(fakePrincessFlag)
 {
 	this->position = position;
-
-	size = Size(0, 0);
+	size = Size(32, 48);
 }
 
 void Princess::loadPrincessImages(SDL_Surface* display)
@@ -22,7 +21,7 @@ void Princess::loadPrincessImages(SDL_Surface* display)
 
 void Princess::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 75 && position.getX() < endOfCamera + 75) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* princessImg = princessImages[fakePrincessFlag];
 		drawSurface(display, princessImg, position.getX() - beginningOfCamera, position.getY());
 	}

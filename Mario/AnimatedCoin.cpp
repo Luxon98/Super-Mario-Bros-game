@@ -17,6 +17,7 @@ AnimatedCoin::AnimatedCoin(Position position)
 {
 	creationTime = std::chrono::steady_clock::now();
 	this->position = position;
+	size = Size(16, 28);
 	slideCounter = 0;
 	auxiliaryCounter = 0;
 	imageIndex = 0;
@@ -34,7 +35,7 @@ void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
 
 void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (position.getX() > beginningOfCamera - 60 && position.getX() < endOfCamera + 60) {
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* animatedCoinImg = animatedCoinImages[computeImageIndex()];
 		drawSurface(display, animatedCoinImg, position.getX() - beginningOfCamera, position.getY());
 	}

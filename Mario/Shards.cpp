@@ -41,6 +41,10 @@ Shards::Shards(Position position)
 	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
 	imageIndex = 0;
+
+	// it is an object containing few shars and its size cannot be determined correctly
+	// additionaly, its size is not needed for anything
+	size = Size(0, 0);
 }
 
 void Shards::loadShardsImages(SDL_Surface* display)
