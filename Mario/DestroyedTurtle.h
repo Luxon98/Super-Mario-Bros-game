@@ -21,7 +21,6 @@ public:
 	DestroyedTurtle(Position position, Direction slideDirection, bool red);
 	static void loadDestroyedTurtleImages(SDL_Surface* display);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
-	bool shouldBeRemoved() const override;
 	void slide() override;
 };
 

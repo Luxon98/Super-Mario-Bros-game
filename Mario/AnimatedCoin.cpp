@@ -15,10 +15,8 @@ int AnimatedCoin::computeImageIndex() const
 
 AnimatedCoin::AnimatedCoin(Position position)
 {
-	creationTime = std::chrono::steady_clock::now();
 	this->position = position;
 	size = Size(16, 28);
-	slideCounter = 0;
 	auxiliaryCounter = 0;
 	imageIndex = 0;
 }
@@ -33,6 +31,11 @@ void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
 	}
 }
 
+bool AnimatedCoin::isAnimatedCoin() const
+{
+	return true;
+}
+
 void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
@@ -43,37 +46,36 @@ void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCa
 
 bool AnimatedCoin::shouldBeRemoved() const
 { 
-	return (slideCounter > 96); 
+	return (auxiliaryCounter > 96);
 }
 
 void AnimatedCoin::slide()
 {
-	++slideCounter;
 	++auxiliaryCounter;
 	if (auxiliaryCounter & 1) {
-		if (slideCounter <= 8) {
+		if (auxiliaryCounter <= 8) {
 			imageIndex = 0;
 		}
-		else if (slideCounter <= 24) {
+		else if (auxiliaryCounter <= 24) {
 			position.setY(position.getY() - 3);
 			imageIndex = 1;
 		}
-		else if (slideCounter <= 48) {
+		else if (auxiliaryCounter <= 48) {
 			position.setY(position.getY() - 2);
 			imageIndex = 2;
 		}
-		else if (slideCounter <= 58) {
+		else if (auxiliaryCounter <= 58) {
 			imageIndex = 3;
 		}
-		else if (slideCounter <= 72) {
+		else if (auxiliaryCounter <= 72) {
 			position.setY(position.getY() + 2);
 			imageIndex = 4;
 		}
-		else if (slideCounter <= 88) {
+		else if (auxiliaryCounter <= 88) {
 			position.setY(position.getY() + 3);
 			imageIndex = 5;
 		}
-		else if (slideCounter <= 96) {
+		else if (auxiliaryCounter <= 96) {
 			imageIndex = 6;
 		}
 	}

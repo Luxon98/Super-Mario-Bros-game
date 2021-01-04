@@ -56,5 +56,3 @@ bool CrushedCreature::shouldBeRemoved() const
 	auto timePoint = std::chrono::steady_clock::now();
 	return (creationTime + std::chrono::milliseconds(1200) < timePoint);
 }
-
-void CrushedCreature::slide() {}

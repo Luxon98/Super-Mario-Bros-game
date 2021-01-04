@@ -33,11 +33,6 @@ void DestroyedFish::draw(SDL_Surface* display, int beginningOfCamera, int endOfC
 	}
 }
 
-bool DestroyedFish::shouldBeRemoved() const
-{
-	return (auxiliaryCounter > 350);
-}
-
 void DestroyedFish::slide()
 {
 	++auxiliaryCounter;

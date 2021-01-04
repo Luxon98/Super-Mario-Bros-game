@@ -37,7 +37,6 @@ DestroyedCreature::DestroyedCreature(Position position, Direction slideDirection
 	this->position = position;
 	size = Size(32, 32);
 	this->slideDirection = slideDirection;
-	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
 }
 
@@ -57,12 +56,6 @@ void DestroyedCreature::draw(SDL_Surface* display, int beginningOfCamera, int en
 		SDL_Surface* dcImg = destroyedCreatureImages[computeImageIndex()];
 		drawSurface(display, dcImg, position.getX() - beginningOfCamera, position.getY());
 	}
-}
-
-bool DestroyedCreature::shouldBeRemoved() const
-{
-	auto timePoint = std::chrono::steady_clock::now();
-	return (creationTime + std::chrono::milliseconds(2000) < timePoint);
 }
 
 void DestroyedCreature::slide()
@@ -93,4 +86,3 @@ void DestroyedCreature::slide()
 		}
 	}
 }
-

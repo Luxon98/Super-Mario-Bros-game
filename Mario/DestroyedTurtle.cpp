@@ -24,7 +24,6 @@ DestroyedTurtle::DestroyedTurtle(Position position, Direction slideDirection, bo
 	this->position = position;
 	this->slideDirection = slideDirection;
 	this->red = red;
-	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
 	size = Size(32, 28);
 }
@@ -45,12 +44,6 @@ void DestroyedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endO
 		SDL_Surface* dtImg = destroyedTurtleImages[computeImageIndex()];
 		drawSurface(display, dtImg, position.getX() - beginningOfCamera, position.getY());
 	}
-}
-
-bool DestroyedTurtle::shouldBeRemoved() const
-{
-	auto timePoint = std::chrono::steady_clock::now();
-	return (creationTime + std::chrono::milliseconds(2000) < timePoint);
 }
 
 void DestroyedTurtle::slide()
@@ -81,4 +74,3 @@ void DestroyedTurtle::slide()
 		}
 	}
 }
-

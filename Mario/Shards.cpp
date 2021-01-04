@@ -38,7 +38,6 @@ void Shards::initPositionsVector(Position position)
 Shards::Shards(Position position)
 {
 	initPositionsVector(position);
-	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
 	imageIndex = 0;
 
@@ -67,8 +66,7 @@ void Shards::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) 
 
 bool Shards::shouldBeRemoved() const
 {
-	auto timePoint = std::chrono::steady_clock::now();
-	return (creationTime + std::chrono::milliseconds(3000) < timePoint);
+	return (shardsPositions[0].getY() > 530);
 }
 
 void Shards::slide()
@@ -122,4 +120,3 @@ void Shards::slide()
 		imageIndex = (imageIndex == 0 ? 1 : 0);
 	}
 }
-

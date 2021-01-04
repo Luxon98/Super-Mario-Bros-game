@@ -39,7 +39,6 @@ void AnimatedText::draw(SDL_Surface* display, int beginningOfCamera, int endOfCa
 
 bool AnimatedText::shouldBeRemoved() const
 {
-	auto timePoint = std::chrono::steady_clock::now();
 	return (auxiliaryCounter > 150);
 }
 

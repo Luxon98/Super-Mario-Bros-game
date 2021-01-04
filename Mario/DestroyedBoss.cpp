@@ -31,7 +31,6 @@ DestroyedBoss::DestroyedBoss(Position position, Direction direction, bool normal
 	this->position = position;
 	this->direction = direction;
 	this->normal = normal;
-	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
 	size = Size(64, 64);
 }
@@ -52,12 +51,6 @@ void DestroyedBoss::draw(SDL_Surface* display, int beginningOfCamera, int endOfC
 		SDL_Surface* bossImg = destroyedBossImages[computeImageIndex()];
 		drawSurface(display, bossImg, position.getX() - beginningOfCamera, position.getY());
 	}
-}
-
-bool DestroyedBoss::shouldBeRemoved() const
-{
-	auto timePoint = std::chrono::steady_clock::now();
-	return (creationTime + std::chrono::milliseconds(2750) < timePoint);
 }
 
 void DestroyedBoss::slide()

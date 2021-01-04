@@ -15,7 +15,6 @@ DestroyedBombardier::DestroyedBombardier(Position position, bool leftSide)
 {
 	this->position = position;
 	this->leftSide = leftSide;
-	creationTime = std::chrono::steady_clock::now();
 	auxiliaryCounter = 0;
 	size = Size(32, 48);
 }
@@ -32,12 +31,6 @@ void DestroyedBombardier::draw(SDL_Surface* display, int beginningOfCamera, int 
 		SDL_Surface* dbImg = destroyedBombardierImages[computeImageIndex()];
 		drawSurface(display, dbImg, position.getX() - beginningOfCamera, position.getY());
 	}
-}
-
-bool DestroyedBombardier::shouldBeRemoved() const
-{
-	auto timePoint = std::chrono::steady_clock::now();
-	return (creationTime + std::chrono::milliseconds(2000) < timePoint);
 }
 
 void DestroyedBombardier::slide()

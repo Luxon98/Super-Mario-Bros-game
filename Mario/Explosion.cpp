@@ -50,5 +50,3 @@ bool Explosion::shouldBeRemoved() const
 	auto timePoint = std::chrono::steady_clock::now();
 	return (creationTime + std::chrono::milliseconds(135) < timePoint);
 }
-
-void Explosion::slide() {}

@@ -129,7 +129,7 @@ void World::deleteTemporaryElements()
 {
 	for (std::size_t i = 0; i < temporaryElements.size(); ++i) {
 		if (temporaryElements[i]->shouldBeRemoved()) {
-			if (std::dynamic_pointer_cast<AnimatedCoin>(temporaryElements[i])) {
+			if (temporaryElements[i]->isAnimatedCoin()) {
 				addAnimatedText(TextType::TWO_HUNDRED, Position(temporaryElements[i]->getPosition()));
 			}
 
