@@ -4,6 +4,7 @@
 #include "MovingObject.h"
 
 class World;
+class Player;
 
 
 class IndependentMovingObject : public MovingObject
@@ -17,6 +18,7 @@ public:
 	int getHealthPoints() const;
 	virtual int getPointsForCrushing() const;
 	virtual int getPointsForDestroying() const;
+	virtual bool shouldStartMoving(const Player &player) const;
 	virtual bool isCrushproof() const;
 	virtual bool isResistantToImmortalPlayer() const;
 	virtual bool isResistantToCollisionWithShell() const;
@@ -24,6 +26,7 @@ public:
 	virtual bool isResistantToFireBalls() const;
 	virtual bool isActiveShell() const;
 	void decrementHealthPoints();
+	virtual void startMoving();
 	virtual void crush(World &world, int index);
 	virtual void destroy(World &world, Direction direction);
 };

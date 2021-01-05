@@ -33,13 +33,14 @@ private:
 public:
 	FireMissle(Position position, MissleType type);
 	static void loadFireRocketImages(SDL_Surface* display);
+	bool shouldStartMoving(const Player &player) const override;
 	bool isCrushproof() const override;
 	bool isResistantToImmortalPlayer() const override;
 	bool isResistantToFireBalls() const override;
 	bool isInactive() const;
-	void setMoveDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
+	void startMoving() override;
 };
 
 #endif //FireMissle_H

@@ -109,22 +109,6 @@ void World::changeColors()
 	Button::changeButtonImage();
 }
 
-void World::setMovementDirection(IndependentMovingObject &npc)
-{
-	if (dynamic_cast<Turtle*>(&npc)) {
-		dynamic_cast<Turtle*>(&npc)->setMoveDirection(Direction::Left);
-	}
-	else if (dynamic_cast<Creature*>(&npc)) {
-		dynamic_cast<Creature*>(&npc)->setMoveDirection(Direction::Left);
-	}
-	else if (dynamic_cast<FireMissle*>(&npc)) {
-		dynamic_cast<FireMissle*>(&npc)->setMoveDirection(Direction::Left);
-	}
-	else if (dynamic_cast<Boss*>(&npc)) {
-		dynamic_cast<Boss*>(&npc)->setMoveDirection(Direction::Left);
-	}
-}
-
 void World::deleteTemporaryElements()
 {
 	for (std::size_t i = 0; i < temporaryElements.size(); ++i) {
@@ -199,18 +183,9 @@ void World::performSpecificNpcsActions(int index)
 void World::performNpcsActions()
 {
 	for (std::size_t i = 0; i < npcs.size(); ++i) {
-		// bad-written code
-		// it will be refactored
-		if (npcs[i]->getMovement().getDirection() == Direction::None && isPlayerCloseEnough(*npcs[i])) {
-			if (dynamic_cast<JumpingFish*>(&*npcs[i]) && npcs[i]->getX() <= player->getX()) {
-				dynamic_cast<JumpingFish*>(&*npcs[i])->setMoveDirection();
-			}
-			else if (dynamic_cast<CloudBombardier*>(&*npcs[i]) && npcs[i]->getX() <= (player->getX() + 15)) {
-				dynamic_cast<CloudBombardier*>(&*npcs[i])->setActiveState();
-			}
-			else {
-				setMovementDirection(*npcs[i]);
-			}			
+		if (npcs[i]->shouldStartMoving(*player)) {
+			npcs[i]->startMoving();
+			break;
 		}
 
 		if (isObjectOutsideWorld(*npcs[i])) {

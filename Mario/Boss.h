@@ -24,12 +24,14 @@ private:
 public:
 	Boss(Position position);
 	static void loadBossImages(SDL_Surface* display);
+	bool shouldStartMoving(const Player &player) const override;
 	bool isCrushproof() const override;
 	bool isResistantToImmortalPlayer() const override;
 	int getPointsForDestroying() const override;
-	void setMoveDirection(Direction direction);
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
+	void startMoving() override;
+	void destroy(World &world, Direction direction) override;
 };
 
 #endif //Boss_H

@@ -6,6 +6,7 @@
 #include "SDL_Utility.h"
 #include "CollisionHandling.h"
 #include "World.h"
+#include "Player.h"
 
 
 std::array<SDL_Surface*, 3> CloudBombardier::bombardierImages;
@@ -33,6 +34,17 @@ void CloudBombardier::loadBombardierImages(SDL_Surface* display)
 	bombardierImages[2] = loadPNG("./img/npc_imgs/cloud.png", display);
 }
 
+bool CloudBombardier::shouldStartMoving(const Player &player) const
+{
+	if (movement.getDirection() == Direction::None && (player.getX() < position.getX()) 
+		&& (position.getX() < player.getX() + 75)) {
+		
+		return true;
+	}
+
+	return false;
+}
+
 bool CloudBombardier::isCrushproof() const
 {
 	return true;
@@ -46,13 +58,6 @@ bool CloudBombardier::isGoingLeft() const
 bool CloudBombardier::isReadyToDropBomb() const
 {
 	return (stepsCounter % 175 == 0 && (stepsCounter > 0 && stepsCounter < 1300));
-}
-
-void CloudBombardier::setActiveState()
-{
-	active = true;
-	movement.setDirection(Direction::Right);
-	size.setHeight(48);
 }
 
 void CloudBombardier::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
@@ -101,6 +106,13 @@ void CloudBombardier::move(World &world)
 			position.setY(600);
 		}
 	}
+}
+
+void CloudBombardier::startMoving()
+{
+	active = true;
+	movement.setDirection(Direction::Right);
+	size.setHeight(48);
 }
 
 void CloudBombardier::destroy(World &world, Direction direction)

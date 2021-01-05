@@ -7,6 +7,7 @@
 #include "World.h"
 #include "CollisionHandling.h"
 #include "SoundController.h"
+#include "Player.h"
 
 
 std::array<SDL_Surface*, 3> FireMissle::missleImages;
@@ -61,6 +62,15 @@ void FireMissle::loadFireRocketImages(SDL_Surface* display)
 	missleImages[2] = loadPNG("./img/npc_imgs/fire_bomb.png", display);
 }
 
+bool FireMissle::shouldStartMoving(const Player &player) const
+{
+	if (movement.getDirection() == Direction::None && position.getX() < player.getX() + 480) {
+		return true;
+	}
+
+	return false;
+}
+
 bool FireMissle::isCrushproof() const
 {
 	return true;
@@ -79,11 +89,6 @@ bool FireMissle::isResistantToFireBalls() const
 bool FireMissle::isInactive() const
 {
 	return inactive;
-}
-
-void FireMissle::setMoveDirection(Direction direction)
-{
-	movement.setDirection(direction);
 }
 
 void FireMissle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
@@ -126,4 +131,9 @@ void FireMissle::move(World &world)
 			}
 		}
 	}
+}
+
+void FireMissle::startMoving()
+{
+	movement.setDirection(Direction::Left);
 }

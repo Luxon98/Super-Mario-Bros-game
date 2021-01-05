@@ -8,6 +8,7 @@
 #include "World.h"
 #include "LayoutStyle.h"
 #include "SoundController.h"
+#include "Player.h"
 
 
 std::array<SDL_Surface*, 8> Turtle::turtleImages;
@@ -53,6 +54,15 @@ void Turtle::loadTurtleImages(SDL_Surface* display)
 	turtleImages[7] = loadPNG("./img/npc_imgs/turtle_right4.png", display);
 }
 
+bool Turtle::shouldStartMoving(const Player &player) const
+{
+	if (movement.getDirection() == Direction::None && position.getX() < player.getX() + 480) {
+		return true;
+	}
+
+	return false;
+}
+
 bool Turtle::isResistantToCollisionWithShell() const
 {
 	return false;
@@ -61,11 +71,6 @@ bool Turtle::isResistantToCollisionWithShell() const
 bool Turtle::isResistantToCollisionWithBlock() const
 {
 	return false;
-}
-
-void Turtle::setMoveDirection(Direction direction)
-{
-	movement.setDirection(direction);
 }
 
 void Turtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
@@ -88,6 +93,11 @@ void Turtle::move(World &world)
 		}
 	}
 	++stepsCounter;
+}
+
+void Turtle::startMoving()
+{
+	movement.setDirection(Direction::Left);
 }
 
 void Turtle::crush(World &world, int index)

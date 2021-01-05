@@ -23,10 +23,11 @@ public:
 	JumpingFish(Position position, bool directionFlag);
 	static void loadFishImages(SDL_Surface* display);
 	int getPointsForCrushing() const override;
+	bool shouldStartMoving(const Player &player) const override;
 	bool isGoingLeft() const;
-	void setMoveDirection();
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
+	void startMoving() override;
 	void crush(World &world, int index) override;
 	void destroy(World &world, Direction direction) override;
 };

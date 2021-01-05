@@ -169,7 +169,7 @@
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="GameFunctions.cpp" />
     <ClCompile Include="InanimateObject.cpp" />
-    <ClCompile Include="IndependentLivingObject.cpp" />
+    <ClCompile Include="IndependentMovingObject.cpp" />
     <ClCompile Include="JumpingFish.cpp" />
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="Lava.cpp" />

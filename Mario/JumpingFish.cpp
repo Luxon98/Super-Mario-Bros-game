@@ -7,6 +7,7 @@
 #include "SDL_Utility.h"
 #include "World.h"
 #include "SoundController.h"
+#include "Player.h"
 
 
 std::array<SDL_Surface*, 4> JumpingFish::fishImages;
@@ -54,14 +55,23 @@ int JumpingFish::getPointsForCrushing() const
 	return 200;
 }
 
+bool JumpingFish::shouldStartMoving(const Player &player) const
+{
+	if (movement.getDirection() == Direction::None) {
+		if (!directionFlag) {
+			return (player.getX() > position.getX() && (position.getX() > player.getX() - 40));
+		}
+		else {
+			return (player.getX() < position.getX() && (position.getX() < player.getX() + 120));
+		}
+	}
+
+	return false;
+}
+
 bool JumpingFish::isGoingLeft() const
 {
 	return directionFlag;
-}
-
-void JumpingFish::setMoveDirection()
-{
-	movement.setDirection(directionFlag ? Direction::Right : Direction::Left);
 }
 
 void JumpingFish::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
@@ -112,6 +122,11 @@ void JumpingFish::move(World &world)
 			changeModel();
 		}
 	}
+}
+
+void JumpingFish::startMoving()
+{
+	movement.setDirection(directionFlag ? Direction::Right : Direction::Left);
 }
 
 void JumpingFish::crush(World &world, int index)

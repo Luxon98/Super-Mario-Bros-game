@@ -64,7 +64,6 @@ private:
 	bool hasLastTouchedBlockCoin() const;
 	bool isLastTouchedBlockBonus() const;
 	void changeColors();
-	void setMovementDirection(IndependentMovingObject &npc);
 	void deleteTemporaryElements();
 	void handleFireballStatus();
 	void performBonusElementsActions();

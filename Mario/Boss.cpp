@@ -6,6 +6,7 @@
 #include "SDL_Utility.h"
 #include "World.h"
 #include "CollisionHandling.h"
+#include "Player.h"
 
 
 std::array<SDL_Surface*, 4> Boss::bossImages;
@@ -83,6 +84,15 @@ void Boss::loadBossImages(SDL_Surface* display)
 	bossImages[3] = loadPNG("./img/npc_imgs/boss4.png", display);
 }
 
+bool Boss::shouldStartMoving(const Player &player) const
+{
+	if (movement.getDirection() == Direction::None && position.getX() < player.getX() + 480) {
+		return true;
+	}
+
+	return false;
+}
+
 bool Boss::isCrushproof() const
 {
 	return true;
@@ -96,11 +106,6 @@ bool Boss::isResistantToImmortalPlayer() const
 int Boss::getPointsForDestroying() const
 {
 	return 5000;
-}
-
-void Boss::setMoveDirection(Direction direction)
-{
-	movement.setDirection(direction);
 }
 
 void Boss::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
@@ -118,4 +123,14 @@ void Boss::move(World &world)
 		moveAndJump(world);
 		changeModel();
 	}
+}
+
+void Boss::startMoving()
+{
+	movement.setDirection(Direction::Left);
+}
+
+void Boss::destroy(World &world, Direction direction)
+{
+	world.addDestroyedBoss(position, direction);
 }

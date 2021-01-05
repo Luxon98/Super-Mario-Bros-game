@@ -2426,7 +2426,7 @@ void Level::setSummerHiddenStage(World &world)
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
 	}
 
-	for (int i = 48; i < 448; i += 32) {
+	for (int i = 16; i < 448; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(16, i)));
 		world.blocks.push_back(Block(BlockType::Ground, Position(624, i)));
 	}
@@ -2478,9 +2478,6 @@ void Level::setSummerHiddenStage(World &world)
 	world.blocks.push_back(Block(BlockType::Empty, Position(440, 90)));
 
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(320, 81))));
-
-	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(16, 18))));
-	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(624, 18))));
 
 	for (int i = 240; i < 432; i += 32) {
 		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 400))));

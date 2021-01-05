@@ -49,6 +49,11 @@ int IndependentMovingObject::getPointsForDestroying() const
 	return 200;
 }
 
+bool IndependentMovingObject::shouldStartMoving(const Player &player) const
+{
+	return false;
+}
+
 bool IndependentMovingObject::isCrushproof() const
 {
 	return false;
@@ -83,6 +88,8 @@ void IndependentMovingObject::decrementHealthPoints()
 {
 	--healthPoints;
 }
+
+void IndependentMovingObject::startMoving() {}
 
 void IndependentMovingObject::crush(World &world, int index) {}
 

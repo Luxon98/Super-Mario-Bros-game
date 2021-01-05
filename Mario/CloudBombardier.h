@@ -19,12 +19,13 @@ private:
 public:
 	CloudBombardier(Position position);
 	static void loadBombardierImages(SDL_Surface* display);
+	bool shouldStartMoving(const Player &player) const override;
 	bool isCrushproof() const override;
 	bool isGoingLeft() const;
 	bool isReadyToDropBomb() const;
-	void setActiveState();
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
-	void move(World &world) override;
+	void move(World &world) override; 
+	void startMoving() override;
 	void destroy(World &world, Direction direction) override;
 };
 

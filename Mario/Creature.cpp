@@ -8,6 +8,7 @@
 #include "World.h"
 #include "LayoutStyle.h"
 #include "SoundController.h"
+#include "Player.h"
 
 
 // pictures with indexes 0-3 are pictures from the original Super Mario Bros
@@ -75,6 +76,15 @@ int Creature::getPointsForDestroying() const
 	return 100;
 }
 
+bool Creature::shouldStartMoving(const Player &player) const
+{
+	if (movement.getDirection() == Direction::None && position.getX() < player.getX() + 480) {
+		return true;
+	}
+
+	return false;
+}
+
 bool Creature::isResistantToCollisionWithShell() const
 {
 	return false;
@@ -83,11 +93,6 @@ bool Creature::isResistantToCollisionWithShell() const
 bool Creature::isResistantToCollisionWithBlock() const
 {
 	return false;
-}
-
-void Creature::setMoveDirection(Direction direction)
-{
-	movement.setDirection(direction);
 }
 
 void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
@@ -110,6 +115,11 @@ void Creature::move(World &world)
 		}
 	}
 	++stepsCounter;
+}
+
+void Creature::startMoving()
+{
+	movement.setDirection(Direction::Left);
 }
 
 void Creature::crush(World &world, int index)
