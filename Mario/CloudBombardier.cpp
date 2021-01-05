@@ -7,6 +7,7 @@
 #include "CollisionHandling.h"
 #include "World.h"
 #include "Player.h"
+#include "SoundController.h"
 
 
 std::array<SDL_Surface*, 3> CloudBombardier::bombardierImages;
@@ -118,4 +119,14 @@ void CloudBombardier::startMoving()
 void CloudBombardier::destroy(World &world, Direction direction)
 {
 	world.addDestroyedBombardier(position, (direction == Direction::Left));
+}
+
+void CloudBombardier::performSpecificActions(World &world, int index)
+{
+	if (isReadyToDropBomb()) {
+		Position bombPosition = position;
+		bombPosition.setY(bombPosition.getY() + 12);
+		world.addFireBomb(bombPosition);
+		SoundController::playBombDroppedEffect();
+	}
 }

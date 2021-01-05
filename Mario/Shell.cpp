@@ -122,3 +122,14 @@ void Shell::destroy(World &world, Direction direction)
 {
 	world.addDestroyedTurtle(position, direction, red);
 }
+
+void Shell::performSpecificActions(World &world, int index)
+{
+	if (shouldTurnIntoTurtle()) {
+		world.addTurtle(position);
+		world.deleteNpc(index);
+	}
+	else if (world.isObjectOutsideCamera(*this)) {
+		world.deleteNpc(index);
+	}
+}

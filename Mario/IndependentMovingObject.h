@@ -29,6 +29,7 @@ public:
 	virtual void startMoving();
 	virtual void crush(World &world, int index);
 	virtual void destroy(World &world, Direction direction);
+	virtual void performSpecificActions(World &world, int index);
 };
 
 #endif //IndependentMovingObject_H

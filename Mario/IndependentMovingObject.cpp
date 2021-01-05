@@ -94,3 +94,5 @@ void IndependentMovingObject::startMoving() {}
 void IndependentMovingObject::crush(World &world, int index) {}
 
 void IndependentMovingObject::destroy(World &world, Direction direction) {}
+
+void IndependentMovingObject::performSpecificActions(World &world, int index) {}

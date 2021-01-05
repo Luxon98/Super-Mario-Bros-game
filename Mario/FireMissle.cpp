@@ -137,3 +137,16 @@ void FireMissle::startMoving()
 {
 	movement.setDirection(Direction::Left);
 }
+
+void FireMissle::performSpecificActions(World &world, int index)
+{
+	if (isInactive()) {
+		Position explosionPosition = position;
+		if (missleType == MissleType::Bomb) {
+			explosionPosition.setY(position.getY() + 7);
+		}
+
+		world.deleteNpc(index);
+		world.addExplosion(explosionPosition);
+	}
+}

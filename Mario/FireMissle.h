@@ -41,6 +41,7 @@ public:
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
 	void startMoving() override;
+	void performSpecificActions(World &world, int index) override;
 };
 
 #endif //FireMissle_H

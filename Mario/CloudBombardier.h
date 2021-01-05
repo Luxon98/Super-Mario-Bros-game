@@ -27,6 +27,7 @@ public:
 	void move(World &world) override; 
 	void startMoving() override;
 	void destroy(World &world, Direction direction) override;
+	void performSpecificActions(World &world, int index) override;
 };
 
 #endif //CloudBombardier_H

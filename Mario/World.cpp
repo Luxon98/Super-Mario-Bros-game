@@ -59,15 +59,6 @@ bool World::isPlayerCloseEnough(IndependentMovingObject &npc) const
 	return false;
 }
 
-bool World::isObjectOutsideCamera(MovingObject &object) const
-{
-	if (object.getX() < camera->getBeginningOfCamera() || object.getX() > camera->getEndOfCamera()) {
-		return true;
-	}
-
-	return false;
-}
-
 bool World::isObjectOutsideWorld(MovingObject &object) const
 {
 	if (object.getY() > WORLD_HEIGHT + DISTANCE_FROM_WORLD) {
@@ -151,35 +142,6 @@ void World::performBonusElementsActions()
 	}
 }
 
-void World::performSpecificNpcsActions(int index)
-{
-	if (std::dynamic_pointer_cast<Shell>(npcs[index])) {
-		if (std::dynamic_pointer_cast<Shell>(npcs[index])->shouldTurnIntoTurtle()) {
-			npcs.push_back(std::make_shared<Turtle>(Turtle(Position(npcs[index]->getPosition()))));
-			npcs.erase(npcs.begin() + index);
-		}
-		else if (isObjectOutsideCamera(*npcs[index])) {              // SHOULD BE TESTED AGAIN
-			npcs.erase(npcs.begin() + index);
-		}
-	}
-	else if (std::dynamic_pointer_cast<FireMissle>(npcs[index])) {
-		if (std::dynamic_pointer_cast<FireMissle>(npcs[index])->isInactive()) {
-			Position position = npcs[index]->getPosition();
-			position.setY(position.getY() + 7);
-			npcs.erase(npcs.begin() + index);
-			addExplosion(position);
-		}
-	}
-	else if (std::dynamic_pointer_cast<CloudBombardier>(npcs[index])) {
-		if (std::dynamic_pointer_cast<CloudBombardier>(npcs[index])->isReadyToDropBomb()) {
-			Position position = npcs[index]->getPosition();
-			position.setY(position.getY() + 12);
-			npcs.push_back(std::make_shared<FireMissle>(FireMissle(position, MissleType::Bomb)));
-			SoundController::playBombDroppedEffect();
-		}
-	}
-}
-
 void World::performNpcsActions()
 {
 	for (std::size_t i = 0; i < npcs.size(); ++i) {
@@ -194,8 +156,7 @@ void World::performNpcsActions()
 		}
 
 		npcs[i]->move(*this);
-
-		performSpecificNpcsActions(i);
+		npcs[i]->performSpecificActions(*this, i);
 	}
 }
 
@@ -522,6 +483,15 @@ BlockType World::getLastTouchedBlockType() const
 	return blocks[lastTouchedBlockIndex].getType();
 }
 
+bool World::isObjectOutsideCamera(MovingObject &object) const
+{
+	if (object.getX() < camera->getBeginningOfCamera() || object.getX() > camera->getEndOfCamera()) {
+		return true;
+	}
+
+	return false;
+}
+
 bool World::isFlagDown() const
 {
 	return flag->isDown();
@@ -669,6 +639,16 @@ void World::deleteFireBall(int index)
 void World::addShell(Position position, bool red)
 {
 	npcs.push_back(std::make_shared<Shell>(Shell(position, red)));
+}
+
+void World::addFireBomb(Position position)
+{
+	npcs.push_back(std::make_shared<FireMissle>(FireMissle(position, MissleType::Bomb)));
+}
+
+void World::addTurtle(Position position)
+{
+	npcs.push_back(std::make_shared<Turtle>(Turtle(Position(position))));
 }
 
 void World::addCrushedCreature(Position position)

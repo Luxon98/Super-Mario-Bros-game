@@ -59,7 +59,6 @@ private:
 	bool fireballStatus;
 	bool isTimeToChangeColors() const;
 	bool isPlayerCloseEnough(IndependentMovingObject &npc) const;
-	bool isObjectOutsideCamera(MovingObject &object) const;
 	bool isObjectOutsideWorld(MovingObject &object) const;
 	bool hasLastTouchedBlockCoin() const;
 	bool isLastTouchedBlockBonus() const;
@@ -67,7 +66,6 @@ private:
 	void deleteTemporaryElements();
 	void handleFireballStatus();
 	void performBonusElementsActions();
-	void performSpecificNpcsActions(int index);
 	void performNpcsActions();
 	void performFireBallsActions();
 	void performPlatformsActions();
@@ -106,6 +104,7 @@ public:
 	const Player& getPlayer() const;
 	int getLastTouchedBlockIndex() const;
 	BlockType getLastTouchedBlockType() const;
+	bool isObjectOutsideCamera(MovingObject &object) const;
 	bool isFlagDown() const;
 	bool isPlayerFinishingWorld() const;
 	bool isBridgeDestroyedAlready() const;
@@ -125,6 +124,8 @@ public:
 	void deleteNpc(int index);
 	void deleteFireBall(int index);
 	void addShell(Position position, bool red = false);
+	void addFireBomb(Position position);
+	void addTurtle(Position position);
 	void addCrushedCreature(Position position);
 	void addDestroyedCreature(Position position, Direction slideDirection);
 	void addDestroyedTurtle(Position position, Direction slideDirection, bool red = false);

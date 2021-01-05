@@ -32,6 +32,7 @@ public:
 	void move(World &world) override;
 	void crush(World &world, int index) override;
 	void destroy(World &world, Direction direction) override;
+	void performSpecificActions(World &world, int index) override;
 };
 
 #endif //Shell_H
