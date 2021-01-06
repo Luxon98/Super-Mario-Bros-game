@@ -103,6 +103,11 @@ bool Boss::isResistantToImmortalPlayer() const
 	return true;
 }
 
+bool Boss::isBoss() const
+{
+	return true;
+}
+
 int Boss::getPointsForDestroying() const
 {
 	return 5000;

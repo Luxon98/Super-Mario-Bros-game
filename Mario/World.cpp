@@ -595,7 +595,7 @@ void World::spoilBridgeAndBoss()
 		}
 	}
 
-	if (npcs.size() > 0 && (std::dynamic_pointer_cast<Boss>(npcs[npcs.size() - 1]))) {
+	if (npcs.size() > 0 && npcs[npcs.size() - 1]->isBoss()) {
 		addDestroyedBoss(npcs[npcs.size() - 1]->getPosition(), 
 			npcs[npcs.size() - 1]->getMovement().getDirection(), false);
 		npcs.pop_back();

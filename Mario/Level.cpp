@@ -2018,7 +2018,7 @@ void Level::setSummerWorld(World &world)
 	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(580, 327))));
 	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(880, 144))));
 	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1475, 403))));
-	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2348, 259))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3078, 432))));
 	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(2655, 348))));
 	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(3315, 176))));
 	world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1985, 52))));
@@ -2055,6 +2055,12 @@ void Level::setSummerWorld(World &world)
 
 	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
 		CustomSummerDecoration(SummerDecorationType::PALM, Position(4450, 163))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
+		CustomSummerDecoration(SummerDecorationType::FENCE, Position(448, 400))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
+		CustomSummerDecoration(SummerDecorationType::FENCE, Position(3260, 176))));
 
 	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3264, 160))));
 	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(3296, 160))));
@@ -2259,6 +2265,11 @@ void Level::setSecondStageOnSummerWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(5822, 81))));
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(6446, 104))));
 
+	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
+		CustomSummerDecoration(SummerDecorationType::FENCE, Position(368, 400))));
+	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
+		CustomSummerDecoration(SummerDecorationType::FENCE, Position(432, 400))));
+
 	if (!summerHiddenStageChecker) {
 		world.checkPoints.push_back(CheckPoint(Position(832, 153), false, 4));
 		world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(450, 60))));
@@ -2389,6 +2400,12 @@ void Level::setThirdStageOnSummerWorld(World &world)
 	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(2, Position(3455, 168))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
+		CustomSummerDecoration(SummerDecorationType::FENCE, Position(384, 400))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
+		CustomSummerDecoration(SummerDecorationType::FENCE, Position(1472, 400))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
 		CustomSummerDecoration(SummerDecorationType::PALM, Position(1070, 353))));
 
 	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
@@ -2420,7 +2437,7 @@ void Level::setSummerHiddenStage(World &world)
 	world.resetImages();
 
 	world.WORLD_HEIGHT = 480;
-	world.LAYOUT_STYLE = LayoutStyle::CustomSummer;
+	world.LAYOUT_STYLE = LayoutStyle::Underground;
 
 	for (int i = 16; i < 656; i += 32) {
 		world.blocks.push_back(Block(BlockType::Ground, Position(i, 464)));
@@ -2476,8 +2493,6 @@ void Level::setSummerHiddenStage(World &world)
 	world.blocks.push_back(Block(BlockType::Empty, Position(360, 138)));
 	world.blocks.push_back(Block(BlockType::Empty, Position(400, 114)));
 	world.blocks.push_back(Block(BlockType::Empty, Position(440, 90)));
-
-	world.inanimateElements.push_back(std::make_shared<Cloud>(Cloud(1, Position(320, 81))));
 
 	for (int i = 240; i < 432; i += 32) {
 		world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(i, 400))));
@@ -2535,6 +2550,9 @@ void Level::setSecondSummerHiddenStage(World &world)
 
 	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
 		CustomSummerDecoration(SummerDecorationType::PALM, Position(201, 349))));
+
+	world.inanimateElements.push_back(std::make_shared<CustomSummerDecoration>(
+		CustomSummerDecoration(SummerDecorationType::FENCE, Position(384, 400))));
 
 	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(176, 225))));
 	world.bonuses.push_back(std::make_shared<Coin>(Coin(Position(144, 225))));

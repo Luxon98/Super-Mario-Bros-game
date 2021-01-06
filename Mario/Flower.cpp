@@ -14,7 +14,14 @@ std::array<SDL_Surface*, 8> Flower::flowerImages;
 
 int Flower::computeImageIndex() const
 {
-	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 4);
+	int baseIndex;
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld || World::LAYOUT_STYLE == LayoutStyle::CustomSummer) {
+		baseIndex = 0;
+	}
+	else {
+		baseIndex = 4;
+	}
+
 	return baseIndex + imageIndex;
 }
 

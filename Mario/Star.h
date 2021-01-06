@@ -13,7 +13,7 @@ struct SDL_Surface;
 class Star : public BonusObject 
 {
 private:
-	static std::array<SDL_Surface*, 8> starImages;
+	static std::array<SDL_Surface*, 12> starImages;
 	int stepsCounter;
 	int stepsUp;
 	int computeImageIndex() const override;

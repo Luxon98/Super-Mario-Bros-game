@@ -16,7 +16,7 @@ CustomSummerDecoration::CustomSummerDecoration(SummerDecorationType type, Positi
 void CustomSummerDecoration::loadDecorationImages(SDL_Surface* display)
 {
 	decorationImages[0] = loadPNG("./img/ie_imgs/palm.png", display);
-	decorationImages[1] = loadPNG("./img/ie_imgs/palm.png", display);
+	decorationImages[1] = loadPNG("./img/ie_imgs/fence.png", display);
 }
 
 void CustomSummerDecoration::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

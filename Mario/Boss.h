@@ -27,6 +27,7 @@ public:
 	bool shouldStartMoving(const Player &player) const override;
 	bool isCrushproof() const override;
 	bool isResistantToImmortalPlayer() const override;
+	bool isBoss() const override;
 	int getPointsForDestroying() const override;
 	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;

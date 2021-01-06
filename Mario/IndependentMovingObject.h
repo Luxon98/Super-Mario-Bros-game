@@ -25,6 +25,7 @@ public:
 	virtual bool isResistantToCollisionWithBlock() const;
 	virtual bool isResistantToFireBalls() const;
 	virtual bool isActiveShell() const;
+	virtual bool isBoss() const;
 	void decrementHealthPoints();
 	virtual void startMoving();
 	virtual void crush(World &world, int index);

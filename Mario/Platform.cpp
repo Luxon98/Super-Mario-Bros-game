@@ -5,9 +5,11 @@
 #include "SDL_Utility.h"
 #include "Player.h"
 #include "CollisionHandling.h"
+#include "World.h"
+#include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 4> Platform::platformImages;
+std::array<SDL_Surface*, 6> Platform::platformImages;
 
 bool Platform::shouldForcePlayerMovement() const
 {
@@ -53,7 +55,8 @@ Size Platform::getSizeFromPlatformType()
 void Platform::drawPlatform(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		int index = (platformType != PlatformType::SmallPlatform ? 0 : 1);
+		int index = (World::LAYOUT_STYLE != LayoutStyle::CustomWinter ? 0 : 2);
+		index += (platformType != PlatformType::SmallPlatform ? 0 : 1);
 		drawSurface(display, platformImages[index], position.getX() - beginningOfCamera, position.getY());
 	}
 }
@@ -63,12 +66,12 @@ void Platform::drawBridge(SDL_Surface* display, int beginningOfCamera, int endOf
 	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		for (int i = 0; i < bridgeLength; ++i) {
 			int posX = (position.getX() - size.getWidth() / 2) - beginningOfCamera + (i * 8);
-			drawSurface(display, platformImages[2], posX, position.getY());
+			drawSurface(display, platformImages[4], posX, position.getY());
 		}
 
 		if (bridgeLength == DEFAULT_BRIDGE_LENGTH) {
 			int posX = position.getX() - beginningOfCamera + 156;
-			drawSurface(display, platformImages[3], posX, position.getY() - 32);
+			drawSurface(display, platformImages[5], posX, position.getY() - 32);
 		}
 	}
 }
@@ -141,8 +144,10 @@ void Platform::loadPlatformImage(SDL_Surface* display)
 {
 	platformImages[0] = loadPNG("./img/other_imgs/platform.png", display);
 	platformImages[1] = loadPNG("./img/other_imgs/small_platform.png", display);
-	platformImages[2] = loadPNG("./img/other_imgs/bridge_element.png", display);
-	platformImages[3] = loadPNG("./img/other_imgs/span.png", display);
+	platformImages[2] = loadPNG("./img/other_imgs/platform2.png", display);
+	platformImages[3] = loadPNG("./img/other_imgs/small_platform2.png", display);
+	platformImages[4] = loadPNG("./img/other_imgs/bridge_element.png", display);
+	platformImages[5] = loadPNG("./img/other_imgs/span.png", display);
 }
 
 int Platform::getBridgeLength() const

@@ -84,6 +84,11 @@ bool IndependentMovingObject::isActiveShell() const
 	return false;
 }
 
+bool IndependentMovingObject::isBoss() const
+{
+	return false;
+}
+
 void IndependentMovingObject::decrementHealthPoints()
 {
 	--healthPoints;

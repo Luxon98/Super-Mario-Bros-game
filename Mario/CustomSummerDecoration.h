@@ -13,7 +13,8 @@ struct SDL_Surface;
 
 enum class SummerDecorationType
 {
-	PALM = 1
+	PALM = 1,
+	FENCE = 2
 };
 
 

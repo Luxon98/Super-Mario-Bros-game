@@ -12,11 +12,21 @@
 #include "LayoutStyle.h"
 
 
-std::array<SDL_Surface*, 8> Star::starImages;
+std::array<SDL_Surface*, 12> Star::starImages;
 
 int Star::computeImageIndex() const
 {
-	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 4);
+	int baseIndex;
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		baseIndex = 0;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
+		baseIndex = 8;
+	}
+	else {
+		baseIndex = 4;
+	}
+
 	return baseIndex + (stepsCounter % 4);
 }
 

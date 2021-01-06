@@ -24,7 +24,7 @@ enum class PlatformType
 class Platform : public WorldObject
 {
 private:
-	static std::array<SDL_Surface*, 4> platformImages;
+	static std::array<SDL_Surface*, 6> platformImages;
 	static constexpr int DEFAULT_BRIDGE_LENGTH = 44;
 	PlatformType platformType;
 	Direction direction;
