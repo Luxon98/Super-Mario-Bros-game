@@ -12,6 +12,7 @@ protected:
 	int growCounter;
 	bool active;
 	void grow();
+	virtual int computeImageIndex() const = 0;
 
 public:
 	bool isActive() const;
@@ -22,4 +23,3 @@ public:
 };
 
 #endif //BonusObject_H
-

@@ -1,7 +1,7 @@
 #include "MovingObject.h"
 
 
-Movement MovingObject::getMovement() const
+Direction MovingObject::getDirection() const
 {
-	return movement;
+	return movement.getDirection();
 }

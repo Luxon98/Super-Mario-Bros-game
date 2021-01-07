@@ -1,15 +1,11 @@
 #include "UtilityFunctions.h"
 
-#include <random>
 #include "WorldObject.h"
+#include "IndependentMovingObject.h"
 #include "Block.h"
-#include "Plant.h"
-#include "FireMissle.h"
 #include "Shell.h"
-#include "Boss.h"
-#include "JumpingFish.h"
-#include "CloudBombardier.h"
 #include "Player.h"
+#include "Camera.h"
 
 
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions)
@@ -88,9 +84,18 @@ bool isInactiveShell(IndependentMovingObject &npc)
 	return (shell && !shell->isActiveShell());
 }
 
-int determineShift(const IndependentMovingObject &object, int base)
+bool isObjectOutsideCamera(MovingObject &object, const Camera &camera)
 {
-	return (object.getMovement().getDirection() == Direction::Left ? base * (-1) : base);
+	if (object.getX() < camera.getBeginningOfCamera() || object.getX() > camera.getEndOfCamera()) {
+		return true;
+	}
+
+	return false;
+}
+
+int determineShift(const MovingObject &object, int base)
+{
+	return (object.getDirection() == Direction::Left ? base * (-1) : base);
 }
 
 int determineShift(Direction direction, int base)

@@ -172,7 +172,7 @@ void handleNpcHpReducing(IndependentMovingObject &npc, World &world, Player &pla
 
 void handleFireBallDeleting(const FireBall &fireball, World &world, int index)
 {
-	int alignment = determineShift(fireball.getMovement().getDirection(), 5);
+	int alignment = determineShift(fireball.getDirection(), 5);
 
 	world.deleteFireBall(index);
 	world.addExplosion(Position(fireball.getX() + alignment, fireball.getY()));
@@ -268,7 +268,7 @@ void handleFireBallsAndNpcsCollisions(World &world, Player &player)
 	for (auto it = fireballs.begin(); it != fireballs.end(); ++it) {
 		for (auto it2 = npcs.begin(); it2 != npcs.end(); ++it2) {
 			if (!(*it2)->isResistantToFireBalls() && areColliding(*it, **it2)) {
-				Direction direction = (*it).getMovement().getDirection();
+				Direction direction = (*it).getDirection();
 				handleNpcHpReducing(**it2, world, player, direction, it2 - npcs.begin());
 				handleFireBallDeleting(*it, world, it - fireballs.begin());
 				return;

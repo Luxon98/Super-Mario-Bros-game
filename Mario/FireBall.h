@@ -2,7 +2,7 @@
 #define FireBall_H
 
 #include <array>
-#include "IndependentMovingObject.h"
+#include "MovingObject.h"
 
 class World;
 class Position;
@@ -10,14 +10,13 @@ enum class Direction;
 struct SDL_Surface;
 
 
-class FireBall : public IndependentMovingObject
+class FireBall : public MovingObject
 {
 private:
 	static std::array<SDL_Surface*, 4> fireBallImages;
 	int stepsUp;
 	int modelIndex;
 	bool stop;
-	int computeImageIndex() const override;
 	void changeModelIndex();
 	void moveVertically(World &world);
 	void moveHorizontally(World &world);

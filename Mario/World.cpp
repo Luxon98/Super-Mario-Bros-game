@@ -172,7 +172,7 @@ void World::performFireBallsActions()
 
 			fireballs.erase(fireballs.begin() + i);
 		}
-		else if (isObjectOutsideWorld(fireballs[i]) || isObjectOutsideCamera(fireballs[i])) {
+		else if (isObjectOutsideWorld(fireballs[i]) || isObjectOutsideCamera(fireballs[i], *camera)) {
 			fireballs.erase(fireballs.begin() + i);
 		}
 	}
@@ -473,23 +473,9 @@ const Player& World::getPlayer() const
 	return *player;
 }
 
-int World::getLastTouchedBlockIndex() const
+const Camera& World::getCamera() const
 {
-	return lastTouchedBlockIndex;
-}
-
-BlockType World::getLastTouchedBlockType() const
-{
-	return blocks[lastTouchedBlockIndex].getType();
-}
-
-bool World::isObjectOutsideCamera(MovingObject &object) const
-{
-	if (object.getX() < camera->getBeginningOfCamera() || object.getX() > camera->getEndOfCamera()) {
-		return true;
-	}
-
-	return false;
+	return *camera;
 }
 
 bool World::isFlagDown() const
@@ -538,6 +524,16 @@ int World::getLastReachedCheckPointMark() const
 	}
 
 	return -1;
+}
+
+int World::getLastTouchedBlockIndex() const
+{
+	return lastTouchedBlockIndex;
+}
+
+BlockType World::getLastTouchedBlockType() const
+{
+	return blocks[lastTouchedBlockIndex].getType();
 }
 
 void World::setGameSpeed(int gameSpeed)
@@ -596,8 +592,7 @@ void World::spoilBridgeAndBoss()
 	}
 
 	if (npcs.size() > 0 && npcs[npcs.size() - 1]->isBoss()) {
-		addDestroyedBoss(npcs[npcs.size() - 1]->getPosition(), 
-			npcs[npcs.size() - 1]->getMovement().getDirection(), false);
+		addDestroyedBoss(npcs[npcs.size() - 1]->getPosition(), npcs[npcs.size() - 1]->getDirection(), false); 
 		npcs.pop_back();
 		SoundController::playEnemyDestroyedEffect(true);
 	}

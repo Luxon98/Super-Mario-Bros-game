@@ -2,9 +2,11 @@
 #define UtilityFunctions_H
 
 class WorldObject;
+class MovingObject;
 class IndependentMovingObject;
 class Block;
 class Player;
+class Camera;
 enum class Direction;
 
 
@@ -22,7 +24,9 @@ bool isNpcCloseAboveBlock(const IndependentMovingObject &npc, const Block &block
 
 bool isInactiveShell(IndependentMovingObject &npc);
 
-int determineShift(const IndependentMovingObject &object, int base);
+bool isObjectOutsideCamera(MovingObject &object, const Camera &camera);
+
+int determineShift(const MovingObject &object, int base);
 
 int determineShift(Direction direction, int base);
 

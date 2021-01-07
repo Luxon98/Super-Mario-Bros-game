@@ -13,6 +13,7 @@ protected:
 	int healthPoints;
 	void moveHorizontally(World &world);
 	void moveDiagonally(World &world);
+	virtual int computeImageIndex() const = 0;
 
 public:
 	int getHealthPoints() const;

@@ -112,8 +112,7 @@ void Shell::crush(World &world, int index)
 		changeActiveState(Direction::None);
 	}
 	else {
-		const Player& player = world.getPlayer();
-		Direction direction = (player.getX() <= getX() ? Direction::Right : Direction::Left); 	// to simplify
+		Direction direction = determineDirection(world.getPlayer(), *this);
 		changeActiveState(direction);
 	}
 }
@@ -129,7 +128,7 @@ void Shell::performSpecificActions(World &world, int index)
 		world.addTurtle(position);
 		world.deleteNpc(index);
 	}
-	else if (world.isObjectOutsideCamera(*this)) {
+	else if (isObjectOutsideCamera(*this, world.getCamera())) {
 		world.deleteNpc(index);
 	}
 }

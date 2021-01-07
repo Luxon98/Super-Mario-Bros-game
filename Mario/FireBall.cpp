@@ -10,12 +10,6 @@
 
 std::array<SDL_Surface*, 4> FireBall::fireBallImages;
 
-int FireBall::computeImageIndex() const
-{
-	// this inherited function is not really needed in this class, but I left it to keep the code simple
-	return modelIndex;
-}
-
 void FireBall::changeModelIndex()
 {
 	++changeModelCounter;
@@ -75,7 +69,6 @@ FireBall::FireBall(Position position, Direction direction)
 	size = Size(16, 16);
 	movement = Movement(3, 2, direction, Direction::Down);
 	this->position = position;
-	healthPoints = 9; //
 	changeModelCounter = 0;
 	stepsUp = 0;
 	modelIndex = 0;
@@ -100,7 +93,7 @@ bool FireBall::shouldBeRemoved() const
 void FireBall::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		SDL_Surface* fireballImg = fireBallImages[computeImageIndex()];
+		SDL_Surface* fireballImg = fireBallImages[modelIndex];
 		drawSurface(display, fireballImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
@@ -112,4 +105,3 @@ void FireBall::move(World &world)
 		moveHorizontally(world);
 	}
 }
-

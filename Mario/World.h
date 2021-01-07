@@ -102,14 +102,14 @@ public:
 	std::vector<std::shared_ptr<BonusObject>> const& getBonusElements() const;
 	std::vector<std::shared_ptr<IndependentMovingObject>> const& getNpcs() const;
 	const Player& getPlayer() const;
-	int getLastTouchedBlockIndex() const;
-	BlockType getLastTouchedBlockType() const;
-	bool isObjectOutsideCamera(MovingObject &object) const;
+	const Camera& getCamera() const;
 	bool isFlagDown() const;
 	bool isPlayerFinishingWorld() const;
 	bool isBridgeDestroyedAlready() const;
 	bool areAnimatedElementsEmpty() const;
 	int getLastReachedCheckPointMark() const;
+	int getLastTouchedBlockIndex() const;
+	BlockType getLastTouchedBlockType() const;
 	void setGameSpeed(int gameSpeed);
 	void setPlayer(std::shared_ptr<Player> player);
 	void setCamera(std::shared_ptr<Camera> camera);

@@ -6,6 +6,7 @@
 #include "Size.h"
 
 class World;
+enum class Direction;
 
 
 class MovingObject : public WorldObject 
@@ -14,10 +15,9 @@ protected:
 	int stepsCounter;
 	int changeModelCounter;
 	Movement movement;
-	virtual int computeImageIndex() const = 0;
 
 public:
-	Movement getMovement() const;
+	Direction getDirection() const;
 	virtual void move(World &world) = 0;
 };
 
