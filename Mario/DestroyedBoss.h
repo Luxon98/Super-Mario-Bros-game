@@ -17,8 +17,8 @@ private:
 public:
 	DestroyedBoss(Position position, Direction direction, bool normal = true);
 	static void loadDestroyedBossImages(SDL_Surface * display);
-	void draw(SDL_Surface * display, int beginningOfCamera, int endOfCamera) const override;
-	void slide() override;
+	void slide() override; 
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //DestroyedBoss_H

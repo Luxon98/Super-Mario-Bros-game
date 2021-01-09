@@ -1,21 +1,12 @@
 #include "Plant.h"
 
-#include "Movement.h"
-#include "Size.h"
-#include "Position.h"
-#include "CollisionHandling.h" 
-#include "SDL_Utility.h"
 #include "World.h"
 #include "LayoutStyle.h"
+#include "SDL_Utility.h"
+#include "CollisionHandling.h" 
 
 
 std::array<SDL_Surface*, 4> Plant::plantImages;
-
-int Plant::computeImageIndex() const
-{
-	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
-	return baseIndex + (model - 1);
-}
 
 bool Plant::isOutsidePipe() const
 {
@@ -52,16 +43,22 @@ void Plant::changeModel()
 	}
 }
 
+int Plant::computeImageIndex() const
+{
+	int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::OpenWorld ? 0 : 2);
+	return baseIndex + (model - 1);
+}
+
 Plant::Plant(Position position, bool delay)
 {
-	size = Size(24, 44);
-	movement = Movement(0, 1, Direction::None, Direction::Up);
 	this->position = position;
+	stepsCounter = (delay ? 629 : -1);
+	changeModelCounter = 0;
 	healthPoints = 1;
 	auxiliaryCounter = 0;
 	model = 1;
-	stepsCounter = (delay ? 629 : -1);
-	changeModelCounter = 0;
+	movement = Movement(0, 1, Direction::None, Direction::Up);
+	size = Size(24, 44);
 }
 
 void Plant::loadPlantImages(SDL_Surface* display)
@@ -84,14 +81,6 @@ bool Plant::isResistantToCollisionWithShell() const
 	return false;
 }
 
-void Plant::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
-{
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		SDL_Surface* plantImg = plantImages[computeImageIndex()];
-		drawSurface(display, plantImg, position.getX() - beginningOfCamera, position.getY());
-	}
-}
-
 void Plant::move(World &world)
 {
 	++stepsCounter;
@@ -108,5 +97,13 @@ void Plant::move(World &world)
 	else if (stepsCounter == 820) {
 		movement.setVerticalDirection(Direction::Up);
 		stepsCounter = -1;
+	}
+}
+
+void Plant::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		SDL_Surface* plantImg = plantImages[computeImageIndex()];
+		drawSurface(display, plantImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

@@ -3,7 +3,6 @@
 
 #include "WorldObject.h"
 #include "Movement.h"
-#include "Size.h"
 
 class World;
 enum class Direction;

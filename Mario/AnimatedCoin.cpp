@@ -1,7 +1,5 @@
 #include "AnimatedCoin.h"
 
-#include <string>
-#include "Position.h"
 #include "SDL_Utility.h"
 
 
@@ -16,37 +14,29 @@ int AnimatedCoin::computeImageIndex() const
 AnimatedCoin::AnimatedCoin(Position position)
 {
 	this->position = position;
-	size = Size(16, 28);
 	auxiliaryCounter = 0;
 	imageIndex = 0;
+	size = Size(16, 28);
 }
 
 void AnimatedCoin::loadAnimatedCoinImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < animatedCoinImages.size(); ++i) {
-		std::string filename = "./img/anm_imgs/a_coin";
+		std::string filename = "./img/temp_imgs/a_coin";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		animatedCoinImages[i] = loadPNG(filename, display);
 	}
 }
 
-bool AnimatedCoin::isAnimatedCoin() const
-{
-	return true;
-}
-
-void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
-{
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		SDL_Surface* animatedCoinImg = animatedCoinImages[computeImageIndex()];
-		drawSurface(display, animatedCoinImg, position.getX() - beginningOfCamera, position.getY());
-	}
-}
-
 bool AnimatedCoin::shouldBeRemoved() const
 { 
 	return (auxiliaryCounter > 96);
+}
+
+bool AnimatedCoin::isAnimatedCoin() const
+{
+	return true;
 }
 
 void AnimatedCoin::slide()
@@ -78,5 +68,13 @@ void AnimatedCoin::slide()
 		else if (auxiliaryCounter <= 96) {
 			imageIndex = 6;
 		}
+	}
+}
+
+void AnimatedCoin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		SDL_Surface* animatedCoinImg = animatedCoinImages[computeImageIndex()];
+		drawSurface(display, animatedCoinImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

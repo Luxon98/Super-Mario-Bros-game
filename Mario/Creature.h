@@ -4,21 +4,19 @@
 #include <array>
 #include "IndependentMovingObject.h"
 
-class World;
-class Position;
 enum class Direction;
 struct SDL_Surface;
 
 
-// this class is the counterpart of NPC, which in the original Mario series was called 'Goomba'
+// name in the original game: 'Goomba'
 class Creature : public IndependentMovingObject
 {
 private:
 	static std::array<SDL_Surface*, 8> creatureImages; 
 	int model;
+	void changeModel();
 	int computeBaseIndex() const;
 	int computeImageIndex() const override;
-	void changeModel();
 
 public:
 	Creature(Position position);
@@ -28,11 +26,11 @@ public:
 	bool shouldStartMoving(const Player &player) const override;
 	bool isResistantToCollisionWithShell() const override;
 	bool isResistantToCollisionWithBlock() const override;
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
-	void move(World &world) override;
 	void startMoving() override;
 	void crush(World &world, int index) override;
 	void destroy(World &world, Direction direction) override;
+	void move(World &world) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //Creature_H

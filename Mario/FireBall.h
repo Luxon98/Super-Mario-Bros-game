@@ -5,7 +5,6 @@
 #include "MovingObject.h"
 
 class World;
-class Position;
 enum class Direction;
 struct SDL_Surface;
 
@@ -25,8 +24,8 @@ public:
 	FireBall(Position position, Direction direction);
 	static void loadFireBallImages(SDL_Surface* display);
 	bool shouldBeRemoved() const;
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move(World &world) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //FireBall_H

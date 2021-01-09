@@ -4,7 +4,8 @@
 #include <array>
 #include "BonusObject.h"
 
-class Position;
+class Player; 
+class World;
 struct SDL_Surface;
 
 
@@ -14,7 +15,7 @@ private:
 	static std::array<SDL_Surface*, 8> coinImages; 
 	static bool coinImage;
 	int computeBaseIndex() const;
-	int computeImageIndex() const;
+	int computeImageIndex() const override;
 
 public:
 	Coin(Position position);
@@ -23,9 +24,9 @@ public:
 	static void loadCoinImages(SDL_Surface* display);
 	static void resetCoinImage();
 	static void changeCoinImage();
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
-	void move(World &world) override;
 	void giveBonus(Player &player) override;
+	void move(World &world) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //Coin_H

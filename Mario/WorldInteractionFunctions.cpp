@@ -1,9 +1,8 @@
 #include "WorldInteractionFunctions.h"
 
+#include "SoundController.h"
 #include "Player.h"
 #include "World.h"
-#include "Mushroom.h"
-#include "SoundController.h"
 #include "AnimatedText.h"
 
 

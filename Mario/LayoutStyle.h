@@ -4,11 +4,11 @@
 
 enum class LayoutStyle
 {
-	OpenWorld,
-	Underground,
-	Castle,
-	CustomWinter,
-	CustomSummer
+	OpenWorld = 0,
+	Underground = 1,
+	Castle = 2,
+	CustomWinter = 3,
+	CustomSummer = 4
 };
 
 #endif //LayoutStyle_H

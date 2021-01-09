@@ -4,7 +4,6 @@
 #include <array>
 #include "WorldObject.h"
 
-class Position;
 class Player;
 enum class Direction;
 struct SDL_Surface;
@@ -48,9 +47,9 @@ public:
 	Direction getDirection() const;
 	PlatformType getPlatformType() const;
 	void setDirection(Direction direction);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void slide(Player &player);
 	void reduceBridge();
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //Platform_H

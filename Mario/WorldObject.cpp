@@ -1,7 +1,5 @@
 #include "WorldObject.h"
 
-#include "Position.h"
-
 
 bool WorldObject::isWithinRangeOfCamera(int beginningOfCamera, int endOfCamera) const
 {

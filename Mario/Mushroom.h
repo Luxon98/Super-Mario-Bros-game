@@ -9,26 +9,26 @@ class Player;
 struct SDL_Surface;
 
 
-// this class is equivalent to a collectible bonus, which was called 'Super Mushroom' in the original Mario series
+// name in the original game: 'Super Mushroom'
 class Mushroom : public BonusObject 
 {
 private:
 	static std::array<SDL_Surface*, 3> mushroomImages;
 	bool oneUp;
 	int stepsUp;
-	int computeImageIndex() const override;
 	void moveUp(World &world);
 	void moveHorizontally(World &world);
 	void moveDiagonally(World &world);
+	int computeImageIndex() const override;
 
 public:
 	Mushroom(Position position, bool oneUp);
 	static void loadMushroomImages(SDL_Surface* display);
 	int getPointsForCollecting() const override;
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
-	void move(World &world) override;
 	void knockUp() override;
 	void giveBonus(Player &player) override;
+	void move(World &world) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //Mushroom_H

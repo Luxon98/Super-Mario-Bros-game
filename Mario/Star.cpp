@@ -1,34 +1,14 @@
 #include "Star.h"
 
-#include <string>
-#include "Movement.h"
-#include "Size.h"
-#include "Position.h"
+#include "SoundController.h"
 #include "CollisionHandling.h"
 #include "SDL_Utility.h"
 #include "Player.h"
-#include "SoundController.h"
 #include "World.h"
 #include "LayoutStyle.h"
 
 
 std::array<SDL_Surface*, 12> Star::starImages;
-
-int Star::computeImageIndex() const
-{
-	int baseIndex;
-	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
-		baseIndex = 0;
-	}
-	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
-		baseIndex = 8;
-	}
-	else {
-		baseIndex = 4;
-	}
-
-	return baseIndex + (stepsCounter % 4);
-}
 
 void Star::makeVerticalMove(World &world)
 {
@@ -67,14 +47,27 @@ void Star::makeHorizontalMove(World &world)
 	}
 }
 
+int Star::computeImageIndex() const
+{
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld) {
+		return 0 + (stepsCounter % 4);
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
+		return 8 + (stepsCounter % 4);
+	}
+	else {
+		return 4 + (stepsCounter % 4);
+	}
+}
+
 Star::Star(Position position)
 {
-	size = Size(28, 32);
-	movement = Movement(1, 1, Direction::Right, Direction::Up);
 	this->position = position;
-	stepsUp = 0;
 	stepsCounter = 0;
 	growCounter = 90;
+	stepsUp = 0;
+	movement = Movement(1, 1, Direction::Right, Direction::Up);
+	size = Size(28, 32);
 }
 
 void Star::loadStarImages(SDL_Surface* display)
@@ -87,12 +80,16 @@ void Star::loadStarImages(SDL_Surface* display)
 	}
 }
 
-void Star::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+void Star::giveBonus(Player &player)
 {
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		SDL_Surface* starImg = starImages[computeImageIndex()];
-		drawSurface(display, starImg, position.getX() - beginningOfCamera, position.getY());
+	if (player.isSmall()) {
+		player.setCurrentAnimation(PlayerAnimation::ImmortalSmall);
 	}
+	else {
+		player.setCurrentAnimation(PlayerAnimation::Immortal);
+	}
+
+	SoundController::playStarMusic();
 }
 
 void Star::move(World &world)
@@ -107,14 +104,10 @@ void Star::move(World &world)
 	++stepsCounter;
 }
 
-void Star::giveBonus(Player &player)
+void Star::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	if (player.isSmall()) {
-		player.setCurrentAnimation(PlayerAnimation::ImmortalSmall);
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		SDL_Surface* starImg = starImages[computeImageIndex()];
+		drawSurface(display, starImg, position.getX() - beginningOfCamera, position.getY());
 	}
-	else {
-		player.setCurrentAnimation(PlayerAnimation::Immortal);
-	}
-
-	SoundController::playStarMusic();
 }

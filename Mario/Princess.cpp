@@ -1,7 +1,5 @@
 #include "Princess.h"
 
-#include "Position.h"
-#include "Size.h"
 #include "SDL_Utility.h"
 
 

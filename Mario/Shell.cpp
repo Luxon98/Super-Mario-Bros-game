@@ -1,17 +1,24 @@
 #include "Shell.h"
 
-#include "Size.h"
-#include "Movement.h"
-#include "Position.h"
-#include "CollisionHandling.h"
-#include "SDL_Utility.h"
+#include "Player.h"
 #include "World.h"
 #include "LayoutStyle.h"
+#include "SDL_Utility.h"
 #include "UtilityFunctions.h"
-#include "Player.h"
+#include "CollisionHandling.h"
 
 
 std::array<SDL_Surface*, 3> Shell::shellImages;
+
+bool Shell::shouldTurnIntoTurtle() const
+{
+	if (red || active) {
+		return false;
+	}
+
+	auto timePoint = std::chrono::steady_clock::now();
+	return (stateTime + std::chrono::milliseconds(20000) < timePoint);
+}
 
 int Shell::computeImageIndex() const
 {
@@ -25,14 +32,14 @@ int Shell::computeImageIndex() const
 
 Shell::Shell(Position position, bool red)
 {
-	size = Size(32, 28);
-	movement = Movement(3, 2, Direction::None);
 	this->position = position;
 	this->red = red;
-	healthPoints = 1;
 	stepsCounter = 0;
-	stateTime = std::chrono::steady_clock::now();
+	healthPoints = 1;
 	active = false;
+	stateTime = std::chrono::steady_clock::now();
+	movement = Movement(3, 2, Direction::None, Direction::None);
+	size = Size(32, 28);
 }
 
 void Shell::loadShellImage(SDL_Surface* display)
@@ -43,31 +50,6 @@ void Shell::loadShellImage(SDL_Surface* display)
 		filename += ".png";
 		shellImages[i] = loadPNG(filename, display);
 	}
-}
-
-bool Shell::isResistantToImmortalPlayer() const
-{
-	return !active;
-}
-
-bool Shell::isActiveShell() const
-{
-	return active;
-}
-
-bool Shell::isRed() const
-{
-	return red;
-}
-
-bool Shell::shouldTurnIntoTurtle() const
-{
-	if (red || active) {
-		return false;
-	}
-
-	auto timePoint = std::chrono::steady_clock::now();
-	return (stateTime + std::chrono::milliseconds(20000) < timePoint);
 }
 
 void Shell::changeActiveState(Direction direction)
@@ -81,29 +63,14 @@ void Shell::changeActiveState(Direction direction)
 	stateTime = std::chrono::steady_clock::now();
 }
 
-void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+bool Shell::isResistantToImmortalPlayer() const
 {
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		SDL_Surface* shellImg = shellImages[computeImageIndex()];
-		drawSurface(display, shellImg, position.getX() - beginningOfCamera, position.getY());
-	}
+	return !active;
 }
 
-void Shell::move(World &world)
+bool Shell::isActiveShell() const
 {
-	if (movement.getDirection() != Direction::None && stepsCounter & 1) {
-		if (isCharacterStandingOnSomething(*this, world)) {
-			moveHorizontally(world);
-		}
-		else {
-			moveDiagonally(world);
-		}
-	}
-	else if (!isCharacterStandingOnSomething(*this, world) && stepsCounter & 1) {
-		moveDiagonally(world);
-	}
-
-	++stepsCounter;
+	return active;
 }
 
 void Shell::crush(World &world, int index)
@@ -130,5 +97,30 @@ void Shell::performSpecificActions(World &world, int index)
 	}
 	else if (isObjectOutsideCamera(*this, world.getCamera())) {
 		world.deleteNpc(index);
+	}
+}
+
+void Shell::move(World &world)
+{
+	if (movement.getDirection() != Direction::None && stepsCounter & 1) {
+		if (isCharacterStandingOnSomething(*this, world)) {
+			moveHorizontally(world);
+		}
+		else {
+			moveDiagonally(world);
+		}
+	}
+	else if (!isCharacterStandingOnSomething(*this, world) && stepsCounter & 1) {
+		moveDiagonally(world);
+	}
+
+	++stepsCounter;
+}
+
+void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		SDL_Surface* shellImg = shellImages[computeImageIndex()];
+		drawSurface(display, shellImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

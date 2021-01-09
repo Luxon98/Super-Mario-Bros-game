@@ -1,15 +1,12 @@
 #include "GameFunctions.h"
 
-#include <iostream>
-#include <chrono>
-#include "KeyboardController.h"
 #include "SoundController.h"
+#include "KeyboardController.h"
 #include "PreloadingImages.h"
 #include "Level.h"
 #include "World.h"
 #include "Screen.h"
 #include "Camera.h"
-#include "Position.h"
 #include "Player.h"
 #include "WorldInteractionFunctions.h"
 #include "MenuManager.h"

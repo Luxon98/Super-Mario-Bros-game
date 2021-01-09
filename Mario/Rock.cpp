@@ -1,7 +1,5 @@
 #include "Rock.h"
 
-#include "Size.h"
-#include "Position.h"
 #include "SDL_Utility.h"
 
 

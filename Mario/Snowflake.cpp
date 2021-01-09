@@ -1,6 +1,5 @@
 #include "Snowflake.h"
 
-#include "Position.h"
 #include "SDL_Utility.h"
 
 
@@ -19,13 +18,6 @@ void Snowflake::loadSnowflakeImage(SDL_Surface* display)
 	snowflakeImage = loadPNG("./img/anm_imgs/snowflake.png", display);
 }
 
-void Snowflake::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
-{
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		drawSurface(display, snowflakeImage, position.getX() - beginningOfCamera, position.getY());
-	}
-}
-
 void Snowflake::move()
 {
 	++auxiliaryCounter;
@@ -39,5 +31,12 @@ void Snowflake::move()
 	}
 	else if (auxiliaryCounter % 5 == 0) {
 		position.setX(position.getX() - 1);
+	}
+}
+
+void Snowflake::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		drawSurface(display, snowflakeImage, position.getX() - beginningOfCamera, position.getY());
 	}
 }

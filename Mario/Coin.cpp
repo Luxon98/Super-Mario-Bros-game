@@ -1,10 +1,8 @@
 #include "Coin.h"
 
-#include "Size.h"
-#include "Position.h"
+#include "SoundController.h"
 #include "SDL_Utility.h"
 #include "Player.h"
-#include "SoundController.h"
 #include "World.h"
 #include "LayoutStyle.h"
 
@@ -15,17 +13,11 @@ bool Coin::coinImage = true;
 
 int Coin::computeBaseIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
-		return 2;
-	}
-	else if (World::LAYOUT_STYLE == LayoutStyle::Castle) {
-		return 4;
-	}
-	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
-		return 6;
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld || World::LAYOUT_STYLE == LayoutStyle::CustomSummer) {
+		return 0;
 	}
 	else {
-		return 0;
+		return 2 * static_cast<int>(World::LAYOUT_STYLE);
 	}
 }
 
@@ -37,8 +29,8 @@ int Coin::computeImageIndex() const
 
 Coin::Coin(Position position)
 {
-	size = Size(20, 28);
 	this->position = position;
+	size = Size(20, 28);
 }
 
 bool Coin::isCoin() const
@@ -71,18 +63,18 @@ void Coin::changeCoinImage()
 	Coin::coinImage = !Coin::coinImage;
 }
 
+void Coin::giveBonus(Player &player)
+{
+	player.incrementCoins();
+	SoundController::playCoinCollectedEffect();
+}
+
+void Coin::move(World &world) {}
+
 void Coin::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
 	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* coinImg = coinImages[computeImageIndex()];
 		drawSurface(display, coinImg, position.getX() - beginningOfCamera, position.getY());
 	}
-}
-
-void Coin::move(World &world) {}
-
-void Coin::giveBonus(Player &player)
-{
-	player.incrementCoins();
-	SoundController::playCoinCollectedEffect();
 }

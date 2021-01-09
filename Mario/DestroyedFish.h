@@ -3,8 +3,8 @@
 
 #include <array>
 #include "TemporaryObject.h"
+#include "Direction.h"
 
-class Position;
 struct SDL_Surface;
 
 
@@ -12,14 +12,14 @@ class DestroyedFish : public TemporaryObject
 {
 private:
 	static std::array<SDL_Surface*, 2> destroyedFishImages;
-	bool directionFlag;
+	Direction direction;
 	int computeImageIndex() const override;
 
 public:
-	DestroyedFish(Position position, bool directionFlag);
+	DestroyedFish(Position position, Direction direction);
 	static void loadDestroyedFishImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void slide() override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //DestroyedFish_H

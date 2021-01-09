@@ -1,14 +1,13 @@
 #include "Screen.h"
 
-#include <string>
 #include <thread>
-#include "Player.h"
-#include "World.h"
 #include "SoundController.h"
-#include "LayoutStyle.h"
+#include "Player.h"
 #include "Camera.h"
-#include "FileNotLoadedException.h"
 #include "SDL_Utility.h"
+#include "World.h"
+#include "LayoutStyle.h"
+#include "FileNotLoadedException.h"
 
 
 bool Screen::coinImage = true;

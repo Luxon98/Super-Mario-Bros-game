@@ -5,7 +5,6 @@
 #include <chrono>
 #include "TemporaryObject.h"
 
-class Position;
 struct SDL_Surface;
 
 
@@ -19,8 +18,8 @@ private:
 public:
 	Explosion(Position position);
 	static void loadExplosionImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	bool shouldBeRemoved() const override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //Explosion_H

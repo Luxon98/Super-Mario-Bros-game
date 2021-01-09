@@ -1,29 +1,13 @@
 #include "RedTurtle.h"
 
-#include "Movement.h"
-#include "Size.h"
-#include "Position.h"
-#include "CollisionHandling.h"
-#include "SDL_Utility.h"
+#include "SoundController.h"
 #include "World.h"
 #include "LayoutStyle.h"
-#include "SoundController.h"
+#include "SDL_Utility.h"
+#include "CollisionHandling.h"
 
 
 std::array<SDL_Surface*, 6> RedTurtle::redTurtleImages;
-
-int RedTurtle::computeImageIndex() const
-{
-	int baseIndex;
-	if (flying) {
-		baseIndex = 4;
-	}
-	else {
-		baseIndex = (movement.getDirection() == Direction::Left ? 0 : 2);
-	}
-
-	return baseIndex + (model - 1);
-}
 
 void RedTurtle::fly(World &world)
 {
@@ -70,6 +54,16 @@ void RedTurtle::patrol(World &world)
 	}
 }
 
+void RedTurtle::loseFlyingAbility()
+{
+	flying = false;
+	stepsCounter = 0;
+	movement.setVerticalDirection(Direction::None);
+	movement.setDirection(Direction::Left);
+	movement.setVerticalSpeed(3);
+	position.setY(position.getY() + 10);
+}
+
 void RedTurtle::changeModel()
 {
 	++changeModelCounter;
@@ -81,16 +75,27 @@ void RedTurtle::changeModel()
 	}
 }
 
+int RedTurtle::computeImageIndex() const
+{
+	if (flying) {
+		return model + 3;
+	}
+	else {
+		int baseIndex = (movement.getDirection() == Direction::Left ? 0 : 2);
+		return baseIndex + (model - 1);
+	}
+}
+
 RedTurtle::RedTurtle(Position position, bool flying)
 {
-	size = Size(26, 44);
-	movement = Movement(1, 3, Direction::Left);
 	this->position = position;
 	this->flying = flying;
-	healthPoints = 1;
-	model = 1;
 	stepsCounter = 0;
 	changeModelCounter = 0;
+	healthPoints = 1;
+	model = 1;
+	movement = Movement(1, 3, Direction::Left, Direction::None);
+	size = Size(26, 44);
 
 	if (flying) {
 		movement.setVerticalDirection(Direction::Up);
@@ -118,46 +123,6 @@ bool RedTurtle::isResistantToCollisionWithBlock() const
 	return false;
 }
 
-bool RedTurtle::isFlying() const
-{
-	return flying;
-}
-
-void RedTurtle::loseFlyingAbility()
-{
-	flying = false;
-	stepsCounter = 0;
-	movement.setVerticalDirection(Direction::None);
-	movement.setDirection(Direction::Left);
-	movement.setVerticalSpeed(3);
-	position.setY(position.getY() + 10);
-}
-
-void RedTurtle::setMoveDirection(Direction direction)
-{
-	movement.setDirection(direction);
-}
-
-void RedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
-{
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		SDL_Surface* redTurtleImg = redTurtleImages[computeImageIndex()];
-		drawSurface(display, redTurtleImg, position.getX() - beginningOfCamera, position.getY());
-	}
-}
-
-void RedTurtle::move(World &world)
-{
-	if (flying) {
-		fly(world);
-	}
-	else {
-		if (movement.getDirection() != Direction::None) {
-			patrol(world);
-		}
-	}
-}
-
 void RedTurtle::crush(World &world, int index)
 {
 	if (flying) {
@@ -174,4 +139,24 @@ void RedTurtle::crush(World &world, int index)
 void RedTurtle::destroy(World &world, Direction direction)
 {
 	world.addDestroyedTurtle(position, direction, true);
+}
+
+void RedTurtle::move(World &world)
+{
+	if (flying) {
+		fly(world);
+	}
+	else {
+		if (movement.getDirection() != Direction::None) {
+			patrol(world);
+		}
+	}
+}
+
+void RedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		SDL_Surface* redTurtleImg = redTurtleImages[computeImageIndex()];
+		drawSurface(display, redTurtleImg, position.getX() - beginningOfCamera, position.getY());
+	}
 }

@@ -1,6 +1,5 @@
 #include "Button.h"
 
-#include "Position.h"
 #include "SDL_Utility.h"
 #include "Player.h"
 #include "UtilityFunctions.h"
@@ -12,8 +11,8 @@ int Button::buttonImage = 1;
 
 Button::Button(Position position)
 {
-	size = Size(13, 21);
 	this->position = position;
+	size = Size(13, 21);
 }
 
 void Button::loadButtonImages(SDL_Surface* display)

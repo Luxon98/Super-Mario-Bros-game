@@ -1,7 +1,5 @@
 #include "UtilityFunctions.h"
 
-#include "WorldObject.h"
-#include "IndependentMovingObject.h"
 #include "Block.h"
 #include "Shell.h"
 #include "Player.h"
@@ -10,7 +8,7 @@
 
 bool isDifferenceInInterval(int difference, int begin, int shift, int repetitions)
 {
-	for (int i = begin, j = 0; j < repetitions; i += shift, j++) {
+	for (int i = begin, j = 0; j < repetitions; i += shift, ++j) {
 		if (difference >= i && difference <= i + 150) {
 			return true;
 		}

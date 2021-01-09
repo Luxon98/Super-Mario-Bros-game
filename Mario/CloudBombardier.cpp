@@ -1,16 +1,60 @@
 #include "CloudBombardier.h"
 
-#include "Movement.h"
-#include "Size.h"
-#include "Position.h"
-#include "SDL_Utility.h"
-#include "CollisionHandling.h"
-#include "World.h"
-#include "Player.h"
 #include "SoundController.h"
+#include "SDL_Utility.h"
+#include "Player.h"
+#include "World.h"
+#include "CollisionHandling.h"
 
 
 std::array<SDL_Surface*, 3> CloudBombardier::bombardierImages;
+
+bool CloudBombardier::isReadyToDropBomb() const
+{
+	return (stepsCounter % 175 == 0 && (stepsCounter > 0 && stepsCounter < 1300));
+}
+
+void CloudBombardier::flyVertically(World &world)
+{
+	if (stepsCounter & 1) {
+		int alignment = computeVerticalAlignment(movement.getVerticalDirection(), movement.getVerticalSpeed(), 
+			*this, world);
+		int verticalDistance = movement.getVerticalSpeed() - alignment;
+
+		if (movement.getVerticalDirection() == Direction::Up) {
+			verticalDistance *= -1;
+		}
+
+		position.setY(position.getY() + verticalDistance);
+	}
+}
+
+void CloudBombardier::flyHorizontally(World &world)
+{
+	int alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
+	int distance = movement.getSpeed() - alignment;
+
+	if (movement.getDirection() == Direction::Left) {
+		distance *= -1;
+	}
+
+	position.setX(position.getX() + distance);
+}
+
+void CloudBombardier::changeParametersDuringFlight(World &world)
+{
+	if (stepsCounter % 75 == 0) {
+		Direction direction = (isPlayerAheadOfNpc(*this, world) ? Direction::Right : Direction::Left);
+		movement.setDirection(direction);
+	}
+
+	if (stepsCounter == 1200) {
+		movement.setVerticalDirection(Direction::Up);
+	}
+	if (stepsCounter == 1600) {
+		position.setY(600);
+	}
+}
 
 int CloudBombardier::computeImageIndex() const
 {
@@ -19,13 +63,13 @@ int CloudBombardier::computeImageIndex() const
 
 CloudBombardier::CloudBombardier(Position position)
 {
-	size = Size(32, 32);
-	movement = Movement(1, 1, Direction::None, Direction::Down);
 	this->position = position;
-	healthPoints = 1;
-	active = false;
 	stepsCounter = 0;
 	changeModelCounter = 0;
+	healthPoints = 1;
+	active = false;
+	movement = Movement(1, 1, Direction::None, Direction::Down);
+	size = Size(32, 32);
 }
 
 void CloudBombardier::loadBombardierImages(SDL_Surface* display)
@@ -51,21 +95,25 @@ bool CloudBombardier::isCrushproof() const
 	return true;
 }
 
-bool CloudBombardier::isGoingLeft() const
+void CloudBombardier::startMoving()
 {
-	return (movement.getDirection() == Direction::Left);
+	active = true;
+	movement.setDirection(Direction::Right);
+	size.setHeight(48);
 }
 
-bool CloudBombardier::isReadyToDropBomb() const
+void CloudBombardier::destroy(World &world, Direction direction)
 {
-	return (stepsCounter % 175 == 0 && (stepsCounter > 0 && stepsCounter < 1300));
+	world.addDestroyedBombardier(position, direction);
 }
 
-void CloudBombardier::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+void CloudBombardier::performSpecificActions(World &world, int index)
 {
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		SDL_Surface* bombardierImg = bombardierImages[computeImageIndex()];
-		drawSurface(display, bombardierImg, position.getX() - beginningOfCamera, position.getY());
+	if (isReadyToDropBomb()) {
+		Position bombPosition = position;
+		bombPosition.setY(bombPosition.getY() + 12);
+		world.addFireBomb(bombPosition);
+		SoundController::playBombDroppedEffect();
 	}
 }
 
@@ -77,56 +125,20 @@ void CloudBombardier::move(World &world)
 	}
 	else {
 		if ((stepsCounter >= 1 && stepsCounter <= 100) || (stepsCounter >= 1200 && stepsCounter <= 1600)) {
-			if (stepsCounter & 1) {
-				int alignment = computeVerticalAlignment(movement.getVerticalDirection(), movement.getVerticalSpeed(), *this, world);
-				int verticalDistance = movement.getVerticalSpeed() - alignment;
-				if (movement.getVerticalDirection() == Direction::Up) {
-					verticalDistance *= -1;
-				}
-				position.setY(position.getY() + verticalDistance);
-			}
+			flyVertically(world);
 		}
 		else if (stepsCounter > 100 && stepsCounter < 1200) {
-			int alignment = computeHorizontalAlignment(movement.getDirection(), movement.getSpeed(), *this, world);
-			int distance = movement.getSpeed() - alignment;
-			if (movement.getDirection() == Direction::Left) {
-				distance *= -1;
-			}
-			position.setX(position.getX() + distance);
+			flyHorizontally(world);
 		}
 
-		if (stepsCounter % 75 == 0) {
-			Direction direction = (isPlayerAheadOfNpc(*this, world) ? Direction::Right : Direction::Left);
-			movement.setDirection(direction);
-		}
-
-		if (stepsCounter == 1200) {
-			movement.setVerticalDirection(Direction::Up);
-		}
-		if (stepsCounter == 1600) {
-			position.setY(600);
-		}
+		changeParametersDuringFlight(world);
 	}
 }
 
-void CloudBombardier::startMoving()
+void CloudBombardier::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	active = true;
-	movement.setDirection(Direction::Right);
-	size.setHeight(48);
-}
-
-void CloudBombardier::destroy(World &world, Direction direction)
-{
-	world.addDestroyedBombardier(position, (direction == Direction::Left));
-}
-
-void CloudBombardier::performSpecificActions(World &world, int index)
-{
-	if (isReadyToDropBomb()) {
-		Position bombPosition = position;
-		bombPosition.setY(bombPosition.getY() + 12);
-		world.addFireBomb(bombPosition);
-		SoundController::playBombDroppedEffect();
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		SDL_Surface* bombardierImg = bombardierImages[computeImageIndex()];
+		drawSurface(display, bombardierImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

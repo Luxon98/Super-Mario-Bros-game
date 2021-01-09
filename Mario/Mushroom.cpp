@@ -1,26 +1,14 @@
 #include "Mushroom.h"
 
-#include "Movement.h"
-#include "Size.h"
-#include "Position.h"
+#include "SoundController.h"
 #include "CollisionHandling.h"
 #include "SDL_Utility.h"
 #include "Player.h"
-#include "SoundController.h"
 #include "World.h"
 #include "LayoutStyle.h"
 
 
 std::array<SDL_Surface*, 3> Mushroom::mushroomImages;
-
-int Mushroom::computeImageIndex() const
-{
-	if (oneUp) {
-		return 1 + (World::LAYOUT_STYLE == LayoutStyle::Underground);
-	}
-	
-	return 0;
-}
 
 void Mushroom::moveUp(World &world)
 {
@@ -57,15 +45,24 @@ void Mushroom::moveDiagonally(World &world)
 	position.setX(position.getX() + distance);
 }
 
+int Mushroom::computeImageIndex() const
+{
+	if (oneUp) {
+		return 1 + (World::LAYOUT_STYLE == LayoutStyle::Underground);
+	}
+
+	return 0;
+}
+
 Mushroom::Mushroom(Position position, bool oneUp)
 {
-	size = Size(32, 32);
-	movement = Movement(1, 2, Direction::Right);
 	this->position = position;
 	this->oneUp = oneUp;
 	stepsCounter = 0;
 	stepsUp = 0;
 	growCounter = 96;
+	movement = Movement(1, 2, Direction::Right, Direction::None);
+	size = Size(32, 32);
 }
 
 void Mushroom::loadMushroomImages(SDL_Surface* display)
@@ -85,6 +82,28 @@ void Mushroom::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera
 	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
 		SDL_Surface* mushroomImg = mushroomImages[computeImageIndex()];
 		drawSurface(display, mushroomImg, position.getX() - beginningOfCamera, position.getY());
+	}
+}
+
+void Mushroom::giveBonus(Player &player)
+{
+	if (!oneUp) {
+		if (player.isSmall()) {
+			player.setCurrentAnimation(PlayerAnimation::Growing);
+		}
+		SoundController::playBonusCollectedEffect();
+	}
+	else {
+		player.incrementLives();
+		SoundController::playNewLiveAddedEffect();
+	}
+}
+
+void Mushroom::knockUp()
+{
+	position.setY(position.getY() - 3);
+	if (stepsUp == 0) {
+		stepsUp = 30;
 	}
 }
 
@@ -109,26 +128,4 @@ void Mushroom::move(World &world)
 		}
 	}
 	++stepsCounter;
-}
-
-void Mushroom::knockUp()
-{
-	position.setY(position.getY() - 3);
-	if (stepsUp == 0) {
-		stepsUp = 30;
-	}
-}
-
-void Mushroom::giveBonus(Player &player)
-{
-	if (!oneUp) {
-		if (player.isSmall()) {
-			player.setCurrentAnimation(PlayerAnimation::Growing);
-		}
-		SoundController::playBonusCollectedEffect();
-	}
-	else {
-		player.incrementLives();
-		SoundController::playNewLiveAddedEffect();
-	}
 }

@@ -1,7 +1,6 @@
 #include "Level.h"
 
 #include "World.h"
-#include "Screen.h"
 #include "Block.h"
 #include "Position.h"
 #include "Creature.h"
@@ -31,6 +30,9 @@
 #include "Snowflake.h"
 #include "RandomGenerator.h"
 
+
+// VERY BADLY WRITTEN CODE
+// LevelManager will be refactored soon
 
 bool Level::summerHiddenStageChecker = false;
 
@@ -2193,23 +2195,23 @@ void Level::setSecondStageOnSummerWorld(World &world)
 
 	world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1185, 52))));
 
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(975, 512), false)));
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1275, 500), true)));
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1375, 512), false)));
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1691, 500), true)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(975, 512), Direction::Right)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1275, 500), Direction::Left)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1375, 512), Direction::Right)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1691, 500), Direction::Left)));
 
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1845, 499), false)));
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2100, 506), true)));
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2170, 500), false)));
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2417, 513), true)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1845, 499), Direction::Right)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2100, 506), Direction::Left)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2170, 500), Direction::Right)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2417, 513), Direction::Left)));
 
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2550, 499), false)));
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2813, 512), true))); 
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2825, 503), false)));
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3100, 500), true)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2550, 499), Direction::Right)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2813, 512), Direction::Left)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(2825, 503), Direction::Right)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3100, 500), Direction::Left)));
 
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3387, 512), false)));
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3627, 498), true)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3387, 512), Direction::Right)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(3627, 498), Direction::Left)));
 
 	for (int i = 8; i < 120; i += 16) {
 		world.inanimateElements.push_back(std::make_shared<Lava>(Lava(Position(i, 456))));
@@ -2379,7 +2381,7 @@ void Level::setThirdStageOnSummerWorld(World &world)
 
 	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(980, 400))));
 	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(1650, 400))));
-	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1800, 504), false)));
+	world.npcs.push_back(std::make_shared<JumpingFish>(JumpingFish(Position(1800, 504), Direction::Right)));
 	world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(450, 60))));
 	world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1050, 110))));
 	world.npcs.push_back(std::make_shared<CloudBombardier>(CloudBombardier(Position(1650, 60))));

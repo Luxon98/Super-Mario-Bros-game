@@ -4,13 +4,11 @@
 #include <array>
 #include "IndependentMovingObject.h"
 
-class World;
-class Position;
 enum class Direction;
 struct SDL_Surface;
 
 
-// this class is the counterpart of NPC, which in the original Mario series was called 'Fake Bowser'
+// name in the original game: 'Fake Bowser'
 class Boss : public IndependentMovingObject
 {
 private:
@@ -29,10 +27,10 @@ public:
 	bool isResistantToImmortalPlayer() const override;
 	bool isBoss() const override;
 	int getPointsForDestroying() const override;
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
-	void move(World &world) override;
 	void startMoving() override;
 	void destroy(World &world, Direction direction) override;
+	void move(World &world) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //Boss_H

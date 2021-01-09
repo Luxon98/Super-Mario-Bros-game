@@ -1,12 +1,10 @@
 #include "Platform.h"
 
-#include "Position.h"
-#include "Size.h"
-#include "SDL_Utility.h"
 #include "Player.h"
 #include "CollisionHandling.h"
 #include "World.h"
 #include "LayoutStyle.h"
+#include "SDL_Utility.h"
 
 
 std::array<SDL_Surface*, 6> Platform::platformImages;
@@ -170,16 +168,6 @@ void Platform::setDirection(Direction direction)
 	this->direction = direction;
 }
 
-void Platform::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
-{
-	if (platformType != PlatformType::Bridge) {
-		drawPlatform(display, beginningOfCamera, endOfCamera);
-	}
-	else {
-		drawBridge(display, beginningOfCamera, endOfCamera);
-	}
-}
-
 void Platform::slide(Player &player)
 {
 	if (isPlayerStandingOnThisPlatform(player, *this) && shouldForcePlayerMovement()) {
@@ -207,5 +195,15 @@ void Platform::reduceBridge()
 	if (platformType == PlatformType::Bridge) {
 		--bridgeLength;
 		size.setWidth(size.getWidth() - 8);
+	}
+}
+
+void Platform::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (platformType != PlatformType::Bridge) {
+		drawPlatform(display, beginningOfCamera, endOfCamera);
+	}
+	else {
+		drawBridge(display, beginningOfCamera, endOfCamera);
 	}
 }

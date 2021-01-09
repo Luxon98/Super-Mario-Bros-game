@@ -14,8 +14,8 @@ private:
 public:
 	Snowflake(Position position);
 	static void loadSnowflakeImage(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void move() override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //Snowflake_H

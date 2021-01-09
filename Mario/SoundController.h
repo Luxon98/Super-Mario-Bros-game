@@ -5,7 +5,6 @@
 #include <array>
 
 class Player;
-class World;
 
 
 class SoundController final

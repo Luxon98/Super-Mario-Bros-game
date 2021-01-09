@@ -4,7 +4,6 @@
 #include <array>
 #include "WorldObject.h"
 
-class Position;
 struct SDL_Surface;
 
 

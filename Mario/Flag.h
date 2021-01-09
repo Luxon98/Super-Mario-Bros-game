@@ -4,7 +4,6 @@
 #include <array>
 #include "InanimateObject.h"
 
-class Position;
 class Player;
 struct SDL_Surface;
 
@@ -24,8 +23,8 @@ public:
 	bool isDown() const;
 	bool isPlayerHittingThisFlag(const Player &player);
 	void setActiveState();
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void changePosition();
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //Flag_H

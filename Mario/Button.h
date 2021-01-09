@@ -4,7 +4,6 @@
 #include <array>
 #include "InanimateObject.h"
 
-class Position;
 class Player;
 struct SDL_Surface;
 

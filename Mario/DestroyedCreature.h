@@ -5,7 +5,6 @@
 #include "TemporaryObject.h"
 #include "Direction.h"
 
-class Position;
 struct SDL_Surface;
 
 
@@ -13,15 +12,15 @@ class DestroyedCreature : public TemporaryObject
 {
 private:
 	static std::array<SDL_Surface*, 8> destroyedCreatureImages;
-	Direction slideDirection;
+	Direction direction;
 	int computeBaseIndex() const;
 	int computeImageIndex() const override;
 
 public:
-	DestroyedCreature(Position position, Direction slideDirection);
+	DestroyedCreature(Position position, Direction direction);
 	static void loadDestroyedCreatureImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	void slide() override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //DestroyedCreature_H

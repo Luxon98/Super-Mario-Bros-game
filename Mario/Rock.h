@@ -3,7 +3,6 @@
 
 #include "InanimateObject.h"
 
-class Position;
 struct SDL_Surface;
 
 

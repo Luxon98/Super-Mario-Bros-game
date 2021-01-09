@@ -1,10 +1,7 @@
 #include "FireBall.h"
 
-#include "Movement.h"
-#include "Size.h"
-#include "Position.h"
-#include "CollisionHandling.h"
 #include "SoundController.h"
+#include "CollisionHandling.h"
 #include "SDL_Utility.h"
 
 
@@ -66,13 +63,13 @@ void FireBall::moveHorizontally(World &world)
 
 FireBall::FireBall(Position position, Direction direction)
 {
-	size = Size(16, 16);
-	movement = Movement(3, 2, direction, Direction::Down);
 	this->position = position;
 	changeModelCounter = 0;
 	stepsUp = 0;
 	modelIndex = 0;
 	stop = false;
+	movement = Movement(3, 2, direction, Direction::Down);
+	size = Size(16, 16);
 }
 
 void FireBall::loadFireBallImages(SDL_Surface* display)
@@ -90,18 +87,18 @@ bool FireBall::shouldBeRemoved() const
 	return stop;
 }
 
-void FireBall::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
-{
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		SDL_Surface* fireballImg = fireBallImages[modelIndex];
-		drawSurface(display, fireballImg, position.getX() - beginningOfCamera, position.getY());
-	}
-}
-
 void FireBall::move(World &world)
 {
 	if (!stop) {
 		moveVertically(world);
 		moveHorizontally(world);
+	}
+}
+
+void FireBall::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		SDL_Surface* fireballImg = fireBallImages[modelIndex];
+		drawSurface(display, fireballImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

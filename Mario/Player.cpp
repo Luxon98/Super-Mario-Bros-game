@@ -1,12 +1,7 @@
 #include "Player.h"
 
-#include <chrono>
-#include <string>
 #include "SoundController.h"
-#include "Position.h"
-#include "Size.h"
 #include "World.h"
-#include "Block.h"
 #include "Camera.h"
 #include "CollisionHandling.h"
 #include "UtilityFunctions.h"
@@ -438,7 +433,7 @@ void Player::slide(World &world)
 Player::Player(Position position)
 {
 	size = Size(32, 32);
-	movement = Movement(1, 1, Direction::None);
+	movement = Movement(1, 1, Direction::None, Direction::None);
 	statistics = Statistics();
 	flags = Flags();
 	stepsCounter = StepsCounter();

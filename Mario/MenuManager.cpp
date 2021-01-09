@@ -1,7 +1,7 @@
 #include "MenuManager.h"
 
-#include "Screen.h"
 #include "SoundController.h"
+#include "Screen.h"
 
 
 std::array<SDL_Surface*, 9> MenuManager::SubmenuManager::submenuImages;

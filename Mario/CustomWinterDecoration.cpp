@@ -1,6 +1,5 @@
 #include "CustomWinterDecoration.h"
 
-#include "Position.h"
 #include "SDL_Utility.h"
 
 

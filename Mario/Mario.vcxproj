@@ -150,7 +150,9 @@
     <ClCompile Include="Cloud.cpp" />
     <ClCompile Include="CloudBombardier.cpp" />
     <ClCompile Include="Coin.cpp" />
-    <ClCompile Include="CollisionHandling.cpp" />
+    <ClCompile Include="CollisionHandling.cpp">
+      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ShowIncludes>
+    </ClCompile>
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="CrushedCreature.cpp" />
     <ClCompile Include="CustomSummerDecoration.cpp" />

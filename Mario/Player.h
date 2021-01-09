@@ -7,7 +7,6 @@
 
 class World;
 class KeyboardController;
-class Position;
 class Camera;
 enum class Direction;
 struct SDL_Surface;

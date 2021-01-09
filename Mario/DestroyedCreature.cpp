@@ -1,67 +1,54 @@
 #include "DestroyedCreature.h"
 
-#include "Position.h"
 #include "SDL_Utility.h"
 #include "World.h"
 #include "LayoutStyle.h"
 #include "UtilityFunctions.h"
 
-// the first four pictures are from the original Mario
-// the last two are custom pictures, created for the needs of the Winter world
+
 std::array<SDL_Surface*, 8> DestroyedCreature::destroyedCreatureImages;
 
 int DestroyedCreature::computeBaseIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld || World::LAYOUT_STYLE == LayoutStyle::Castle) {
+		return 0;
+	}
+	else if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
 		return 2;
 	}
-	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
-		return 4;
-	}
-	else if (World::LAYOUT_STYLE == LayoutStyle::CustomSummer) {
-		return 6;
-	}
 	else {
-		return 0;
+		return 2 * (static_cast<int>(World::LAYOUT_STYLE) - 1);
 	}
 }
 
 int DestroyedCreature::computeImageIndex() const
 {
 	int baseIndex = computeBaseIndex();
-	return baseIndex + (slideDirection == Direction::Left);
+	return baseIndex + (direction == Direction::Left);
 }
 
-DestroyedCreature::DestroyedCreature(Position position, Direction slideDirection)
+DestroyedCreature::DestroyedCreature(Position position, Direction direction)
 {
 	this->position = position;
-	size = Size(32, 32);
-	this->slideDirection = slideDirection;
+	this->direction = direction;
 	auxiliaryCounter = 0;
+	size = Size(32, 32);
 }
 
 void DestroyedCreature::loadDestroyedCreatureImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < destroyedCreatureImages.size(); ++i) {
-		std::string filename = "./img/anm_imgs/destroyed_creature";
+		std::string filename = "./img/temp_imgs/destroyed_creature";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		destroyedCreatureImages[i] = loadPNG(filename, display);
 	}
 }
 
-void DestroyedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
-{
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		SDL_Surface* dcImg = destroyedCreatureImages[computeImageIndex()];
-		drawSurface(display, dcImg, position.getX() - beginningOfCamera, position.getY());
-	}
-}
-
 void DestroyedCreature::slide()
 {
 	++auxiliaryCounter;
-	int shift = determineShift(slideDirection, 2);
+	int shift = determineShift(direction, 2);
 
 	if (auxiliaryCounter & 1) {
 		if (auxiliaryCounter <= 12) {
@@ -84,5 +71,13 @@ void DestroyedCreature::slide()
 				position.setX(position.getX() + shift);
 			}
 		}
+	}
+}
+
+void DestroyedCreature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		SDL_Surface* dcImg = destroyedCreatureImages[computeImageIndex()];
+		drawSurface(display, dcImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

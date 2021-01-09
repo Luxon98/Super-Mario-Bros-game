@@ -1,8 +1,5 @@
 #include "Bush.h"
 
-#include <string>
-#include "Size.h"
-#include "Position.h"
 #include "SDL_Utility.h"
 
 

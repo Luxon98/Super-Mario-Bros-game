@@ -1,21 +1,24 @@
 #include "Shards.h"
 
-#include "Position.h"
 #include "SDL_Utility.h"
 #include "World.h"
 #include "LayoutStyle.h"
 
-// the first four pictures are from the original Mario
-// the last two are custom pictures, created for the needs of the Winter world
+
 std::array<SDL_Surface*, 6> Shards::shardsImages;
+
+void Shards::initPositionsVector(Position position)
+{
+	shardsPositions.push_back(Position(position.getX() - 15, position.getY() - 15));
+	shardsPositions.push_back(Position(position.getX() + 15, position.getY() - 15));
+	shardsPositions.push_back(Position(position.getX() + 15, position.getY() + 15));
+	shardsPositions.push_back(Position(position.getX() - 15, position.getY() + 15));
+}
 
 int Shards::computeBaseIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
-		return 2;
-	}
-	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
-		return 4;
+	if (World::LAYOUT_STYLE == LayoutStyle::Underground || World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
+		return static_cast<int>(World::LAYOUT_STYLE) + 1;
 	}
 	else {
 		return 0;
@@ -27,20 +30,11 @@ int Shards::computeImageIndex() const {
 	return baseIndex + imageIndex;
 }
 
-void Shards::initPositionsVector(Position position)
-{
-	shardsPositions.push_back(Position(position.getX() - 15, position.getY() - 15));
-	shardsPositions.push_back(Position(position.getX() + 15, position.getY() - 15));
-	shardsPositions.push_back(Position(position.getX() + 15, position.getY() + 15));
-	shardsPositions.push_back(Position(position.getX() - 15, position.getY() + 15));
-}
-
 Shards::Shards(Position position)
 {
 	initPositionsVector(position);
 	auxiliaryCounter = 0;
 	imageIndex = 0;
-
 	// it is an object containing few shars and its size cannot be determined correctly
 	// additionaly, its size is not needed for anything
 	size = Size(0, 0);
@@ -49,18 +43,10 @@ Shards::Shards(Position position)
 void Shards::loadShardsImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < shardsImages.size(); ++i) {
-		std::string filename = "./img/anm_imgs/shard";
+		std::string filename = "./img/temp_imgs/shard";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		shardsImages[i] = loadPNG(filename, display);
-	}
-}
-
-void Shards::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
-{
-	SDL_Surface* shardImg = shardsImages[computeImageIndex()];
-	for (int i = 0; i < 4; ++i) {
-		drawSurface(display, shardImg, shardsPositions[i].getX() - beginningOfCamera, shardsPositions[i].getY());
 	}
 }
 
@@ -118,5 +104,13 @@ void Shards::slide()
 
 	if (auxiliaryCounter % 30 == 0) {
 		imageIndex = (imageIndex == 0 ? 1 : 0);
+	}
+}
+
+void Shards::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	SDL_Surface* shardImg = shardsImages[computeImageIndex()];
+	for (int i = 0; i < 4; ++i) {
+		drawSurface(display, shardImg, shardsPositions[i].getX() - beginningOfCamera, shardsPositions[i].getY());
 	}
 }

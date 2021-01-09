@@ -1,10 +1,9 @@
 #include "World.h"
 
+#include "SoundController.h"
 #include "CollisionHandling.h"
 #include "UtilityFunctions.h"
-#include "Block.h"
 #include "Camera.h"
-#include "MovingObject.h"
 #include "AnimatedObject.h"
 #include "Player.h"
 #include "Coin.h"
@@ -31,8 +30,6 @@
 #include "DestroyedBoss.h"
 #include "DestroyedFish.h"
 #include "DestroyedBombardier.h"
-#include "Position.h"
-#include "SoundController.h"
 #include "LayoutStyle.h"
 #include "Screen.h"
 
@@ -666,14 +663,14 @@ void World::addDestroyedBoss(Position position, Direction direction, bool normal
 	temporaryElements.push_back(std::make_shared<DestroyedBoss>(DestroyedBoss(position, direction, normal)));
 }
 
-void World::addDestroyedFish(Position position, bool directionFlag)
+void World::addDestroyedFish(Position position, Direction direction)
 {
-	destroyedElements.push_back(std::make_shared<DestroyedFish>(DestroyedFish(position, directionFlag)));
+	destroyedElements.push_back(std::make_shared<DestroyedFish>(DestroyedFish(position, direction)));
 }
 
-void World::addDestroyedBombardier(Position position, bool leftSide)
+void World::addDestroyedBombardier(Position position, Direction direction)
 {
-	destroyedElements.push_back(std::make_shared<DestroyedBombardier>(DestroyedBombardier(position, leftSide)));
+	destroyedElements.push_back(std::make_shared<DestroyedBombardier>(DestroyedBombardier(position, direction)));
 }
 
 void World::addExplosion(Position position)

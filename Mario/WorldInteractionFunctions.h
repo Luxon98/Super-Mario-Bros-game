@@ -3,7 +3,6 @@
 
 class Player;
 class World;
-class Mushroom;
 class Position;
 enum class TextType;
 

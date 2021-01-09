@@ -5,7 +5,6 @@
 #include <vector>
 #include "TemporaryObject.h"
 
-class Position;
 struct SDL_Surface;
 
 
@@ -15,16 +14,16 @@ private:
 	static std::array<SDL_Surface*, 6> shardsImages;
 	std::vector<Position> shardsPositions;
 	int imageIndex;
-	int computeBaseIndex() const;
-	int computeImageIndex() const;
 	void initPositionsVector(Position position);
+	int computeBaseIndex() const;
+	int computeImageIndex() const override;
 
 public:
 	Shards(Position position);
 	static void loadShardsImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	bool shouldBeRemoved() const override;
 	void slide() override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //Shards_H

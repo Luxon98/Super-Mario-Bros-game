@@ -1,12 +1,9 @@
 #include "Boss.h"
 
-#include "Movement.h"
-#include "Size.h"
-#include "Position.h"
 #include "SDL_Utility.h"
+#include "Player.h"
 #include "World.h"
 #include "CollisionHandling.h"
-#include "Player.h"
 
 
 std::array<SDL_Surface*, 4> Boss::bossImages;
@@ -66,22 +63,24 @@ void Boss::moveAndJump(World &world)
 
 Boss::Boss(Position position)
 {
-	size = Size(58, 64);
-	movement = Movement(1, 1, Direction::None);
 	this->position = position;
+	stepsCounter = 0;
+	changeModelCounter = 0;
 	healthPoints = 5;
 	model = 1;
 	auxiliaryCounter = 0;
-	stepsCounter = 0;
-	changeModelCounter = 0;
+	movement = Movement(1, 1, Direction::None, Direction::None);
+	size = Size(58, 64);
 }
 
 void Boss::loadBossImages(SDL_Surface* display)
 {
-	bossImages[0] = loadPNG("./img/npc_imgs/boss1.png", display);
-	bossImages[1] = loadPNG("./img/npc_imgs/boss2.png", display);
-	bossImages[2] = loadPNG("./img/npc_imgs/boss3.png", display);
-	bossImages[3] = loadPNG("./img/npc_imgs/boss4.png", display);
+	for (std::size_t i = 0; i < bossImages.size(); ++i) {
+		std::string filename = "./img/npc_imgs/boss";
+		filename += std::to_string(i + 1);
+		filename += ".png";
+		bossImages[i] = loadPNG(filename, display);
+	}
 }
 
 bool Boss::shouldStartMoving(const Player &player) const
@@ -113,12 +112,14 @@ int Boss::getPointsForDestroying() const
 	return 5000;
 }
 
-void Boss::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+void Boss::startMoving()
 {
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		SDL_Surface* bossImg = bossImages[computeImageIndex()];
-		drawSurface(display, bossImg, position.getX() - beginningOfCamera, position.getY());
-	}
+	movement.setDirection(Direction::Left);
+}
+
+void Boss::destroy(World &world, Direction direction)
+{
+	world.addDestroyedBoss(position, direction);
 }
 
 void Boss::move(World &world)
@@ -130,12 +131,10 @@ void Boss::move(World &world)
 	}
 }
 
-void Boss::startMoving()
+void Boss::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
 {
-	movement.setDirection(Direction::Left);
-}
-
-void Boss::destroy(World &world, Direction direction)
-{
-	world.addDestroyedBoss(position, direction);
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		SDL_Surface* bossImg = bossImages[computeImageIndex()];
+		drawSurface(display, bossImg, position.getX() - beginningOfCamera, position.getY());
+	}
 }

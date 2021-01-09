@@ -4,20 +4,18 @@
 #include <array>
 #include "IndependentMovingObject.h"
 
-class World;
-class Position;
 enum class Direction;
 struct SDL_Surface;
 
 
-// this class is the counterpart of NPC, which in the original Mario series was called 'Koopa Troopa'
+// name in the original game: 'Koopa Troopa'
 class Turtle : public IndependentMovingObject
 {
 private:
 	static std::array<SDL_Surface*, 8> turtleImages;
 	int model;
-	int computeImageIndex() const override;
 	void changeModel();
+	int computeImageIndex() const override;
 
 public:
 	Turtle(Position position);
@@ -25,11 +23,11 @@ public:
 	bool shouldStartMoving(const Player &player) const override;
 	bool isResistantToCollisionWithShell() const override;
 	bool isResistantToCollisionWithBlock() const override;
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
-	void move(World &world) override;
 	void startMoving() override;
 	void crush(World &world, int index) override;
 	void destroy(World &world, Direction direction) override;
+	void move(World &world) override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //Turtle_H

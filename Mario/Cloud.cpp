@@ -1,7 +1,5 @@
 #include "Cloud.h"
 
-#include "Size.h"
-#include "Position.h"
 #include "SDL_Utility.h"
 
 
@@ -24,7 +22,6 @@ Cloud::Cloud(int type, Position position)
 {
 	this->position = position;
 	model = type;
-
 	size = getSizeFromModel();
 }
 
@@ -45,4 +42,3 @@ void Cloud::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) c
 		drawSurface(display, cloudImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
-

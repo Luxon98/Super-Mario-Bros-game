@@ -19,17 +19,11 @@
     <Filter Include="Header Files\InanimateObjects">
       <UniqueIdentifier>{619ffa26-2ad4-4eb8-9f53-c37604bc817e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\LivingObjects">
-      <UniqueIdentifier>{e99d9b50-8b1d-4189-ae16-eaa00c8e9f8c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\AbstractClasses">
       <UniqueIdentifier>{191cfea8-de7f-4c08-8627-f944430bcea9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\InanimateObjects">
       <UniqueIdentifier>{d7b97311-df03-4034-9676-49a26fc97e76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\LivingObjects">
-      <UniqueIdentifier>{84a23ddc-6fe2-41f9-93bf-3e9563549aea}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\HandlingAndControlling">
       <UniqueIdentifier>{af19db81-84cc-4e72-93a3-6aaab2494043}</UniqueIdentifier>
@@ -42,12 +36,6 @@
     </Filter>
     <Filter Include="Source Files\TemporaryObjects">
       <UniqueIdentifier>{930d4ba8-a3fd-48d9-a5fe-11dda69bc343}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\BonusObjects">
-      <UniqueIdentifier>{5d240767-c4b1-445e-aed9-eb4ee509c001}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\BonusObjects">
-      <UniqueIdentifier>{579abea5-4aca-4349-a604-403ff3bc6223}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Exceptions">
       <UniqueIdentifier>{5024f5b7-5eba-417a-8f0c-bb6c3cee210e}</UniqueIdentifier>
@@ -72,6 +60,24 @@
     </Filter>
     <Filter Include="Source Files\AnimatedObjects">
       <UniqueIdentifier>{75a40fb2-d2c9-4488-969c-c1e6be2a92d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bonuses">
+      <UniqueIdentifier>{579abea5-4aca-4349-a604-403ff3bc6223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Bonuses">
+      <UniqueIdentifier>{5d240767-c4b1-445e-aed9-eb4ee509c001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NPCs">
+      <UniqueIdentifier>{e99d9b50-8b1d-4189-ae16-eaa00c8e9f8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NPCs">
+      <UniqueIdentifier>{84a23ddc-6fe2-41f9-93bf-3e9563549aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\OtherMovingObjects">
+      <UniqueIdentifier>{25360b6d-cd79-4b8c-ba6e-7881b38da1a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\OtherMovingObjects">
+      <UniqueIdentifier>{cde49463-d919-47f7-bb9f-7221a86cce1a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,20 +108,14 @@
     <ClCompile Include="Cloud.cpp">
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Coin.cpp">
-      <Filter>Source Files\InanimateObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Creature.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
+      <Filter>Source Files\NPCs</Filter>
     </ClCompile>
     <ClCompile Include="Turtle.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
+      <Filter>Source Files\NPCs</Filter>
     </ClCompile>
     <ClCompile Include="Shell.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
+      <Filter>Source Files\NPCs</Filter>
     </ClCompile>
     <ClCompile Include="CrushedCreature.cpp">
       <Filter>Source Files\TemporaryObjects</Filter>
@@ -126,20 +126,17 @@
     <ClCompile Include="DestroyedTurtle.cpp">
       <Filter>Source Files\TemporaryObjects</Filter>
     </ClCompile>
-    <ClCompile Include="FireBall.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Explosion.cpp">
       <Filter>Source Files\TemporaryObjects</Filter>
     </ClCompile>
     <ClCompile Include="Star.cpp">
-      <Filter>Source Files\BonusObjects</Filter>
+      <Filter>Source Files\Bonuses</Filter>
     </ClCompile>
     <ClCompile Include="Flower.cpp">
-      <Filter>Source Files\BonusObjects</Filter>
+      <Filter>Source Files\Bonuses</Filter>
     </ClCompile>
     <ClCompile Include="Mushroom.cpp">
-      <Filter>Source Files\BonusObjects</Filter>
+      <Filter>Source Files\Bonuses</Filter>
     </ClCompile>
     <ClCompile Include="BonusObject.cpp">
       <Filter>Source Files\AbstractClasses</Filter>
@@ -166,10 +163,10 @@
       <Filter>Source Files\Exceptions</Filter>
     </ClCompile>
     <ClCompile Include="Plant.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
+      <Filter>Source Files\NPCs</Filter>
     </ClCompile>
     <ClCompile Include="RedTurtle.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
+      <Filter>Source Files\NPCs</Filter>
     </ClCompile>
     <ClCompile Include="Block.cpp">
       <Filter>Source Files\OtherObjects</Filter>
@@ -208,7 +205,7 @@
       <Filter>Source Files\OtherObjects</Filter>
     </ClCompile>
     <ClCompile Include="Boss.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
+      <Filter>Source Files\NPCs</Filter>
     </ClCompile>
     <ClCompile Include="DestroyedBoss.cpp">
       <Filter>Source Files\TemporaryObjects</Filter>
@@ -241,19 +238,19 @@
       <Filter>Source Files\InanimateObjects</Filter>
     </ClCompile>
     <ClCompile Include="JumpingFish.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
+      <Filter>Source Files\NPCs</Filter>
     </ClCompile>
     <ClCompile Include="DestroyedFish.cpp">
       <Filter>Source Files\TemporaryObjects</Filter>
     </ClCompile>
     <ClCompile Include="CloudBombardier.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
+      <Filter>Source Files\NPCs</Filter>
     </ClCompile>
     <ClCompile Include="DestroyedBombardier.cpp">
       <Filter>Source Files\TemporaryObjects</Filter>
     </ClCompile>
     <ClCompile Include="FireMissle.cpp">
-      <Filter>Source Files\LivingObjects</Filter>
+      <Filter>Source Files\NPCs</Filter>
     </ClCompile>
     <ClCompile Include="TemporaryObject.cpp">
       <Filter>Source Files\AbstractClasses</Filter>
@@ -269,6 +266,15 @@
     </ClCompile>
     <ClCompile Include="IndependentMovingObject.cpp">
       <Filter>Source Files\AbstractClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Source Files\Bonuses</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\OtherMovingObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>Source Files\OtherMovingObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -287,29 +293,23 @@
     <ClInclude Include="Cloud.h">
       <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Coin.h">
-      <Filter>Header Files\InanimateObjects</Filter>
-    </ClInclude>
     <ClInclude Include="InanimateObject.h">
       <Filter>Header Files\AbstractClasses</Filter>
     </ClInclude>
     <ClInclude Include="WorldObject.h">
       <Filter>Header Files\AbstractClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\LivingObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Header Files\OtherFiles</Filter>
     </ClInclude>
     <ClInclude Include="Creature.h">
-      <Filter>Header Files\LivingObjects</Filter>
+      <Filter>Header Files\NPCs</Filter>
     </ClInclude>
     <ClInclude Include="Turtle.h">
-      <Filter>Header Files\LivingObjects</Filter>
+      <Filter>Header Files\NPCs</Filter>
     </ClInclude>
     <ClInclude Include="Shell.h">
-      <Filter>Header Files\LivingObjects</Filter>
+      <Filter>Header Files\NPCs</Filter>
     </ClInclude>
     <ClInclude Include="CrushedCreature.h">
       <Filter>Header Files\TemporaryObjects</Filter>
@@ -320,20 +320,17 @@
     <ClInclude Include="DestroyedTurtle.h">
       <Filter>Header Files\TemporaryObjects</Filter>
     </ClInclude>
-    <ClInclude Include="FireBall.h">
-      <Filter>Header Files\LivingObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Explosion.h">
       <Filter>Header Files\TemporaryObjects</Filter>
     </ClInclude>
     <ClInclude Include="Flower.h">
-      <Filter>Header Files\BonusObjects</Filter>
+      <Filter>Header Files\Bonuses</Filter>
     </ClInclude>
     <ClInclude Include="Mushroom.h">
-      <Filter>Header Files\BonusObjects</Filter>
+      <Filter>Header Files\Bonuses</Filter>
     </ClInclude>
     <ClInclude Include="Star.h">
-      <Filter>Header Files\BonusObjects</Filter>
+      <Filter>Header Files\Bonuses</Filter>
     </ClInclude>
     <ClInclude Include="BonusObject.h">
       <Filter>Header Files\AbstractClasses</Filter>
@@ -366,10 +363,10 @@
       <Filter>Header Files\OtherFiles</Filter>
     </ClInclude>
     <ClInclude Include="Plant.h">
-      <Filter>Header Files\LivingObjects</Filter>
+      <Filter>Header Files\NPCs</Filter>
     </ClInclude>
     <ClInclude Include="RedTurtle.h">
-      <Filter>Header Files\LivingObjects</Filter>
+      <Filter>Header Files\NPCs</Filter>
     </ClInclude>
     <ClInclude Include="World.h">
       <Filter>Header Files\OtherObjects</Filter>
@@ -408,7 +405,7 @@
       <Filter>Header Files\OtherObjects</Filter>
     </ClInclude>
     <ClInclude Include="Boss.h">
-      <Filter>Header Files\LivingObjects</Filter>
+      <Filter>Header Files\NPCs</Filter>
     </ClInclude>
     <ClInclude Include="DestroyedBoss.h">
       <Filter>Header Files\TemporaryObjects</Filter>
@@ -441,19 +438,19 @@
       <Filter>Header Files\InanimateObjects</Filter>
     </ClInclude>
     <ClInclude Include="JumpingFish.h">
-      <Filter>Header Files\LivingObjects</Filter>
+      <Filter>Header Files\NPCs</Filter>
     </ClInclude>
     <ClInclude Include="DestroyedFish.h">
       <Filter>Header Files\TemporaryObjects</Filter>
     </ClInclude>
     <ClInclude Include="CloudBombardier.h">
-      <Filter>Header Files\LivingObjects</Filter>
+      <Filter>Header Files\NPCs</Filter>
     </ClInclude>
     <ClInclude Include="DestroyedBombardier.h">
       <Filter>Header Files\TemporaryObjects</Filter>
     </ClInclude>
     <ClInclude Include="FireMissle.h">
-      <Filter>Header Files\LivingObjects</Filter>
+      <Filter>Header Files\NPCs</Filter>
     </ClInclude>
     <ClInclude Include="RandomGenerator.h">
       <Filter>Header Files\OtherFiles</Filter>
@@ -472,6 +469,15 @@
     </ClInclude>
     <ClInclude Include="IndependentMovingObject.h">
       <Filter>Header Files\AbstractClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Header Files\Bonuses</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\OtherMovingObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>Header Files\OtherMovingObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

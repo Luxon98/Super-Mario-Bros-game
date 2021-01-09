@@ -1,15 +1,10 @@
 #include "Block.h"
 
-#include <string>
-#include "Position.h"
-#include "Size.h"
-#include "SDL_Utility.h"
 #include "World.h"
 #include "LayoutStyle.h"
+#include "SDL_Utility.h"
 
 
-// pictures of blocks with indexes 0-35 are pictures from the original Super Mario Bros
-// the last twelve are custom graphics, created by me for the needs of the Winter World
 std::array<SDL_Surface*, 48> Block::blockImages;
 std::array<SDL_Surface*, 12> Block::landImages;
 

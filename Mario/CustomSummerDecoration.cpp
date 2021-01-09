@@ -1,6 +1,5 @@
 #include "CustomSummerDecoration.h"
 
-#include "Position.h"
 #include "SDL_Utility.h"
 
 

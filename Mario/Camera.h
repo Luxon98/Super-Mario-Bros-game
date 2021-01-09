@@ -21,4 +21,3 @@ public:
 };
 
 #endif //Camera_H
-

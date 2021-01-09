@@ -4,8 +4,6 @@
 #include <array>
 #include "InanimateObject.h"
 
-class Position;
-class Size;
 struct SDL_Surface;
 
 

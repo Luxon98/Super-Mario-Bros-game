@@ -1,9 +1,6 @@
 #include "IndependentMovingObject.h"
 
 #include "CollisionHandling.h"
-#include "Movement.h"
-#include "Position.h"
-#include "World.h"
 
 
 void IndependentMovingObject::moveHorizontally(World &world)

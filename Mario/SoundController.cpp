@@ -46,18 +46,7 @@ void SoundController::loadSoundEffects()
 
 int SoundController::getIndexOfBackgroundMusic()
 {
-	switch (World::LAYOUT_STYLE) {
-	case LayoutStyle::OpenWorld:
-		return 0;
-	case LayoutStyle::Underground:
-		return 1;
-	case LayoutStyle::Castle:
-		return 2;
-	case LayoutStyle::CustomWinter:
-		return 3;
-	default:
-		return 4;
-	}
+	return static_cast<int>(World::LAYOUT_STYLE);
 }
 
 bool SoundController::initSoundMixer()

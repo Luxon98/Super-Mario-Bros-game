@@ -1,10 +1,8 @@
 #include "Lava.h"
 
-#include "Size.h"
-#include "Position.h"
 #include "SDL_Utility.h"
-#include "LayoutStyle.h"
 #include "World.h"
+#include "LayoutStyle.h"
 
 
 std::array<SDL_Surface*, 2> Lava::lavaImages;

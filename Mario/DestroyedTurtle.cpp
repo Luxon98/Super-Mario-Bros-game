@@ -1,6 +1,5 @@
 #include "DestroyedTurtle.h"
 
-#include "Position.h"
 #include "SDL_Utility.h"
 #include "World.h"
 #include "LayoutStyle.h"
@@ -19,10 +18,10 @@ int DestroyedTurtle::computeImageIndex() const
 	}
 }
 
-DestroyedTurtle::DestroyedTurtle(Position position, Direction slideDirection, bool red)
+DestroyedTurtle::DestroyedTurtle(Position position, Direction direction, bool red)
 {
 	this->position = position;
-	this->slideDirection = slideDirection;
+	this->direction = direction;
 	this->red = red;
 	auxiliaryCounter = 0;
 	size = Size(32, 28);
@@ -31,25 +30,17 @@ DestroyedTurtle::DestroyedTurtle(Position position, Direction slideDirection, bo
 void DestroyedTurtle::loadDestroyedTurtleImages(SDL_Surface* display)
 {
 	for (std::size_t i = 0; i < destroyedTurtleImages.size(); ++i) {
-		std::string filename = "./img/anm_imgs/destroyed_turtle";
+		std::string filename = "./img/temp_imgs/destroyed_turtle";
 		filename += std::to_string(i + 1);
 		filename += ".png";
 		destroyedTurtleImages[i] = loadPNG(filename, display);
 	}
 }
 
-void DestroyedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
-{
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		SDL_Surface* dtImg = destroyedTurtleImages[computeImageIndex()];
-		drawSurface(display, dtImg, position.getX() - beginningOfCamera, position.getY());
-	}
-}
-
 void DestroyedTurtle::slide()
 {
 	++auxiliaryCounter;
-	int shift = determineShift(slideDirection, 2);
+	int shift = determineShift(direction, 2);
 
 	if (auxiliaryCounter & 1) {
 		if (auxiliaryCounter <= 12) {
@@ -72,5 +63,13 @@ void DestroyedTurtle::slide()
 				position.setX(position.getX() + shift);
 			}
 		}
+	}
+}
+
+void DestroyedTurtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		SDL_Surface* dtImg = destroyedTurtleImages[computeImageIndex()];
+		drawSurface(display, dtImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }

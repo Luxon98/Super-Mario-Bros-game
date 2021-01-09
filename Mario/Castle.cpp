@@ -1,7 +1,5 @@
 #include "Castle.h"
 
-#include "Position.h"
-#include "Size.h"
 #include "SDL_Utility.h"
 
 
@@ -27,4 +25,3 @@ void Castle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) 
 		drawSurface(display, castleImg, position.getX() - beginningOfCamera, position.getY());
 	}
 }
-

@@ -1,5 +1,6 @@
 #include "TemporaryObject.h"
 
+
 bool TemporaryObject::shouldBeRemoved() const
 {
 	return (position.getY() > 530);

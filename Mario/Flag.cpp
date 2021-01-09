@@ -1,10 +1,9 @@
 #include "Flag.h"
 
-#include "Position.h"
 #include "SDL_Utility.h"
 #include "Player.h"
-#include "LayoutStyle.h"
 #include "World.h"
+#include "LayoutStyle.h"
 
 
 std::array<SDL_Surface*, 4> Flag::flagImages;
@@ -12,9 +11,9 @@ std::array<SDL_Surface*, 4> Flag::flagImages;
 Flag::Flag(Position position)
 {
 	this->position = position;
-	active = false;
-	stickPositionY = position.getY() + 117;
 	stepsCounter = 0;
+	stickPositionY = position.getY() + 117;
+	active = false;
 	size = Size(48, 304);
 }
 
@@ -50,15 +49,6 @@ void Flag::setActiveState()
 	active = true;
 }
 
-void Flag::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
-{
-	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
-		int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::CustomWinter ? 2 : 0);
-		drawSurface(display, flagImages[baseIndex + 1], position.getX() + 17 - beginningOfCamera, stickPositionY);
-		drawSurface(display, flagImages[baseIndex + 0], position.getX() - beginningOfCamera, position.getY());
-	}
-}
-
 void Flag::changePosition()
 {
 	if (active && stepsCounter < 506) {
@@ -72,3 +62,11 @@ void Flag::changePosition()
 	}
 }
 
+void Flag::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const
+{
+	if (isWithinRangeOfCamera(beginningOfCamera, endOfCamera)) {
+		int baseIndex = (World::LAYOUT_STYLE == LayoutStyle::CustomWinter ? 2 : 0);
+		drawSurface(display, flagImages[baseIndex + 1], position.getX() + 17 - beginningOfCamera, stickPositionY);
+		drawSurface(display, flagImages[baseIndex + 0], position.getX() - beginningOfCamera, position.getY());
+	}
+}

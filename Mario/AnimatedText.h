@@ -4,7 +4,6 @@
 #include <array>
 #include "TemporaryObject.h"
 
-class Position;
 struct SDL_Surface;
 
 
@@ -29,9 +28,9 @@ private:
 public:
 	AnimatedText(TextType type, Position position);
 	static void loadAnimatedTextImages(SDL_Surface* display);
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	bool shouldBeRemoved() const override;
 	void slide() override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //AnimatedText_H

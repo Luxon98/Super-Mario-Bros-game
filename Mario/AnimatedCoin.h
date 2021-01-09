@@ -4,7 +4,6 @@
 #include <array>
 #include "TemporaryObject.h"
 
-class Position;
 struct SDL_Surface;
 
 
@@ -18,11 +17,10 @@ private:
 public:
 	AnimatedCoin(Position position);
 	static void loadAnimatedCoinImages(SDL_Surface* display);
-	bool isAnimatedCoin() const override;
-	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 	bool shouldBeRemoved() const override;
+	bool isAnimatedCoin() const override;
 	void slide() override;
+	void draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const override;
 };
 
 #endif //AnimatedCoin_H
-
