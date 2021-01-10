@@ -127,23 +127,12 @@ void Screen::loadCoinImages()
 	}
 }
 
-void Screen::loadDeadMarioImages()
-{
-	for (std::size_t k = 19; k < screenImages.size(); ++k) {
-		std::string filename = "./img/mario_imgs/mario_dead";
-		filename += std::to_string(k - 18);
-		filename += ".png";
-		screenImages[k] = loadPNG(filename, display);
-	}
-}
-
 void Screen::loadScreenImages()
 {
 	try {
 		loadDigitImages();
 		loadOtherImages();
 		loadCoinImages();
-		loadDeadMarioImages();
 		loadWorldImages();
 	}
 	catch (const FileNotLoadedException & e) {
@@ -280,66 +269,6 @@ void Screen::drawCoins(int coins)
 	drawSurface(display, img2, 286, 40);
 }
 
-void Screen::drawAddingPointsAnimation(World &world, bool checker)
-{
-	for (int i = time; i >= 0; --i) {
-		fillBackground();
-		world.draw(display, !checker);
-		player->addPoints(checker ? 100 : 50);
-		drawScreenElements();
-		drawTime(time);
-		drawPoints(player->getPoints());
-		drawCoins(player->getCoins());
-		--time;
-		updateView();
-
-		if (checker && (i % 6 == 0)) {
-			SoundController::playGettingPointsEffect();
-		}
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(20));
-	}
-}
-
-void Screen::addExplosions(World &world, int i)
-{
-	std::array<int, 10> xPositions = { 290, 390, 275, 350, 290, 350, 250, 365, 320, 320 };
-	std::array<int, 10> yPositions = { 270, 230, 190, 270, 215, 215, 230, 190, 200, 170 };
-
-	if (i % 50 == 0) {
-		int index = i / 50;
-		index %= 10;
-
-		if (index >= 1 && index <= 10) {
-			world.addExplosion(Position(camera->getBeginningOfCamera() + xPositions[index - 1], yPositions[index - 1]));
-		}
-	}
-}
-
-void Screen::drawFireworks(World &world)
-{
-	for (int i = 0; i < 2500; ++i) {
-		fillBackground();
-
-		world.performActions();
-		world.draw(display);
-
-		drawScreenElements();
-		drawTime(0);
-		drawPoints(player->getPoints());
-		drawCoins(player->getCoins());
-		updateView();
-
-		if (i <= 2000) {
-			if (i % 250 == 0) {
-				SoundController::playFireworksEffect();
-			}
-
-			addExplosions(world, i);
-		}
-	}
-}
-
 void Screen::drawCustomWorldThankYouScreen(World &world, int level)
 {
 	for (int i = 0; i < 1000; ++i) {
@@ -407,7 +336,7 @@ int Screen::initGUI()
 
 	SDL_SetWindowTitle(window, "Super Mario Bros");
 
-	scrtex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING,
+	scrtex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 
 		SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	SDL_ShowCursor(SDL_DISABLE);
@@ -550,120 +479,6 @@ void Screen::drawTimeUpScreen()
 	drawPoints(player->getPoints());
 	drawCoins(player->getCoins());
 	updateView();
-}
-
-void Screen::drawDeadMario(World &world)
-{
-	SoundController::stopMusic();
-	SoundController::playMarioDeadEffect();
-
-	int index = player->getDeadMarioImageIndex() + 19;
-	SDL_Surface* img = screenImages[index];
-	int shift = 0;
-	for (int i = 0; i < 2400; ++i) {
-		if (i % 3 == 0) {
-			time = computeTime();
-			fillBackground();
-			world.draw(display, false);
-
-			drawScreenElements();
-			drawTime(time);
-			drawPoints(player->getPoints());
-			drawCoins(player->getCoins());
-
-			drawSurface(display, img, player->getX() - camera->getBeginningOfCamera(), player->getY() + shift);
-			updateView();
-
-			shift += (i <= 450 ? -1 : 1);
-		}
-	}
-
-	std::this_thread::sleep_for(std::chrono::milliseconds(1250));
-}
-
-void Screen::drawMarioPipeTravellingScreen(World &world, Direction direction)
-{
-	player->resetModel();
-	SDL_Surface* img = player->getImage();
-	int x = player->getX() - camera->getBeginningOfCamera();
-	int y = player->getY() + (direction == Direction::Down ? 0 : 70);
-
-	for (int i = 0; i < 70; ++i) {
-		fillBackground();
-
-		drawSurface(display, img, x, y);
-		world.performActions();
-		world.draw(display, false);
-
-		drawScreenElements();
-		time = computeTime();
-		drawTime(time);
-		drawPoints(player->getPoints());
-		drawCoins(player->getCoins());
-		updateView();
-
-		y += (direction == Direction::Down ? 1 : -1);
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	}
-}
-
-void Screen::drawBridgeSpolilingScreen(World &world)
-{
-	do {
-		fillBackground();
-
-		world.spoilBridgeAndBoss();
-		world.performActions(false);
-		world.draw(display);
-
-		drawScreenElements();
-		time = computeTime();
-		drawTime(time);
-		drawPoints(player->getPoints());
-		drawCoins(player->getCoins());
-		updateView();
-	} 
-	while (!world.areAnimatedElementsEmpty() || !world.isBridgeDestroyedAlready());
-}
-
-void Screen::drawLevelFinishedScreen(World &world)
-{
-	SoundController::playLevelFinishedEffect();
-
-	while (player->isStillRunning()) {
-		updateScreen(world);
-	}
-
-	drawAddingPointsAnimation(world, true);
-}
-
-void Screen::drawWorldFinishedScreen(World &world)
-{
-	SoundController::playWorldFinishedEffect();
-
-	while (player->isStillRunning()) {
-		updateScreen(world);
-	}
-
-	drawThankYouScreen(world);
-	drawPressEnterScreen();
-}
-
-void Screen::drawCustomWorldFinishedScreen(World &world, int level)
-{
-	SoundController::playWorldFinishedEffect();
-
-	while (player->isStillRunning()) {
-		updateScreen(world);
-	}
-
-	drawAddingPointsAnimation(world, false);
-
-	SoundController::stopMusic();
-	drawFireworks(world);
-
-	drawCustomWorldThankYouScreen(world, level);
-	drawPressEnterScreen();
 }
 
 void Screen::updateScreen(World &world)

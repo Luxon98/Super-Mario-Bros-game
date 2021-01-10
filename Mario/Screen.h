@@ -9,6 +9,7 @@
 class Player;
 class World;
 class Camera;
+class AnimationsPlayer;
 enum class Direction;
 
 
@@ -21,7 +22,7 @@ private:
 	int level;
 	std::chrono::steady_clock::time_point timeBegin;
 	std::array<SDL_Surface*, 10> digitImages;
-	std::array<SDL_Surface*, 24> screenImages;
+	std::array<SDL_Surface*, 19> screenImages;
 	std::array<SDL_Surface*, 10> worldImages;
 	std::shared_ptr<Player> player;
 	std::shared_ptr<Camera> camera;
@@ -40,7 +41,6 @@ private:
 	void loadOtherImages();
 	void loadWorldImages();
 	void loadCoinImages();
-	void loadDeadMarioImages();
 	void loadScreenImages();
 	void setBlueBackground();
 	void setBlackBackground();
@@ -53,14 +53,12 @@ private:
 	void drawTime(long long int time);
 	void drawPoints(int points);
 	void drawCoins(int coins);
-	void drawAddingPointsAnimation(World &world, bool checker);
-	void addExplosions(World &world, int i);
-	void drawFireworks(World &world);
 	void drawCustomWorldThankYouScreen(World &world, int level);
 	void drawThankYouInscriptions(int i);
 	void drawThankYouScreen(World &world);
 	int initGUI();
 	void closeGUI();
+	friend class AnimationsPlayer;
 
 public:
 	static constexpr int SCREEN_WIDTH = 640;
@@ -81,12 +79,6 @@ public:
 	void drawChangeStageOfLevelScreen();
 	void drawGameOverScreen();
 	void drawTimeUpScreen();
-	void drawDeadMario(World &world);
-	void drawMarioPipeTravellingScreen(World &world, Direction direction);
-	void drawBridgeSpolilingScreen(World &world);
-	void drawLevelFinishedScreen(World &world);
-	void drawWorldFinishedScreen(World &world);
-	void drawCustomWorldFinishedScreen(World &world, int level);
 	void updateScreen(World &world);
 	~Screen();
 };

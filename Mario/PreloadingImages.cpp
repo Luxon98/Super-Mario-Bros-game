@@ -40,6 +40,7 @@
 #include "Platform.h"
 #include "FireSerpent.h"
 #include "MenuManager.h"
+#include "AnimationsPlayer.h"
 
 
 void preloadBonusObjectsImages(SDL_Surface* display)
@@ -47,11 +48,11 @@ void preloadBonusObjectsImages(SDL_Surface* display)
 	Flower::loadFlowerImages(display);
 	Mushroom::loadMushroomImages(display);
 	Star::loadStarImages(display);
+	Coin::loadCoinImages(display);
 }
 
 void preloadInanimateObjectImages(SDL_Surface* display)
 {
-	Coin::loadCoinImages(display);
 	Bush::loadBushImages(display);
 	Cloud::loadCloudImages(display);
 	Rock::loadRockImage(display);
@@ -104,6 +105,7 @@ void preloadOtherImages(SDL_Surface* display)
 	Platform::loadPlatformImage(display);
 	FireSerpent::loadFireSerpentImages(display);
 	MenuManager::loadMenuImages(display);
+	AnimationsPlayer::loadAnimationsPlayerImages(display);
 }
 
 void preloadImages(SDL_Surface* display)

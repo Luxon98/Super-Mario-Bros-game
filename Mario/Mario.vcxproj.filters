@@ -276,6 +276,9 @@
     <ClCompile Include="FireBall.cpp">
       <Filter>Source Files\OtherMovingObjects</Filter>
     </ClCompile>
+    <ClCompile Include="AnimationsPlayer.cpp">
+      <Filter>Source Files\HandlingAndControlling</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionHandling.h">
@@ -478,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="FireBall.h">
       <Filter>Header Files\OtherMovingObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationsPlayer.h">
+      <Filter>Header Files\HandlingAndControlling</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

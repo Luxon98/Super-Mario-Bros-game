@@ -176,6 +176,7 @@
     <ClCompile Include="KeyboardController.cpp" />
     <ClCompile Include="Lava.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="AnimationsPlayer.cpp" />
     <ClCompile Include="MovingObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuManager.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="Lava.h" />
     <ClInclude Include="LayoutStyle.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="AnimationsPlayer.h" />
     <ClInclude Include="MovingObject.h" />
     <ClInclude Include="MenuManager.h" />
     <ClInclude Include="Movement.h" />

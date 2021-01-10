@@ -3,6 +3,7 @@
 #include "SoundController.h"
 #include "KeyboardController.h"
 #include "PreloadingImages.h"
+#include "AnimationsPlayer.h"
 #include "Level.h"
 #include "World.h"
 #include "Screen.h"
@@ -307,14 +308,14 @@ void showLevelFinishingAnimation(Player &player, World &world, Screen &screen, i
 	}
 	player.setFinishingRunParameters(185);
 
-	screen.drawLevelFinishedScreen(world);
+	AnimationsPlayer::playLevelFinishedAnimation(world, screen);
 }
 
 void showWorldFinishingAnimation(Player &player, World &world, Screen &screen)
 {
-	screen.drawBridgeSpolilingScreen(world);
+	AnimationsPlayer::playBridgeSpolilingAnimation(world, screen);
 	player.setFinishingRunParameters(275);
-	screen.drawWorldFinishedScreen(world);
+	AnimationsPlayer::playWorldFinishedAnimation(world, screen);
 }
 
 void showWinterWorldFinishingAnimation(Player &player, World &world, Screen &screen)
@@ -330,14 +331,14 @@ void showWinterWorldFinishingAnimation(Player &player, World &world, Screen &scr
 	}
 	player.setFinishingRunParameters(185);
 
-	screen.drawCustomWorldFinishedScreen(world, 77);
+	AnimationsPlayer::playCustomWorldFinishedAnimation(world, 77, screen);
 }
 
 void showSummerWorldFinishingAnimation(Player &player, World &world, Screen &screen)
 {
-	screen.drawBridgeSpolilingScreen(world);
+	AnimationsPlayer::playBridgeSpolilingAnimation(world, screen);
 	player.setFinishingRunParameters(360);
-	screen.drawCustomWorldFinishedScreen(world, 88);
+	AnimationsPlayer::playCustomWorldFinishedAnimation(world, 88, screen);
 }
 
 void runGame()
@@ -411,7 +412,7 @@ void runGame()
 			resetScreen(screen, level, checkPointMark);
 
 			if (isPlayerExitingPipe(level, checkPointMark)) {
-				screen.drawMarioPipeTravellingScreen(world, Direction::Up);
+				AnimationsPlayer::playMarioPipeTravellingAnimation(world, Direction::Up, screen);
 			}
 
 			SoundController::playBackgroundMusic();
@@ -438,7 +439,7 @@ void runGame()
 					SoundController::playPipeTravelEffect();
 
 					if (isPlayerEnteringPipe(level, checkPointMark)) {
-						screen.drawMarioPipeTravellingScreen(world, Direction::Down);
+						AnimationsPlayer::playMarioPipeTravellingAnimation(world, Direction::Down, screen);
 					}
 					break;
 				}
@@ -478,7 +479,7 @@ void runGame()
 			}
 
 			if (!playerState) {
-				screen.drawDeadMario(world);
+				AnimationsPlayer::playMarioDyingAnimation(world, screen);
 			}
 			else if (!timeState) {
 				screen.drawTimeUpScreen();
