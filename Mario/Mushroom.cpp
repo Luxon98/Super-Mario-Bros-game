@@ -58,7 +58,7 @@ Mushroom::Mushroom(Position position, bool oneUp)
 {
 	this->position = position;
 	this->oneUp = oneUp;
-	stepsCounter = 0;
+	moveCounter = 0;
 	stepsUp = 0;
 	growCounter = 96;
 	movement = Movement(1, 2, Direction::Right, Direction::None);
@@ -112,7 +112,7 @@ void Mushroom::move(World &world)
 	if (growCounter) {
 		grow();
 	}
-	else if (stepsCounter & 1) {
+	else if (moveCounter & 1) {
 		if (stepsUp > 0) {
 			moveUp(world);
 			--stepsUp;
@@ -127,5 +127,5 @@ void Mushroom::move(World &world)
 			}
 		}
 	}
-	++stepsCounter;
+	++moveCounter;
 }

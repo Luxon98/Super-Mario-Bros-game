@@ -91,7 +91,7 @@ void AnimationsPlayer::playMarioDyingAnimation(World &world, Screen &screen)
 	SDL_Surface* img = deadMarioImages[screen.player->getDeadMarioImageIndex()];
 
 	int shift = 0;
-	for (int i = 0; i < MARIO_DYING_ANIMATIONS_FRAMES_NUMBER; ++i) {
+	for (int i = 0; i < MARIO_DYING_ANIMATION_FRAMES_NUMBER; ++i) {
 		if (i % 3 == 0) {
 			screen.fillBackground();
 			world.draw(screen.display, false);
@@ -114,7 +114,7 @@ void AnimationsPlayer::playMarioPipeTravellingAnimation(World &world, Direction 
 	int x = screen.player->getX() - screen.camera->getBeginningOfCamera();
 	int y = screen.player->getY() + (direction == Direction::Down ? 0 : 70);
 
-	for (int i = 0; i < MARIO_PIPE_TRAVELLING_ANIMATIONS_FRAMES_NUMBER; ++i) {
+	for (int i = 0; i < MARIO_PIPE_TRAVELLING_ANIMATION_FRAMES_NUMBER; ++i) {
 		screen.fillBackground();
 		drawSurface(screen.display, img, x, y);
 		world.performActions();
@@ -123,8 +123,9 @@ void AnimationsPlayer::playMarioPipeTravellingAnimation(World &world, Direction 
 		drawBasicScreenElements(screen);
 		screen.updateView();
 
-		y += (direction == Direction::Down ? 1 : -1);
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		if (i % 5 == 0) {
+			y += (direction == Direction::Down ? 1 : -1);
+		}
 	}
 }
 

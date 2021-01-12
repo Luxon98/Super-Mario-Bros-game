@@ -34,7 +34,7 @@ Shell::Shell(Position position, bool red)
 {
 	this->position = position;
 	this->red = red;
-	stepsCounter = 0;
+	moveCounter = 0;
 	healthPoints = 1;
 	active = false;
 	stateTime = std::chrono::steady_clock::now();
@@ -102,7 +102,7 @@ void Shell::performSpecificActions(World &world, int index)
 
 void Shell::move(World &world)
 {
-	if (movement.getDirection() != Direction::None && stepsCounter & 1) {
+	if (movement.getDirection() != Direction::None && moveCounter & 1) {
 		if (isCharacterStandingOnSomething(*this, world)) {
 			moveHorizontally(world);
 		}
@@ -110,11 +110,11 @@ void Shell::move(World &world)
 			moveDiagonally(world);
 		}
 	}
-	else if (!isCharacterStandingOnSomething(*this, world) && stepsCounter & 1) {
+	else if (!isCharacterStandingOnSomething(*this, world) && moveCounter & 1) {
 		moveDiagonally(world);
 	}
 
-	++stepsCounter;
+	++moveCounter;
 }
 
 void Shell::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

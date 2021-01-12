@@ -555,7 +555,7 @@ void World::setLastTouchedBlock(int index)
 	}
 }
 
-void World::hitBlock()
+void World::handleBlockHitting()
 {
 	if (lastTouchedBlockIndex != -1) {
 		BlockType blockType = blocks[lastTouchedBlockIndex].getType();

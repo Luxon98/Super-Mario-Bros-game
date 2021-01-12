@@ -19,8 +19,8 @@ private:
 	static std::array<SDL_Surface*, 5> deadMarioImages;
 	static std::array<int, 10> xPositions;
 	static std::array<int, 10> yPositions;
-	static constexpr int MARIO_DYING_ANIMATIONS_FRAMES_NUMBER = 2400;
-	static constexpr int MARIO_PIPE_TRAVELLING_ANIMATIONS_FRAMES_NUMBER = 70;
+	static constexpr int MARIO_DYING_ANIMATION_FRAMES_NUMBER = 2400;
+	static constexpr int MARIO_PIPE_TRAVELLING_ANIMATION_FRAMES_NUMBER = 350;
 	static constexpr int FIREWORKS_FRAMES_NUMBER = 2500;
 	static void addExplosions(World &world, int i, Screen &screen);
 	static void drawBasicScreenElements(Screen &screen);

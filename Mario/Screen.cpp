@@ -23,17 +23,11 @@ bool Screen::isPlayerExceedingCameraReferencePoint() const
 
 int Screen::computeCoinBaseIndex() const
 {
-	if (World::LAYOUT_STYLE == LayoutStyle::Underground) {
-		return 2;
-	}
-	else if (World::LAYOUT_STYLE == LayoutStyle::Castle) {
-		return 4;
-	}
-	else if (World::LAYOUT_STYLE == LayoutStyle::CustomWinter) {
-		return 6;
+	if (World::LAYOUT_STYLE == LayoutStyle::OpenWorld || World::LAYOUT_STYLE == LayoutStyle::CustomSummer) {
+		return 0;
 	}
 	else {
-		return 0;
+		return 2 * static_cast<int>(World::LAYOUT_STYLE);
 	}
 }
 

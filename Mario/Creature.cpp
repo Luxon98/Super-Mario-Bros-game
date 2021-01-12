@@ -40,7 +40,7 @@ int Creature::computeImageIndex() const
 Creature::Creature(Position position)
 {
 	this->position = position;
-	stepsCounter = 0;
+	moveCounter = 0;
 	changeModelCounter = 0;
 	healthPoints = 1;
 	model = 1;
@@ -107,7 +107,7 @@ void Creature::destroy(World &world, Direction direction)
 
 void Creature::move(World &world)
 {
-	if (movement.getDirection() != Direction::None && stepsCounter % 3 == 0) {
+	if (movement.getDirection() != Direction::None && moveCounter % 3 == 0) {
 		if (isCharacterStandingOnSomething(*this, world)) {
 			moveHorizontally(world);
 			changeModel();
@@ -116,7 +116,7 @@ void Creature::move(World &world)
 			moveDiagonally(world);
 		}
 	}
-	++stepsCounter;
+	++moveCounter;
 }
 
 void Creature::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

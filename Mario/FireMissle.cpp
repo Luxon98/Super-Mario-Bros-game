@@ -68,7 +68,7 @@ int FireMissle::computeImageIndex() const
 FireMissle::FireMissle(Position position, MissleType type)
 {
 	this->position = position;
-	stepsCounter = 0;
+	moveCounter = 0;
 	changeModelCounter = 0;
 	healthPoints = 2; // it is indestructible anyway
 	inactive = false;

@@ -11,7 +11,7 @@ enum class Direction;
 class MovingObject : public WorldObject 
 {
 protected:
-	int stepsCounter;
+	int moveCounter;
 	int changeModelCounter;
 	Movement movement;
 

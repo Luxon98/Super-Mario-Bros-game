@@ -64,7 +64,7 @@ void Boss::moveAndJump(World &world)
 Boss::Boss(Position position)
 {
 	this->position = position;
-	stepsCounter = 0;
+	moveCounter = 0;
 	changeModelCounter = 0;
 	healthPoints = 5;
 	model = 1;
@@ -124,8 +124,8 @@ void Boss::destroy(World &world, Direction direction)
 
 void Boss::move(World &world)
 {
-	++stepsCounter;
-	if (movement.getDirection() != Direction::None && stepsCounter & 1) {
+	++moveCounter;
+	if (movement.getDirection() != Direction::None && moveCounter & 1) {
 		moveAndJump(world);
 		changeModel();
 	}

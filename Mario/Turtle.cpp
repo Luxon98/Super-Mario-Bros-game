@@ -31,7 +31,7 @@ int Turtle::computeImageIndex() const
 Turtle::Turtle(Position position)
 {
 	this->position = position;
-	stepsCounter = 0;
+	moveCounter = 0;
 	changeModelCounter = 0;
 	healthPoints = 1;
 	model = 1;
@@ -88,7 +88,7 @@ void Turtle::destroy(World &world, Direction direction)
 
 void Turtle::move(World &world)
 {
-	if (movement.getDirection() != Direction::None && stepsCounter % 3 == 0) {
+	if (movement.getDirection() != Direction::None && moveCounter % 3 == 0) {
 		if (isCharacterStandingOnSomething(*this, world)) {
 			moveHorizontally(world);
 			changeModel();
@@ -97,7 +97,7 @@ void Turtle::move(World &world)
 			moveDiagonally(world);
 		}
 	}
-	++stepsCounter;
+	++moveCounter;
 }
 
 void Turtle::draw(SDL_Surface* display, int beginningOfCamera, int endOfCamera) const

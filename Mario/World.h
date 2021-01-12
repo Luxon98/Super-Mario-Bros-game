@@ -114,7 +114,7 @@ public:
 	void setPlayer(std::shared_ptr<Player> player);
 	void setCamera(std::shared_ptr<Camera> camera);
 	void setLastTouchedBlock(int index);
-	void hitBlock();
+	void handleBlockHitting();
 	void setFireballStatus();
 	void switchOnFlag();
 	void spoilBridgeAndBoss();

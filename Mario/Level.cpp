@@ -231,7 +231,7 @@ void Level::setFirstLevel(World &world, bool checker)
 	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4150, 400))));
 	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(4200, 400))));
 	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(5200, 400))));
-	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(5270, 400))));
+	world.npcs.push_back(std::make_shared<Creature>(Creature(Position(5400, 400))));
 
 	world.checkPoints.push_back(CheckPoint(Position(1856, 265), false, 1));
 

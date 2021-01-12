@@ -11,12 +11,12 @@ std::array<SDL_Surface*, 3> CloudBombardier::bombardierImages;
 
 bool CloudBombardier::isReadyToDropBomb() const
 {
-	return (stepsCounter % 175 == 0 && (stepsCounter > 0 && stepsCounter < 1300));
+	return (moveCounter % 175 == 0 && (moveCounter > 0 && moveCounter < 1300));
 }
 
 void CloudBombardier::flyVertically(World &world)
 {
-	if (stepsCounter & 1) {
+	if (moveCounter & 1) {
 		int alignment = computeVerticalAlignment(movement.getVerticalDirection(), movement.getVerticalSpeed(), 
 			*this, world);
 		int verticalDistance = movement.getVerticalSpeed() - alignment;
@@ -43,15 +43,15 @@ void CloudBombardier::flyHorizontally(World &world)
 
 void CloudBombardier::changeParametersDuringFlight(World &world)
 {
-	if (stepsCounter % 75 == 0) {
+	if (moveCounter % 75 == 0) {
 		Direction direction = (isPlayerAheadOfNpc(*this, world) ? Direction::Right : Direction::Left);
 		movement.setDirection(direction);
 	}
 
-	if (stepsCounter == 1200) {
+	if (moveCounter == 1200) {
 		movement.setVerticalDirection(Direction::Up);
 	}
-	if (stepsCounter == 1600) {
+	if (moveCounter == 1600) {
 		position.setY(600);
 	}
 }
@@ -64,7 +64,7 @@ int CloudBombardier::computeImageIndex() const
 CloudBombardier::CloudBombardier(Position position)
 {
 	this->position = position;
-	stepsCounter = 0;
+	moveCounter = 0;
 	changeModelCounter = 0;
 	healthPoints = 1;
 	active = false;
@@ -119,15 +119,15 @@ void CloudBombardier::performSpecificActions(World &world, int index)
 
 void CloudBombardier::move(World &world)
 {
-	++stepsCounter;
+	++moveCounter;
 	if (!active) {
-		--stepsCounter;
+		--moveCounter;
 	}
 	else {
-		if ((stepsCounter >= 1 && stepsCounter <= 100) || (stepsCounter >= 1200 && stepsCounter <= 1600)) {
+		if ((moveCounter >= 1 && moveCounter <= 100) || (moveCounter >= 1200 && moveCounter <= 1600)) {
 			flyVertically(world);
 		}
-		else if (stepsCounter > 100 && stepsCounter < 1200) {
+		else if (moveCounter > 100 && moveCounter < 1200) {
 			flyHorizontally(world);
 		}
 

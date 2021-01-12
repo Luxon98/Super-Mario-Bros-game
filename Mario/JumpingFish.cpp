@@ -11,17 +11,17 @@ std::array<SDL_Surface*, 4> JumpingFish::fishImages;
 
 void JumpingFish::changeParametersDuringJump()
 {
-	if (stepsCounter == 200 || stepsCounter == 300) {
+	if (moveCounter == 200 || moveCounter == 300) {
 		movement.setVerticalSpeed(2);
 	}
-	else if (stepsCounter == 240 || stepsCounter == 280) {
+	else if (moveCounter == 240 || moveCounter == 280) {
 		movement.setVerticalSpeed(1);
 	}
-	else if (stepsCounter == 260) {
+	else if (moveCounter == 260) {
 		movement.setVerticalSpeed(0);
 		movement.setVerticalDirection(Direction::Down);
 	}
-	else if (stepsCounter == 340) {
+	else if (moveCounter == 340) {
 		movement.setVerticalSpeed(3);
 	}
 }
@@ -29,7 +29,7 @@ void JumpingFish::changeParametersDuringJump()
 void JumpingFish::jump()
 {
 	movingFlag = true;
-	if (stepsCounter % 2 == 0) {
+	if (moveCounter % 2 == 0) {
 		int distance = movement.getSpeed() * (direction == Direction::Left ? -1 : 1);
 		position.setX(position.getX() + distance);
 
@@ -61,7 +61,7 @@ JumpingFish::JumpingFish(Position position, Direction direction)
 {
 	this->position = position;
 	this->direction = direction;
-	stepsCounter = 0;
+	moveCounter = 0;
 	changeModelCounter = 0;
 	healthPoints = 1;
 	movingFlag = false;
@@ -119,9 +119,9 @@ void JumpingFish::destroy(World &world, Direction direction)
 
 void JumpingFish::move(World &world)
 {
-	++stepsCounter;
+	++moveCounter;
 	if (movement.getDirection() == Direction::None && !movingFlag) {
-		stepsCounter = 0;
+		moveCounter = 0;
 	}
 	else {
 		jump();

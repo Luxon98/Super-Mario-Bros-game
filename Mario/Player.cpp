@@ -635,7 +635,7 @@ void Player::hitBlock(World &world)
 		world.destroyLastTouchedBlock();
 	}
 	else {
-		world.hitBlock();
+		world.handleBlockHitting();
 	}
 }
 

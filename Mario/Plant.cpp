@@ -10,7 +10,7 @@ std::array<SDL_Surface*, 4> Plant::plantImages;
 
 bool Plant::isOutsidePipe() const
 {
-	if (stepsCounter >= 42 && stepsCounter <= 588) {
+	if (moveCounter >= 42 && moveCounter <= 588) {
 		return true;
 	}
 
@@ -19,7 +19,7 @@ bool Plant::isOutsidePipe() const
 
 void Plant::slide(World &world)
 {
-	if (stepsCounter < 630) {
+	if (moveCounter < 630) {
 		if (!isPlayerCloseToPlant(*this, world) || isOutsidePipe()) {
 			if (movement.getVerticalDirection() == Direction::Up) {
 				position.setY(position.getY() - movement.getVerticalSpeed());
@@ -29,7 +29,7 @@ void Plant::slide(World &world)
 			}
 		}
 		else {
-			--stepsCounter;
+			--moveCounter;
 		}
 	}
 }
@@ -52,7 +52,7 @@ int Plant::computeImageIndex() const
 Plant::Plant(Position position, bool delay)
 {
 	this->position = position;
-	stepsCounter = (delay ? 629 : -1);
+	moveCounter = (delay ? 629 : -1);
 	changeModelCounter = 0;
 	healthPoints = 1;
 	auxiliaryCounter = 0;
@@ -83,20 +83,20 @@ bool Plant::isResistantToCollisionWithShell() const
 
 void Plant::move(World &world)
 {
-	++stepsCounter;
-	if (stepsCounter < 90 || (stepsCounter >= 540 && stepsCounter < 820)) {
+	++moveCounter;
+	if (moveCounter < 90 || (moveCounter >= 540 && moveCounter < 820)) {
 		slide(world);
 	}
 	else {
 		changeModel();
 	}
 
-	if (stepsCounter == 90) {
+	if (moveCounter == 90) {
 		movement.setVerticalDirection(Direction::Down);
 	}
-	else if (stepsCounter == 820) {
+	else if (moveCounter == 820) {
 		movement.setVerticalDirection(Direction::Up);
-		stepsCounter = -1;
+		moveCounter = -1;
 	}
 }
 

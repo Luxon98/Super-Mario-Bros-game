@@ -11,8 +11,8 @@ std::array<SDL_Surface*, 6> RedTurtle::redTurtleImages;
 
 void RedTurtle::fly(World &world)
 {
-	++stepsCounter;
-	if (stepsCounter % 3 == 0) {
+	++moveCounter;
+	if (moveCounter % 3 == 0) {
 		int alignment = computeVerticalAlignment(movement.getVerticalDirection(), 
 			movement.getVerticalSpeed(), *this, world);
 
@@ -24,19 +24,19 @@ void RedTurtle::fly(World &world)
 		position.setY(position.getY() + verticalDistance);
 	}
 
-	if (stepsCounter == 180) {
+	if (moveCounter == 180) {
 		movement.setVerticalDirection(
 			movement.getVerticalDirection() == Direction::Down ? Direction::Up : Direction::Down);
 
-		stepsCounter = 0;
+		moveCounter = 0;
 	}
 	changeModel();
 }
 
 void RedTurtle::patrol(World &world)
 {
-	++stepsCounter;
-	if (stepsCounter % 3 == 0) {
+	++moveCounter;
+	if (moveCounter % 3 == 0) {
 		if (!isCharacterStandingOnSomething(*this, world)) {
 			moveDiagonally(world);
 		}
@@ -46,18 +46,18 @@ void RedTurtle::patrol(World &world)
 		}
 	}
 
-	if (stepsCounter == 480) {
+	if (moveCounter == 480) {
 		if (isCharacterStandingOnSomething(*this, world)) {
 			movement.setDirection(movement.getDirection() == Direction::Right ? Direction::Left : Direction::Right);
 		}
-		stepsCounter = 0;
+		moveCounter = 0;
 	}
 }
 
 void RedTurtle::loseFlyingAbility()
 {
 	flying = false;
-	stepsCounter = 0;
+	moveCounter = 0;
 	movement.setVerticalDirection(Direction::None);
 	movement.setDirection(Direction::Left);
 	movement.setVerticalSpeed(3);
@@ -90,7 +90,7 @@ RedTurtle::RedTurtle(Position position, bool flying)
 {
 	this->position = position;
 	this->flying = flying;
-	stepsCounter = 0;
+	moveCounter = 0;
 	changeModelCounter = 0;
 	healthPoints = 1;
 	model = 1;
